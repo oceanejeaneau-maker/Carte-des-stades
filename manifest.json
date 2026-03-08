@@ -4,25 +4,15 @@
   "description": "Tour des stades d'Europe",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f4f6f9",
+  "background_color": "#111111",
   "theme_color": "#1a56db",
   "orientation": "any",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/727/727606.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/256/727/727606.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/128/727/727606.png",
-      "sizes": "128x128",
-      "type": "image/png"
     }
   ]
 }
