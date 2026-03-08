@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carte Interactive - Stades Europe</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
+    h1 { text-align: center; color: #333; }
+
+    .filters {
+      background: white; padding: 15px; border-radius: 8px;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px;
+    }
+    .filters input, .filters select, .filters button {
+      padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px;
+    }
+    .filters button {
+      background-color: #007bff; color: white; border: none; cursor: pointer;
+    }
+    .filters button:hover { background-color: #0056b3; }
+
+    #map { height: 500px; width: 100%; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+
+    .table-container {
+      background: white; border-radius: 8px; padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+    th { background-color: #f8f9fa; position: sticky; top: 0; }
+    tr.data-row:hover { background-color: #f1f1f1; cursor: pointer; }
+
+    .group-header { background-color: #e9ecef; font-weight: bold; cursor: pointer; user-select: none; }
+    .sub-header { background-color: #dee2e6; font-weight: 600; }
+
+    .hidden { display: none; }
+
+    .stat-bar {
+      display: flex; gap: 20px; background: white; padding: 12px 20px;
+      border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px; font-size: 14px; align-items: center; flex-wrap: wrap;
+    }
+    .stat-item { display: flex; align-items: center; gap: 6px; }
+    .stat-value { font-weight: bold; font-size: 18px; color: #007bff; }
+  </style>
+</head>
+<body>
+
+  <h1>🌍 Les Plus Grands Stades d'Europe</h1>
+
+  <!-- Stats -->
+  <div class="stat-bar">
+    <div class="stat-item">✅ Visités : <span class="stat-value" id="statVisites">0</span></div>
+    <div class="stat-item">📋 Total : <span class="stat-value" id="statTotal">0</span></div>
+    <div class="stat-item">📊 Progression : <span class="stat-value" id="statPct">0%</span></div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Rechercher (stade, ville...)" style="flex-grow: 1;">
+    <select id="paysFilter"><option value="">Tous les pays</option></select>
+    <select id="champFilter"><option value="">Tous les championnats</option></select>
+    <button id="btnVisited">Afficher: Tous</button>
+    <button id="btnReset">Réinitialiser</button>
+  </div>
+
+  <!-- Carte -->
+  <div id="map"></div>
+
+  <!-- Tableau -->
+  <div class="table-container">
+    <table id="stadesTable">
+      <thead>
+        <tr>
+          <th width="50"><input type="checkbox" id="selectAll" title="Tout cocher/décocher"></th>
+          <th>Stade</th>
+          <th>Ville</th>
+          <th>Pays</th>
+          <th>Championnat</th>
+          <th width="80">Année</th>
+          <th width="50">Visité</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // --- DRAPEAUX PAR PAYS ---
+      const drapeaux = {
+        "France": "🇫🇷", "Espagne": "🇪🇸", "Allemagne": "🇩🇪", "Italie": "🇮🇹",
+        "Portugal": "🇵🇹", "Angleterre": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Pays-Bas": "🇳🇱", "Belgique": "🇧🇪",
+        "Écosse": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "Suisse": "🇨🇭"
+      };
+
+      // --- 1. DONNÉES ---
+      const stadesDefaut = [
+        { nom: "Stade Francis-Le Blé", ville: "Brest", pays: "France", championnat: "Ligue 1", lat: 48.3903, lng: -4.4861},
+        { nom: "Estadio El Sadar", ville: "Pampelune", pays: "Espagne", championnat: "La Liga", lat: 42.7960, lng: -1.6465},
+        { nom: "Stade du Hainaut", ville: "Valenciennes", pays: "France", championnat: "Ligue 2", lat: 50.3489, lng: 3.5287},
+        { nom: "Stade Marcel-Picot", ville: "Nancy", pays: "France", championnat: "National", lat: 48.6881, lng: 6.1846},
+        { nom: "Stade Auguste-Delaune", ville: "Reims", pays: "France", championnat: "Ligue 1", lat: 49.2581, lng: 4.0317},
+        { nom: "Estadio La Romareda", ville: "Saragosse", pays: "Espagne", championnat: "Segunda División", lat: 41.6361, lng: -0.9022},
+        { nom: "Stade de Suisse", ville: "Berne", pays: "Suisse", championnat: "Super League", lat: 46.9630, lng: 7.4646},
+        { nom: "Estádio do Restelo", ville: "Lisbonne", pays: "Portugal", championnat: "Segunda Liga", lat: 38.7075, lng: -9.2101},
+        { nom: "Mercedes-Benz Arena", ville: "Stuttgart", pays: "Allemagne", championnat: "Bundesliga", lat: 48.7927, lng: 9.2321},
+        { nom: "Allianz Riviera", ville: "Nice", pays: "France", championnat: "Ligue 1", lat: 43.7050, lng: 7.1920},
+        { nom: "Estadio Balaídos", ville: "Vigo", pays: "Espagne", championnat: "La Liga", lat: 42.2118, lng: -8.7392},
+        { nom: "Estádio D. Afonso Henriques", ville: "Guimarães", pays: "Portugal", championnat: "Primeira Liga", lat: 41.4471, lng: -8.2908},
+        { nom: "Red Bull Arena", ville: "Leipzig", pays: "Allemagne", championnat: "Bundesliga", lat: 51.3457, lng: 12.3614},
+        { nom: "Stade Louis-II", ville: "Monaco", pays: "France", championnat: "Ligue 1", lat: 43.7279, lng: 7.4197},
+        { nom: "Estadio San Mamés", ville: "Bilbao", pays: "Espagne", championnat: "La Liga", lat: 43.2641, lng: -2.9496},
+        { nom: "Stadio Artemio Franchi", ville: "Florence", pays: "Italie", championnat: "Serie A", lat: 43.7809, lng: 11.2826},
+        { nom: "Stade Bollaert-Delelis", ville: "Lens", pays: "France", championnat: "Ligue 1", lat: 50.4319, lng: 2.8296},
+        { nom: "Estadio Riazor", ville: "La Corogne", pays: "Espagne", championnat: "Segunda División", lat: 43.3689, lng: -8.4189},
+        { nom: "Estádio Municipal de Braga", ville: "Braga", pays: "Portugal", championnat: "Primeira Liga", lat: 41.5610, lng: -8.4292},
+        { nom: "Estadio Ramón Sánchez Pizjuán", ville: "Séville", pays: "Espagne", championnat: "La Liga", lat: 37.3841, lng: -5.9708},
+        { nom: "Stade Geoffroy-Guichard", ville: "Saint-Étienne", pays: "France", championnat: "Ligue 1", lat: 45.4609, lng: 4.3907},
+        { nom: "Estádio José Alvalade", ville: "Lisbonne", pays: "Portugal", championnat: "Primeira Liga", lat: 38.7611, lng: -9.1606},
+        { nom: "Estadio Mestalla", ville: "Valence", pays: "Espagne", championnat: "La Liga", lat: 39.4749, lng: -0.3581},
+        { nom: "La Rosaleda", ville: "Malaga", pays: "Espagne", championnat: "La Liga", lat: 36.7321, lng: -4.4262},
+        { nom: "Matmut Atlantique", ville: "Bordeaux", pays: "France", championnat: "Ligue 1", lat: 44.8909, lng: -0.5645},
+        { nom: "Stade Pierre-Mauroy", ville: "Lille", pays: "France", championnat: "Ligue 1", lat: 50.6119, lng: 3.1306},
+        { nom: "De Kuip", ville: "Rotterdam", pays: "Pays-Bas", championnat: "Eredivisie", lat: 51.8931, lng: 4.5236},
+        { nom: "King Baudouin Stadium", ville: "Bruxelles", pays: "Belgique", championnat: "Jupiler Pro League", lat: 50.8950, lng: 4.3340},
+        { nom: "Tottenham Hotspur Stadium", ville: "Londres", pays: "Angleterre", championnat: "Premier League", lat: 51.6043, lng: -0.0665},
+        { nom: "Ibrox Stadium", ville: "Glasgow", pays: "Écosse", championnat: "Scottish Premiership", lat: 55.8530, lng: -4.3090},
+        { nom: "Johan Cruyff Arena", ville: "Amsterdam", pays: "Pays-Bas", championnat: "Eredivisie", lat: 52.3144, lng: 4.9410},
+        { nom: "Philips Stadion", ville: "Eindhoven", pays: "Pays-Bas", championnat: "Eredivisie", lat: 51.4416, lng: 5.4760},
+        { nom: "Stade du Pays de Charleroi", ville: "Charleroi", pays: "Belgique", championnat: "Jupiler Pro League", lat: 50.4042, lng: 4.4441},
+        { nom: "Stade Jan Breydel", ville: "Bruges", pays: "Belgique", championnat: "Jupiler Pro League", lat: 51.1989, lng: 3.1806},
+        { nom: "Emirates Stadium", ville: "Londres", pays: "Angleterre", championnat: "Premier League", lat: 51.5549, lng: -0.1084},
+        { nom: "Stamford Bridge", ville: "Londres", pays: "Angleterre", championnat: "Premier League", lat: 51.4816, lng: -0.1910},
+        { nom: "Celtic Park", ville: "Glasgow", pays: "Écosse", championnat: "Scottish Premiership", lat: 55.8497, lng: -4.2055},
+        { nom: "Estádio do Dragão", ville: "Porto", pays: "Portugal", championnat: "Primeira Liga", lat: 41.1621, lng: -8.5839},
+        { nom: "San Siro", ville: "Milan", pays: "Italie", championnat: "Serie A", lat: 45.4781, lng: 9.124},
+        { nom: "Stadio Olimpico", ville: "Rome", pays: "Italie", championnat: "Serie A", lat: 41.9339, lng: 12.4544},
+        { nom: "Parc des Princes", ville: "Paris", pays: "France", championnat: "Ligue 1", lat: 48.8414, lng: 2.253},
+        { nom: "Stade Vélodrome", ville: "Marseille", pays: "France", championnat: "Ligue 1", lat: 43.2698, lng: 5.3957},
+        { nom: "Groupama Stadium", ville: "Lyon", pays: "France", championnat: "Ligue 1", lat: 45.7657, lng: 4.9828},
+        { nom: "Stade de la Beaujoire", ville: "Nantes", pays: "France", championnat: "Ligue 1", lat: 47.2568, lng: -1.5253},
+        { nom: "Camp Nou", ville: "Barcelone", pays: "Espagne", championnat: "La Liga", lat: 41.3809, lng: 2.1228},
+        { nom: "Santiago Bernabéu", ville: "Madrid", pays: "Espagne", championnat: "La Liga", lat: 40.4531, lng: -3.6884},
+        { nom: "Estadio Benito Villamarín", ville: "Séville", pays: "Espagne", championnat: "La Liga", lat: 37.3565, lng: -5.9819},
+        { nom: "Estadio de la Cerámica", ville: "Villarreal", pays: "Espagne", championnat: "La Liga", lat: 39.9431, lng: -0.1033},
+        { nom: "Volksparkstadion", ville: "Hambourg", pays: "Allemagne", championnat: "2. Bundesliga", lat: 53.5872, lng: 9.8986},
+        { nom: "Stadion An der Alten Försterei", ville: "Berlin", pays: "Allemagne", championnat: "Bundesliga", lat: 52.4574, lng: 13.5666},
+        { nom: "Vonovia Ruhrstadion", ville: "Bochum", pays: "Allemagne", championnat: "Bundesliga", lat: 51.4816, lng: 7.2183},
+        { nom: "BORUSSIA-PARK", ville: "Mönchengladbach", pays: "Allemagne", championnat: "Bundesliga", lat: 51.1745, lng: 6.3876},
+        { nom: "Max-Morlock-Stadion", ville: "Nuremberg", pays: "Allemagne", championnat: "2. Bundesliga", lat: 49.4305, lng: 11.1275},
+        { nom: "SchücoArena", ville: "Bielefeld", pays: "Allemagne", championnat: "2. Bundesliga", lat: 52.0208, lng: 8.5324},
+        { nom: "MDCC-Arena", ville: "Magdebourg", pays: "Allemagne", championnat: "2. Bundesliga", lat: 52.1203, lng: 11.6350},
+        { nom: "Stadion am Böllenfalltor", ville: "Darmstadt", pays: "Allemagne", championnat: "Bundesliga", lat: 49.8591, lng: 8.6523},
+        { nom: "WWK Arena", ville: "Augsbourg", pays: "Allemagne", championnat: "Bundesliga", lat: 48.3231, lng: 10.9887},
+        { nom: "Voith-Arena", ville: "Heidenheim", pays: "Allemagne", championnat: "Bundesliga", lat: 48.6743, lng: 10.1533},
+        { nom: "PreZero Arena", ville: "Sinsheim", pays: "Allemagne", championnat: "Bundesliga", lat: 49.2381, lng: 8.8972},
+        { nom: "Merkur Spiel-Arena", ville: "Düsseldorf", pays: "Allemagne", championnat: "2. Bundesliga", lat: 51.2613, lng: 6.7333},
+        { nom: "Eintracht-Stadion", ville: "Brunswick", pays: "Allemagne", championnat: "2. Bundesliga", lat: 52.2739, lng: 10.5261},
+        { nom: "Millerntor-Stadion", ville: "Hambourg", pays: "Allemagne", championnat: "2. Bundesliga", lat: 53.5544, lng: 9.9674},
+        { nom: "Holstein-Stadion", ville: "Kiel", pays: "Allemagne", championnat: "2. Bundesliga", lat: 54.3391, lng: 10.1355},
+        { nom: "Sportpark Ronhof", ville: "Fürth", pays: "Allemagne", championnat: "2. Bundesliga", lat: 49.4875, lng: 10.9994},
+        { nom: "Signal Iduna Park", ville: "Dortmund", pays: "Allemagne", championnat: "Bundesliga", lat: 51.4926, lng: 7.4519},
+        { nom: "Allianz Arena", ville: "Munich", pays: "Allemagne", championnat: "Bundesliga", lat: 48.2188, lng: 11.6247}
+      ];
+
+      // --- PERSISTANCE localStorage ---
+      const STORAGE_KEY = "stades_europe_v1";
+
+      function sauvegarder() {
+        const data = stades.map(s => ({ visite: s.visite, annee: s.annee || null }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function charger() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          data.forEach((d, i) => {
+            if (stades[i]) {
+              stades[i].visite = !!d.visite;
+              stades[i].annee = d.annee || null;
+            }
+          });
+        } catch(e) {
+          console.warn("Erreur chargement localStorage", e);
+        }
+      }
+
+      // Initialiser les stades avec valeurs par défaut
+      const stades = stadesDefaut.map(s => ({ ...s, visite: false, annee: null }));
+      // Charger l'état sauvegardé par-dessus
+      charger();
+
+      // --- 2. INITIALISATION CARTE ---
+      const map = L.map("map").setView([48.0, 8.0], 5);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      let markers = [];
+
+      // --- 3. ÉTAT DES FILTRES ---
+      let filterState = {
+        search: "",
+        pays: "",
+        championnat: "",
+        visitedOnly: false
+      };
+
+      // --- 4. UTILITAIRES ---
+      function removeAccents(str) {
+        return str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
+      }
+
+      function isFilterActive() {
+        return filterState.search || filterState.pays || filterState.championnat || filterState.visitedOnly;
+      }
+
+      function getFilteredIds() {
+        return stades
+          .map((s, i) => ({ ...s, id: i }))
+          .filter(s => {
+            if (filterState.visitedOnly && !s.visite) return false;
+            if (filterState.pays && s.pays !== filterState.pays) return false;
+            if (filterState.championnat && s.championnat !== filterState.championnat) return false;
+            if (filterState.search) {
+              const searchStr = `${s.nom} ${s.ville} ${s.pays}`.toLowerCase();
+              if (!removeAccents(searchStr).includes(removeAccents(filterState.search))) return false;
+            }
+            return true;
+          })
+          .map(s => s.id);
+      }
+
+      // --- 5. STATISTIQUES ---
+      function updateStats() {
+        const total = stades.length;
+        const visites = stades.filter(s => s.visite).length;
+        const pct = total > 0 ? Math.round(visites / total * 100) : 0;
+        document.getElementById("statVisites").textContent = visites;
+        document.getElementById("statTotal").textContent = total;
+        document.getElementById("statPct").textContent = pct + "%";
+      }
+
+      // --- 6. FILTRES ---
+      function initFilters() {
+        const paysSet = new Set(stades.map(s => s.pays).sort());
+        const champSet = new Set(stades.map(s => s.championnat).sort());
+
+        const paysSelect = document.getElementById("paysFilter");
+        const champSelect = document.getElementById("champFilter");
+
+        paysSet.forEach(p => {
+          const opt = document.createElement("option");
+          opt.value = p; opt.textContent = (drapeaux[p] || "🏳") + " " + p;
+          paysSelect.appendChild(opt);
+        });
+
+        champSet.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c; opt.textContent = c;
+          champSelect.appendChild(opt);
+        });
+
+        document.getElementById("searchInput").addEventListener("input", (e) => {
+          filterState.search = e.target.value.toLowerCase();
+          renderAll();
+        });
+
+        paysSelect.addEventListener("change", (e) => {
+          filterState.pays = e.target.value;
+          renderAll();
+        });
+
+        champSelect.addEventListener("change", (e) => {
+          filterState.championnat = e.target.value;
+          renderAll();
+        });
+
+        const btnVisited = document.getElementById("btnVisited");
+        btnVisited.addEventListener("click", () => {
+          filterState.visitedOnly = !filterState.visitedOnly;
+          btnVisited.textContent = filterState.visitedOnly ? "Afficher: Visités" : "Afficher: Tous";
+          btnVisited.style.backgroundColor = filterState.visitedOnly ? "#28a745" : "#007bff";
+          renderAll();
+        });
+
+        document.getElementById("btnReset").addEventListener("click", () => {
+          filterState = { search: "", pays: "", championnat: "", visitedOnly: false };
+          document.getElementById("searchInput").value = "";
+          paysSelect.value = "";
+          champSelect.value = "";
+          document.getElementById("btnVisited").textContent = "Afficher: Tous";
+          document.getElementById("btnVisited").style.backgroundColor = "#007bff";
+          renderAll();
+        });
+
+        // FIX selectAll : coche/décoche correctement les stades filtrés
+        document.getElementById("selectAll").addEventListener("change", (e) => {
+          const checked = e.target.checked;
+          const filteredIds = getFilteredIds();
+          filteredIds.forEach(id => {
+            stades[id].visite = checked;
+            if (checked && !stades[id].annee) stades[id].annee = new Date().getFullYear();
+            updateMarkerVisibility(id);
+          });
+          sauvegarder();
+          updateStats();
+          renderTableBody();
+        });
+      }
+
+      // --- 7. CARTE ---
+      function initMarkers() {
+        stades.forEach((s, i) => {
+          const marker = L.marker([s.lat, s.lng])
+            .bindPopup(`<b>${s.nom}</b><br>${s.ville} (${s.pays})<br><i>${s.championnat}</i>`);
+          markers.push({ id: i, marker });
+          // Ne pas ajouter à la carte maintenant, updateMarkerVisibility s'en charge
+        });
+        // Appliquer la visibilité initiale
+        stades.forEach((_, i) => updateMarkerVisibility(i));
+      }
+
+      function updateMarkerVisibility(id) {
+        const item = markers.find(m => m.id === id);
+        if (!item) return;
+        if (stades[id].visite) {
+          if (!map.hasLayer(item.marker)) item.marker.addTo(map);
+        } else {
+          if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
+        }
+      }
+
+      // --- 8. RENDU GLOBAL ---
+      function renderAll() {
+        renderTableBody();
+
+        // Synchroniser la carte avec filtres + état visité
+        const allowedIds = getFilteredIds();
+        markers.forEach(m => {
+          if (stades[m.id].visite && allowedIds.includes(m.id)) {
+            if (!map.hasLayer(m.marker)) m.marker.addTo(map);
+          } else {
+            if (map.hasLayer(m.marker)) map.removeLayer(m.marker);
+          }
+        });
+      }
+
+      // --- 9. RENDU TABLEAU ---
+      function renderTableBody() {
+        const tbody = document.querySelector("#stadesTable tbody");
+        tbody.innerHTML = "";
+
+        const filteredIds = getFilteredIds();
+        if (filteredIds.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='7' style='text-align:center'>Aucun stade ne correspond aux filtres.</td></tr>";
+          return;
+        }
+
+        // Groupement Pays -> Championnat
+        const grouped = {};
+        filteredIds.forEach(id => {
+          const s = stades[id];
+          if (!grouped[s.pays]) grouped[s.pays] = {};
+          if (!grouped[s.pays][s.championnat]) grouped[s.pays][s.championnat] = [];
+          grouped[s.pays][s.championnat].push(id);
+        });
+
+        // FIX : déplier automatiquement si un filtre est actif
+        const autoExpand = isFilterActive();
+
+        Object.keys(grouped).sort().forEach(pays => {
+          const flag = drapeaux[pays] || "🏳";
+          const trCountry = document.createElement("tr");
+          trCountry.className = "group-header";
+          let expanded = autoExpand;
+          trCountry.innerHTML = `<td colspan='7'>${flag} ${pays} <span style='float:right; font-size:0.8em'>${expanded ? "▼" : "▶"}</span></td>`;
+
+          trCountry.addEventListener("click", () => {
+            expanded = !expanded;
+            const arrow = trCountry.querySelector("span");
+            arrow.textContent = expanded ? "▼" : "▶";
+            let next = trCountry.nextElementSibling;
+            while (next && !next.classList.contains("group-header")) {
+              if (expanded) {
+                next.classList.remove("hidden");
+              } else {
+                next.classList.add("hidden");
+              }
+              next = next.nextElementSibling;
+            }
+          });
+
+          tbody.appendChild(trCountry);
+
+          Object.keys(grouped[pays]).sort().forEach(champ => {
+            const trChamp = document.createElement("tr");
+            trChamp.className = "sub-header" + (autoExpand ? "" : " hidden");
+            trChamp.innerHTML = `<td colspan='7' style='padding-left:40px'>⚽ ${champ}</td>`;
+            tbody.appendChild(trChamp);
+
+            grouped[pays][champ].forEach(id => {
+              const s = stades[id];
+              const tr = document.createElement("tr");
+              tr.className = "data-row" + (autoExpand ? "" : " hidden");
+
+              tr.innerHTML = `
+                <td><input type="checkbox" class="cb-visite" data-id="${id}" ${s.visite ? 'checked' : ''}></td>
+                <td><strong>${s.nom}</strong></td>
+                <td>${s.ville}</td>
+                <td>${flag} ${s.pays}</td>
+                <td>${s.championnat}</td>
+                <td>
+                  <input type="number" class="input-annee" data-id="${id}"
+                    value="${s.annee || ''}"
+                    min="1900" max="${new Date().getFullYear()}"
+                    style="width:65px" placeholder="…">
+                </td>
+                <td>${s.visite ? '✅' : '❌'}</td>
+              `;
+
+              // FIX clic ligne : on cible correctement la ligne sans conflit avec les inputs
+              tr.addEventListener("click", (e) => {
+                if (e.target.closest("input")) return; // ignorer les clics sur inputs
+                map.flyTo([s.lat, s.lng], 13);
+                const markerObj = markers.find(m => m.id === id);
+                if (markerObj) {
+                  if (!map.hasLayer(markerObj.marker)) markerObj.marker.addTo(map);
+                  markerObj.marker.openPopup();
+                }
+              });
+
+              // Checkbox visité
+              tr.querySelector(".cb-visite").addEventListener("change", (e) => {
+                stades[id].visite = e.target.checked;
+                if (e.target.checked && !stades[id].annee) {
+                  stades[id].annee = new Date().getFullYear();
+                }
+                updateMarkerVisibility(id);
+                sauvegarder();
+                updateStats();
+                renderTableBody();
+              });
+
+              // Input année avec validation
+              tr.querySelector(".input-annee").addEventListener("change", (e) => {
+                const val = parseInt(e.target.value);
+                const currentYear = new Date().getFullYear();
+                if (!isNaN(val) && val >= 1900 && val <= currentYear) {
+                  stades[id].annee = val;
+                  e.target.style.borderColor = "";
+                } else if (e.target.value === "") {
+                  stades[id].annee = null;
+                  e.target.style.borderColor = "";
+                } else {
+                  e.target.style.borderColor = "red";
+                  e.target.title = `Année invalide (1900-${currentYear})`;
+                  return; // Ne pas sauvegarder si invalide
+                }
+                sauvegarder();
+              });
+
+              tbody.appendChild(tr);
+            });
+          });
+        });
+      }
+
+      // --- 10. LANCEMENT ---
+      initFilters();
+      initMarkers();
+      updateStats();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
