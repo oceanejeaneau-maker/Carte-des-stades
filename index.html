@@ -194,7 +194,7 @@
 const STORAGE_KEY  = 'stades_europe_v4';
 const CURRENT_YEAR = new Date().getFullYear();
 
-const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE' };
+const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU' };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
@@ -210,6 +210,14 @@ const CHAMP_COLORS = {
   'Super League Suisse':'#c0392b',
   'Super League Grèce':'#1abc9c',
   'League of Ireland':'#2ecc71',
+  'Süper Lig':'#e74c3c',
+  'SuperLiga Serbie':'#c0392b',
+  'HNL Croatie':'#3498db',
+  'Liga 1 Roumanie':'#f39c12',
+  'Ekstraklasa':'#e67e22',
+  'Fortuna Liga':'#2980b9',
+  'Bundesliga Autriche':'#8e44ad',
+  'OTP Bank Liga':'#27ae60',
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
 
@@ -356,7 +364,7 @@ const STADES_DATA = [
   {nom:'Groupama Stadium',club:'Olympique Lyonnais',ville:'Lyon',pays:'France',championnat:'Ligue 1',lat:45.7657,lng:4.9828},
   {nom:'Allianz Riviera',club:'OGC Nice',ville:'Nice',pays:'France',championnat:'Ligue 1',lat:43.705,lng:7.192},
   {nom:'Roazhon Park',club:'Stade Rennais',ville:'Rennes',pays:'France',championnat:'Ligue 1',lat:48.1072,lng:-1.7114},
-  {nom:'Stade Charléty',club:'Paris FC',ville:'Paris',pays:'France',championnat:'Ligue 1',lat:48.8175,lng:2.3494},
+  {nom:'Stade Jean-Bouin',club:'Paris FC',ville:'Paris',pays:'France',championnat:'Ligue 1',lat:48.8428,lng:2.2533},
   {nom:'Stade Bollaert-Delelis',club:'RC Lens',ville:'Lens',pays:'France',championnat:'Ligue 1',lat:50.4319,lng:2.8296},
   {nom:"Stade de l'Abbé-Deschamps",club:'AJ Auxerre',ville:'Auxerre',pays:'France',championnat:'Ligue 1',lat:47.7986,lng:3.5683},
   {nom:'Stadium de Toulouse',club:'Toulouse FC',ville:'Toulouse',pays:'France',championnat:'Ligue 1',lat:43.5832,lng:1.434},
@@ -480,6 +488,37 @@ const STADES_DATA = [
   {nom:'UCD Bowl',club:'UCD AFC',ville:'Dublin',pays:'Irlande',championnat:'League of Ireland',lat:53.3078,lng:-6.2238},
   // SUISSE
   {nom:'Stade de Suisse',club:'BSC Young Boys',ville:'Berne',pays:'Suisse',championnat:'Super League Suisse',lat:46.963,lng:7.4646},
+  // TURQUIE
+  {nom:"Rams Park",club:"Galatasaray",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0765,lng:28.9834},
+  {nom:"Sukru Saracoglu Stadium",club:"Fenerbahce",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:40.9938,lng:29.0346},
+  {nom:"Vodafone Park",club:"Besiktas",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0388,lng:29.0054},
+  {nom:"Senol Gunes Stadyumu",club:"Trabzonspor",ville:"Trabzon",pays:"Turquie",championnat:"Süper Lig",lat:41.0018,lng:39.7494},
+  {nom:"Yeni Adana Stadyumu",club:"Adana Demirspor",ville:"Adana",pays:"Turquie",championnat:"Süper Lig",lat:37.0086,lng:35.3289},
+  {nom:"Konya Buyuksehir Stadyumu",club:"Konyaspor",ville:"Konya",pays:"Turquie",championnat:"Süper Lig",lat:37.8674,lng:32.4938},
+  {nom:"Kalyon Stadyumu",club:"Sivasspor",ville:"Sivas",pays:"Turquie",championnat:"Süper Lig",lat:39.7477,lng:37.0179},
+  // SERBIE
+  {nom:"Stadion Rajko Mitic",club:"Etoile Rouge de Belgrade",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7833,lng:20.4625},
+  {nom:"Stadion FK Partizan",club:"FK Partizan",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7864,lng:20.4478},
+  // CROATIE
+  {nom:"Stadion Maksimir",club:"Dinamo Zagreb",ville:"Zagreb",pays:"Croatie",championnat:"HNL Croatie",lat:45.8119,lng:16.0119},
+  {nom:"Stadion Poljud",club:"Hajduk Split",ville:"Split",pays:"Croatie",championnat:"HNL Croatie",lat:43.5228,lng:16.4344},
+  // ROUMANIE
+  {nom:"Arena Nationala",club:"Steaua Bucarest",ville:"Bucarest",pays:"Roumanie",championnat:"Liga 1 Roumanie",lat:44.4386,lng:26.1225},
+  {nom:"Stadionul Ghencea",club:"FCSB",ville:"Bucarest",pays:"Roumanie",championnat:"Liga 1 Roumanie",lat:44.4189,lng:26.0553},
+  // POLOGNE
+  {nom:"Stadion Narodowy",club:"Equipe nationale Pologne",ville:"Varsovie",pays:"Pologne",championnat:"Ekstraklasa",lat:52.2397,lng:21.0458},
+  {nom:"Stadion Wojska Polskiego",club:"Legia Varsovie",ville:"Varsovie",pays:"Pologne",championnat:"Ekstraklasa",lat:52.2192,lng:21.0336},
+  {nom:"Stadion Lecha Poznan",club:"Lech Poznan",ville:"Poznan",pays:"Pologne",championnat:"Ekstraklasa",lat:52.3896,lng:16.8531},
+  // TCHEQUE
+  {nom:"Doosan Arena",club:"FC Viktoria Plzen",ville:"Plzen",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.7475,lng:13.3875},
+  {nom:"Stadion Eden",club:"SK Slavia Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0675,lng:14.4919},
+  {nom:"Generali Arena",club:"AC Sparta Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0989,lng:14.4003},
+  // AUTRICHE
+  {nom:"Ernst-Happel-Stadion",club:"Equipe nationale Autriche",ville:"Vienne",pays:"Autriche",championnat:"Bundesliga Autriche",lat:48.2083,lng:16.4178},
+  {nom:"Red Bull Arena Salzburg",club:"RB Salzbourg",ville:"Salzbourg",pays:"Autriche",championnat:"Bundesliga Autriche",lat:47.8219,lng:13.0433},
+  // HONGRIE
+  {nom:"Puskas Arena",club:"Equipe nationale Hongrie",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5014,lng:19.0636},
+  {nom:"Groupama Arena",club:"Ferencvaros",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.4561,lng:19.0986},
 ];
 
 // ════════════════════════════════════
@@ -760,7 +799,6 @@ function grouper(ids) {
 
 function makeGroupActions() { return document.createDocumentFragment(); }
 
-// Mémoriser l'état d'expansion des groupes pays
 const expandedState = {};
 
 function renderTableBody(ids) {
@@ -772,7 +810,6 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    // Garder l'état précédent si existant, sinon utiliser autoExpand
     let expanded = (pays in expandedState) ? expandedState[pays] : autoExpand;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
