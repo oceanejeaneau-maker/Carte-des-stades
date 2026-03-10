@@ -194,7 +194,7 @@
 const STORAGE_KEY  = 'stades_europe_v4';
 const CURRENT_YEAR = new Date().getFullYear();
 
-const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU' };
+const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE' };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
@@ -218,6 +218,12 @@ const CHAMP_COLORS = {
   'Fortuna Liga':'#2980b9',
   'Bundesliga Autriche':'#8e44ad',
   'OTP Bank Liga':'#27ae60',
+  'Serie A Bresil':'#009c3b',
+  'Liga Profesional':'#74acdf',
+  'Primera Division Uruguay':'#001489',
+  'Primera Division Chili':'#d52b1e',
+  'Liga BetPlay':'#fcd116',
+  'Liga 1 Perou':'#d91023',
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
 
@@ -396,6 +402,8 @@ const STADES_DATA = [
   // National
   {nom:'Stade du Hainaut',club:'Valenciennes FC',ville:'Valenciennes',pays:'France',championnat:'National',lat:50.3489,lng:3.5287},
   {nom:'Matmut Atlantique',club:'Girondins de Bordeaux',ville:'Bordeaux',pays:'France',championnat:'National',lat:44.8909,lng:-0.5645},
+  // Stade Jean-Bouin (Paris FC — Ligue 1)
+  {nom:'Stade Jean-Bouin',club:'Paris FC',ville:'Paris',pays:'France',championnat:'Ligue 1',lat:48.8428,lng:2.2533},
   // ITALIE — Serie A 2025-2026
   {nom:'San Siro',club:'AC Milan / Inter Milan',ville:'Milan',pays:'Italie',championnat:'Serie A',lat:45.4781,lng:9.124},
   {nom:'Stadio Olimpico',club:'AS Roma / SS Lazio',ville:'Rome',pays:'Italie',championnat:'Serie A',lat:41.9339,lng:12.4544},
@@ -517,6 +525,37 @@ const STADES_DATA = [
   // HONGRIE
   {nom:"Puskas Arena",club:"Equipe nationale Hongrie",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5014,lng:19.0636},
   {nom:"Groupama Arena",club:"Ferencvaros",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.4561,lng:19.0986},
+  // BRESIL
+  {nom:"Estadio do Maracana",club:"Flamengo / Fluminense",ville:"Rio de Janeiro",pays:"Bresil",championnat:"Serie A Bresil",lat:-22.9121,lng:-43.2302},
+  {nom:"Neo Quimica Arena",club:"Corinthians",ville:"Sao Paulo",pays:"Bresil",championnat:"Serie A Bresil",lat:-23.5453,lng:-46.4740},
+  {nom:"Allianz Parque",club:"Palmeiras",ville:"Sao Paulo",pays:"Bresil",championnat:"Serie A Bresil",lat:-23.5273,lng:-46.6786},
+  {nom:"Estadio Morumbi",club:"Sao Paulo FC",ville:"Sao Paulo",pays:"Bresil",championnat:"Serie A Bresil",lat:-23.5996,lng:-46.7196},
+  {nom:"Arena do Gremio",club:"Gremio",ville:"Porto Alegre",pays:"Bresil",championnat:"Serie A Bresil",lat:-29.9787,lng:-51.1880},
+  {nom:"Estadio Beira-Rio",club:"Internacional",ville:"Porto Alegre",pays:"Bresil",championnat:"Serie A Bresil",lat:-30.0653,lng:-51.2353},
+  {nom:"Arena MRV",club:"Atletico Mineiro",ville:"Belo Horizonte",pays:"Bresil",championnat:"Serie A Bresil",lat:-19.9208,lng:-43.9244},
+  {nom:"Estadio Vila Belmiro",club:"Santos FC",ville:"Santos",pays:"Bresil",championnat:"Serie A Bresil",lat:-23.9609,lng:-46.3336},
+  {nom:"Estadio de Sao Januario",club:"Vasco da Gama",ville:"Rio de Janeiro",pays:"Bresil",championnat:"Serie A Bresil",lat:-22.8886,lng:-43.2783},
+  // ARGENTINE
+  {nom:"Estadio Alberto J. Armando",club:"Boca Juniors",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional",lat:-34.6355,lng:-58.3644},
+  {nom:"Estadio Monumental",club:"River Plate",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional",lat:-34.5453,lng:-58.4497},
+  {nom:"Estadio Presidente Peron",club:"Racing Club",ville:"Avellaneda",pays:"Argentine",championnat:"Liga Profesional",lat:-34.6614,lng:-58.3669},
+  {nom:"Estadio Libertadores de America",club:"Independiente",ville:"Avellaneda",pays:"Argentine",championnat:"Liga Profesional",lat:-34.6644,lng:-58.3736},
+  {nom:"Estadio Pedro Bidegain",club:"San Lorenzo",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional",lat:-34.6432,lng:-58.4378},
+  {nom:"Estadio Jorge Luis Hirschi",club:"Estudiantes de La Plata",ville:"La Plata",pays:"Argentine",championnat:"Liga Profesional",lat:-34.9108,lng:-57.9986},
+  {nom:"Estadio Jose Amalfitani",club:"Velez Sarsfield",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional",lat:-34.6347,lng:-58.5197},
+  // URUGUAY
+  {nom:"Estadio Centenario",club:"Nacional / Penarol",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8939,lng:-56.1536},
+  {nom:"Estadio Gran Parque Central",club:"Nacional",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.9003,lng:-56.1617},
+  {nom:"Estadio Campeon del Siglo",club:"Penarol",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8347,lng:-56.0736},
+  // CHILI
+  {nom:"Estadio Monumental David Arellano",club:"Colo-Colo",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.4911,lng:-70.6147},
+  {nom:"Estadio Nacional Julio Martinez Pradanos",club:"Universidad de Chile",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.4644,lng:-70.6097},
+  // COLOMBIE
+  {nom:"Estadio El Campin",club:"Millonarios / Santa Fe",ville:"Bogota",pays:"Colombie",championnat:"Liga BetPlay",lat:4.6473,lng:-74.0773},
+  {nom:"Estadio Atanasio Girardot",club:"Atletico Nacional",ville:"Medellin",pays:"Colombie",championnat:"Liga BetPlay",lat:6.2572,lng:-75.5908},
+  // PEROU
+  {nom:"Estadio Nacional del Peru",club:"Alianza Lima / Universitario",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.0647,lng:-77.0333},
+  {nom:"Estadio Alejandro Villanueva",club:"Alianza Lima",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.1058,lng:-77.0197},
 ];
 
 // ════════════════════════════════════
