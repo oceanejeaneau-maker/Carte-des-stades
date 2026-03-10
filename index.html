@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tour des Stades — Europe</title>
+  <title>Tour des Stades — Monde</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a56db">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Carte des Stades">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -202,9 +207,102 @@
     .match-stats-bar { display: flex; flex-wrap: wrap; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 0 20px; gap: 0; }
     .match-stat-item { display: flex; flex-direction: column; padding: 14px 24px 14px 0; margin-right: 24px; border-right: 1px solid var(--border); }
     .match-stat-item:last-child { border-right: none; }
+
+    /* ── PAGE CONNEXION ── */
+    .auth-overlay {
+      position: fixed; inset: 0; background: #0d1117;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 0;
+    }
+    .auth-overlay.hidden { display: none; }
+    .auth-box {
+      background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+      padding: 40px 36px; width: 100%; max-width: 380px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .auth-logo { text-align: center; margin-bottom: 8px; }
+    .auth-logo .logo-big { font-size: 3rem; }
+    .auth-logo h1 { font-family: var(--font-disp); font-size: 2rem; color: #e6edf3; letter-spacing: .06em; margin-top: 6px; }
+    .auth-logo p { color: #8b949e; font-size: 13px; margin-top: 4px; }
+    .auth-tabs { display: flex; gap: 0; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; }
+    .auth-tab { flex: 1; padding: 9px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 500; color: #8b949e; background: #0d1117; transition: all .15s; }
+    .auth-tab.active { background: #21262d; color: #e6edf3; }
+    .auth-field { display: flex; flex-direction: column; gap: 6px; }
+    .auth-field label { font-size: 12px; color: #8b949e; font-weight: 500; }
+    .auth-field input { background: #0d1117; border: 1px solid #30363d; color: #e6edf3; border-radius: 8px; padding: 10px 14px; font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color .15s; }
+    .auth-field input:focus { border-color: #58a6ff; box-shadow: 0 0 0 3px rgba(88,166,255,.15); }
+    .auth-field input::placeholder { color: #484f58; }
+    .btn-auth { padding: 11px; border-radius: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; background: #1a56db; color: #fff; width: 100%; }
+    .btn-auth:hover { background: #0550ae; }
+    .btn-google { background: #fff; color: #24292f; border: 1px solid #d0d7de; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-google:hover { background: #f6f8fa; }
+    .auth-sep { display: flex; align-items: center; gap: 12px; color: #484f58; font-size: 12px; }
+    .auth-sep::before, .auth-sep::after { content: ''; flex: 1; height: 1px; background: #30363d; }
+    .auth-error { background: #3d1c1c; border: 1px solid #c0392b; border-radius: 8px; padding: 10px 14px; color: #f85149; font-size: 13px; display: none; }
+    .auth-error.visible { display: block; }
+
+    /* ── TOPBAR USER ── */
+    .topbar-user { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: #1a56db; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; }
+    .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .user-name { font-size: 13px; color: #8b949e; white-space: nowrap; }
+    .btn-logout { background: none; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 5px 10px; font-size: 12px; cursor: pointer; font-family: var(--font-body); transition: all .15s; white-space: nowrap; }
+    .btn-logout:hover { border-color: #c0392b; color: #f85149; }
+
+    /* ── PAGE CLASSEMENT ── */
+    .page-classement { padding: 28px; gap: 20px; }
+    .leaderboard { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .leaderboard-row { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid #eaeef2; transition: background .1s; }
+    .leaderboard-row:last-child { border-bottom: none; }
+    .leaderboard-row:hover { background: #f0f6ff; }
+    .leaderboard-rank { font-family: var(--font-disp); font-size: 1.4rem; color: var(--muted); width: 36px; text-align: center; flex-shrink: 0; }
+    .leaderboard-rank.gold { color: #f1c40f; }
+    .leaderboard-rank.silver { color: #95a5a6; }
+    .leaderboard-rank.bronze { color: #cd7f32; }
+    .leaderboard-avatar { width: 36px; height: 36px; border-radius: 50%; background: #1a56db; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; }
+    .leaderboard-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .leaderboard-info { flex: 1; }
+    .leaderboard-name { font-weight: 600; font-size: 14px; color: var(--text); }
+    .leaderboard-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .leaderboard-score { font-family: var(--font-disp); font-size: 1.6rem; color: var(--accent2); letter-spacing: .02em; }
+    .leaderboard-me { background: #f0f6ff !important; border-left: 3px solid var(--accent2); }
   </style>
 </head>
 <body>
+
+<!-- PAGE CONNEXION -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="logo-big">⚽</div>
+      <h1>Tour des Stades</h1>
+      <p>Connecte-toi pour accéder à ta carte</p>
+    </div>
+    <div id="authError" class="auth-error"></div>
+    <button class="btn-auth btn-google" id="btnGoogle">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 6.294C4.672 4.169 6.656 3.58 9 3.58z"/></svg>
+      Continuer avec Google
+    </button>
+    <div class="auth-sep">ou</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tabLogin">Connexion</div>
+      <div class="auth-tab" id="tabRegister">Inscription</div>
+    </div>
+    <div class="auth-field">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="ton@email.com">
+    </div>
+    <div class="auth-field">
+      <label>Mot de passe</label>
+      <input type="password" id="authPassword" placeholder="••••••••">
+    </div>
+    <div class="auth-field" id="fieldName" style="display:none">
+      <label>Pseudo</label>
+      <input type="text" id="authName" placeholder="Ton prénom ou pseudo">
+    </div>
+    <button class="btn-auth" id="btnAuthSubmit">Se connecter</button>
+  </div>
+</div>
 
 <div class="app-layout">
 
@@ -224,6 +322,14 @@
       <div class="nav-item" data-page="matchs">
         <span class="nav-icon">🏆</span> Matchs vus
       </div>
+      <div class="nav-item" data-page="classement">
+        <span class="nav-icon">🥇</span> Classement
+      </div>
+    </div>
+    <div class="topbar-user">
+      <span class="user-name" id="userName"></span>
+      <div class="user-avatar" id="userAvatar"></div>
+      <button class="btn-logout" id="btnLogout">Déconnexion</button>
     </div>
   </nav>
 
@@ -337,8 +443,173 @@
       <div class="match-list" id="matchList"></div>
     </div>
 
+    <!-- PAGE CLASSEMENT -->
+    <div class="page page-classement" id="page-classement">
+      <div class="page-header">
+        <h2>🥇 Classement mondial</h2>
+        <p>Les explorateurs de stades les plus actifs</p>
+      </div>
+      <div class="match-stats-bar" style="margin-bottom:0">
+        <div class="match-stat-item"><span class="stat-label">Joueurs</span><span class="stat-value" id="classNbJoueurs">0</span></div>
+        <div class="match-stat-item"><span class="stat-label">Ton rang</span><span class="stat-value" id="classMonRang">—</span></div>
+      </div>
+      <div class="leaderboard" id="leaderboard">
+        <div style="text-align:center;padding:32px;color:var(--muted)">Chargement…</div>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<script type="module">
+// ════════════════════════════════════
+// FIREBASE CONFIG — remplace par tes clés Firebase !
+// ════════════════════════════════════
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, onSnapshot, orderBy, query, limit } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCZS8SW1RHMdrau1cODnmKN49TuL6NyaYM",
+  authDomain: "carte-des-stades-9b6d7.firebaseapp.com",
+  projectId: "carte-des-stades-9b6d7",
+  storageBucket: "carte-des-stades-9b6d7.firebasestorage.app",
+  messagingSenderId: "815104486735",
+  appId: "1:815104486735:web:7ec27337e1dc36deb2693a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
+let currentUser = null;
+
+// ── Auth UI ──────────────────────────────
+const authOverlay = document.getElementById('authOverlay');
+const authError = document.getElementById('authError');
+let isLogin = true;
+
+document.getElementById('tabLogin').addEventListener('click', () => {
+  isLogin = true;
+  document.getElementById('tabLogin').classList.add('active');
+  document.getElementById('tabRegister').classList.remove('active');
+  document.getElementById('btnAuthSubmit').textContent = 'Se connecter';
+  document.getElementById('fieldName').style.display = 'none';
+  authError.classList.remove('visible');
+});
+document.getElementById('tabRegister').addEventListener('click', () => {
+  isLogin = false;
+  document.getElementById('tabRegister').classList.add('active');
+  document.getElementById('tabLogin').classList.remove('active');
+  document.getElementById('btnAuthSubmit').textContent = "S'inscrire";
+  document.getElementById('fieldName').style.display = 'flex';
+  authError.classList.remove('visible');
+});
+
+function showError(msg) { authError.textContent = msg; authError.classList.add('visible'); }
+
+document.getElementById('btnGoogle').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, googleProvider); }
+  catch(e) { showError('Erreur Google : ' + e.message); }
+});
+
+document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const name = document.getElementById('authName').value.trim();
+  if (!email || !password) { showError('Remplis email et mot de passe.'); return; }
+  try {
+    if (isLogin) {
+      await signInWithEmailAndPassword(auth, email, password);
+    } else {
+      if (!name) { showError('Entre un pseudo.'); return; }
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+    }
+  } catch(e) {
+    const msgs = { 'auth/user-not-found':'Aucun compte avec cet email.', 'auth/wrong-password':'Mot de passe incorrect.', 'auth/email-already-in-use':'Email déjà utilisé.', 'auth/weak-password':'Mot de passe trop court (6 caractères min).' };
+    showError(msgs[e.code] || e.message);
+  }
+});
+
+document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
+
+// ── Auth state ────────────────────────────
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    currentUser = user;
+    authOverlay.classList.add('hidden');
+    const name = user.displayName || user.email.split('@')[0];
+    document.getElementById('userName').textContent = name;
+    const av = document.getElementById('userAvatar');
+    if (user.photoURL) { av.innerHTML = `<img src="${user.photoURL}">`; }
+    else { av.textContent = name[0].toUpperCase(); }
+    await chargerDepuisFirestore();
+    updateStats();
+    renderAll();
+    renderMatchs();
+  } else {
+    currentUser = null;
+    authOverlay.classList.remove('hidden');
+  }
+});
+
+// ── Firestore sauvegarde ──────────────────
+async function sauvegarder() {
+  if (!currentUser) return;
+  const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
+  const visites = stades.filter(s => s.visite).length;
+  await setDoc(doc(db, 'users', currentUser.uid), {
+    stades: data, matchs, notes,
+    displayName: currentUser.displayName || currentUser.email.split('@')[0],
+    photoURL: currentUser.photoURL || null,
+    visites, updatedAt: Date.now()
+  });
+}
+
+async function chargerDepuisFirestore() {
+  if (!currentUser) return;
+  const snap = await getDoc(doc(db, 'users', currentUser.uid));
+  if (snap.exists()) {
+    const d = snap.data();
+    if (d.stades) d.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } });
+    if (d.matchs) matchs.splice(0, matchs.length, ...d.matchs);
+    if (d.notes) Object.assign(notes, d.notes);
+  }
+}
+
+// ── Classement ────────────────────────────
+async function chargerClassement() {
+  const q = query(collection(db, 'users'), orderBy('visites', 'desc'), limit(50));
+  const snap = await getDocs(q);
+  const lb = document.getElementById('leaderboard');
+  const rows = [];
+  snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+  document.getElementById('classNbJoueurs').textContent = rows.length;
+  const monRang = rows.findIndex(r => r.id === currentUser?.uid);
+  document.getElementById('classMonRang').textContent = monRang >= 0 ? `#${monRang + 1}` : '—';
+  if (!rows.length) { lb.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted)">Aucun joueur pour l\'instant.</div>'; return; }
+  lb.innerHTML = rows.map((r, i) => {
+    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+    const rankIcon = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1;
+    const isMe = r.id === currentUser?.uid;
+    const av = r.photoURL ? `<img src="${r.photoURL}">` : (r.displayName || '?')[0].toUpperCase();
+    return `<div class="leaderboard-row ${isMe ? 'leaderboard-me' : ''}">
+      <div class="leaderboard-rank ${rankClass}">${rankIcon}</div>
+      <div class="leaderboard-avatar">${av}</div>
+      <div class="leaderboard-info">
+        <div class="leaderboard-name">${r.displayName || 'Anonyme'}${isMe ? ' <span style="color:var(--accent2);font-size:11px">(toi)</span>' : ''}</div>
+        <div class="leaderboard-sub">${r.matchs?.length || 0} matchs vus</div>
+      </div>
+      <div class="leaderboard-score">${r.visites || 0}<span style="font-size:12px;color:var(--muted);font-family:var(--font-body);margin-left:4px">stades</span></div>
+    </div>`;
+  }).join('');
+}
+
+// Exposer les fonctions au scope global pour le reste du script
+window._firebase = { sauvegarder, chargerClassement };
+</script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -346,8 +617,10 @@
 <script>
 'use strict';
 
-const STORAGE_KEY  = 'stades_europe_v4';
 const CURRENT_YEAR = new Date().getFullYear();
+
+function sauvegarder() { if (window._firebase) window._firebase.sauvegarder(); }
+function charger() {} // chargement géré par Firebase
 
 const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA' };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
@@ -744,16 +1017,6 @@ const STADES_DATA = [
 // STATE
 // ════════════════════════════════════
 const stades = STADES_DATA.map(s => ({...s, visite:false, annee:null}));
-
-function sauvegarder() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stades.map(s=>({visite:s.visite,annee:s.annee??null})))); } catch {}
-}
-function charger() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY); if (!raw) return;
-    JSON.parse(raw).forEach((d,i) => { if (!stades[i]) return; stades[i].visite=Boolean(d.visite); stades[i].annee=d.annee??null; });
-  } catch {}
-}
 charger();
 
 // ════════════════════════════════════
@@ -1109,6 +1372,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
     document.getElementById('page-' + page).classList.add('active');
     if (page === 'notes') renderNotes();
     if (page === 'matchs') renderMatchs();
+    if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
   });
 });
 
@@ -1119,7 +1383,7 @@ const NOTES_KEY = 'stades_notes_v1';
 let notes = {};
 try { notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '{}'); } catch {}
 
-function saveNotes() { try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch {} }
+function saveNotes() { sauvegarder(); }
 
 function renderNotes() {
   const search = document.getElementById('notesSearch').value.toLowerCase();
@@ -1168,7 +1432,7 @@ const MATCHS_KEY = 'stades_matchs_v1';
 let matchs = [];
 try { matchs = JSON.parse(localStorage.getItem(MATCHS_KEY) || '[]'); } catch {}
 
-function saveMatchs() { try { localStorage.setItem(MATCHS_KEY, JSON.stringify(matchs)); } catch {} }
+function saveMatchs() { sauvegarder(); }
 
 // Remplir le select stade et championnat
 const matchStadeEl = document.getElementById('matchStade');
