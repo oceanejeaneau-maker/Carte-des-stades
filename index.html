@@ -194,7 +194,7 @@
 const STORAGE_KEY  = 'stades_europe_v4';
 const CURRENT_YEAR = new Date().getFullYear();
 
-const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE' };
+const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA' };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
@@ -224,6 +224,9 @@ const CHAMP_COLORS = {
   'Primera Division Chili':'#d52b1e',
   'Liga BetPlay':'#fcd116',
   'Liga 1 Perou':'#d91023',
+  'MLS':'#002855',
+  'Liga MX':'#006847',
+  'MLS Canada':'#d52b1e',
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
 
@@ -556,6 +559,30 @@ const STADES_DATA = [
   // PEROU
   {nom:"Estadio Nacional del Peru",club:"Alianza Lima / Universitario",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.0647,lng:-77.0333},
   {nom:"Estadio Alejandro Villanueva",club:"Alianza Lima",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.1058,lng:-77.0197},
+  // USA — MLS
+  {nom:"Dignity Health Sports Park",club:"LA Galaxy",ville:"Los Angeles",pays:"USA",championnat:"MLS",lat:33.8644,lng:-118.2611},
+  {nom:"BMO Stadium",club:"LAFC",ville:"Los Angeles",pays:"USA",championnat:"MLS",lat:34.0131,lng:-118.2846},
+  {nom:"Yankee Stadium",club:"NYC FC",ville:"New York",pays:"USA",championnat:"MLS",lat:40.8296,lng:-73.9262},
+  {nom:"Red Bull Arena",club:"NY Red Bulls",ville:"Harrison",pays:"USA",championnat:"MLS",lat:40.7369,lng:-74.1502},
+  {nom:"Lumen Field",club:"Seattle Sounders",ville:"Seattle",pays:"USA",championnat:"MLS",lat:47.5952,lng:-122.3316},
+  {nom:"Providence Park",club:"Portland Timbers",ville:"Portland",pays:"USA",championnat:"MLS",lat:45.5212,lng:-122.6916},
+  {nom:"Mercedes-Benz Stadium",club:"Atlanta United",ville:"Atlanta",pays:"USA",championnat:"MLS",lat:33.7554,lng:-84.4010},
+  {nom:"Chase Stadium",club:"Inter Miami",ville:"Fort Lauderdale",pays:"USA",championnat:"MLS",lat:26.1917,lng:-80.1628},
+  {nom:"Soldier Field",club:"Chicago Fire",ville:"Chicago",pays:"USA",championnat:"MLS",lat:41.8623,lng:-87.6167},
+  {nom:"Subaru Park",club:"Philadelphia Union",ville:"Chester",pays:"USA",championnat:"MLS",lat:39.8329,lng:-75.3788},
+  // MEXIQUE — Liga MX
+  {nom:"Estadio Azteca",club:"Club America / Cruz Azul",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3029,lng:-99.1505},
+  {nom:"Estadio Akron",club:"Chivas Guadalajara",ville:"Guadalajara",pays:"Mexique",championnat:"Liga MX",lat:20.6861,lng:-103.4657},
+  {nom:"Estadio Ciudad de los Deportes",club:"Cruz Azul",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3794,lng:-99.1581},
+  {nom:"Estadio Olimpico Universitario",club:"Pumas UNAM",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3225,lng:-99.1858},
+  {nom:"Estadio Universitario",club:"Tigres UANL",ville:"Monterrey",pays:"Mexique",championnat:"Liga MX",lat:25.6869,lng:-100.3189},
+  {nom:"Estadio BBVA",club:"Monterrey",ville:"Monterrey",pays:"Mexique",championnat:"Liga MX",lat:25.6694,lng:-100.2436},
+  {nom:"Estadio Nemesio Diez",club:"Toluca",ville:"Toluca",pays:"Mexique",championnat:"Liga MX",lat:19.2897,lng:-99.6536},
+  {nom:"Estadio Corona",club:"Santos Laguna",ville:"Torreon",pays:"Mexique",championnat:"Liga MX",lat:25.5494,lng:-103.4678},
+  // CANADA — MLS
+  {nom:"BMO Field",club:"Toronto FC",ville:"Toronto",pays:"Canada",championnat:"MLS Canada",lat:43.6333,lng:-79.4186},
+  {nom:"BC Place",club:"Vancouver Whitecaps",ville:"Vancouver",pays:"Canada",championnat:"MLS Canada",lat:49.2767,lng:-123.1117},
+  {nom:"Saputo Stadium",club:"CF Montreal",ville:"Montreal",pays:"Canada",championnat:"MLS Canada",lat:45.5633,lng:-73.5514},
 ];
 
 // ════════════════════════════════════
