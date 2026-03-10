@@ -130,23 +130,27 @@
       display: flex; align-items: center; gap: 0;
       padding: 0 20px; height: 52px; position: sticky; top: 0; z-index: 100;
       border-bottom: 1px solid #30363d; flex-shrink: 0;
+      overflow-x: auto; overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
-    .topbar-logo { display: flex; align-items: center; gap: 10px; padding-right: 24px; border-right: 1px solid #30363d; margin-right: 8px; }
+    .topbar::-webkit-scrollbar { display: none; }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; padding-right: 24px; border-right: 1px solid #30363d; margin-right: 8px; flex-shrink: 0; }
     .topbar-logo .logo-icon { font-size: 1.4rem; }
     .topbar-logo .logo-title { font-family: var(--font-disp); font-size: 1.3rem; letter-spacing: .06em; color: #e6edf3; line-height: 1; white-space: nowrap; }
-    .topbar-nav { display: flex; align-items: center; gap: 2px; flex: 1; }
+    .topbar-nav { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
     .nav-item {
       display: flex; align-items: center; gap: 8px; padding: 8px 16px;
       cursor: pointer; color: #8b949e; font-size: 13px; font-weight: 500;
       transition: all .15s; border-bottom: 2px solid transparent; height: 52px;
-      white-space: nowrap;
+      white-space: nowrap; flex-shrink: 0;
     }
     .nav-item:hover { color: #e6edf3; background: #21262d; }
     .nav-item.active { color: #58a6ff; border-bottom-color: #58a6ff; }
     .nav-item .nav-icon { font-size: 1rem; }
 
     /* ── CONTENU PRINCIPAL ── */
-    .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-x: hidden; }
 
     /* ── PAGES ── */
     .page { display: none; flex-direction: column; }
