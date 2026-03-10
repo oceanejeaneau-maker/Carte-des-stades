@@ -583,8 +583,10 @@
 
   </div>
 </div>
+
+<script type="module">
 // ════════════════════════════════════
-// FIREBASE CONFIG — remplace par tes clés Firebase !
+// FIREBASE CONFIG
 // ════════════════════════════════════
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
@@ -676,9 +678,15 @@ onAuthStateChanged(auth, async user => {
     if (user.photoURL) { av.innerHTML = `<img src="${user.photoURL}">`; }
     else { av.textContent = name[0].toUpperCase(); }
     await chargerDepuisFirestore();
-    updateStats();
-    renderAll();
-    renderMatchs();
+    // Attendre que le script principal soit chargé
+    const waitApp = () => new Promise(resolve => {
+      if (window._app) return resolve();
+      const t = setInterval(() => { if (window._app) { clearInterval(t); resolve(); } }, 50);
+    });
+    await waitApp();
+    window._app.updateStats();
+    window._app.renderAll();
+    window._app.renderMatchs();
     renderProfil();
   } else {
     currentUser = null;
@@ -1733,6 +1741,9 @@ document.getElementById('matchFilterChamp').addEventListener('change', renderMat
 document.getElementById('matchFilterPays').addEventListener('change', renderMatchs);
 
 renderMatchs();
+
+// Exposer les fonctions pour le module Firebase
+window._app = { updateStats, renderAll, renderMatchs };
 </script>
 </body>
 </html>
