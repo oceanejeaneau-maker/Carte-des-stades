@@ -227,9 +227,10 @@
     /* ── PAGE CONNEXION ── */
     .auth-overlay {
       position: fixed; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(59,130,246,.15) 0%, #0a0e1a 60%);
+      background: var(--bg);
       display: flex; align-items: center; justify-content: center;
       z-index: 9999; padding: 16px;
+      overflow-y: auto;
     }
     .auth-overlay.hidden { display: none; }
     .auth-box {
@@ -586,7 +587,7 @@
 // FIREBASE CONFIG — remplace par tes clés Firebase !
 // ════════════════════════════════════
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, onSnapshot, orderBy, query, limit } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -630,9 +631,18 @@ document.getElementById('tabRegister').addEventListener('click', () => {
 function showError(msg) { authError.textContent = msg; authError.classList.add('visible'); }
 
 document.getElementById('btnGoogle').addEventListener('click', async () => {
-  try { await signInWithPopup(auth, googleProvider); }
-  catch(e) { showError('Erreur Google : ' + e.message); }
+  try {
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      await signInWithRedirect(auth, googleProvider);
+    } else {
+      await signInWithPopup(auth, googleProvider);
+    }
+  } catch(e) { showError('Erreur Google : ' + e.message); }
 });
+
+// Récupérer le résultat après redirect mobile
+getRedirectResult(auth).catch(e => { if (e.code) showError('Erreur Google : ' + e.message); });
 
 document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
