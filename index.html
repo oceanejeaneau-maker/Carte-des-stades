@@ -129,21 +129,30 @@
       width: 220px; min-width: 220px; background: #1c2128; color: #e6edf3;
       display: flex; flex-direction: column; padding: 0; position: sticky;
       top: 0; height: 100vh; overflow-y: auto; z-index: 100;
+      transition: width .25s ease, min-width .25s ease;
     }
-    .sidebar-logo { padding: 24px 20px 16px; border-bottom: 1px solid #30363d; }
+    .sidebar.collapsed { width: 56px; min-width: 56px; }
+    .sidebar-logo { padding: 16px 14px; border-bottom: 1px solid #30363d; display: flex; align-items: center; justify-content: space-between; gap: 8px; overflow: hidden; }
+    .sidebar-logo .logo-left { display: flex; flex-direction: column; gap: 2px; overflow: hidden; transition: opacity .2s, width .2s; }
+    .sidebar.collapsed .logo-left { opacity: 0; width: 0; }
     .sidebar-logo .logo-icon { font-size: 1.8rem; }
-    .sidebar-logo .logo-title { font-family: var(--font-disp); font-size: 1.4rem; letter-spacing: .06em; color: #e6edf3; line-height: 1; margin-top: 4px; }
-    .sidebar-logo .logo-sub { font-size: .65rem; color: #8b949e; text-transform: uppercase; letter-spacing: .12em; }
+    .sidebar-logo .logo-title { font-family: var(--font-disp); font-size: 1.4rem; letter-spacing: .06em; color: #e6edf3; line-height: 1; margin-top: 4px; white-space: nowrap; }
+    .sidebar-logo .logo-sub { font-size: .65rem; color: #8b949e; text-transform: uppercase; letter-spacing: .12em; white-space: nowrap; }
+    .btn-toggle-sidebar { background: none; border: none; color: #8b949e; cursor: pointer; font-size: 1.2rem; padding: 4px 6px; border-radius: 6px; transition: all .15s; flex-shrink: 0; }
+    .btn-toggle-sidebar:hover { background: #21262d; color: #e6edf3; }
     .sidebar-nav { padding: 12px 0; flex: 1; }
     .nav-item {
-      display: flex; align-items: center; gap: 12px; padding: 11px 20px;
+      display: flex; align-items: center; gap: 12px; padding: 11px 18px;
       cursor: pointer; color: #8b949e; font-size: 13px; font-weight: 500;
-      transition: all .15s; border-left: 3px solid transparent;
+      transition: all .15s; border-left: 3px solid transparent; white-space: nowrap; overflow: hidden;
     }
     .nav-item:hover { background: #21262d; color: #e6edf3; }
     .nav-item.active { background: #21262d; color: #58a6ff; border-left-color: #58a6ff; }
-    .nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
-    .nav-section-title { padding: 16px 20px 6px; font-size: .62rem; text-transform: uppercase; letter-spacing: .14em; color: #484f58; font-weight: 600; }
+    .nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; flex-shrink: 0; }
+    .nav-item .nav-label { transition: opacity .2s; }
+    .sidebar.collapsed .nav-label { opacity: 0; width: 0; overflow: hidden; }
+    .nav-section-title { padding: 16px 20px 6px; font-size: .62rem; text-transform: uppercase; letter-spacing: .14em; color: #484f58; font-weight: 600; white-space: nowrap; overflow: hidden; transition: opacity .2s; }
+    .sidebar.collapsed .nav-section-title { opacity: 0; }
 
     /* ── CONTENU PRINCIPAL ── */
     .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -205,22 +214,25 @@
 <div class="app-layout">
 
   <!-- SIDEBAR -->
-  <nav class="sidebar">
+  <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon">⚽</div>
-      <div class="logo-title">Stades</div>
-      <div class="logo-sub">Tour du monde</div>
+      <div class="logo-left">
+        <div class="logo-icon">⚽</div>
+        <div class="logo-title">Stades</div>
+        <div class="logo-sub">Tour du monde</div>
+      </div>
+      <button class="btn-toggle-sidebar" id="btnToggleSidebar" title="Réduire/Agrandir">☰</button>
     </div>
     <div class="sidebar-nav">
       <div class="nav-section-title">Navigation</div>
       <div class="nav-item active" data-page="carte">
-        <span class="nav-icon">🗺️</span> Carte & Stades
+        <span class="nav-icon">🗺️</span><span class="nav-label"> Carte & Stades</span>
       </div>
       <div class="nav-item" data-page="notes">
-        <span class="nav-icon">📝</span> Notes
+        <span class="nav-icon">📝</span><span class="nav-label"> Notes</span>
       </div>
       <div class="nav-item" data-page="matchs">
-        <span class="nav-icon">🏆</span> Matchs vus
+        <span class="nav-icon">🏆</span><span class="nav-label"> Matchs vus</span>
       </div>
     </div>
   </nav>
@@ -1094,6 +1106,14 @@ initFilters();
 buildLegend();
 updateStats();
 renderAll();
+
+// ════════════════════════════════════
+// TOGGLE SIDEBAR
+// ════════════════════════════════════
+const sidebar = document.getElementById('sidebar');
+document.getElementById('btnToggleSidebar').addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
+});
 
 // ════════════════════════════════════
 // NAVIGATION SIDEBAR
