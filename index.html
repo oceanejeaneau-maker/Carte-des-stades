@@ -259,6 +259,117 @@
       z-index: 9999; padding: 16px; overflow-y: auto;
     }
     .auth-overlay.hidden { display: none; }
+
+    /* ── ONBOARDING ── */
+    .onboarding-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: #080c0a;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .onboarding-overlay.hidden { display: none; }
+
+    .onboarding-bg {
+      position: absolute; inset: 0; overflow: hidden;
+    }
+    .onboarding-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 110%, rgba(0,230,118,.18) 0%, transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(0,230,118,.03) 60px, rgba(0,230,118,.03) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(0,230,118,.03) 60px, rgba(0,230,118,.03) 61px);
+    }
+    .onboarding-bg .pitch-lines {
+      position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 400px; opacity: .06;
+      border: 3px solid #00e676; border-radius: 12px;
+    }
+    .onboarding-bg .pitch-lines::before {
+      content: ''; position: absolute; top: 50%; left: 0; right: 0;
+      height: 3px; background: #00e676;
+    }
+    .onboarding-bg .pitch-lines::after {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 120px; height: 120px; border-radius: 50%; border: 3px solid #00e676;
+    }
+
+    .onboarding-slides {
+      flex: 1; display: flex; transition: transform .5s cubic-bezier(.4,0,.2,1);
+    }
+    .onboarding-slide {
+      min-width: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 28px; text-align: center; position: relative; z-index: 1;
+    }
+    .onboarding-icon {
+      font-size: 5rem; margin-bottom: 24px;
+      animation: iconPop .6s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes iconPop { from { transform: scale(0) rotate(-20deg); opacity:0; } to { transform: scale(1) rotate(0); opacity:1; } }
+    .onboarding-slide h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.4rem; font-weight: 800; color: #fff;
+      letter-spacing: .06em; text-transform: uppercase;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .onboarding-slide h2 span { color: #00e676; text-shadow: 0 0 20px rgba(0,230,118,.5); }
+    .onboarding-slide p {
+      font-family: 'Inter', sans-serif;
+      color: #81c784; font-size: 1rem; line-height: 1.6;
+      max-width: 300px; margin: 0 auto 32px;
+    }
+    .onboarding-stats {
+      display: flex; gap: 24px; margin-bottom: 8px;
+    }
+    .onboarding-stat {
+      display: flex; flex-direction: column; align-items: center;
+      background: rgba(0,230,118,.06); border: 1px solid rgba(0,230,118,.15);
+      border-radius: 12px; padding: 14px 20px;
+    }
+    .onboarding-stat-val {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 2rem; color: #00e676;
+      text-shadow: 0 0 12px rgba(0,230,118,.4);
+    }
+    .onboarding-stat-lbl {
+      font-size: .7rem; color: #4a6350;
+      text-transform: uppercase; letter-spacing: .1em; margin-top: 4px;
+    }
+
+    .onboarding-footer {
+      position: relative; z-index: 1;
+      padding: 20px 28px 36px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .onboarding-dots {
+      display: flex; gap: 8px;
+    }
+    .onboarding-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #1c2820; transition: all .3s;
+    }
+    .onboarding-dot.active {
+      background: #00e676; width: 24px; border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0,230,118,.5);
+    }
+    .onboarding-btn {
+      width: 100%; max-width: 320px;
+      padding: 15px; border-radius: 8px;
+      background: #00e676; color: #000;
+      border: none; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; cursor: pointer;
+      box-shadow: 0 0 32px rgba(0,230,118,.3);
+      transition: all .2s;
+    }
+    .onboarding-btn:hover { background: #69f0ae; transform: translateY(-1px); }
+    .onboarding-skip {
+      font-size: .8rem; color: #4a6350; cursor: pointer;
+      font-family: 'Inter', sans-serif; background: none; border: none;
+      transition: color .15s;
+    }
+    .onboarding-skip:hover { color: #81c784; }
     .auth-box {
       background: var(--surface); border: 1px solid var(--accent); border-radius: 12px;
       padding: 28px 24px; width: 100%; max-width: 340px;
@@ -373,6 +484,85 @@
 <body>
 
 <!-- PAGE CONNEXION -->
+<!-- ══ ONBOARDING ══ -->
+<div class="onboarding-overlay hidden" id="onboardingOverlay">
+  <div class="onboarding-bg">
+    <div class="pitch-lines"></div>
+  </div>
+
+  <div class="onboarding-slides" id="onboardingSlides">
+
+    <!-- Slide 1 -->
+    <div class="onboarding-slide">
+      <div class="onboarding-icon">🏟️</div>
+      <h2>Tour des<br><span>Stades</span></h2>
+      <p>Le tracker ultime pour les fans de foot qui visitent les stades du monde entier.</p>
+      <div class="onboarding-stats">
+        <div class="onboarding-stat">
+          <div class="onboarding-stat-val" id="ob-stades">630</div>
+          <div class="onboarding-stat-lbl">Stades</div>
+        </div>
+        <div class="onboarding-stat">
+          <div class="onboarding-stat-val" id="ob-pays">118</div>
+          <div class="onboarding-stat-lbl">Pays</div>
+        </div>
+        <div class="onboarding-stat">
+          <div class="onboarding-stat-val" id="ob-champs">∞</div>
+          <div class="onboarding-stat-lbl">Championnats</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="onboarding-slide">
+      <div class="onboarding-icon">🗺️</div>
+      <h2>Trace ta<br><span>Route</span></h2>
+      <p>Coche chaque stade visité. Suis ta progression sur la carte interactive. Compare-toi au monde entier.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px">
+        <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+          <span style="font-size:1.4rem">✅</span>
+          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#81c784">Coche les stades visités</span>
+        </div>
+        <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+          <span style="font-size:1.4rem">🔥</span>
+          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#81c784">Carte de chaleur de tes voyages</span>
+        </div>
+        <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+          <span style="font-size:1.4rem">🏆</span>
+          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#81c784">Classement mondial en temps réel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="onboarding-slide">
+      <div class="onboarding-icon">🥇</div>
+      <h2>Rejoins la<br><span>Communauté</span></h2>
+      <p>Crée ton compte gratuit, sauvegarde ta progression et grimpe dans le classement mondial.</p>
+      <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:12px;padding:20px;width:100%;max-width:300px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#4a6350;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Gratuit pour toujours</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Compte gratuit</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Sauvegarde cloud automatique</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Classement mondial</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Notes & matchs vus</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="onboarding-footer">
+    <div class="onboarding-dots">
+      <div class="onboarding-dot active" data-i="0"></div>
+      <div class="onboarding-dot" data-i="1"></div>
+      <div class="onboarding-dot" data-i="2"></div>
+    </div>
+    <button class="onboarding-btn" id="onboardingBtn">Suivant</button>
+    <button class="onboarding-skip" id="onboardingSkip">Passer l'intro</button>
+  </div>
+</div>
+
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-box">
     <div class="auth-logo">
@@ -2456,6 +2646,65 @@ document.getElementById('matchFilterPays').addEventListener('change', renderMatc
 renderMatchs();
 
 // Exposer les fonctions pour le module Firebase
+// ════════════════════════════════════
+// ONBOARDING
+// ════════════════════════════════════
+(function() {
+  const overlay = document.getElementById('onboardingOverlay');
+  const slides  = document.getElementById('onboardingSlides');
+  const btn     = document.getElementById('onboardingBtn');
+  const skip    = document.getElementById('onboardingSkip');
+  const dots    = document.querySelectorAll('.onboarding-dot');
+  let current   = 0;
+  const TOTAL   = 3;
+
+  // Mettre à jour les stats dynamiquement
+  const obStades = document.getElementById('ob-stades');
+  const obPays   = document.getElementById('ob-pays');
+  if (obStades) obStades.textContent = typeof STADES_DATA !== 'undefined' ? STADES_DATA.length : 630;
+  if (obPays)   obPays.textContent   = typeof STADES_DATA !== 'undefined'
+    ? new Set(STADES_DATA.map(s=>s.pays)).size : 118;
+
+  function goTo(i) {
+    current = i;
+    slides.style.transform = `translateX(-${i * 100}%)`;
+    dots.forEach((d,j) => d.classList.toggle('active', j === i));
+    btn.textContent = i === TOTAL - 1 ? "C'est parti ! 🚀" : 'Suivant';
+    // Relancer l'animation de l'icône
+    const icon = slides.children[i].querySelector('.onboarding-icon');
+    if (icon) { icon.style.animation='none'; void icon.offsetWidth; icon.style.animation=''; }
+  }
+
+  function finish() {
+    overlay.classList.add('hidden');
+    try { localStorage.setItem('stades_onboarded', '1'); } catch {}
+  }
+
+  btn.addEventListener('click', () => {
+    if (current < TOTAL - 1) goTo(current + 1);
+    else finish();
+  });
+  skip.addEventListener('click', finish);
+
+  // Swipe support mobile
+  let startX = 0;
+  overlay.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  overlay.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (dx < -50 && current < TOTAL-1) goTo(current+1);
+    if (dx > 50  && current > 0)       goTo(current-1);
+  }, {passive:true});
+
+  // Afficher seulement au 1er lancement
+  try {
+    if (!localStorage.getItem('stades_onboarded')) {
+      overlay.classList.remove('hidden');
+    }
+  } catch {
+    overlay.classList.remove('hidden');
+  }
+})();
+
 window._app = { updateStats, renderAll, renderMatchs };
 </script>
 
