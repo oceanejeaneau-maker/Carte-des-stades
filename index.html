@@ -260,7 +260,30 @@
     }
     .auth-overlay.hidden { display: none; }
 
-    /* ── ONBOARDING ── */
+    /* ── FICHE STADE (panneau) ── */
+    .fiche-overlay { position:fixed; inset:0; z-index:5000; display:flex; align-items:flex-end; justify-content:center; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity .3s; }
+    .fiche-overlay.open { opacity:1; pointer-events:all; }
+    .fiche-panel { background:var(--surface); border:1px solid var(--border); border-radius:20px 20px 0 0; width:100%; max-width:560px; max-height:85vh; overflow-y:auto; transform:translateY(100%); transition:transform .4s cubic-bezier(.4,0,.2,1); box-shadow:0 -8px 40px rgba(0,230,118,.08); }
+    .fiche-overlay.open .fiche-panel { transform:translateY(0); }
+    .fiche-handle { width:40px; height:4px; background:var(--border2); border-radius:2px; margin:12px auto 0; }
+    .fiche-header { padding:16px 20px 12px; border-bottom:1px solid var(--border); }
+    .fiche-champ-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; margin-bottom:10px; }
+    .fiche-nom { font-family:var(--font-disp); font-size:1.8rem; font-weight:800; color:var(--text); letter-spacing:.04em; text-transform:uppercase; line-height:1.1; }
+    .fiche-club { font-size:13px; color:var(--text2); margin-top:4px; }
+    .fiche-location { font-size:12px; color:var(--text3); margin-top:2px; }
+    .fiche-body { padding:16px 20px; display:flex; flex-direction:column; gap:14px; }
+    .fiche-stats-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .fiche-stat { flex:1; min-width:80px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:3px; }
+    .fiche-stat-val { font-family:var(--font-mono); font-size:1.1rem; color:var(--accent); text-shadow:0 0 8px var(--accent-glow); }
+    .fiche-stat-lbl { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text3); }
+    .fiche-section-title { font-family:var(--font-disp); font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text3); margin-bottom:6px; }
+    .fiche-anecdote { background:rgba(0,230,118,.04); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:12px 14px; font-size:13px; color:var(--text2); line-height:1.6; font-style:italic; }
+    .fiche-visite-btn { width:100%; padding:13px; border-radius:8px; font-family:var(--font-disp); font-size:1rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border:none; cursor:pointer; transition:all .2s; }
+    .fiche-visite-btn.non-visite { background:var(--accent); color:#000; box-shadow:0 0 20px var(--accent-glow); }
+    .fiche-visite-btn.non-visite:hover { background:var(--accent2); }
+    .fiche-visite-btn.visite { background:var(--surface2); color:var(--accent); border:1px solid var(--accent); }
+    .fiche-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:1px solid var(--border); color:var(--text3); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all .15s; }
+    .fiche-close:hover { color:var(--text); border-color:var(--border2); }
     .onboarding-overlay {
       position: fixed; inset: 0; z-index: 10000;
       background: #080c0a;
@@ -518,6 +541,18 @@
 <body>
 
 <!-- PAGE CONNEXION -->
+<!-- ══ FICHE STADE ══ -->
+<div class="fiche-overlay" id="ficheOverlay">
+  <div class="fiche-panel" id="fichePanel">
+    <div class="fiche-handle"></div>
+    <div style="position:relative">
+      <button class="fiche-close" id="ficheClose">✕</button>
+      <div class="fiche-header" id="ficheHeader"></div>
+      <div class="fiche-body" id="ficheBody"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ ONBOARDING ══ -->
 <div class="onboarding-overlay hidden" id="onboardingOverlay">
   <div class="onboarding-bg">
@@ -2205,14 +2240,16 @@ function makeIcon(s) {
   });
 }
 
-function makePopupHTML(s) {
+function makePopupHTML(s, id) {
   const col   = champColor(s.championnat);
-  const annee = s.annee ? ` <small style="color:#888">(${s.annee})</small>` : '';
-  return `<b style="color:#1a2940;font-size:14px">${esc(s.nom)}</b><br>`
-    + (s.club ? `<span style="color:#0969da;font-size:12px;font-weight:500">🏟 ${esc(s.club)}</span><br>` : '')
-    + `<span style="color:#555">${esc(s.ville)} — ${drapeau(s.pays)} ${esc(s.pays)}</span><br>`
-    + `<span style="display:inline-block;margin-top:3px;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:600;background:${col}22;color:${col};border:1px solid ${col}66">${esc(s.championnat)}</span>`
-    + (s.visite ? `<br><span style="color:#1a7a2e;font-weight:600">✅ Visité${annee}</span>` : '');
+  const annee = s.annee ? ` <small style="color:var(--text3)">(${s.annee})</small>` : '';
+  const hasInfo = !!STADES_INFO[s.nom];
+  return `<b style="font-family:'Barlow Condensed',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--text)">${esc(s.nom)}</b><br>`
+    + (s.club ? `<span style="color:var(--text2);font-size:12px">🏟️ ${esc(s.club)}</span><br>` : '')
+    + `<span style="color:var(--text3);font-size:11px">${drapeau(s.pays)} ${esc(s.ville)}</span><br>`
+    + `<span style="display:inline-block;margin:4px 0;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:${col}22;color:${col};border:1px solid ${col}44">${esc(s.championnat)}</span>`
+    + (s.visite ? `<br><span style="color:var(--accent);font-weight:600;font-size:12px">✅ Visité${annee}</span>` : '')
+    + `<br><button onclick="openFiche(${id})" style="margin-top:8px;width:100%;padding:6px;background:var(--accent);color:#000;border:none;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">${hasInfo ? '📋 Voir la fiche' : '📋 Ouvrir'}</button>`;
 }
 
 // ── Cluster ───────────────────────────────────
@@ -2260,7 +2297,7 @@ const rawMarkers    = [];
 const markerVisible = new Array(stades.length).fill(false);
 
 stades.forEach((s,i) => {
-  const m = L.marker([s.lat,s.lng], {icon:makeIcon(s)}).bindPopup(makePopupHTML(s), {maxWidth:250});
+  const m = L.marker([s.lat,s.lng], {icon:makeIcon(s)}).bindPopup(makePopupHTML(s, i), {maxWidth:260});
   m.on('click', () => {
     const row = document.querySelector(`[data-stadeid="${i}"]`); if (!row) return;
     let prev = row.previousElementSibling;
@@ -2279,7 +2316,7 @@ function _addToMap(i) {
 function syncMarker(i, visible) {
   const m=rawMarkers[i], s=stades[i];
   markerVisible[i]=visible;
-  m.setIcon(makeIcon(s)); m.setPopupContent(makePopupHTML(s));
+  m.setIcon(makeIcon(s)); m.setPopupContent(makePopupHTML(s, i));
   if (visible) {
     if (clusterMode) { if (!clusterGroup.hasLayer(m)) clusterGroup.addLayer(m); }
     else             { if (!map.hasLayer(m)) m.addTo(map); }
@@ -2499,6 +2536,8 @@ function renderTableBody(ids) {
       champIds.forEach(id=>{
         const s=stades[id];
         const tr=tbody.insertRow(); tr.className='data-row'+(autoExpand?'':' hidden'); tr.dataset.stadeid=id;
+        tr.style.cursor='pointer';
+        tr.addEventListener('click', e => { if (e.target.type !== 'checkbox') openFiche(id); });
 
         const cb=makeCheckbox(s.visite);
         cb.addEventListener('change',()=>{
@@ -2921,6 +2960,172 @@ document.getElementById('customGoalBtn').addEventListener('click', () => {
     overlay.classList.remove('hidden');
   }
 })();
+
+// ════════════════════════════════════
+// FICHE STADE ENRICHIE
+// ════════════════════════════════════
+const STADES_INFO = {
+  // ALLEMAGNE
+  'Allianz Arena':        { capacite:75024, ouverture:2005, record:75000, anecdote:"Seul stade au monde à changer de couleur selon l'équipe qui joue : rouge pour le Bayern, blanc pour l'Allemagne, bleu pour les Girondins (avant leur départ). Son éclairage LED est visible à des kilomètres." },
+  'Signal Iduna Park':    { capacite:81365, ouverture:1974, record:81365, anecdote:"Le Mur Jaune, la tribune debout du Borussia Dortmund, est la plus grande tribune d'Europe avec 25 000 places debout. L'ambiance y est considérée comme la meilleure d'Allemagne." },
+  'Olympiastadion Berlin':{ capacite:74475, ouverture:1936, record:100000, anecdote:"Construit pour les JO de 1936 sous Hitler, il a accueilli la finale de la Coupe du Monde 2006. Jesse Owens y avait humilié le régime nazi en remportant 4 médailles d'or." },
+  'Volksparkstadion':     { capacite:57000, ouverture:1953, record:76000, anecdote:"Surnommé 'la forteresse' par les supporters du HSV, ce stade a accueilli des matchs de la Coupe du Monde 1974 et de l'Euro 1988." },
+  'Deutsche Bank Park':   { capacite:58000, ouverture:1925, record:61000, anecdote:"L'un des plus vieux stades de Bundesliga encore en usage. Surnommé le 'Waldstadion', il est entouré de forêt et possède une atmosphère unique en Europe." },
+  // ANGLETERRE
+  'Wembley':              { capacite:90000, ouverture:2007, record:90000, anecdote:"Reconstruit pour 757 millions £, son arc emblématique de 133m est visible à 13 miles. Lieu de la finale de l'Euro 2021, il a vu l'Angleterre attendre sa gloire depuis 1966." },
+  'Old Trafford':         { capacite:74310, ouverture:1910, record:76962, anecdote:"Surnommé 'le Théâtre des Rêves' par Bobby Charlton. Détruit pendant le Blitz de 1941, reconstruit grâce à... Arsenal qui prêta son stade à United pendant 8 ans." },
+  'Anfield':              { capacite:61276, ouverture:1884, record:61905, anecdote:"You'll Never Walk Alone retentit à Anfield depuis 1963. La Kop — sa tribune légendaire — peut générer 130 décibels, l'équivalent d'un avion au décollage." },
+  'Etihad Stadium':       { capacite:53400, ouverture:2003, record:54693, anecdote:"Construit pour les Jeux du Commonwealth 2002, il a été transformé en stade de foot. Depuis l'ère City, il est devenu l'un des stades les plus modernes d'Angleterre." },
+  'Emirates Stadium':     { capacite:60704, ouverture:2006, record:60161, anecdote:"Arsenal a quitté Highbury après 93 ans pour ce bijou. Premier stade anglais avec des sièges individuels numérotés en Ligue des Champions, construit sans dette publique." },
+  'Tottenham Hotspur Stadium':{ capacite:62850, ouverture:2019, record:62850, anecdote:"Le stade le plus moderne d'Angleterre possède la plus grande brasserie intégrée d'un stade en Europe et un terrain synthétique rétractable pour accueillir des matchs de NFL." },
+  'Villa Park':           { capacite:42682, ouverture:1897, record:76588, anecdote:"L'un des plus anciens stades professionnels d'Angleterre. La tribune Holte End, construite en 1939, est l'une des plus imposantes tribunes couvertes du pays." },
+  // ESPAGNE
+  'Santiago Bernabéu':    { capacite:81044, ouverture:1947, record:124000, anecdote:"Rénové pour 900M€ avec un toit rétractable et une façade titanium, il peut désormais accueillir des concerts en 24h. Son record de 124 000 spectateurs date de 1956." },
+  'Camp Nou':             { capacite:99354, ouverture:1957, record:120000, anecdote:"Le plus grand stade d'Europe en capacité. En cours de rénovation pour 1,5 milliard €, il rouvre en 2025 avec un toit acoustique permettant des concerts sans riverains plaignants." },
+  'Metropolitano':        { capacite:68456, ouverture:2017, record:68456, anecdote:"Ancienne piste d'athlétisme transformée, il a accueilli la finale de la Ligue des Champions 2019. Son ambiance est réputée la plus intense de Madrid selon les joueurs visiteurs." },
+  'Mestalla':             { capacite:49430, ouverture:1923, record:65000, anecdote:"L'un des plus vieux stades d'Espagne encore en activité. Ses tribunes très verticales créent une atmosphère oppressante pour les visiteurs. Impossible à rénover selon les architectes — donc irremplaçable." },
+  'Ramón Sánchez-Pizjuán':{ capacite:43883, ouverture:1958, record:70000, anecdote:"Considéré comme l'enfer pour les équipes visitantes. Liverpool et Manchester United y ont subi des défaites mémorables en C1. La chaleur sévillane et le bruit en font un cauchemar." },
+  // FRANCE
+  'Stade de France':      { capacite:81338, ouverture:1998, record:81338, anecdote:"Construit en 26 mois pour la Coupe du Monde 1998, il est le 5e plus grand stade d'Europe. Zidane y a marqué deux buts de la tête en finale contre le Brésil devant 80 000 personnes." },
+  'Parc des Princes':     { capacite:48712, ouverture:1897, record:50370, anecdote:"Troisième stade à porter ce nom depuis 1897, il est le seul grand stade de football au cœur de Paris. Sa rénovation de 1972 par Roger Taillibert en a fait une icône architecturale." },
+  'Groupama Stadium':     { capacite:59186, ouverture:2016, record:59186, anecdote:"Le plus grand stade de club en France, entièrement construit sur fonds privés. Sa façade maillage métallique de 12 000m² est unique en Europe et change d'aspect selon la lumière." },
+  'Orange Vélodrome':     { capacite:67394, ouverture:1937, record:67394, anecdote:"Le stade le plus bruyant de France selon les mesures acoustiques. La 'chaudière' marseillaise peut atteindre 120 décibels lors des grands soirs européens." },
+  'Allianz Riviera':      { capacite:35624, ouverture:2013, record:35624, anecdote:"Premier stade français certifié HQE (Haute Qualité Environnementale). Son toit photovoltaïque produit suffisamment d'énergie pour alimenter 500 foyers par an." },
+  'Roazhon Park':         { capacite:29778, ouverture:1912, record:33448, anecdote:"L'un des plus anciens stades de France encore en activité. Surnommé 'le chaudron', ses quatre tribunes très proches du terrain créent une atmosphère unique en Ligue 1." },
+  // ITALIE
+  'San Siro':             { capacite:75817, ouverture:1926, record:85000, anecdote:"Partagé par les deux grands rivaux milanais depuis 1926, il sera démoli d'ici 2030 pour laisser place à un nouveau stade. Classé monument historique par les Milanais, sa démolition fait débat." },
+  'Stadio Olimpico':      { capacite:70634, ouverture:1953, record:100000, anecdote:"Construit pour les JO de 1960, partagé par la Lazio et la Roma comme San Siro. Les deux clubs ont des tribunes séparées et ne se mélangent jamais — même physiquement dans le stade." },
+  'Juventus Stadium':     { capacite:41507, ouverture:2011, record:41507, anecdote:"Premier stade moderne entièrement privé en Italie, construit sur l'emplacement du mythique Delle Alpi. La Juventus a mis fin à 100 ans de stades municipaux dans le football italien." },
+  "Stadio Diego Armando Maradona":{ capacite:54726, ouverture:1959, record:85000, anecdote:"Rebaptisé en l'honneur de Maradona après sa mort en 2020. C'est ici qu'il a fait vibrer Naples, transformant une ville en capitale mondiale du football pendant 7 ans." },
+  // PORTUGAL
+  'Estádio da Luz':       { capacite:64642, ouverture:2003, record:65647, anecdote:"La 'Cathédrale' du Benfica. Son nom vient du quartier de la Luz où il est situé. L'acoustique de son toit crée un écho qui amplifie le 'Glorioso' chanté par 65 000 Benfiquistas." },
+  'Estádio do Dragão':    { capacite:50033, ouverture:2003, record:52000, anecdote:"Construit pour l'Euro 2004, il a été le théâtre de la première grande gloire du Portugal. Ses murs de verre permettent aux passants de voir l'intérieur du stade depuis la rue." },
+  // PAYS-BAS
+  'Johan Cruyff ArenA':   { capacite:54990, ouverture:1996, record:54990, anecdote:"Premier stade européen à toit rétractable entièrement électrique. Rebaptisé en 2018 en hommage à Johan Cruyff, il est équipé de 4200 panneaux solaires et de batteries de stockage géantes." },
+  // BELGIQUE
+  'Jan Breydel Stadion':  { capacite:29062, ouverture:1975, record:32000, anecdote:"Partagé par Bruges et Courtrai, c'est l'un des rares stades partagés par des rivaux en Belgique. Sa pelouse synthétique chauffée permet de jouer par -10°C." },
+  // TURQUIE
+  'Türk Telekom Stadium': { capacite:52652, ouverture:2011, record:52652, anecdote:"Surnommé 'le nid' par les supporters de Galatasaray. Classé parmi les stades les plus bruyants du monde — les visiteurs de C1 le décrivent souvent comme un cauchemar acoustique." },
+  'Vodafone Park':        { capacite:41903, ouverture:2016, record:41903, anecdote:"Construit sur l'emplacement mythique de l'İnönü Stadyumu. Besiktas a refusé le naming pendant 2 ans pour ne pas changer de nom. Vue sur le Bosphore depuis les tribunes." },
+  // RUSSIE / UKRAINE
+  'Luzhniki':             { capacite:81000, ouverture:1956, record:103000, anecdote:"Le plus grand stade de Russie, scène de la finale de la Coupe du Monde 2018. C'est ici que France-Croatie (4-2) a été joué. Reconstruit pour 450M€, il garde son look soviétique historique." },
+  'NSC Olimpiyskiy':      { capacite:70050, ouverture:1923, record:100000, anecdote:"Inauguré pour les JO de 1980 à Moscou, c'est le plus ancien grand stade d'Europe encore en activité. Son histoire traverse l'URSS, l'Ukraine indépendante et les guerres contemporaines." },
+  // BRÉSIL
+  'Estádio do Maracanã':  { capacite:78838, ouverture:1950, record:199854, anecdote:"Le record du monde de spectateurs (199 854) date de 1950. La 'Maracanazo' — défaite du Brésil contre l'Uruguay en finale du Mondial — reste le plus grand trauma du football brésilien." },
+  'Arena Corinthians':    { capacite:47605, ouverture:2014, record:47605, anecdote:"Construit spécialement pour la Coupe du Monde 2014, il a accueilli le match d'ouverture Brésil-Croatie. Surnommé 'l'Itaquerão', son financement a déclenché des manifestations au Brésil." },
+  // ARGENTINE
+  'El Monumental':        { capacite:84567, ouverture:1938, record:100000, anecdote:"Le plus grand stade d'Amérique du Sud. La finale de la Coupe du Monde 1978 entre Argentine et Pays-Bas s'y est jouée, avec Videla en tribune. 84 000 confettis tombaient depuis les tribunes." },
+  'La Bombonera':         { capacite:49000, ouverture:1940, record:57395, anecdote:"En forme de boîte de chocolats (d'où son nom), ses tribunes verticales à 90° créent des vibrations si intenses que les joueurs sentent le sol trembler. Classé monument historique." },
+  // QATAR
+  'Lusail Stadium':       { capacite:88966, ouverture:2021, record:88966, anecdote:"Théâtre de la finale du Mondial 2022 (Argentine-France), il sera partiellement démoli après la compétition, ses matériaux recyclés pour construire des cliniques et des écoles au Qatar." },
+  // ARABIE SAOUDITE
+  'King Fahd International Stadium':{ capacite:68752, ouverture:1987, record:68752, anecdote:"Son toit en forme de tentes bédouines est un chef-d'œuvre d'ingénierie. Il a accueilli Ronaldo (CR7) pour le match le plus regardé de Saudi Pro League — 1,5 milliard de téléspectateurs mondiaux." },
+  // AFRIQUE DU SUD
+  'FNB Stadium':          { capacite:94736, ouverture:1989, record:94736, anecdote:"Surnommé 'Soccer City', il a accueilli la finale de la Coupe du Monde 2010. C'est ici que Nelson Mandela a fait sa première apparition publique après sa libération de prison en 1990." },
+  // JAPON
+  'Japan National Stadium':{ capacite:68000, ouverture:2019, record:68000, anecdote:"Construit pour les JO de Tokyo 2020 (reportés en 2021), sa façade en bois de cyprès japonais est une ode au design traditionnel. Zaha Hadid avait gagné le concours initial avant d'être évinctée." },
+  'Nissan Stadium':       { capacite:72327, ouverture:1998, record:72327, anecdote:"Le plus grand stade de club en Asie. La finale de la Coupe du Monde 2002 entre Brésil et Allemagne s'y est jouée, avec le doublé de Ronaldo face à Oliver Kahn." },
+  // AUSTRALIE
+  'Stadium Australia':    { capacite:83500, ouverture:1999, record:109874, anecdote:"Construit pour les JO de Sydney 2000, son record de 109 874 spectateurs lors d'un concert de U2 en 2010 en fait le stade multi-usage le plus utilisé d'Océanie." },
+  // MAROC
+  'Stade Mohammed V':     { capacite:67000, ouverture:1955, record:75000, anecdote:"Le stade historique du football marocain, théâtre des premières gloires du Wydad et du Raja. Rénové pour accueillir la Coupe du Monde 2030 co-organisée par le Maroc." },
+};
+
+// ── Panneau fiche stade ───────────────────────
+const ficheOverlay = document.getElementById('ficheOverlay');
+const ficheClose   = document.getElementById('ficheClose');
+let ficheStadeId   = null;
+
+function openFiche(id) {
+  ficheStadeId = id;
+  const s    = stades[id];
+  const info = STADES_INFO[s.nom];
+  const col  = champColor(s.championnat);
+
+  // Header
+  document.getElementById('ficheHeader').innerHTML = `
+    <div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44">
+      <span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>
+      ${esc(s.championnat)}
+    </div>
+    <div class="fiche-nom">${esc(s.nom)}</div>
+    ${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}
+    <div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>
+  `;
+
+  // Body
+  let body = '';
+
+  // Stats enrichies
+  if (info) {
+    body += `<div>
+      <div class="fiche-section-title">📊 Infos clés</div>
+      <div class="fiche-stats-row">
+        <div class="fiche-stat">
+          <div class="fiche-stat-val">${info.capacite ? info.capacite.toLocaleString('fr-FR') : '—'}</div>
+          <div class="fiche-stat-lbl">Capacité</div>
+        </div>
+        <div class="fiche-stat">
+          <div class="fiche-stat-val">${info.ouverture || '—'}</div>
+          <div class="fiche-stat-lbl">Ouverture</div>
+        </div>
+        <div class="fiche-stat">
+          <div class="fiche-stat-val">${info.record ? info.record.toLocaleString('fr-FR') : '—'}</div>
+          <div class="fiche-stat-lbl">Record affluence</div>
+        </div>
+      </div>
+    </div>`;
+
+    body += `<div>
+      <div class="fiche-section-title">💬 Le savais-tu ?</div>
+      <div class="fiche-anecdote">${esc(info.anecdote)}</div>
+    </div>`;
+  } else {
+    body += `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;color:var(--text3);font-size:13px">
+      📋 Fiche détaillée bientôt disponible
+    </div>`;
+  }
+
+  // Note perso si existante
+  const noteKey = s.nom + '||' + s.pays;
+  if (notes[noteKey]) {
+    body += `<div>
+      <div class="fiche-section-title">📝 Ta note</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5">${esc(notes[noteKey])}</div>
+    </div>`;
+  }
+
+  // Bouton visiter
+  body += `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">
+    ${s.visite ? '✅ Stade visité — retirer' : '🏟️ Marquer comme visité'}
+  </button>`;
+
+  document.getElementById('ficheBody').innerHTML = body;
+
+  // Listener bouton
+  document.getElementById('ficheVisiteBtn').addEventListener('click', () => {
+    stades[ficheStadeId].visite = !stades[ficheStadeId].visite;
+    if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR;
+    commit(true);
+    // Mettre à jour le bouton
+    const btn = document.getElementById('ficheVisiteBtn');
+    const v   = stades[ficheStadeId].visite;
+    btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`;
+    btn.textContent = v ? '✅ Stade visité — retirer' : '🏟️ Marquer comme visité';
+  });
+
+  ficheOverlay.classList.add('open');
+}
+
+ficheClose.addEventListener('click', () => ficheOverlay.classList.remove('open'));
+ficheOverlay.addEventListener('click', e => { if (e.target === ficheOverlay) ficheOverlay.classList.remove('open'); });
+
+// Swipe down pour fermer
+let ficheStartY = 0;
+document.getElementById('fichePanel').addEventListener('touchstart', e => { ficheStartY = e.touches[0].clientY; }, {passive:true});
+document.getElementById('fichePanel').addEventListener('touchend', e => {
+  if (e.changedTouches[0].clientY - ficheStartY > 80) ficheOverlay.classList.remove('open');
+}, {passive:true});
 
 window._app = { updateStats, renderAll, renderMatchs };
 </script>
