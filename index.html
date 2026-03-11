@@ -844,7 +844,11 @@ const CURRENT_YEAR = new Date().getFullYear();
 function sauvegarder() { if (window._firebase) window._firebase.sauvegarder(); }
 function charger() {} // chargement géré par Firebase
 
-const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA' };
+const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA',
+  Japon:'JP', 'Corée du Sud':'KR', Chine:'CN', Australie:'AU', 'Arabie Saoudite':'SA', 'Émirats Arabes Unis':'AE', Qatar:'QA', Inde:'IN', Iran:'IR', Indonésie:'ID', Thaïlande:'TH',
+  'Afrique du Sud':'ZA', Maroc:'MA', Nigeria:'NG', Égypte:'EG', Sénégal:'SN', Cameroun:'CM', "Côte d'Ivoire":'CI', Ghana:'GH', Tanzanie:'TZ', Kenya:'KE', Algérie:'DZ', Tunisie:'TN',
+  'Nouvelle-Zélande':'NZ'
+};
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
@@ -877,6 +881,33 @@ const CHAMP_COLORS = {
   'MLS':'#002855',
   'Liga MX':'#006847',
   'MLS Canada':'#d52b1e',
+  // Asie
+  'J1 League':'#e63946',
+  'K League':'#003594',
+  'Super League':'#de2910',
+  'A-League':'#00843d',
+  'Saudi Pro League':'#006c35',
+  'UAE Pro League':'#00732f',
+  'Qatar Stars League':'#8d1b3d',
+  'ISL':'#ff6600',
+  'Persian Gulf Pro League':'#239f40',
+  'Thai League 1':'#003087',
+  'Liga 1':'#ce1126',
+  // Afrique
+  'PSL':'#007a4d',
+  'Botola Pro':'#c1272d',
+  'NPFL':'#008751',
+  'Egyptian Premier League':'#c09300',
+  'Ligue 1 Sénégal':'#00853f',
+  'MTN Elite One':'#007a5e',
+  'MTN Ligue 1':'#f77f00',
+  'Ghana Premier League':'#006b3f',
+  'NBC Premier League':'#1eb53a',
+  'FKF Premier League':'#006600',
+  'Ligue Professionnelle 1':'#006233',
+  'Ligue 1 Tunisie':'#e70013',
+  // Océanie
+  'National League NZ':'#00247d',
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
 
@@ -1233,7 +1264,130 @@ const STADES_DATA = [
   {nom:"BMO Field",club:"Toronto FC",ville:"Toronto",pays:"Canada",championnat:"MLS Canada",lat:43.6333,lng:-79.4186},
   {nom:"BC Place",club:"Vancouver Whitecaps",ville:"Vancouver",pays:"Canada",championnat:"MLS Canada",lat:49.2767,lng:-123.1117},
   {nom:"Saputo Stadium",club:"CF Montreal",ville:"Montreal",pays:"Canada",championnat:"MLS Canada",lat:45.5633,lng:-73.5514},
+
+  // ── JAPON — J1 League ──
+  {nom:"Japan National Stadium",club:"Sélection Japon",ville:"Tokyo",pays:"Japon",championnat:"J1 League",lat:35.6782,lng:139.7141},
+  {nom:"Nissan Stadium",club:"Yokohama F. Marinos",ville:"Yokohama",pays:"Japon",championnat:"J1 League",lat:35.5100,lng:139.6063},
+  {nom:"Saitama Stadium 2002",club:"Urawa Red Diamonds",ville:"Saitama",pays:"Japon",championnat:"J1 League",lat:35.9095,lng:139.7208},
+  {nom:"Toyota Stadium",club:"Nagoya Grampus",ville:"Toyota",pays:"Japon",championnat:"J1 League",lat:35.1333,lng:137.0667},
+  {nom:"Yanmar Stadium Nagai",club:"Gamba Osaka",ville:"Osaka",pays:"Japon",championnat:"J1 League",lat:34.6161,lng:135.5194},
+  {nom:"Kashima Soccer Stadium",club:"Kashima Antlers",ville:"Kashima",pays:"Japon",championnat:"J1 League",lat:35.9561,lng:140.6369},
+  {nom:"Noevir Stadium Kobe",club:"Vissel Kobe",ville:"Kobe",pays:"Japon",championnat:"J1 League",lat:34.6769,lng:135.1894},
+  {nom:"Shizuoka Stadium Ecopa",club:"Jubilo Iwata",ville:"Fukuroi",pays:"Japon",championnat:"J1 League",lat:34.7167,lng:137.9167},
+
+  // ── CORÉE DU SUD — K League ──
+  {nom:"Seoul World Cup Stadium",club:"FC Seoul",ville:"Séoul",pays:"Corée du Sud",championnat:"K League",lat:37.5689,lng:126.8972},
+  {nom:"Jeonju World Cup Stadium",club:"Jeonbuk Hyundai Motors",ville:"Jeonju",pays:"Corée du Sud",championnat:"K League",lat:35.8194,lng:127.1281},
+  {nom:"Incheon Football Stadium",club:"Incheon United",ville:"Incheon",pays:"Corée du Sud",championnat:"K League",lat:37.4444,lng:126.6972},
+  {nom:"Suwon World Cup Stadium",club:"Suwon Samsung Bluewings",ville:"Suwon",pays:"Corée du Sud",championnat:"K League",lat:37.2972,lng:127.0556},
+  {nom:"Ulsan Munsu Football Stadium",club:"Ulsan Hyundai",ville:"Ulsan",pays:"Corée du Sud",championnat:"K League",lat:35.5375,lng:129.2611},
+
+  // ── CHINE — Super League ──
+  {nom:"Workers' Stadium",club:"Beijing Guoan",ville:"Pékin",pays:"Chine",championnat:"Super League",lat:39.9289,lng:116.4436},
+  {nom:"Hongkou Football Stadium",club:"Shanghai Shenhua",ville:"Shanghai",pays:"Chine",championnat:"Super League",lat:31.2597,lng:121.4706},
+  {nom:"Tianhe Stadium",club:"Guangzhou FC",ville:"Guangzhou",pays:"Chine",championnat:"Super League",lat:23.1322,lng:113.3597},
+  {nom:"Longhua Football Stadium",club:"Shenzhen FC",ville:"Shenzhen",pays:"Chine",championnat:"Super League",lat:22.5431,lng:114.0579},
+  {nom:"Jiangsu Olympic Sports Centre",club:"Jiangsu FC",ville:"Nankin",pays:"Chine",championnat:"Super League",lat:32.0503,lng:118.7819},
+
+  // ── AUSTRALIE — A-League ──
+  {nom:"Stadium Australia",club:"Western Sydney Wanderers",ville:"Sydney",pays:"Australie",championnat:"A-League",lat:-33.8472,lng:151.0633},
+  {nom:"AAMI Park",club:"Melbourne City",ville:"Melbourne",pays:"Australie",championnat:"A-League",lat:-37.8194,lng:144.9833},
+  {nom:"HBF Park",club:"Perth Glory",ville:"Perth",pays:"Australie",championnat:"A-League",lat:-31.9486,lng:115.8639},
+  {nom:"Allianz Stadium",club:"Sydney FC",ville:"Sydney",pays:"Australie",championnat:"A-League",lat:-33.8900,lng:151.2233},
+  {nom:"CommBank Stadium",club:"Western Sydney Wanderers",ville:"Parramatta",pays:"Australie",championnat:"A-League",lat:-33.8139,lng:151.0028},
+  {nom:"Brisbane Stadium",club:"Brisbane Roar",ville:"Brisbane",pays:"Australie",championnat:"A-League",lat:-27.4578,lng:153.0097},
+
+  // ── ARABIE SAOUDITE — Pro League ──
+  {nom:"King Fahd International Stadium",club:"Sélection Arabie Saoudite",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7156,lng:46.7219},
+  {nom:"Mohammed bin Salman Stadium",club:"Al-Hilal",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7503,lng:46.8231},
+  {nom:"King Abdullah Sports City",club:"Al-Ahli",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.6847,lng:39.1861},
+  {nom:"Mrsool Park",club:"Al-Nassr",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.8917,lng:46.8528},
+  {nom:"Prince Abdullah Al-Faisal Stadium",club:"Al-Ittihad",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.5433,lng:39.1786},
+
+  // ── ÉMIRATS ARABES UNIS ──
+  {nom:"Hazza bin Zayed Stadium",club:"Al Ain FC",ville:"Al Ain",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:24.2308,lng:55.7628},
+  {nom:"Al Maktoum Stadium",club:"Al Wasl",ville:"Dubaï",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:25.2289,lng:55.3011},
+
+  // ── QATAR ──
+  {nom:"Lusail Stadium",club:"Sélection Qatar",ville:"Lusail",pays:"Qatar",championnat:"Qatar Stars League",lat:25.4333,lng:51.5000},
+  {nom:"Al Bayt Stadium",club:"Al Khor",ville:"Al Khor",pays:"Qatar",championnat:"Qatar Stars League",lat:25.6667,lng:51.5333},
+  {nom:"Khalifa International Stadium",club:"Sélection Qatar",ville:"Doha",pays:"Qatar",championnat:"Qatar Stars League",lat:25.2628,lng:51.4514},
+  {nom:"Ahmad Bin Ali Stadium",club:"Al Rayyan",ville:"Al Rayyan",pays:"Qatar",championnat:"Qatar Stars League",lat:25.2514,lng:51.3681},
+
+  // ── INDE — ISL ──
+  {nom:"Salt Lake Stadium",club:"ATK Mohun Bagan",ville:"Kolkata",pays:"Inde",championnat:"ISL",lat:22.5756,lng:88.3922},
+  {nom:"Jawaharlal Nehru Stadium",club:"Kerala Blasters",ville:"Kochi",pays:"Inde",championnat:"ISL",lat:9.9594,lng:76.2928},
+  {nom:"Mumbai Football Arena",club:"Mumbai City FC",ville:"Mumbai",pays:"Inde",championnat:"ISL",lat:19.0456,lng:72.8717},
+  {nom:"Shree Shiv Chhatrapati Sports Complex",club:"FC Pune City",ville:"Pune",pays:"Inde",championnat:"ISL",lat:18.5233,lng:73.8678},
+
+  // ── AFRIQUE DU SUD — PSL ──
+  {nom:"FNB Stadium",club:"Kaizer Chiefs",ville:"Johannesburg",pays:"Afrique du Sud",championnat:"PSL",lat:-26.2344,lng:27.9828},
+  {nom:"Cape Town Stadium",club:"Cape Town City",ville:"Le Cap",pays:"Afrique du Sud",championnat:"PSL",lat:-33.9031,lng:18.4114},
+  {nom:"Moses Mabhida Stadium",club:"AmaZulu FC",ville:"Durban",pays:"Afrique du Sud",championnat:"PSL",lat:-29.8281,lng:31.0303},
+  {nom:"Loftus Versfeld Stadium",club:"Mamelodi Sundowns",ville:"Pretoria",pays:"Afrique du Sud",championnat:"PSL",lat:-25.7500,lng:28.2222},
+  {nom:"Peter Mokaba Stadium",club:"Polokwane City",ville:"Polokwane",pays:"Afrique du Sud",championnat:"PSL",lat:-23.9025,lng:29.4775},
+
+  // ── MAROC ──
+  {nom:"Stade Mohammed V",club:"Wydad Casablanca",ville:"Casablanca",pays:"Maroc",championnat:"Botola Pro",lat:33.5811,lng:-7.6272},
+  {nom:"Stade de Fès",club:"MAS de Fès",ville:"Fès",pays:"Maroc",championnat:"Botola Pro",lat:34.0433,lng:-5.0072},
+  {nom:"Grand Stade de Tanger",club:"Ittihad Tanger",ville:"Tanger",pays:"Maroc",championnat:"Botola Pro",lat:35.7500,lng:-5.8039},
+  {nom:"Stade Adrar",club:"Hassania Agadir",ville:"Agadir",pays:"Maroc",championnat:"Botola Pro",lat:30.4167,lng:-9.5667},
+
+  // ── NIGERIA ──
+  {nom:"National Stadium Lagos",club:"Sélection Nigeria",ville:"Lagos",pays:"Nigeria",championnat:"NPFL",lat:6.4969,lng:3.3603},
+  {nom:"Moshood Abiola National Stadium",club:"Sélection Nigeria",ville:"Abuja",pays:"Nigeria",championnat:"NPFL",lat:9.0694,lng:7.4906},
+  {nom:"Godswill Akpabio Stadium",club:"Akwa United",ville:"Uyo",pays:"Nigeria",championnat:"NPFL",lat:5.0167,lng:7.9333},
+
+  // ── ÉGYPTE ──
+  {nom:"Cairo International Stadium",club:"Sélection Égypte",ville:"Le Caire",pays:"Égypte",championnat:"Egyptian Premier League",lat:30.0731,lng:31.3122},
+  {nom:"Borg El Arab Stadium",club:"Sélection Égypte",ville:"Alexandrie",pays:"Égypte",championnat:"Egyptian Premier League",lat:30.9253,lng:29.5264},
+  {nom:"Air Defence Stadium",club:"Zamalek SC",ville:"Le Caire",pays:"Égypte",championnat:"Egyptian Premier League",lat:30.1156,lng:31.3228},
+
+  // ── SÉNÉGAL ──
+  {nom:"Stade Léopold Sédar Senghor",club:"Sélection Sénégal",ville:"Dakar",pays:"Sénégal",championnat:"Ligue 1 Sénégal",lat:14.7167,lng:-17.4500},
+  {nom:"Stade du Sénégal",club:"Sélection Sénégal",ville:"Diamniadio",pays:"Sénégal",championnat:"Ligue 1 Sénégal",lat:14.7167,lng:-17.2500},
+
+  // ── CAMEROUN ──
+  {nom:"Stade d'Olembé",club:"Sélection Cameroun",ville:"Yaoundé",pays:"Cameroun",championnat:"MTN Elite One",lat:3.9000,lng:11.5333},
+  {nom:"Stade de la Réunification",club:"Sélection Cameroun",ville:"Douala",pays:"Cameroun",championnat:"MTN Elite One",lat:4.0603,lng:9.7333},
+
+  // ── CÔTE D'IVOIRE ──
+  {nom:"Stade Olympique Alassane Ouattara",club:"Sélection Côte d'Ivoire",ville:"Abidjan",pays:"Côte d'Ivoire",championnat:"MTN Ligue 1",lat:5.3667,lng:-3.9833},
+  {nom:"Stade de la Paix",club:"SO Armée",ville:"Bouaké",pays:"Côte d'Ivoire",championnat:"MTN Ligue 1",lat:7.6833,lng:-5.0333},
+
+  // ── GHANA ──
+  {nom:"Baba Yara Sports Stadium",club:"Asante Kotoko",ville:"Kumasi",pays:"Ghana",championnat:"Ghana Premier League",lat:6.6833,lng:-1.6167},
+  {nom:"Accra Sports Stadium",club:"Hearts of Oak",ville:"Accra",pays:"Ghana",championnat:"Ghana Premier League",lat:5.5500,lng:-0.1833},
+
+  // ── TANZANIE / KENYA ──
+  {nom:"Benjamin Mkapa Stadium",club:"Sélection Tanzanie",ville:"Dar es Salaam",pays:"Tanzanie",championnat:"NBC Premier League",lat:-6.8342,lng:39.2286},
+  {nom:"Kasarani Stadium",club:"Gor Mahia",ville:"Nairobi",pays:"Kenya",championnat:"FKF Premier League",lat:-1.2208,lng:36.8958},
+
+  // ── ALGÉRIE ──
+  {nom:"Stade Mustapha Tchaker",club:"MC Béjaïa",ville:"Blida",pays:"Algérie",championnat:"Ligue Professionnelle 1",lat:36.4667,lng:2.8333},
+  {nom:"Stade du 5 Juillet 1962",club:"MC Alger",ville:"Alger",pays:"Algérie",championnat:"Ligue Professionnelle 1",lat:36.7500,lng:3.0500},
+  {nom:"Stade Nelson Mandela",club:"USM Annaba",ville:"Annaba",pays:"Algérie",championnat:"Ligue Professionnelle 1",lat:36.9000,lng:7.7667},
+
+  // ── TUNISIE ──
+  {nom:"Stade de Radès",club:"Sélection Tunisie",ville:"Radès",pays:"Tunisie",championnat:"Ligue 1 Tunisie",lat:36.7667,lng:10.2833},
+  {nom:"Stade Hamadi Agrebi",club:"ES Sahel",ville:"Sousse",pays:"Tunisie",championnat:"Ligue 1 Tunisie",lat:35.8167,lng:10.6333},
+
+  // ── NOUVELLE-ZÉLANDE ──
+  {nom:"Eden Park",club:"Sélection Nouvelle-Zélande",ville:"Auckland",pays:"Nouvelle-Zélande",championnat:"National League NZ",lat:-36.8753,lng:174.7442},
+
+  // ── INDONÉSIE ──
+  {nom:"Gelora Bung Karno Stadium",club:"Sélection Indonésie",ville:"Jakarta",pays:"Indonésie",championnat:"Liga 1",lat:-6.2183,lng:106.8022},
+  {nom:"Gelora Bandung Lautan Api",club:"Persib Bandung",ville:"Bandung",pays:"Indonésie",championnat:"Liga 1",lat:-6.9381,lng:107.6239},
+
+  // ── THAÏLANDE ──
+  {nom:"Rajamangala National Stadium",club:"Sélection Thaïlande",ville:"Bangkok",pays:"Thaïlande",championnat:"Thai League 1",lat:13.7667,lng:100.5956},
+  {nom:"700th Anniversary Stadium",club:"Chiangmai United",ville:"Chiang Mai",pays:"Thaïlande",championnat:"Thai League 1",lat:18.7667,lng:99.0000},
+
+  // ── IRAN ──
+  {nom:"Azadi Stadium",club:"Persepolis FC",ville:"Téhéran",pays:"Iran",championnat:"Persian Gulf Pro League",lat:35.7292,lng:51.3128},
+  {nom:"Naghsh-e Jahan Stadium",club:"Zob Ahan",ville:"Ispahan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:32.6572,lng:51.6786},
 ];
+
 
 // ════════════════════════════════════
 // STATE
