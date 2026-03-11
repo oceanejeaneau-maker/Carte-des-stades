@@ -408,7 +408,41 @@
     .btn-logout { background: none; border: 1px solid var(--border); color: var(--text3); border-radius: 4px; padding: 4px 8px; font-size: 10px; cursor: pointer; font-family: var(--font-disp); transition: all .15s; white-space: nowrap; letter-spacing: .06em; text-transform: uppercase; }
     .btn-logout:hover { border-color: var(--red); color: var(--red); }
 
-    /* ── PAGE CLASSEMENT ── */
+    /* ── PAGE STATS ── */
+    .page-stats { padding: 16px; gap: 16px; max-width: 640px; margin: 0 auto; width: 100%; }
+    .stats-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .stats-card-title { font-family: var(--font-disp); font-size: 1rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    /* Graphique barres */
+    .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
+    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .bar-wrap { width: 100%; display: flex; align-items: flex-end; justify-content: center; height: 100px; }
+    .bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--accent); min-height: 2px; transition: height .6s cubic-bezier(.4,0,.2,1); position: relative; }
+    .bar:hover::after { content: attr(data-val); position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; color: var(--accent); white-space: nowrap; }
+    .bar-lbl { font-family: var(--font-mono); font-size: 9px; color: var(--text3); }
+    /* Continents */
+    .continent-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .continent-name { font-size: 12px; color: var(--text2); min-width: 110px; font-family: var(--font-disp); text-transform: uppercase; letter-spacing: .04em; }
+    .continent-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .continent-bar { height: 100%; border-radius: 4px; transition: width .8s cubic-bezier(.4,0,.2,1); }
+    .continent-count { font-family: var(--font-mono); font-size: 11px; color: var(--accent); min-width: 28px; text-align: right; }
+    /* Objectifs */
+    .objectif-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .objectif-header { display: flex; justify-content: space-between; align-items: center; }
+    .objectif-name { font-size: 13px; color: var(--text); font-weight: 500; }
+    .objectif-pct { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+    .objectif-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .objectif-fill { height: 100%; border-radius: 3px; background: var(--accent); box-shadow: 0 0 6px var(--accent-glow); transition: width .8s cubic-bezier(.4,0,.2,1); }
+    .objectif-fill.done { background: var(--amber); box-shadow: 0 0 6px var(--amber-dim); }
+    .objectif-badge { font-size: .65rem; padding: 2px 7px; border-radius: 10px; background: var(--accent-dim); color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; }
+    .objectif-badge.done { background: var(--amber-dim); color: var(--amber); }
+    /* Top pays */
+    .top-pays-grid { display: flex; flex-direction: column; gap: 6px; }
+    .top-pays-row { display: flex; align-items: center; gap: 8px; }
+    .top-pays-flag { font-size: 1rem; min-width: 22px; }
+    .top-pays-name { font-size: 12px; color: var(--text2); flex: 1; }
+    .top-pays-bar-wrap { width: 80px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .top-pays-bar { height: 100%; background: var(--accent); border-radius: 3px; }
+    .top-pays-count { font-family: var(--font-mono); font-size: 11px; color: var(--text3); min-width: 22px; text-align: right; }
     .page-classement { padding: 16px; gap: 14px; }
     .leaderboard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .leaderboard-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); transition: background .15s; }
@@ -617,6 +651,9 @@
       <div class="nav-item" data-page="classement">
         <span class="nav-icon">🥇</span> Classement
       </div>
+      <div class="nav-item" data-page="stats">
+        <span class="nav-icon">📊</span> Stats
+      </div>
       <div class="nav-item" data-page="profil">
         <span class="nav-icon">👤</span> Profil
       </div>
@@ -743,6 +780,48 @@
       </div>
 
       <div class="match-list" id="matchList"></div>
+    </div>
+
+    <!-- PAGE STATS -->
+    <div class="page page-stats" id="page-stats">
+
+      <!-- Progression par année -->
+      <div class="stats-card">
+        <div class="stats-card-title">📈 Progression par année</div>
+        <div class="bar-chart" id="statsBarChart">
+          <div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div>
+        </div>
+      </div>
+
+      <!-- Répartition continents -->
+      <div class="stats-card">
+        <div class="stats-card-title">🌍 Répartition par continent</div>
+        <div id="statsContinents"></div>
+      </div>
+
+      <!-- Top pays -->
+      <div class="stats-card">
+        <div class="stats-card-title">🏴 Top pays visités</div>
+        <div class="top-pays-grid" id="statsTopPays">
+          <div style="color:var(--text3);font-size:12px">Aucun stade visité</div>
+        </div>
+      </div>
+
+      <!-- Objectifs -->
+      <div class="stats-card">
+        <div class="stats-card-title">🎯 Objectifs</div>
+        <div id="statsObjectifs"></div>
+        <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-disp);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Objectif personnalisé</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="number" id="customGoalInput" min="1" max="630" placeholder="Ex: 50"
+              style="width:80px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-mono);font-size:13px;outline:none">
+            <button id="customGoalBtn" style="padding:7px 14px;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:var(--font-disp);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">Définir</button>
+            <span id="customGoalDisplay" style="font-size:11px;color:var(--text3)"></span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- PAGE CLASSEMENT -->
@@ -2484,6 +2563,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
     if (page === 'matchs') renderMatchs();
     if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
     if (page === 'profil') { if (window._firebase) window._firebase.renderProfil(); }
+    if (page === 'stats') renderStats();
   });
 });
 
@@ -2647,8 +2727,145 @@ renderMatchs();
 
 // Exposer les fonctions pour le module Firebase
 // ════════════════════════════════════
-// ONBOARDING
+// PAGE STATS
 // ════════════════════════════════════
+const CONTINENTS = {
+  'Europe':        ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Macédoine du Nord','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie'],
+  'Amérique du Sud': ['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela'],
+  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
+  'Afrique':       ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique','Libye'],
+  'Asie':          ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande','Îles Salomon','Samoa','Fidji','Polynésie française','Nouvelle-Calédonie'],
+  'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
+};
+const CONTINENT_COLORS = {
+  'Europe':'#3b82f6','Amérique du Sud':'#f59e0b','Amérique du Nord':'#ef4444',
+  'Afrique':'#10b981','Asie':'#8b5cf6','Moyen-Orient':'#f97316'
+};
+
+function getContinent(pays) {
+  for (const [c, list] of Object.entries(CONTINENTS)) {
+    if (list.includes(pays)) return c;
+  }
+  return 'Autre';
+}
+
+function renderStats() {
+  const visites = stades.filter(s => s.visite);
+
+  // ── Graphique par année ──
+  const byYear = {};
+  visites.forEach(s => {
+    const y = s.annee || 'N/A';
+    byYear[y] = (byYear[y] || 0) + 1;
+  });
+  const chart = document.getElementById('statsBarChart');
+  if (!visites.length) {
+    chart.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;width:100%;padding:20px 0">Commence à cocher des stades !</div>';
+  } else {
+    const years = Object.keys(byYear).filter(y=>y!=='N/A').sort();
+    if (byYear['N/A']) years.push('N/A');
+    const max = Math.max(...Object.values(byYear));
+    chart.innerHTML = years.map(y => {
+      const val = byYear[y];
+      const pct = Math.round((val/max)*100);
+      return `<div class="bar-col">
+        <div class="bar-wrap"><div class="bar" style="height:${pct}%;opacity:${0.5+pct/200}" data-val="${val}"></div></div>
+        <div class="bar-lbl">${y === 'N/A' ? '?' : y.toString().slice(2)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Continents ──
+  const byCont = {};
+  visites.forEach(s => {
+    const c = getContinent(s.pays);
+    byCont[c] = (byCont[c] || 0) + 1;
+  });
+  const totalStadesCont = Object.entries(CONTINENTS).reduce((a,[,l])=>a+stades.filter(s=>l.includes(s.pays)).length, 0);
+  const contEl = document.getElementById('statsContinents');
+  const contList = Object.entries(CONTINENTS).map(([c, list]) => {
+    const total = stades.filter(s => list.includes(s.pays)).length;
+    const done  = visites.filter(s => list.includes(s.pays)).length;
+    return { c, total, done };
+  }).filter(x => x.total > 0).sort((a,b) => b.done - a.done);
+  const maxDone = Math.max(...contList.map(x=>x.done), 1);
+  contEl.innerHTML = contList.map(({c, total, done}) => `
+    <div class="continent-row">
+      <div class="continent-name">${c}</div>
+      <div class="continent-bar-wrap">
+        <div class="continent-bar" style="width:${Math.round((done/total)*100)}%;background:${CONTINENT_COLORS[c]||'#aaa'}"></div>
+      </div>
+      <div class="continent-count">${done}<span style="color:var(--text3);font-size:9px">/${total}</span></div>
+    </div>
+  `).join('');
+
+  // ── Top pays ──
+  const byPays = {};
+  visites.forEach(s => { byPays[s.pays] = (byPays[s.pays] || 0) + 1; });
+  const topPays = Object.entries(byPays).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const topMax = topPays[0]?.[1] || 1;
+  const topEl = document.getElementById('statsTopPays');
+  if (!topPays.length) {
+    topEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Aucun stade visité</div>';
+  } else {
+    topEl.innerHTML = topPays.map(([pays, count]) => `
+      <div class="top-pays-row">
+        <span class="top-pays-flag">${drapeau(pays)}</span>
+        <span class="top-pays-name">${pays}</span>
+        <div class="top-pays-bar-wrap"><div class="top-pays-bar" style="width:${Math.round((count/topMax)*100)}%"></div></div>
+        <span class="top-pays-count">${count}</span>
+      </div>
+    `).join('');
+  }
+
+  // ── Objectifs ──
+  const total = stades.length;
+  const done  = visites.length;
+  const customGoal = parseInt(localStorage.getItem('stades_custom_goal') || '0');
+  const objectifs = [
+    { name: '🥉 Premiers pas',    target: 10,           icon:'🥉' },
+    { name: '🥈 En route',        target: 50,           icon:'🥈' },
+    { name: '🥇 Explorateur',     target: 100,          icon:'🥇' },
+    { name: '🌍 Globe-trotter',   target: 200,          icon:'🌍' },
+    { name: '🏆 Légende',         target: 500,          icon:'🏆' },
+  ];
+  if (customGoal > 0) {
+    objectifs.push({ name: `🎯 Mon objectif : ${customGoal} stades`, target: customGoal, custom: true });
+  }
+  document.getElementById('statsObjectifs').innerHTML = objectifs.map(obj => {
+    const pct = Math.min(Math.round((done/obj.target)*100), 100);
+    const isDone = done >= obj.target;
+    return `<div class="objectif-row">
+      <div class="objectif-header">
+        <span class="objectif-name">${obj.name}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="objectif-pct">${done}/${obj.target}</span>
+          ${isDone ? `<span class="objectif-badge done">✓ Atteint</span>` : `<span class="objectif-badge">${pct}%</span>`}
+        </div>
+      </div>
+      <div class="objectif-track"><div class="objectif-fill${isDone?' done':''}" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  // Afficher objectif custom actuel
+  if (customGoal > 0) {
+    document.getElementById('customGoalDisplay').textContent = `Actuel : ${customGoal}`;
+    document.getElementById('customGoalInput').value = customGoal;
+  }
+}
+
+// Objectif personnalisé
+document.getElementById('customGoalBtn').addEventListener('click', () => {
+  const val = parseInt(document.getElementById('customGoalInput').value);
+  if (val > 0 && val <= 9999) {
+    try { localStorage.setItem('stades_custom_goal', val); } catch {}
+    document.getElementById('customGoalDisplay').textContent = `Actuel : ${val}`;
+    renderStats();
+  }
+});
+
+// Appeler renderStats quand on navigue sur la page
+
 (function() {
   const overlay = document.getElementById('onboardingOverlay');
   const slides  = document.getElementById('onboardingSlides');
