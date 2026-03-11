@@ -2156,7 +2156,13 @@ function initFilters() {
 // ════════════════════════════════════
 // RENDU
 // ════════════════════════════════════
-function commit() { sauvegarder(); updateStats(); renderAll(); }
+function commit(fromCheckbox) { sauvegarder(); updateStats(); if(fromCheckbox) { syncAllMarkers(); } else { renderAll(); } }
+
+function syncAllMarkers() {
+  const ids = getFilteredIds();
+  stades.forEach((_,i) => syncMarker(i, ids.includes(i) && layerVisible(stades[i])));
+  updateHeatmap();
+}
 
 function updateStats() {
   const total=stades.length, visites=stades.filter(s=>s.visite).length, pct=total?Math.round(visites/total*100):0;
@@ -2222,7 +2228,15 @@ function renderTableBody(ids) {
         const tr=tbody.insertRow(); tr.className='data-row'+(autoExpand?'':' hidden'); tr.dataset.stadeid=id;
 
         const cb=makeCheckbox(s.visite);
-        cb.addEventListener('change',()=>{stades[id].visite=cb.checked; if(cb.checked&&!stades[id].annee) stades[id].annee=CURRENT_YEAR; commit();});
+        cb.addEventListener('change',()=>{
+          stades[id].visite=cb.checked;
+          if(cb.checked&&!stades[id].annee) stades[id].annee=CURRENT_YEAR;
+          // Mettre à jour visuellement la ligne sans reconstruire le tableau
+          const tdV = tr.querySelector('.badge-oui, .badge-non');
+          if(tdV) { tdV.className = cb.checked ? 'badge-oui' : 'badge-non'; tdV.textContent = cb.checked ? '✅' : '—'; }
+          tr.style.background = cb.checked ? 'rgba(0,230,118,.04)' : '';
+          commit(true);
+        });
         tr.insertCell().appendChild(cb);
 
         const bN=document.createElement('b'); bN.textContent=s.nom; tr.insertCell().appendChild(bN);
