@@ -104,11 +104,21 @@
     .marker-cluster-large  div { background: rgba(239,68,68,.9)   !important; color: #fff !important; font-weight: 700; }
     .marker-cluster div { font-family: var(--font-disp) !important; font-size: 15px !important; }
 
-    .map-legend { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
-    .map-legend-title { font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; color: var(--text3); width: 100%; margin-bottom: 2px; font-weight: 600; }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); cursor: pointer; opacity: 1; transition: opacity .15s; }
+    .map-legend { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .map-legend-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; cursor: pointer; user-select: none; gap: 8px; }
+    .map-legend-header:hover { background: var(--surface2); }
+    .map-legend-title { font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; color: var(--text3); font-weight: 600; flex: 1; }
+    .map-legend-toggle { font-size: 10px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; font-family: var(--font-disp); letter-spacing: .04em; white-space: nowrap; transition: all .15s; }
+    .map-legend-body { display: none; padding: 8px 12px 10px; border-top: 1px solid var(--border); }
+    .map-legend-body.open { display: block; }
+    .map-legend-search { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 5px; padding: 6px 10px; font-family: var(--font-body); font-size: 12px; outline: none; margin-bottom: 8px; }
+    .map-legend-search:focus { border-color: var(--accent); }
+    .map-legend-search::placeholder { color: var(--text3); }
+    .map-legend-grid { display: flex; flex-wrap: wrap; gap: 4px 12px; max-height: 200px; overflow-y: auto; }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); cursor: pointer; opacity: 1; transition: opacity .15s; padding: 2px 0; }
     .legend-item.dimmed { opacity: .25; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid rgba(255,255,255,.2); flex-shrink: 0; }
+    .legend-item.hidden-search { display: none; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
     .map-dot { border-radius: 50%; border: 2px solid rgba(255,255,255,.9); box-shadow: 0 1px 4px rgba(0,0,0,.35); }
 
@@ -463,7 +473,14 @@
         </div>
         <div id="map"></div>
         <div class="map-legend" id="mapLegend">
-          <div class="map-legend-title">Couleurs par championnat — cliquer pour filtrer</div>
+          <div class="map-legend-header" id="legendHeader">
+            <span class="map-legend-title">🎨 Légende championnats</span>
+            <span class="map-legend-toggle" id="legendToggleBtn">Afficher ▼</span>
+          </div>
+          <div class="map-legend-body" id="legendBody">
+            <input class="map-legend-search" id="legendSearch" placeholder="🔍 Rechercher un championnat..." />
+            <div class="map-legend-grid" id="legendGrid"></div>
+          </div>
         </div>
         <div class="table-container">
           <table id="stadesTable">
@@ -2015,15 +2032,17 @@ document.getElementById('btnZoomVisited').addEventListener('click', () => {
   map.flyToBounds(L.latLngBounds(vis.map(s=>[s.lat,s.lng])).pad(0.1), {duration:0.8});
 });
 
-// ── Légende cliquable ─────────────────────────
+// ── Légende cliquable repliable ───────────────
 const champFilter = { active: null };
 function buildLegend() {
-  const legend = document.getElementById('mapLegend');
-  legend.innerHTML = '<div class="map-legend-title">Couleurs par championnat — cliquer pour filtrer</div>';
+  const grid = document.getElementById('legendGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
   const champs = [...new Set(stades.map(s=>s.championnat))].sort();
   champs.forEach(champ => {
     const item = document.createElement('div');
     item.className = 'legend-item';
+    item.dataset.champ = champ.toLowerCase();
     item.innerHTML = `<div class="legend-dot" style="background:${champColor(champ)}"></div><span>${champ}</span>`;
     item.addEventListener('click', () => {
       if (champFilter.active === champ) {
@@ -2035,18 +2054,34 @@ function buildLegend() {
         document.getElementById('champFilter').value = champ;
         filter.championnat = champ;
       }
-      legend.querySelectorAll('.legend-item').forEach(el => {
+      grid.querySelectorAll('.legend-item').forEach(el => {
         const name = el.querySelector('span').textContent;
         el.classList.toggle('dimmed', champFilter.active !== null && name !== champFilter.active);
       });
       renderAll();
     });
-    legend.appendChild(item);
+    grid.appendChild(item);
   });
-  // Visité
-  const vis = document.createElement('div'); vis.className='legend-item';
-  vis.innerHTML=`<div class="legend-dot" style="background:#3fb950;box-shadow:0 0 0 2px rgba(63,185,80,.4)"></div><span style="color:var(--green);font-weight:600">Visité ✅</span>`;
-  legend.appendChild(vis);
+  // Item "Visité"
+  const vis = document.createElement('div'); vis.className='legend-item'; vis.dataset.champ='visité';
+  vis.innerHTML=`<div class="legend-dot" style="background:var(--accent);box-shadow:0 0 0 2px var(--accent-dim)"></div><span style="color:var(--accent);font-weight:600">Visité ✅</span>`;
+  grid.appendChild(vis);
+
+  // Toggle légende
+  document.getElementById('legendHeader').addEventListener('click', () => {
+    const body = document.getElementById('legendBody');
+    const btn = document.getElementById('legendToggleBtn');
+    const open = body.classList.toggle('open');
+    btn.textContent = open ? 'Masquer ▲' : 'Afficher ▼';
+  });
+
+  // Recherche dans la légende
+  document.getElementById('legendSearch').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    grid.querySelectorAll('.legend-item').forEach(el => {
+      el.classList.toggle('hidden-search', q && !el.dataset.champ.includes(q));
+    });
+  });
 }
 
 // ════════════════════════════════════
@@ -2089,7 +2124,7 @@ function initFilters() {
   cS.addEventListener('change', e=>{
     filter.championnat=e.target.value;
     champFilter.active=e.target.value||null;
-    document.querySelectorAll('#mapLegend .legend-item').forEach(el=>{
+    document.querySelectorAll('#legendGrid .legend-item').forEach(el=>{
       const name=el.querySelector('span')?.textContent;
       if(name) el.classList.toggle('dimmed', champFilter.active!==null && name!==champFilter.active);
     });
@@ -2108,7 +2143,7 @@ function initFilters() {
     document.getElementById('searchInput').value=''; pS.value=''; cS.value='';
     document.getElementById('btnVisited').textContent='Afficher : Tous';
     document.getElementById('btnVisited').className='btn btn-primary';
-    document.querySelectorAll('#mapLegend .legend-item').forEach(el=>el.classList.remove('dimmed'));
+    document.querySelectorAll('#legendGrid .legend-item').forEach(el=>el.classList.remove('dimmed'));
     renderAll();
   });
   document.getElementById('selectAll').addEventListener('change', e=>{
