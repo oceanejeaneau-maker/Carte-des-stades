@@ -2303,7 +2303,7 @@ stades.forEach((s,i) => {
     let prev = row.previousElementSibling;
     while (prev) { prev.classList.remove('hidden'); prev=prev.previousElementSibling; }
     row.classList.remove('hidden'); row.scrollIntoView({behavior:'smooth',block:'center'});
-    row.style.background='#dbeafe'; setTimeout(()=>{row.style.background='';},1500);
+    row.style.background='rgba(0,230,118,.12)'; setTimeout(()=>{row.style.background='';},1500);
   });
   rawMarkers.push(m);
 });
@@ -2526,7 +2526,7 @@ function renderTableBody(ids) {
 
     Object.keys(groups[pays]).sort().forEach(champ=>{
       const champIds=groups[pays][champ];
-      const trC=tbody.insertRow(); trC.className='sub-header'+(autoExpand?'':' hidden');
+      const trC=tbody.insertRow(); trC.className='sub-header'+(expanded?'':' hidden');
       const tdC=trC.insertCell(); tdC.colSpan=8; tdC.style.paddingLeft='30px';
       const sc=document.createElement('span');
       const dot=`<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${champColor(champ)};margin-right:6px;vertical-align:middle"></span>`;
@@ -2535,7 +2535,7 @@ function renderTableBody(ids) {
 
       champIds.forEach(id=>{
         const s=stades[id];
-        const tr=tbody.insertRow(); tr.className='data-row'+(autoExpand?'':' hidden'); tr.dataset.stadeid=id;
+        const tr=tbody.insertRow(); tr.className='data-row'+(expanded?'':' hidden'); tr.dataset.stadeid=id;
         tr.style.cursor='pointer';
         tr.addEventListener('click', e => { if (e.target.type !== 'checkbox') openFiche(id); });
 
@@ -3126,6 +3126,8 @@ document.getElementById('fichePanel').addEventListener('touchstart', e => { fich
 document.getElementById('fichePanel').addEventListener('touchend', e => {
   if (e.changedTouches[0].clientY - ficheStartY > 80) ficheOverlay.classList.remove('open');
 }, {passive:true});
+
+window.openFiche = openFiche;
 
 window._app = { updateStats, renderAll, renderMatchs };
 </script>
