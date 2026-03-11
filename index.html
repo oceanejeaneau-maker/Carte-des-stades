@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tour des Stades — Monde</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a0e1a">
+  <meta name="theme-color" content="#00e676">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Carte des Stades">
@@ -565,6 +565,7 @@
               <div class="profil-email" id="profilEmail">—</div>
             </div>
             <button class="profil-share-btn" id="btnShareProfil">🔗 Partager</button>
+            <button class="profil-share-btn" id="btnInstallApp" style="display:none;background:var(--accent);color:#000;border-color:var(--accent);font-family:var(--font-disp);letter-spacing:.06em;text-transform:uppercase;">📲 Installer l'app</button>
           </div>
         </div>
         <div class="profil-stats">
@@ -2403,6 +2404,66 @@ renderMatchs();
 
 // Exposer les fonctions pour le module Firebase
 window._app = { updateStats, renderAll, renderMatchs };
+</script>
+
+<script>
+// ── Enregistrement du Service Worker ──────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => {
+        console.log('✅ SW enregistré:', reg.scope);
+
+        // Détecter une mise à jour disponible
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Afficher une petite bannière de mise à jour
+              const banner = document.createElement('div');
+              banner.style.cssText = `
+                position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+                background:#00e676; color:#000; padding:10px 20px; border-radius:8px;
+                font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700;
+                letter-spacing:.06em; text-transform:uppercase; z-index:99999;
+                box-shadow:0 4px 20px rgba(0,230,118,.4); cursor:pointer;
+                display:flex; align-items:center; gap:10px;
+              `;
+              banner.innerHTML = '🔄 Mise à jour disponible — <span style="text-decoration:underline">Recharger</span>';
+              banner.onclick = () => { newWorker.postMessage({ type: 'SKIP_WAITING' }); location.reload(); };
+              document.body.appendChild(banner);
+            }
+          });
+        });
+      })
+      .catch(err => console.warn('SW échec:', err));
+  });
+}
+
+// ── Bannière "Installer l'app" ─────────────────
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Afficher le bouton "Installer" sur la page profil
+  const btn = document.getElementById('btnInstallApp');
+  if (btn) {
+    btn.style.display = 'flex';
+    btn.addEventListener('click', async () => {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') btn.style.display = 'none';
+      deferredPrompt = null;
+    });
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  const btn = document.getElementById('btnInstallApp');
+  if (btn) btn.style.display = 'none';
+  deferredPrompt = null;
+});
 </script>
 </body>
 </html>
