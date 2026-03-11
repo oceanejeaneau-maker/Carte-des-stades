@@ -134,6 +134,9 @@
     .sub-header { background: var(--surface2); font-weight: 600; font-size: .72rem; color: var(--text3); }
     .sub-header td { padding: 7px 12px; }
     .group-toggle { cursor: pointer; }
+    .group-toggle .arrow { display: inline-block; transition: transform .2s; font-style: normal; color: white; }
+    .group-toggle .arrow.open { transform: rotate(0deg); }
+    .group-toggle .arrow.closed { transform: rotate(-90deg); }
     .group-actions { float: right; display: flex; gap: 6px; }
     .btn-action { font-size: 11px; padding: 2px 9px; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text3); cursor: pointer; font-family: var(--font-body); transition: all .12s; }
     .btn-action.check:hover   { background: var(--green-dim); color: var(--green); border-color: var(--green); }
@@ -2205,10 +2208,11 @@ function renderTableBody(ids) {
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
     const sp=document.createElement('span'); sp.className='group-toggle';
-    const arrow=document.createTextNode(expanded?' ▼':' ▶');
+    const arrow=document.createElement('span'); arrow.className='arrow '+(expanded?'open':'closed'); arrow.textContent=' ▼';
     sp.append(`${flag} ${pays}`,arrow);
     sp.addEventListener('click',()=>{
-      expanded=!expanded; expandedState[pays]=expanded; arrow.textContent=expanded?' ▼':' ▶';
+      expanded=!expanded; expandedState[pays]=expanded;
+      arrow.className='arrow '+(expanded?'open':'closed');
       let next=trP.nextElementSibling;
       while(next&&!next.classList.contains('group-header')){next.classList.toggle('hidden',!expanded); next=next.nextElementSibling;}
     });
