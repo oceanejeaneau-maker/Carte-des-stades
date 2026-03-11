@@ -2509,7 +2509,8 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    let expanded = (pays in expandedState) ? expandedState[pays] : autoExpand;
+    // Par défaut ouvert (true), sauf si l'utilisateur a explicitement fermé ce pays
+    let expanded = (pays in expandedState) ? expandedState[pays] : true;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
@@ -2537,7 +2538,11 @@ function renderTableBody(ids) {
         const s=stades[id];
         const tr=tbody.insertRow(); tr.className='data-row'+(expanded?'':' hidden'); tr.dataset.stadeid=id;
         tr.style.cursor='pointer';
-        tr.addEventListener('click', e => { if (e.target.type !== 'checkbox') openFiche(id); });
+        tr.addEventListener('click', e => {
+          if (e.target.type === 'checkbox' || e.target.closest('input')) return;
+          openFiche(id);
+          flyTo(s.lat, s.lng);
+        });
 
         const cb=makeCheckbox(s.visite);
         cb.addEventListener('change',()=>{
@@ -2573,7 +2578,6 @@ function renderTableBody(ids) {
         tr.insertCell().appendChild(inp);
 
         const tdV=tr.insertCell(); tdV.className=s.visite?'badge-oui':'badge-non'; tdV.textContent=s.visite?'✅':'—';
-        tr.addEventListener('click',e=>{if(e.target.closest('input'))return; flyTo(s.lat,s.lng);});
       });
     });
   });
