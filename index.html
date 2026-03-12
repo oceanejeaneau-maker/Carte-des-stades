@@ -637,7 +637,7 @@
     <div class="auth-logo">
       <div class="logo-big">⚽</div>
       <h1>Tour des Stades</h1>
-      <p>Connecte-toi pour accéder à ta carte</p>
+      <p>Connecte-toi pour synchroniser ta progression</p>
     </div>
     <div id="authError" class="auth-error"></div>
     <button class="btn-auth btn-google" id="btnGoogle">
@@ -662,6 +662,10 @@
       <input type="text" id="authName" placeholder="Ton prénom ou pseudo">
     </div>
     <button class="btn-auth" id="btnAuthSubmit">Se connecter</button>
+    <div class="auth-sep">ou</div>
+    <button class="btn-auth" id="btnGuest" style="background:transparent;color:var(--text3);border:1px solid var(--border);box-shadow:none;font-family:var(--font-body);font-size:13px;letter-spacing:0;text-transform:none;">
+      Continuer sans compte <small style="opacity:.6">(sauvegarde locale)</small>
+    </button>
   </div>
 </div>
 
@@ -947,11 +951,50 @@ const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
+let guestMode = false;
 
 // ── Auth UI ──────────────────────────────
 const authOverlay = document.getElementById('authOverlay');
 const authError = document.getElementById('authError');
 let isLogin = true;
+
+// ── Mode invité ───────────────────────────
+document.getElementById('btnGuest').addEventListener('click', () => {
+  guestMode = true;
+  authOverlay.classList.add('hidden');
+  // Charger depuis localStorage
+  try {
+    const saved = JSON.parse(localStorage.getItem('stades_guest_v1') || 'null');
+    if (saved && saved.stades) {
+      saved.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } });
+    }
+    if (saved && saved.matchs) matchs.splice(0, matchs.length, ...saved.matchs);
+    if (saved && saved.notes) Object.assign(notes, saved.notes);
+  } catch {}
+  // Mettre à jour l'UI
+  document.getElementById('userName').textContent = 'Invité';
+  document.getElementById('userAvatar').textContent = '👤';
+  document.getElementById('btnLogout').textContent = 'Se connecter';
+  const waitApp = () => new Promise(resolve => {
+    if (window._app) return resolve();
+    const t = setInterval(() => { if (window._app) { clearInterval(t); resolve(); } }, 50);
+  });
+  waitApp().then(() => {
+    window._app.updateStats();
+    window._app.renderAll();
+    window._app.renderMatchs();
+  });
+});
+
+// Remplacer le comportement de Déconnexion en mode invité
+document.getElementById('btnLogout').addEventListener('click', () => {
+  if (guestMode) {
+    guestMode = false;
+    authOverlay.classList.remove('hidden');
+    return;
+  }
+  signOut(auth);
+});
 
 document.getElementById('tabLogin').addEventListener('click', () => {
   isLogin = true;
@@ -1005,11 +1048,10 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
-
 // ── Auth state ────────────────────────────
 onAuthStateChanged(auth, async user => {
   if (user) {
+    guestMode = false; // un vrai compte prend le dessus
     currentUser = user;
     authOverlay.classList.add('hidden');
     const name = user.displayName || user.email.split('@')[0];
@@ -1030,12 +1072,20 @@ onAuthStateChanged(auth, async user => {
     renderProfil();
   } else {
     currentUser = null;
-    authOverlay.classList.remove('hidden');
+    if (!guestMode) authOverlay.classList.remove('hidden');
   }
 });
 
 // ── Firestore sauvegarde ──────────────────
 async function sauvegarder() {
+  if (guestMode) {
+    // Sauvegarde locale pour invité
+    try {
+      const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
+      localStorage.setItem('stades_guest_v1', JSON.stringify({ stades: data, matchs, notes }));
+    } catch {}
+    return;
+  }
   if (!currentUser) return;
   const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
   const visites = stades.filter(s => s.visite).length;
@@ -1050,7 +1100,21 @@ async function sauvegarder() {
 
 // ── Profil ────────────────────────────────
 function renderProfil() {
-  if (!currentUser) return;
+  if (!currentUser) {
+    // Mode invité
+    document.getElementById('profilAvatar').textContent = '👤';
+    document.getElementById('profilName').textContent = 'Mode invité';
+    document.getElementById('profilEmail').textContent = 'Données sauvegardées localement';
+    document.getElementById('profilInputNom').value = '';
+    document.getElementById('profilInputPhoto').value = '';
+    const visites = stades.filter(s => s.visite).length;
+    const pays = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
+    document.getElementById('psVisites').textContent = visites;
+    document.getElementById('psPays').textContent = pays;
+    document.getElementById('psMatchs').textContent = matchs.length;
+    document.getElementById('profilLienUrl').textContent = '— Connecte-toi pour partager ton profil —';
+    return;
+  }
   const name = currentUser.displayName || currentUser.email.split('@')[0];
   const av = document.getElementById('profilAvatar');
   if (currentUser.photoURL) { av.innerHTML = `<img src="${currentUser.photoURL}">`; }
@@ -1137,6 +1201,10 @@ async function chargerDepuisFirestore() {
 
 // ── Classement ────────────────────────────
 async function chargerClassement() {
+  if (guestMode) {
+    document.getElementById('leaderboard').innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3);font-size:13px">Connecte-toi pour accéder au classement mondial 🌍</div>';
+    return;
+  }
   const q = query(collection(db, 'users'), orderBy('visites', 'desc'), limit(50));
   const snap = await getDocs(q);
   const lb = document.getElementById('leaderboard');
@@ -1165,6 +1233,8 @@ async function chargerClassement() {
 
 // Exposer les fonctions au scope global pour le reste du script
 window._firebase = { sauvegarder, chargerClassement, renderProfil };
+// Exposer guestMode pour le script principal
+Object.defineProperty(window, 'guestMode', { get: () => guestMode });
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
