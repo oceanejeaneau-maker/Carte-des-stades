@@ -929,13 +929,16 @@
   </div>
 </div>
 
-<script type="module">
+<!-- Firebase SDK via CDN classique (non-module) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
 // ════════════════════════════════════
-// FIREBASE CONFIG
+// FIREBASE — script classique, non bloquant
 // ════════════════════════════════════
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, onSnapshot, orderBy, query, limit } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+(function() {
+try {
 
 const firebaseConfig = {
   apiKey: "AIzaSyCZS8SW1RHMdrau1cODnmKN49TuL6NyaYM",
@@ -946,10 +949,30 @@ const firebaseConfig = {
   appId: "1:815104486735:web:7ec27337e1dc36deb2693a"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+// Shims pour compat API
+function signInWithEmailAndPassword(a, e, p) { return auth.signInWithEmailAndPassword(e, p); }
+function createUserWithEmailAndPassword(a, e, p) { return auth.createUserWithEmailAndPassword(e, p); }
+function signInWithPopup(a, p) { return auth.signInWithPopup(p); }
+function signInWithRedirect(a, p) { return auth.signInWithRedirect(p); }
+function getRedirectResult(a) { return auth.getRedirectResult(); }
+function signOut(a) { return auth.signOut(); }
+function onAuthStateChanged(a, cb) { return auth.onAuthStateChanged(cb); }
+function updateProfile(user, data) { return user.updateProfile(data); }
+function doc(d, ...path) { let ref = d; for(let i=0;i<path.length;i+=2) ref=ref.collection(path[i]).doc(path[i+1]); return ref; }
+function setDoc(ref, data) { return ref.set(data); }
+function getDoc(ref) { return ref.get(); }
+function collection(d, name) { return d.collection(name); }
+function getDocs(ref) { return ref.get(); }
+function query(ref, ...args) { let q=ref; for(const a of args) { if(a._type==='orderBy') q=q.orderBy(a.field,a.dir); if(a._type==='limit') q=q.limit(a.n); } return q; }
+function orderBy(field, dir='asc') { return {_type:'orderBy',field,dir}; }
+function limit(n) { return {_type:'limit',n}; }
+function onSnapshot(ref, cb) { return ref.onSnapshot(cb); }
+
 
 let currentUser = null;
 let guestMode = false;
@@ -1229,6 +1252,18 @@ async function chargerClassement() {
 window._firebase = { sauvegarder, chargerClassement, renderProfil };
 // Exposer guestMode pour le script principal
 Object.defineProperty(window, 'guestMode', { get: () => guestMode });
+} catch(e) {
+  console.warn('Firebase init échoué:', e.message);
+  window._firebase = {
+    sauvegarder: () => {},
+    chargerClassement: () => {
+      const el = document.getElementById('leaderboard');
+      if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3)">Connexion requise pour le classement</div>';
+    },
+    renderProfil: () => {}
+  };
+}
+})();
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
