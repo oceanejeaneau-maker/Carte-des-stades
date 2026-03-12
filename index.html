@@ -42,6 +42,9 @@
       --radius-sm: 6px;
       --shadow:    0 8px 32px rgba(0,0,0,.6);
       --shadow-sm: 0 2px 8px rgba(0,0,0,.4);
+      --muted:     #4a6350;
+      --green:     #00e676;
+      --green-dim: rgba(0,230,118,.15);
     }
     body {
       font-family: var(--font-body); background: var(--bg); color: var(--text);
@@ -50,9 +53,6 @@
         radial-gradient(ellipse at 20% 50%, rgba(0,230,118,.03) 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, rgba(0,230,118,.02) 0%, transparent 50%);
     }
-    ::-webkit-scrollbar { width: 3px; height: 3px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
     
 
@@ -542,11 +542,11 @@
 
 <!-- PAGE CONNEXION -->
 <!-- ══ FICHE STADE ══ -->
-<div class="fiche-overlay" id="ficheOverlay">
+<div class="fiche-overlay" id="ficheOverlay" role="dialog" aria-modal="true" aria-labelledby="ficheNomTitle">
   <div class="fiche-panel" id="fichePanel">
     <div class="fiche-handle"></div>
     <div style="position:relative">
-      <button class="fiche-close" id="ficheClose">✕</button>
+      <button class="fiche-close" id="ficheClose" aria-label="Fermer la fiche stade">✕</button>
       <div class="fiche-header" id="ficheHeader"></div>
       <div class="fiche-body" id="ficheBody"></div>
     </div>
@@ -668,7 +668,7 @@
 <div class="app-layout">
 
   <!-- TOPBAR -->
-  <nav class="topbar">
+  <nav class="topbar" aria-label="Navigation principale">
     <div class="topbar-logo">
       <span class="logo-icon">⚽</span>
       <span class="logo-title">Stades</span>
@@ -696,7 +696,7 @@
     <div class="topbar-user">
       <span class="user-name" id="userName"></span>
       <div class="user-avatar" id="userAvatar"></div>
-      <button class="btn-logout" id="btnLogout">Déconnexion</button>
+      <button class="btn-logout" id="btnLogout" aria-label="Se déconnecter">Déconnexion</button>
     </div>
   </nav>
 
@@ -932,6 +932,10 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, onSnapshot, orderBy, query, limit } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
+// ⚠️ SÉCURITÉ : Ces clés sont publiques côté client (normal pour Firebase).
+// Protégez votre app via les règles Firestore et les restrictions de domaine
+// dans la console Firebase : https://console.firebase.google.com
+// Assurez-vous que les règles Firestore exigent une authentification pour lire/écrire.
 const firebaseConfig = {
   apiKey: "AIzaSyCZS8SW1RHMdrau1cODnmKN49TuL6NyaYM",
   authDomain: "carte-des-stades-9b6d7.firebaseapp.com",
@@ -990,7 +994,9 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
   const name = document.getElementById('authName').value.trim();
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !password) { showError('Remplis email et mot de passe.'); return; }
+  if (!emailRe.test(email)) { showError('Adresse email invalide.'); return; }
   try {
     if (isLogin) {
       await signInWithEmailAndPassword(auth, email, password);
@@ -1015,18 +1021,25 @@ onAuthStateChanged(auth, async user => {
     const name = user.displayName || user.email.split('@')[0];
     document.getElementById('userName').textContent = name;
     const av = document.getElementById('userAvatar');
-    if (user.photoURL) { av.innerHTML = `<img src="${user.photoURL}">`; }
+    if (user.photoURL) { const img = document.createElement('img'); img.alt = ''; img.src = user.photoURL; av.innerHTML = ''; av.appendChild(img); }
     else { av.textContent = name[0].toUpperCase(); }
     await chargerDepuisFirestore();
-    // Attendre que le script principal soit chargé
-    const waitApp = () => new Promise(resolve => {
+    // Attendre que le script principal soit chargé via CustomEvent ou accès direct
+    await new Promise(resolve => {
       if (window._app) return resolve();
-      const t = setInterval(() => { if (window._app) { clearInterval(t); resolve(); } }, 50);
+      window.addEventListener('appReady', resolve, { once: true });
+      // Fallback: polling court avec timeout de 5s
+      let elapsed = 0;
+      const t = setInterval(() => {
+        elapsed += 50;
+        if (window._app || elapsed >= 5000) { clearInterval(t); resolve(); }
+      }, 50);
     });
-    await waitApp();
-    window._app.updateStats();
-    window._app.renderAll();
-    window._app.renderMatchs();
+    if (window._app) {
+      window._app.updateStats();
+      window._app.renderAll();
+      window._app.renderMatchs();
+    }
     renderProfil();
   } else {
     currentUser = null;
@@ -1037,15 +1050,38 @@ onAuthStateChanged(auth, async user => {
 // ── Firestore sauvegarde ──────────────────
 async function sauvegarder() {
   if (!currentUser) return;
-  const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
-  const visites = stades.filter(s => s.visite).length;
-  const pays = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
-  await setDoc(doc(db, 'users', currentUser.uid), {
-    stades: data, matchs, notes,
-    displayName: currentUser.displayName || currentUser.email.split('@')[0],
-    photoURL: currentUser.photoURL || null,
-    visites, pays, updatedAt: Date.now()
-  });
+  try {
+    const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
+    const visites = stades.filter(s => s.visite).length;
+    const pays = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
+    await setDoc(doc(db, 'users', currentUser.uid), {
+      stades: data, matchs, notes,
+      displayName: currentUser.displayName || currentUser.email.split('@')[0],
+      photoURL: currentUser.photoURL || null,
+      visites, pays, updatedAt: Date.now()
+    });
+    _showSaveToast('✓ Sauvegardé', false);
+  } catch(err) {
+    console.error('Erreur sauvegarde:', err);
+    _showSaveToast('⚠ Erreur de sauvegarde', true);
+  }
+}
+
+function _showSaveToast(msg, isError) {
+  let t = document.getElementById('_saveToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = '_saveToast';
+    t.style.cssText = 'position:fixed;bottom:70px;right:16px;padding:6px 14px;border-radius:6px;font-size:12px;font-family:var(--font-body);z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = isError ? 'rgba(255,23,68,.9)' : 'rgba(0,230,118,.15)';
+  t.style.color = isError ? '#fff' : 'var(--accent)';
+  t.style.border = isError ? '1px solid #ff1744' : '1px solid var(--accent)';
+  t.style.opacity = '1';
+  clearTimeout(t._hide);
+  t._hide = setTimeout(() => { t.style.opacity = '0'; }, 2000);
 }
 
 // ── Profil ────────────────────────────────
@@ -1053,7 +1089,7 @@ function renderProfil() {
   if (!currentUser) return;
   const name = currentUser.displayName || currentUser.email.split('@')[0];
   const av = document.getElementById('profilAvatar');
-  if (currentUser.photoURL) { av.innerHTML = `<img src="${currentUser.photoURL}">`; }
+  if (currentUser.photoURL) { const img = document.createElement('img'); img.alt = ''; img.src = currentUser.photoURL; av.innerHTML = ''; av.appendChild(img); }
   else { av.textContent = name[0].toUpperCase(); }
   document.getElementById('profilName').textContent = name;
   document.getElementById('profilEmail').textContent = currentUser.email;
@@ -1174,7 +1210,7 @@ const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Ita
   'Afrique du Sud':'ZA', Maroc:'MA', Nigeria:'NG', Égypte:'EG', Sénégal:'SN', Cameroun:'CM', "Côte d'Ivoire":'CI', Ghana:'GH', Tanzanie:'TZ', Kenya:'KE', Algérie:'DZ', Tunisie:'TN',
   'Nouvelle-Zélande':'NZ',
   Norvège:'NO', Danemark:'DK', Suède:'SE', Finlande:'FI', Islande:'IS',
-  Russie:'RU', Ukraine:'UA', Pologne:'PL', Bulgarie:'BG', Slovaquie:'SK',
+  Russie:'RU', Ukraine:'UA', Bulgarie:'BG', Slovaquie:'SK',
   Slovénie:'SI', Géorgie:'GE', Arménie:'AM', Azerbaïdjan:'AZ', Biélorussie:'BY',
   Albanie:'AL', 'Macédoine du Nord':'MK', Bosnie:'BA', Luxembourg:'LU', Malte:'MT', Chypre:'CY',
   Mali:'ML', 'Burkina Faso':'BF', Bénin:'BJ', Guinée:'GN', 'Guinée Équatoriale':'GQ',
@@ -1187,7 +1223,8 @@ const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Ita
   Honduras:'HN', 'El Salvador':'SV', Guatemala:'GT', Nicaragua:'NI', Panama:'PA',
   Jamaïque:'JM', Cuba:'CU',
   Paraguay:'PY', Équateur:'EC', Bolivie:'BO', Venezuela:'VE',
-  Népal:'NP', Cambodge:'KH'
+  Lituanie:'LT', Lettonie:'LV', Estonie:'EE', 'Costa Rica':'CR',
+  Vietnam:'VN', 'Îles Salomon':'SB', Samoa:'WS', Fidji:'FJ',
 };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
@@ -1201,15 +1238,10 @@ const CHAMP_COLORS = {
   'Jupiler Pro League':'#e67e22',
   'Primeira Liga':'#27ae60','Segunda Liga':'#a8d8a8',
   'Scottish Premiership':'#9b59b6',
-  'Super League Suisse':'#c0392b',
   'Super League Grèce':'#1abc9c',
   'League of Ireland':'#2ecc71',
   'Süper Lig':'#e74c3c',
-  'SuperLiga Serbie':'#c0392b',
   'HNL Croatie':'#3498db',
-  'Liga 1 Roumanie':'#f39c12',
-  'Ekstraklasa':'#e67e22',
-  'Fortuna Liga':'#2980b9',
   'Bundesliga Autriche':'#8e44ad',
   'OTP Bank Liga':'#27ae60',
   'Serie A Bresil':'#009c3b',
@@ -1291,7 +1323,6 @@ const CHAMP_COLORS = {
   // Amérique du Sud complément
   'División de Honor':'#d52b1e', 'Liga Pro Ecuador':'#ffdd00',
   'División Profesional Bolivia':'#007a3d', 'Liga Futve':'#cf142b',
-  'Primera Division Chili':'#d52b1e',
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
 
@@ -2428,7 +2459,11 @@ function initFilters() {
   pays.forEach(p  => pS.add(new Option(`${drapeau(p)} ${p}`, p)));
   champ.forEach(c => cS.add(new Option(c, c)));
 
-  document.getElementById('searchInput').addEventListener('input', e=>{filter.search=sansAccents(e.target.value.toLowerCase());renderAll();});
+  let _searchTimer;
+  document.getElementById('searchInput').addEventListener('input', e=>{
+    clearTimeout(_searchTimer);
+    _searchTimer = setTimeout(()=>{ filter.search=sansAccents(e.target.value.toLowerCase()); renderAll(); }, 180);
+  });
   pS.addEventListener('change', e=>{filter.pays=e.target.value;renderAll();});
   cS.addEventListener('change', e=>{
     filter.championnat=e.target.value;
@@ -2625,7 +2660,7 @@ function renderNotes() {
   const list = document.getElementById('notesList');
   list.innerHTML = '';
 
-  const filtered = stades.filter((s, i) => {
+  const filtered = stades.map((s, i) => ({...s, _idx: i})).filter((s, i) => {
     if (filter === 'visites' && !s.visite) return false;
     if (search && !s.nom.toLowerCase().includes(search) && !s.ville.toLowerCase().includes(search)) return false;
     return true;
@@ -2636,8 +2671,8 @@ function renderNotes() {
     return;
   }
 
-  filtered.forEach((s, _) => {
-    const i = stades.indexOf(s);
+  filtered.forEach((s) => {
+    const i = s._idx; // index pré-calculé
     const card = document.createElement('div');
     card.className = 'note-card';
     const col = champColor(s.championnat);
@@ -2662,9 +2697,8 @@ document.getElementById('notesFilter').addEventListener('change', renderNotes);
 // ════════════════════════════════════
 // PAGE MATCHS
 // ════════════════════════════════════
-const MATCHS_KEY = 'stades_matchs_v1';
-let matchs = [];
-try { matchs = JSON.parse(localStorage.getItem(MATCHS_KEY) || '[]'); } catch {}
+const MATCHS_KEY = 'stades_matchs_v1'; // clé conservée pour rétrocompat
+let matchs = []; // chargé depuis Firestore via chargerDepuisFirestore()
 
 function saveMatchs() { sauvegarder(); }
 
@@ -3134,6 +3168,7 @@ document.getElementById('fichePanel').addEventListener('touchend', e => {
 window.openFiche = openFiche;
 
 window._app = { updateStats, renderAll, renderMatchs };
+window.dispatchEvent(new CustomEvent('appReady'));
 </script>
 
 <script>
