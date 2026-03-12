@@ -632,7 +632,7 @@
   </div>
 </div>
 
-<div class="auth-overlay" id="authOverlay">
+<div class="auth-overlay hidden" id="authOverlay">
   <div class="auth-box">
     <div class="auth-logo">
       <div class="logo-big">⚽</div>
@@ -699,8 +699,9 @@
     </div>
     <div class="topbar-user">
       <span class="user-name" id="userName"></span>
-      <div class="user-avatar" id="userAvatar"></div>
-      <button class="btn-logout" id="btnLogout">Déconnexion</button>
+      <div class="user-avatar" id="userAvatar" style="display:none"></div>
+      <button class="btn-logout" id="btnLogout" style="display:none">Déconnexion</button>
+      <button class="btn-logout" id="btnShowAuth" style="background:transparent;border:1px solid var(--accent);color:var(--accent);font-size:12px;padding:5px 12px">Connexion</button>
     </div>
   </nav>
 
@@ -958,32 +959,19 @@ const authOverlay = document.getElementById('authOverlay');
 const authError = document.getElementById('authError');
 let isLogin = true;
 
+// ── Bouton "Connexion" dans la topbar ────────
+document.getElementById('btnShowAuth').addEventListener('click', () => {
+  authOverlay.classList.remove('hidden');
+});
+
 // ── Mode invité ───────────────────────────
 document.getElementById('btnGuest').addEventListener('click', () => {
   guestMode = true;
   authOverlay.classList.add('hidden');
-  // Charger depuis localStorage
-  try {
-    const saved = JSON.parse(localStorage.getItem('stades_guest_v1') || 'null');
-    if (saved && saved.stades) {
-      saved.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } });
-    }
-    if (saved && saved.matchs) matchs.splice(0, matchs.length, ...saved.matchs);
-    if (saved && saved.notes) Object.assign(notes, saved.notes);
-  } catch {}
-  // Mettre à jour l'UI
-  document.getElementById('userName').textContent = 'Invité';
-  document.getElementById('userAvatar').textContent = '👤';
-  document.getElementById('btnLogout').textContent = 'Se connecter';
-  const waitApp = () => new Promise(resolve => {
-    if (window._app) return resolve();
-    const t = setInterval(() => { if (window._app) { clearInterval(t); resolve(); } }, 50);
-  });
-  waitApp().then(() => {
-    window._app.updateStats();
-    window._app.renderAll();
-    window._app.renderMatchs();
-  });
+  document.getElementById('btnShowAuth').style.display = 'block';
+  document.getElementById('btnLogout').style.display = 'none';
+  document.getElementById('userAvatar').style.display = 'none';
+  document.getElementById('userName').textContent = '';
 });
 
 // Remplacer le comportement de Déconnexion en mode invité
@@ -1051,16 +1039,18 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
 // ── Auth state ────────────────────────────
 onAuthStateChanged(auth, async user => {
   if (user) {
-    guestMode = false; // un vrai compte prend le dessus
+    guestMode = false;
     currentUser = user;
     authOverlay.classList.add('hidden');
     const name = user.displayName || user.email.split('@')[0];
     document.getElementById('userName').textContent = name;
     const av = document.getElementById('userAvatar');
+    av.style.display = 'flex';
+    document.getElementById('btnLogout').style.display = 'block';
+    document.getElementById('btnShowAuth').style.display = 'none';
     if (user.photoURL) { av.innerHTML = `<img src="${user.photoURL}">`; }
     else { av.textContent = name[0].toUpperCase(); }
     await chargerDepuisFirestore();
-    // Attendre que le script principal soit chargé
     const waitApp = () => new Promise(resolve => {
       if (window._app) return resolve();
       const t = setInterval(() => { if (window._app) { clearInterval(t); resolve(); } }, 50);
@@ -1072,7 +1062,11 @@ onAuthStateChanged(auth, async user => {
     renderProfil();
   } else {
     currentUser = null;
-    if (!guestMode) authOverlay.classList.remove('hidden');
+    // L'app reste accessible sans compte — pas de blocage
+    document.getElementById('userAvatar').style.display = 'none';
+    document.getElementById('btnLogout').style.display = 'none';
+    document.getElementById('btnShowAuth').style.display = 'block';
+    document.getElementById('userName').textContent = '';
   }
 });
 
