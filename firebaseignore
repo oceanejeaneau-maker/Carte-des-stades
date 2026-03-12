@@ -1,0 +1,20 @@
+# Fichiers de deploiement - ne pas envoyer sur Firebase Hosting
+deploy.ps1
+deployer.bat
+*.ps1
+*.bat
+*.sh
+
+# Fichiers Git
+.git
+.gitignore
+
+# Fichiers systeme
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers de config locale
+*.env
+.env.*
+node_modules
