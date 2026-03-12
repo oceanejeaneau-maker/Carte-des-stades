@@ -22,17 +22,22 @@ try {
     Write-Host ""
 
     # 1. Aller dans le dossier projet
-    Write-Host "[1/5] Navigation vers le projet..." -ForegroundColor Yellow
+    Write-Host "[1/6] Navigation vers le projet..." -ForegroundColor Yellow
     Set-Location $projet
 
-    # 2. Ajouter tous les fichiers modifies
-    Write-Host "[2/5] Git add..." -ForegroundColor Yellow
+    # 2. Pull depuis GitHub (AVANT le add/commit)
+    Write-Host "[2/6] Git pull origin main..." -ForegroundColor Yellow
+    git pull origin main --no-edit
+    if ($LASTEXITCODE -ne 0) { throw "Echec git pull" }
+
+    # 3. Ajouter tous les fichiers modifies
+    Write-Host "[3/6] Git add..." -ForegroundColor Yellow
     git add .
 
-    # 3. Commit avec message horodate
+    # 4. Commit avec message horodate
     $date = Get-Date -Format "yyyy-MM-dd HH:mm"
     $msg = "update $date"
-    Write-Host "[3/5] Git commit : $msg" -ForegroundColor Yellow
+    Write-Host "[4/6] Git commit : $msg" -ForegroundColor Yellow
     git diff --cached --quiet
     if ($LASTEXITCODE -eq 0) {
         Write-Host "  -> Rien a committer, on continue." -ForegroundColor DarkGray
@@ -41,13 +46,13 @@ try {
         if ($LASTEXITCODE -ne 0) { throw "Echec git commit" }
     }
 
-    # 4. Push vers GitHub
-    Write-Host "[4/5] Git push..." -ForegroundColor Yellow
+    # 5. Push vers GitHub
+    Write-Host "[5/6] Git push..." -ForegroundColor Yellow
     git push
     if ($LASTEXITCODE -ne 0) { throw "Echec git push" }
 
-    # 5. Deploiement Firebase Hosting
-    Write-Host "[5/5] Firebase deploy..." -ForegroundColor Yellow
+    # 6. Deploiement Firebase Hosting
+    Write-Host "[6/6] Firebase deploy..." -ForegroundColor Yellow
     firebase deploy
     if ($LASTEXITCODE -ne 0) { throw "Echec firebase deploy" }
 
