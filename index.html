@@ -167,29 +167,93 @@
       background: var(--surface);
       border-bottom: .5px solid var(--border);
       box-shadow: var(--shadow-sm);
-      display: flex; align-items: center; gap: 0;
-      padding: 0 14px; height: 52px; position: sticky; top: 0; z-index: 100;
-      overflow-x: auto; overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; height: 56px; position: sticky; top: 0; z-index: 100;
     }
-    .topbar::-webkit-scrollbar { display: none; }
-    .topbar-logo { display: flex; align-items: center; gap: 8px; padding-right: 16px; border-right: .5px solid var(--border); margin-right: 4px; flex-shrink: 0; }
-    .topbar-logo .logo-icon { font-size: 1.2rem; }
-    .topbar-logo .logo-title { font-family: var(--font-disp); font-size: 1.4rem; font-weight: 700; letter-spacing: .08em; color: var(--text); white-space: nowrap; text-transform: uppercase; }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
+    .topbar-logo .logo-icon { font-size: 1.3rem; }
+    .topbar-logo .logo-title { font-family: var(--font-disp); font-size: 1.6rem; font-weight: 900; letter-spacing: .1em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
     .topbar-logo .logo-title span { color: var(--accent); }
-    .topbar-nav { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
-    .nav-item {
-      display: flex; align-items: center; gap: 6px; padding: 6px 12px;
-      cursor: pointer; color: var(--text3); font-size: 12px; font-weight: 500;
-      transition: color .15s; height: 52px; white-space: nowrap; flex-shrink: 0;
-      position: relative; text-transform: uppercase; letter-spacing: .06em;
-      font-family: var(--font-disp);
+    .topbar-spacer { width: 40px; flex-shrink: 0; }
+
+    /* ── HAMBURGER ── */
+    .btn-hamburger {
+      width: 40px; height: 40px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 5px;
+      cursor: pointer; border: none; background: none; padding: 4px; border-radius: 8px;
+      transition: background .15s; flex-shrink: 0;
     }
-    .nav-item:hover { color: var(--text2); }
-    .nav-item.active { color: var(--accent); }
-    .nav-item.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
-    .nav-item .nav-icon { font-size: .9rem; }
+    .btn-hamburger:hover { background: var(--surface2); }
+    .btn-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text2); border-radius: 2px;
+      transition: all .25s cubic-bezier(.4,0,.2,1);
+    }
+    .btn-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--text); }
+    .btn-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .btn-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--text); }
+
+    /* ── DRAWER ── */
+    .drawer-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.5); backdrop-filter: blur(2px);
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 280px; z-index: 201;
+      background: var(--surface);
+      border-left: .5px solid var(--border);
+      box-shadow: -8px 0 32px rgba(0,0,0,.3);
+      transform: translateX(100%);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      padding: 20px 20px 16px;
+      border-bottom: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .drawer-title {
+      font-family: var(--font-disp); font-size: 1.1rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--text3);
+    }
+    .drawer-close {
+      width: 32px; height: 32px; border-radius: 6px;
+      background: var(--surface2); border: .5px solid var(--border);
+      color: var(--text2); cursor: pointer; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .15s;
+    }
+    .drawer-close:hover { background: var(--surface3); color: var(--text); }
+
+    .drawer-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+
+    .drawer-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 20px; cursor: pointer;
+      color: var(--text2); font-size: 14px; font-weight: 500;
+      font-family: var(--font-disp); text-transform: uppercase;
+      letter-spacing: .06em; transition: all .15s;
+      border-left: 3px solid transparent;
+    }
+    .drawer-item:hover { background: var(--surface2); color: var(--text); }
+    .drawer-item.active {
+      color: var(--accent); background: var(--accent-dim);
+      border-left-color: var(--accent);
+    }
+    .drawer-item .drawer-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+
+    .drawer-footer {
+      padding: 16px 20px;
+      border-top: .5px solid var(--border);
+      display: flex; flex-direction: column; gap: 8px;
+    }
 
     /* ── CONTENU PRINCIPAL ── */
     .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-x: hidden; }
@@ -675,38 +739,55 @@
 
 <div class="app-layout">
 
+  <!-- DRAWER OVERLAY -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <!-- DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">Menu</div>
+      <div class="drawer-close" id="drawerClose">✕</div>
+    </div>
+    <nav class="drawer-nav">
+      <div class="drawer-item active" data-page="carte">
+        <span class="drawer-icon">🗺️</span> Carte & Stades
+      </div>
+      <div class="drawer-item" data-page="notes">
+        <span class="drawer-icon">📝</span> Notes
+      </div>
+      <div class="drawer-item" data-page="matchs">
+        <span class="drawer-icon">🏆</span> Matchs vus
+      </div>
+      <div class="drawer-item" data-page="classement">
+        <span class="drawer-icon">🥇</span> Classement
+      </div>
+      <div class="drawer-item" data-page="stats">
+        <span class="drawer-icon">📊</span> Stats
+      </div>
+      <div class="drawer-item" data-page="profil">
+        <span class="drawer-icon">👤</span> Profil
+      </div>
+    </nav>
+    <div class="drawer-footer">
+      <span class="user-name" id="userName" style="font-size:12px;color:var(--text3)"></span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="user-avatar" id="userAvatar" style="display:none"></div>
+        <button class="btn-logout" id="btnLogout" style="display:none">Déconnexion</button>
+        <button class="btn-logout" id="btnShowAuth" style="background:transparent;border:.5px solid var(--accent);color:var(--accent);font-size:12px;padding:5px 12px">Connexion</button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOPBAR -->
   <nav class="topbar">
+    <div class="topbar-spacer"></div>
     <div class="topbar-logo">
       <span class="logo-icon">⚽</span>
       <span class="logo-title">GROUND<span>HOPPER</span></span>
     </div>
-    <div class="topbar-nav">
-      <div class="nav-item active" data-page="carte">
-        <span class="nav-icon">🗺️</span> Carte & Stades
-      </div>
-      <div class="nav-item" data-page="notes">
-        <span class="nav-icon">📝</span> Notes
-      </div>
-      <div class="nav-item" data-page="matchs">
-        <span class="nav-icon">🏆</span> Matchs vus
-      </div>
-      <div class="nav-item" data-page="classement">
-        <span class="nav-icon">🥇</span> Classement
-      </div>
-      <div class="nav-item" data-page="stats">
-        <span class="nav-icon">📊</span> Stats
-      </div>
-      <div class="nav-item" data-page="profil">
-        <span class="nav-icon">👤</span> Profil
-      </div>
-    </div>
-    <div class="topbar-user">
-      <span class="user-name" id="userName"></span>
-      <div class="user-avatar" id="userAvatar" style="display:none"></div>
-      <button class="btn-logout" id="btnLogout" style="display:none">Déconnexion</button>
-      <button class="btn-logout" id="btnShowAuth" style="background:transparent;border:1px solid var(--accent);color:var(--accent);font-size:12px;padding:5px 12px">Connexion</button>
-    </div>
+    <button class="btn-hamburger" id="btnHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- CONTENU -->
@@ -1188,7 +1269,7 @@ document.getElementById('btnCopierLien').addEventListener('click', () => {
 });
 
 document.getElementById('btnShareProfil').addEventListener('click', () => {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.drawer-item').forEach(n => n.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelector('[data-page="profil"]').classList.add('active');
   document.getElementById('page-profil').classList.add('active');
@@ -1894,10 +1975,31 @@ function renderTableBody(ids) {
 // ════════════════════════════════════
 // NAVIGATION TOPBAR
 // ════════════════════════════════════
-document.querySelectorAll('.nav-item').forEach(item => {
+// ── Drawer navigation ─────────────────────
+const drawer        = document.getElementById('drawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+const btnHamburger  = document.getElementById('btnHamburger');
+const drawerClose   = document.getElementById('drawerClose');
+
+function openDrawer() {
+  drawer.classList.add('open');
+  drawerOverlay.classList.add('open');
+  btnHamburger.classList.add('open');
+}
+function closeDrawer() {
+  drawer.classList.remove('open');
+  drawerOverlay.classList.remove('open');
+  btnHamburger.classList.remove('open');
+}
+
+btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+drawerClose.addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
+
+document.querySelectorAll('.drawer-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.drawer-item').forEach(n => n.classList.remove('active'));
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     item.classList.add('active');
     document.getElementById('page-' + page).classList.add('active');
@@ -1906,6 +2008,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
     if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
     if (page === 'profil') { if (window._firebase) window._firebase.renderProfil(); }
     if (page === 'stats') renderStats();
+    closeDrawer();
   });
 });
 
