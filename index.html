@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tour des Stades — Monde</title>
+  <title>Groundhopper</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#00e676">
+  <meta name="theme-color" content="#CC1919">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Carte des Stades">
+  <meta name="apple-mobile-web-app-title" content="Groundhopper">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -18,37 +18,40 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:        #080c0a;
-      --surface:   #0d1210;
-      --surface2:  #131a16;
-      --surface3:  #1a2420;
-      --border:    #1c2820;
-      --border2:   #253530;
-      --accent:    #00e676;
-      --accent2:   #69f0ae;
-      --accent-dim:#00e67622;
-      --accent-glow: rgba(0,230,118,.2);
+      --bg:        #2B2F36;
+      --surface:   #353A42;
+      --surface2:  #3E4450;
+      --surface3:  #4E5565;
+      --border:    #4E5565;
+      --border2:   #5A6070;
+      --accent:    #CC1919;
+      --accent2:   #E52020;
+      --accent-dim:#35252580;
+      --accent-glow: #CC191922;
       --amber:     #ffab00;
-      --amber-dim: rgba(255,171,0,.15);
-      --red:       #ff1744;
-      --red-dim:   rgba(255,23,68,.15);
-      --text:      #e8f5e9;
-      --text2:     #81c784;
-      --text3:     #4a6350;
+      --amber-dim: #ffab0026;
+      --red:       #CC1919;
+      --red-dim:   #35252580;
+      --green:     #00C875;
+      --green-dim: #25353080;
+      --text:      #F0F1F3;
+      --text2:     #8A909A;
+      --text3:     #7A8090;
+      --text4:     #5A6070;
       --font-disp: 'Barlow Condensed', sans-serif;
       --font-body: 'Inter', sans-serif;
       --font-mono: 'Share Tech Mono', monospace;
       --radius:    10px;
       --radius-sm: 6px;
-      --shadow:    0 8px 32px rgba(0,0,0,.6);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,.4);
+      --shadow:    0 8px 32px #00000060;
+      --shadow-sm: 0 2px 8px #00000040;
     }
     body {
       font-family: var(--font-body); background: var(--bg); color: var(--text);
       min-height: 100vh; overflow-x: hidden;
       background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(0,230,118,.03) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(0,230,118,.02) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 50%, #CC191906 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, #CC191904 0%, transparent 50%);
     }
     ::-webkit-scrollbar { width: 3px; height: 3px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -60,12 +63,12 @@
     .stat-bar::-webkit-scrollbar { display: none; }
     .stat-item { display: flex; flex-direction: column; padding: 14px 24px 14px 0; margin-right: 24px; border-right: 1px solid var(--border); min-width: 80px; flex-shrink: 0; }
     .stat-item:last-child { border-right: none; }
-    .stat-label { font-size: .6rem; text-transform: uppercase; letter-spacing: .18em; color: var(--text3); margin-bottom: 4px; font-weight: 600; }
-    .stat-value { font-family: var(--font-mono); font-size: 1.9rem; color: var(--accent); line-height: 1; font-weight: 400; text-shadow: 0 0 12px var(--accent); letter-spacing: .05em; }
-    .stat-value.green { color: var(--accent); text-shadow: 0 0 12px var(--accent); }
-    .progress-wrap { background: var(--surface); padding: 0 16px 12px; border-bottom: 1px solid var(--border); }
-    .progress-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .6s cubic-bezier(.4,0,.2,1); width: 0%; box-shadow: 0 0 8px var(--accent); }
+    .stat-label { font-size: .6rem; text-transform: uppercase; letter-spacing: .18em; color: var(--text3); margin-bottom: 4px; font-weight: 500; }
+    .stat-value { font-family: var(--font-disp); font-size: 1.9rem; color: var(--text); line-height: 1; font-weight: 700; letter-spacing: .03em; }
+    .stat-value.green { color: var(--text); }
+    .progress-wrap { background: var(--surface); padding: 0 16px 12px; border-bottom: .5px solid var(--border); }
+    .progress-track { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width .4s ease; width: 0%; }
 
 
 
@@ -77,13 +80,13 @@
     #searchInput { flex-grow: 1; min-width: 180px; }
     .filters select option { background: var(--surface); color: var(--text); }
 
-    .btn { padding: 9px 16px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); transition: all .2s; background: var(--surface); color: var(--text2); }
-    .btn-primary { background: var(--accent); color: #000; border-color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 0 16px var(--accent-glow); }
-    .btn-primary:hover { background: var(--accent2); box-shadow: 0 0 24px var(--accent-glow); }
-    .btn-active  { background: var(--accent); color: #000; border-color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 0 16px var(--accent-glow); }
+    .btn { padding: 7px 16px; border-radius: 7px; font-family: var(--font-body); font-size: 12px; font-weight: 500; cursor: pointer; border: .5px solid var(--border); transition: background .15s; background: var(--surface2); color: var(--text2); }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; box-shadow: none; }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-active  { background: var(--accent); color: #fff; border-color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; }
     .btn-ghost   { background: transparent; color: var(--text2); border-color: var(--border); }
-    .btn-ghost:hover { color: var(--text); border-color: var(--border2); background: var(--surface2); }
-    .btn-sm { padding: 7px 13px; font-size: 12px; }
+    .btn-ghost:hover { color: var(--text); background: var(--surface3); }
+    .btn-sm { padding: 5px 13px; font-size: 11px; }
 
     .map-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-bottom: none; border-radius: var(--radius) var(--radius) 0 0; padding: 8px 12px; }
     .toolbar-label { font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; color: var(--text3); font-weight: 600; }
@@ -93,7 +96,7 @@
 
     #map { height: 420px; border-radius: 0 0 var(--radius) var(--radius); border: 1px solid var(--border); overflow: hidden; }
     @media(max-width:600px) { #map { height: 300px; } }
-    .leaflet-container { background: #0f172a !important; }
+    .leaflet-container { background: #2B2F36 !important; }
     .leaflet-popup-content-wrapper { border-radius: var(--radius); box-shadow: var(--shadow); background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .leaflet-popup-tip { background: var(--surface); }
     .leaflet-popup-content { font-family: var(--font-body); font-size: 13px; line-height: 1.7; min-width: 160px; color: var(--text); }
@@ -129,7 +132,7 @@
     th { background: var(--surface2); padding: 10px 12px; text-align: left; font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--text3); border-bottom: 1px solid var(--border); white-space: nowrap; }
     td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
     tr.data-row:hover { background: var(--surface2); cursor: pointer; }
-    .group-header { background: rgba(0,230,118,.05); font-weight: 700; cursor: pointer; user-select: none; font-size: .65rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); border-left: 2px solid var(--accent); }
+    .group-header { background: rgba(204,25,25,.05); font-weight: 700; cursor: pointer; user-select: none; font-size: .65rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); border-left: 2px solid var(--accent); }
     .group-header td { padding: 8px 12px; }
     .sub-header { background: var(--surface2); font-weight: 600; font-size: .72rem; color: var(--text3); }
     .sub-header td { padding: 7px 12px; }
@@ -162,8 +165,8 @@
     /* ── TOPBAR ── */
     .topbar {
       background: var(--surface);
-      border-bottom: 2px solid var(--accent);
-      box-shadow: 0 2px 24px var(--accent-glow);
+      border-bottom: .5px solid var(--border);
+      box-shadow: var(--shadow-sm);
       display: flex; align-items: center; gap: 0;
       padding: 0 14px; height: 52px; position: sticky; top: 0; z-index: 100;
       overflow-x: auto; overflow-y: hidden;
@@ -171,20 +174,21 @@
       scrollbar-width: none;
     }
     .topbar::-webkit-scrollbar { display: none; }
-    .topbar-logo { display: flex; align-items: center; gap: 8px; padding-right: 16px; border-right: 1px solid var(--border); margin-right: 4px; flex-shrink: 0; }
+    .topbar-logo { display: flex; align-items: center; gap: 8px; padding-right: 16px; border-right: .5px solid var(--border); margin-right: 4px; flex-shrink: 0; }
     .topbar-logo .logo-icon { font-size: 1.2rem; }
-    .topbar-logo .logo-title { font-family: var(--font-disp); font-size: 1.4rem; font-weight: 700; letter-spacing: .1em; color: var(--accent); white-space: nowrap; text-transform: uppercase; text-shadow: 0 0 12px var(--accent-glow); }
+    .topbar-logo .logo-title { font-family: var(--font-disp); font-size: 1.4rem; font-weight: 700; letter-spacing: .08em; color: var(--text); white-space: nowrap; text-transform: uppercase; }
+    .topbar-logo .logo-title span { color: var(--accent); }
     .topbar-nav { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
     .nav-item {
       display: flex; align-items: center; gap: 6px; padding: 6px 12px;
-      cursor: pointer; color: var(--text3); font-size: 12px; font-weight: 600;
-      transition: all .15s; height: 52px; white-space: nowrap; flex-shrink: 0;
+      cursor: pointer; color: var(--text3); font-size: 12px; font-weight: 500;
+      transition: color .15s; height: 52px; white-space: nowrap; flex-shrink: 0;
       position: relative; text-transform: uppercase; letter-spacing: .06em;
       font-family: var(--font-disp);
     }
     .nav-item:hover { color: var(--text2); }
     .nav-item.active { color: var(--accent); }
-    .nav-item.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+    .nav-item.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
     .nav-item .nav-icon { font-size: .9rem; }
 
     /* ── CONTENU PRINCIPAL ── */
@@ -238,7 +242,7 @@
     .match-card-date { font-family: var(--font-mono); font-size: 11px; color: var(--text3); min-width: 72px; }
     .match-card-info { flex: 1; }
     .match-card-teams { font-weight: 600; font-size: 14px; color: var(--text); }
-    .match-card-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .08em; min-width: 55px; text-align: center; font-weight: 400; text-shadow: 0 0 8px var(--accent); }
+    .match-card-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .08em; min-width: 55px; text-align: center; font-weight: 400;  }
     .match-card-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
     .match-card-del { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 1rem; padding: 4px; opacity: .5; transition: opacity .15s; }
     .match-card-del:hover { opacity: 1; color: var(--red); }
@@ -252,9 +256,9 @@
       position: fixed; inset: 0;
       background: var(--bg);
       background-image:
-        radial-gradient(ellipse at 50% 100%, rgba(0,230,118,.08) 0%, transparent 60%),
-        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0,230,118,.015) 40px, rgba(0,230,118,.015) 41px),
-        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,230,118,.015) 40px, rgba(0,230,118,.015) 41px);
+        radial-gradient(ellipse at 50% 100%, rgba(204,25,25,.06) 0%, transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(204,25,25,.01) 40px, rgba(204,25,25,.01) 41px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(204,25,25,.01) 40px, rgba(204,25,25,.01) 41px);
       display: flex; align-items: center; justify-content: center;
       z-index: 9999; padding: 16px; overflow-y: auto;
     }
@@ -263,7 +267,7 @@
     /* ── FICHE STADE (panneau) ── */
     .fiche-overlay { position:fixed; inset:0; z-index:5000; display:flex; align-items:flex-end; justify-content:center; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity .3s; }
     .fiche-overlay.open { opacity:1; pointer-events:all; }
-    .fiche-panel { background:var(--surface); border:1px solid var(--border); border-radius:20px 20px 0 0; width:100%; max-width:560px; max-height:85vh; overflow-y:auto; transform:translateY(100%); transition:transform .4s cubic-bezier(.4,0,.2,1); box-shadow:0 -8px 40px rgba(0,230,118,.08); }
+    .fiche-panel { background:var(--surface); border:1px solid var(--border); border-radius:20px 20px 0 0; width:100%; max-width:560px; max-height:85vh; overflow-y:auto; transform:translateY(100%); transition:transform .4s cubic-bezier(.4,0,.2,1); box-shadow:0 -8px 40px rgba(204,25,25,.08); }
     .fiche-overlay.open .fiche-panel { transform:translateY(0); }
     .fiche-handle { width:40px; height:4px; background:var(--border2); border-radius:2px; margin:12px auto 0; }
     .fiche-header { padding:16px 20px 12px; border-bottom:1px solid var(--border); }
@@ -274,19 +278,19 @@
     .fiche-body { padding:16px 20px; display:flex; flex-direction:column; gap:14px; }
     .fiche-stats-row { display:flex; gap:10px; flex-wrap:wrap; }
     .fiche-stat { flex:1; min-width:80px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:3px; }
-    .fiche-stat-val { font-family:var(--font-mono); font-size:1.1rem; color:var(--accent); text-shadow:0 0 8px var(--accent-glow); }
+    .fiche-stat-val { font-family:var(--font-mono); font-size:1.1rem; color:var(--accent);  }
     .fiche-stat-lbl { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text3); }
     .fiche-section-title { font-family:var(--font-disp); font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text3); margin-bottom:6px; }
-    .fiche-anecdote { background:rgba(0,230,118,.04); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:12px 14px; font-size:13px; color:var(--text2); line-height:1.6; font-style:italic; }
+    .fiche-anecdote { background:rgba(204,25,25,.04); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:12px 14px; font-size:13px; color:var(--text2); line-height:1.6; font-style:italic; }
     .fiche-visite-btn { width:100%; padding:13px; border-radius:8px; font-family:var(--font-disp); font-size:1rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border:none; cursor:pointer; transition:all .2s; }
-    .fiche-visite-btn.non-visite { background:var(--accent); color:#000; box-shadow:0 0 20px var(--accent-glow); }
+    .fiche-visite-btn.non-visite { background:var(--accent); color:#fff;  }
     .fiche-visite-btn.non-visite:hover { background:var(--accent2); }
     .fiche-visite-btn.visite { background:var(--surface2); color:var(--accent); border:1px solid var(--accent); }
     .fiche-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:1px solid var(--border); color:var(--text3); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all .15s; }
     .fiche-close:hover { color:var(--text); border-color:var(--border2); }
     .onboarding-overlay {
       position: fixed; inset: 0; z-index: 10000;
-      background: #080c0a;
+      background: #2B2F36;
       display: flex; flex-direction: column;
       overflow: hidden;
     }
@@ -299,22 +303,22 @@
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 50% 110%, rgba(0,230,118,.18) 0%, transparent 60%),
-        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(0,230,118,.03) 60px, rgba(0,230,118,.03) 61px),
-        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(0,230,118,.03) 60px, rgba(0,230,118,.03) 61px);
+        radial-gradient(ellipse at 50% 110%, rgba(204,25,25,.10) 0%, transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(204,25,25,.02) 60px, rgba(204,25,25,.02) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(204,25,25,.02) 60px, rgba(204,25,25,.02) 61px);
     }
     .onboarding-bg .pitch-lines {
       position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
       width: 700px; height: 400px; opacity: .06;
-      border: 3px solid #00e676; border-radius: 12px;
+      border: 3px solid #CC1919; border-radius: 12px;
     }
     .onboarding-bg .pitch-lines::before {
       content: ''; position: absolute; top: 50%; left: 0; right: 0;
-      height: 3px; background: #00e676;
+      height: 3px; background: #CC1919;
     }
     .onboarding-bg .pitch-lines::after {
       content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 120px; height: 120px; border-radius: 50%; border: 3px solid #00e676;
+      width: 120px; height: 120px; border-radius: 50%; border: 3px solid #CC1919;
     }
 
     .onboarding-slides {
@@ -336,10 +340,10 @@
       letter-spacing: .06em; text-transform: uppercase;
       line-height: 1.1; margin-bottom: 16px;
     }
-    .onboarding-slide h2 span { color: #00e676; text-shadow: 0 0 20px rgba(0,230,118,.5); }
+    .onboarding-slide h2 span { color: #CC1919; text-shadow: 0 0 20px rgba(204,25,25,.5); }
     .onboarding-slide p {
       font-family: 'Inter', sans-serif;
-      color: #81c784; font-size: 1rem; line-height: 1.6;
+      color: #8A909A; font-size: 1rem; line-height: 1.6;
       max-width: 300px; margin: 0 auto 32px;
     }
     .onboarding-stats {
@@ -347,16 +351,16 @@
     }
     .onboarding-stat {
       display: flex; flex-direction: column; align-items: center;
-      background: rgba(0,230,118,.06); border: 1px solid rgba(0,230,118,.15);
+      background: rgba(204,25,25,.06); border: 1px solid rgba(204,25,25,.15);
       border-radius: 12px; padding: 14px 20px;
     }
     .onboarding-stat-val {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 2rem; color: #00e676;
-      text-shadow: 0 0 12px rgba(0,230,118,.4);
+      font-size: 2rem; color: #CC1919;
+      text-shadow: 0 0 12px rgba(204,25,25,.4);
     }
     .onboarding-stat-lbl {
-      font-size: .7rem; color: #4a6350;
+      font-size: .7rem; color: #7A8090;
       text-transform: uppercase; letter-spacing: .1em; margin-top: 4px;
     }
 
@@ -370,29 +374,29 @@
     }
     .onboarding-dot {
       width: 8px; height: 8px; border-radius: 50%;
-      background: #1c2820; transition: all .3s;
+      background: #4E5565; transition: all .3s;
     }
     .onboarding-dot.active {
-      background: #00e676; width: 24px; border-radius: 4px;
-      box-shadow: 0 0 8px rgba(0,230,118,.5);
+      background: #CC1919; width: 24px; border-radius: 4px;
+      box-shadow: 0 0 8px rgba(204,25,25,.5);
     }
     .onboarding-btn {
       width: 100%; max-width: 320px;
       padding: 15px; border-radius: 8px;
-      background: #00e676; color: #000;
+      background: #CC1919; color: #fff;
       border: none; font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.1rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; cursor: pointer;
-      box-shadow: 0 0 32px rgba(0,230,118,.3);
+      box-shadow: 0 0 32px rgba(204,25,25,.3);
       transition: all .2s;
     }
-    .onboarding-btn:hover { background: #69f0ae; transform: translateY(-1px); }
+    .onboarding-btn:hover { background: #E52020; transform: translateY(-1px); }
     .onboarding-skip {
-      font-size: .8rem; color: #4a6350; cursor: pointer;
+      font-size: .8rem; color: #7A8090; cursor: pointer;
       font-family: 'Inter', sans-serif; background: none; border: none;
       transition: color .15s;
     }
-    .onboarding-skip:hover { color: #81c784; }
+    .onboarding-skip:hover { color: #8A909A; }
     .auth-box {
       background: var(--surface); border: 1px solid var(--accent); border-radius: 12px;
       padding: 28px 24px; width: 100%; max-width: 340px;
@@ -403,7 +407,7 @@
     @keyframes slideUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
     .auth-logo { text-align: center; margin-bottom: 4px; }
     .auth-logo .logo-big { font-size: 2.5rem; }
-    .auth-logo h1 { font-family: var(--font-disp); font-size: 2rem; font-weight: 700; color: var(--accent); margin-top: 8px; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 0 20px var(--accent); }
+    .auth-logo h1 { font-family: var(--font-disp); font-size: 2rem; font-weight: 700; color: var(--accent); margin-top: 8px; letter-spacing: .1em; text-transform: uppercase;  }
     .auth-logo p { color: var(--text2); font-size: 13px; margin-top: 4px; }
     .auth-tabs { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .auth-tab { flex: 1; padding: 9px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text2); background: transparent; transition: all .15s; }
@@ -413,8 +417,8 @@
     .auth-field input { background: transparent; border: 1px solid var(--border2); color: var(--accent2); border-radius: 6px; padding: 11px 14px; font-family: var(--font-mono); font-size: 14px; outline: none; transition: all .2s; }
     .auth-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow), 0 0 12px var(--accent-glow); }
     .auth-field input::placeholder { color: var(--text3); }
-    .btn-auth { padding: 12px; border-radius: 6px; font-family: var(--font-disp); font-size: 15px; font-weight: 700; cursor: pointer; border: 1px solid var(--accent); transition: all .2s; background: var(--accent); color: #000; width: 100%; box-shadow: 0 0 20px var(--accent-glow); letter-spacing: .1em; text-transform: uppercase; }
-    .btn-auth:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 0 32px var(--accent-glow); }
+    .btn-auth { padding: 12px; border-radius: 6px; font-family: var(--font-disp); font-size: 15px; font-weight: 700; cursor: pointer; border: 1px solid var(--accent); transition: all .2s; background: var(--accent); color: #fff; width: 100%;  letter-spacing: .1em; text-transform: uppercase; }
+    .btn-auth:hover { background: var(--accent2); transform: translateY(-1px);  }
     .btn-google { background: transparent; color: var(--text2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: none; font-family: var(--font-body); }
     .btn-google:hover { border-color: var(--text2); color: var(--text); transform: translateY(-1px); }
     .auth-sep { display: flex; align-items: center; gap: 12px; color: var(--text3); font-size: 12px; }
@@ -424,7 +428,7 @@
 
     /* ── TOPBAR USER ── */
     .topbar-user { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding-left: 12px; border-left: 1px solid var(--border); }
-    .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #000; flex-shrink: 0; overflow: hidden; font-family: var(--font-disp); }
+    .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; font-family: var(--font-disp); }
     .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .user-name { font-size: 11px; color: var(--text3); white-space: nowrap; display: none; }
     @media(min-width:600px) { .user-name { display: block; } }
@@ -454,7 +458,7 @@
     .objectif-name { font-size: 13px; color: var(--text); font-weight: 500; }
     .objectif-pct { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
     .objectif-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-    .objectif-fill { height: 100%; border-radius: 3px; background: var(--accent); box-shadow: 0 0 6px var(--accent-glow); transition: width .8s cubic-bezier(.4,0,.2,1); }
+    .objectif-fill { height: 100%; border-radius: 3px; background: var(--accent);  transition: width .8s cubic-bezier(.4,0,.2,1); }
     .objectif-fill.done { background: var(--amber); box-shadow: 0 0 6px var(--amber-dim); }
     .objectif-badge { font-size: .65rem; padding: 2px 7px; border-radius: 10px; background: var(--accent-dim); color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; }
     .objectif-badge.done { background: var(--amber-dim); color: var(--amber); }
@@ -480,14 +484,14 @@
     .leaderboard-info { flex: 1; }
     .leaderboard-name { font-weight: 600; font-size: 14px; color: var(--text); }
     .leaderboard-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
-    .leaderboard-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .05em; font-weight: 400; text-shadow: 0 0 8px var(--accent); }
-    .leaderboard-me { background: rgba(0,230,118,.04) !important; border-left: 3px solid var(--accent); }
+    .leaderboard-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .05em; font-weight: 400;  }
+    .leaderboard-me { background: rgba(204,25,25,.04) !important; border-left: 3px solid var(--accent); }
 
     /* ── PAGE PROFIL ── */
     .page-profil { padding: 16px; gap: 16px; max-width: 560px; margin: 0 auto; width: 100%; }
     .profil-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .profil-banner { height: 72px; background: linear-gradient(90deg, var(--surface) 0%, rgba(0,230,118,.12) 50%, var(--surface) 100%); border-bottom: 1px solid var(--accent); position: relative; overflow: hidden; }
-    .profil-banner::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,230,118,.04) 20px, rgba(0,230,118,.04) 21px); }
+    .profil-banner { height: 72px; background: linear-gradient(90deg, var(--surface) 0%, rgba(204,25,25,.12) 50%, var(--surface) 100%); border-bottom: 1px solid var(--accent); position: relative; overflow: hidden; }
+    .profil-banner::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(204,25,25,.04) 20px, rgba(204,25,25,.04) 21px); }
     .profil-header { padding: 0 20px 20px; position: relative; }
     .profil-avatar-wrap { position: relative; display: inline-block; margin-top: -28px; }
     .profil-avatar {
@@ -514,8 +518,8 @@
 
     .profil-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
     .profil-stat { background: var(--surface); padding: 14px; text-align: center; }
-    .profil-stat-val { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 400; color: var(--accent); line-height: 1; text-shadow: 0 0 10px var(--accent); }
-    .profil-stat-val.green { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+    .profil-stat-val { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 400; color: var(--accent); line-height: 1;  }
+    .profil-stat-val.green { color: var(--accent);  }
     .profil-stat-lbl { font-size: .6rem; text-transform: uppercase; letter-spacing: .14em; color: var(--text3); margin-top: 4px; font-weight: 600; }
 
     .profil-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
@@ -525,11 +529,11 @@
     .profil-field input { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 14px; font-family: var(--font-body); font-size: 14px; outline: none; transition: all .2s; }
     .profil-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     .profil-field input::placeholder { color: var(--text3); }
-    .profil-save-btn { align-self: flex-start; padding: 10px 24px; border-radius: var(--radius-sm); background: var(--accent); color: #000; border: none; font-family: var(--font-disp); font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; box-shadow: 0 0 16px var(--accent-glow); letter-spacing: .08em; text-transform: uppercase; }
-    .profil-save-btn:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 0 24px var(--accent-glow); }
+    .profil-save-btn { align-self: flex-start; padding: 10px 24px; border-radius: var(--radius-sm); background: var(--accent); color: #fff; border: none; font-family: var(--font-disp); font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s;  letter-spacing: .08em; text-transform: uppercase; }
+    .profil-save-btn:hover { background: var(--accent2); transform: translateY(-1px);  }
     .profil-save-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
     .profil-toast { padding: 10px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; text-align: center; display: none; }
-    .profil-toast.success { display: block; background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,185,129,.3); }
+    .profil-toast.success { display: block; background: var(--green-dim); color: var(--green); border: 1px solid rgba(0,200,117,.3); }
     .profil-toast.error { display: block; background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
 
     .profil-link-box { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; }
@@ -564,7 +568,7 @@
     <!-- Slide 1 -->
     <div class="onboarding-slide">
       <div class="onboarding-icon">🏟️</div>
-      <h2>Tour des<br><span>Stades</span></h2>
+      <h2>GROUND<br><span>HOPPER</span></h2>
       <p>Le tracker ultime pour les fans de foot qui visitent les stades du monde entier.</p>
       <div class="onboarding-stats">
         <div class="onboarding-stat">
@@ -588,17 +592,17 @@
       <h2>Trace ta<br><span>Route</span></h2>
       <p>Coche chaque stade visité. Suis ta progression sur la carte interactive. Compare-toi au monde entier.</p>
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px">
-        <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
           <span style="font-size:1.4rem">✅</span>
-          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#81c784">Coche les stades visités</span>
+          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#8A909A">Coche les stades visités</span>
         </div>
-        <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
           <span style="font-size:1.4rem">🔥</span>
-          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#81c784">Carte de chaleur de tes voyages</span>
+          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#8A909A">Carte de chaleur de tes voyages</span>
         </div>
-        <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
           <span style="font-size:1.4rem">🏆</span>
-          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#81c784">Classement mondial en temps réel</span>
+          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#8A909A">Classement mondial en temps réel</span>
         </div>
       </div>
     </div>
@@ -608,13 +612,13 @@
       <div class="onboarding-icon">🥇</div>
       <h2>Rejoins la<br><span>Communauté</span></h2>
       <p>Crée ton compte gratuit, sauvegarde ta progression et grimpe dans le classement mondial.</p>
-      <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:12px;padding:20px;width:100%;max-width:300px">
-        <div style="font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#4a6350;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Gratuit pour toujours</div>
+      <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.2);border-radius:12px;padding:20px;width:100%;max-width:300px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#7A8090;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Gratuit pour toujours</div>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Compte gratuit</div>
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Sauvegarde cloud automatique</div>
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Classement mondial</div>
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#81c784">✓ Notes & matchs vus</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Compte gratuit</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Sauvegarde cloud automatique</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Classement mondial</div>
+          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Notes & matchs vus</div>
         </div>
       </div>
     </div>
@@ -636,7 +640,7 @@
   <div class="auth-box">
     <div class="auth-logo">
       <div class="logo-big">⚽</div>
-      <h1>Tour des Stades</h1>
+      <h1>Groundhopper</h1>
       <p>Connecte-toi pour synchroniser ta progression</p>
     </div>
     <div id="authError" class="auth-error"></div>
@@ -675,7 +679,7 @@
   <nav class="topbar">
     <div class="topbar-logo">
       <span class="logo-icon">⚽</span>
-      <span class="logo-title">Stades</span>
+      <span class="logo-title">GROUND<span>HOPPER</span></span>
     </div>
     <div class="topbar-nav">
       <div class="nav-item active" data-page="carte">
@@ -1269,6 +1273,7 @@ Object.defineProperty(window, 'guestMode', { get: () => guestMode });
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="stadiums.js"></script>
 <script>
 'use strict';
 
@@ -1320,6 +1325,8 @@ const CHAMP_COLORS = {
   'Eredivisie':'#fdcb6e',
   'Jupiler Pro League':'#e67e22',
   'Primeira Liga':'#27ae60','Segunda Liga':'#a8d8a8',
+  'Liga Portugal 2':'#2ecc71','Serie B':'#52c7aa','Serie B Brazil':'#009c3b','J2 League':'#e67e22','K League 2':'#1f8dd6','USL Championship':'#16a085',
+  'League One':'#9b59b6','Primera Federación':'#2980b9','Liga':'#f39c12','National':'#8e44ad','Serie C':'#d35400','Serie C Brazil':'#27ae60','USL League One':'#f1c40f','J3 League':'#e74c3c','League Two':'#34495e','National 2':'#2c3e50','Regionalliga':'#27ae60','Serie D':'#8e44ad','Segunda Federación':'#e67e22','Japan Football League':'#16a085',
   'Scottish Premiership':'#9b59b6',
   'Super League Suisse':'#c0392b',
   'Super League Grèce':'#1abc9c',
@@ -1428,1281 +1435,11 @@ function makeCheckbox(checked) { const c=document.createElement('input'); c.type
 // ════════════════════════════════════
 // DONNÉES
 // ════════════════════════════════════
-const STADES_DATA = [
 
-  // ══════════════════════════════════════════════════
-  // AFRIQUE DU SUD (5 stades)
-  // ══════════════════════════════════════════════════
+// ════════════════════════════════════
+// DONNÉES (externalisées dans stadiums.js)
+// ════════════════════════════════════
 
-  // ── PSL ──
-  {nom:"Moses Mabhida Stadium",club:"AmaZulu FC",ville:"Durban",pays:"Afrique du Sud",championnat:"PSL",lat:-29.8281,lng:31.0303},
-  {nom:"FNB Stadium",club:"Kaizer Chiefs",ville:"Johannesburg",pays:"Afrique du Sud",championnat:"PSL",lat:-26.2344,lng:27.9828},
-  {nom:"Cape Town Stadium",club:"Cape Town City",ville:"Le Cap",pays:"Afrique du Sud",championnat:"PSL",lat:-33.9031,lng:18.4114},
-  {nom:"Peter Mokaba Stadium",club:"Polokwane City",ville:"Polokwane",pays:"Afrique du Sud",championnat:"PSL",lat:-23.9025,lng:29.4775},
-  {nom:"Loftus Versfeld Stadium",club:"Mamelodi Sundowns",ville:"Pretoria",pays:"Afrique du Sud",championnat:"PSL",lat:-25.75,lng:28.2222},
-
-  // ══════════════════════════════════════════════════
-  // ALBANIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Kategoria Superiore ──
-  {nom:"Air Albania Stadium",club:"Sélection Albanie",ville:"Tirana",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.3281,lng:19.8308},
-  {nom:"Qemal Stafa Stadium",club:"SK Tirana",ville:"Tirana",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.3333,lng:19.8167},
-
-  // ══════════════════════════════════════════════════
-  // ALGÉRIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue Professionnelle 1 ──
-  {nom:"Stade du 5 Juillet 1962",club:"MC Alger",ville:"Alger",pays:"Algérie",championnat:"Ligue Professionnelle 1",lat:36.75,lng:3.05},
-  {nom:"Stade Nelson Mandela",club:"USM Annaba",ville:"Annaba",pays:"Algérie",championnat:"Ligue Professionnelle 1",lat:36.9,lng:7.7667},
-  {nom:"Stade Mustapha Tchaker",club:"MC Béjaïa",ville:"Blida",pays:"Algérie",championnat:"Ligue Professionnelle 1",lat:36.4667,lng:2.8333},
-
-  // ══════════════════════════════════════════════════
-  // ALLEMAGNE (17 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Bundesliga ──
-  {nom:"WWK Arena",club:"FC Augsbourg",ville:"Augsbourg",pays:"Allemagne",championnat:"Bundesliga",lat:48.3233,lng:10.8858},
-  {nom:"Olympiastadion Berlin",club:"Hertha BSC",ville:"Berlin",pays:"Allemagne",championnat:"Bundesliga",lat:52.5147,lng:13.2395},
-  {nom:"Stadion An der Alten Försterei",club:"Union Berlin",ville:"Berlin",pays:"Allemagne",championnat:"Bundesliga",lat:52.4573,lng:13.5672},
-  {nom:"Vonovia Ruhrstadion",club:"VfL Bochum",ville:"Bochum",pays:"Allemagne",championnat:"Bundesliga",lat:51.4897,lng:7.2314},
-  {nom:"Weserstadion",club:"Werder Brême",ville:"Brême",pays:"Allemagne",championnat:"Bundesliga",lat:53.0661,lng:8.8378},
-  {nom:"Signal Iduna Park",club:"Borussia Dortmund",ville:"Dortmund",pays:"Allemagne",championnat:"Bundesliga",lat:51.4926,lng:7.4519},
-  {nom:"Deutsche Bank Park",club:"Eintracht Francfort",ville:"Francfort",pays:"Allemagne",championnat:"Bundesliga",lat:50.0686,lng:8.6453},
-  {nom:"Veltins-Arena",club:"Schalke 04",ville:"Gelsenkirchen",pays:"Allemagne",championnat:"Bundesliga",lat:51.5544,lng:7.0678},
-  {nom:"Volksparkstadion",club:"Hambourg SV",ville:"Hambourg",pays:"Allemagne",championnat:"Bundesliga",lat:53.5872,lng:9.8986},
-  {nom:"Red Bull Arena Leipzig",club:"RB Leipzig",ville:"Leipzig",pays:"Allemagne",championnat:"Bundesliga",lat:51.3458,lng:12.3483},
-  {nom:"BayArena",club:"Bayer Leverkusen",ville:"Leverkusen",pays:"Allemagne",championnat:"Bundesliga",lat:51.0384,lng:7.0022},
-  {nom:"MEWA Arena",club:"Mainz 05",ville:"Mayence",pays:"Allemagne",championnat:"Bundesliga",lat:49.9842,lng:8.2242},
-  {nom:"Allianz Arena",club:"Bayern Munich",ville:"Munich",pays:"Allemagne",championnat:"Bundesliga",lat:48.2188,lng:11.6244},
-  {nom:"Borussia-Park",club:"Borussia Mönchengladbach",ville:"Mönchengladbach",pays:"Allemagne",championnat:"Bundesliga",lat:51.1742,lng:6.3856},
-  {nom:"PreZero Arena",club:"TSG Hoffenheim",ville:"Sinsheim",pays:"Allemagne",championnat:"Bundesliga",lat:49.2381,lng:8.8892},
-  {nom:"MHPArena",club:"VfB Stuttgart",ville:"Stuttgart",pays:"Allemagne",championnat:"Bundesliga",lat:48.7925,lng:9.2322},
-  {nom:"Volkswagen Arena",club:"Wolfsburg",ville:"Wolfsburg",pays:"Allemagne",championnat:"Bundesliga",lat:52.432,lng:10.8036},
-
-  // ══════════════════════════════════════════════════
-  // ANGLETERRE (22 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premier League ──
-  {nom:"Villa Park",club:"Aston Villa",ville:"Birmingham",pays:"Angleterre",championnat:"Premier League",lat:52.5092,lng:-1.8847},
-  {nom:"Vitality Stadium",club:"AFC Bournemouth",ville:"Bournemouth",pays:"Angleterre",championnat:"Premier League",lat:50.7352,lng:-1.8383},
-  {nom:"AMEX Stadium",club:"Brighton & Hove Albion",ville:"Brighton",pays:"Angleterre",championnat:"Premier League",lat:50.8619,lng:-0.0839},
-  {nom:"Turf Moor",club:"Burnley FC",ville:"Burnley",pays:"Angleterre",championnat:"Premier League",lat:53.7892,lng:-2.2297},
-  {nom:"Portman Road",club:"Ipswich Town",ville:"Ipswich",pays:"Angleterre",championnat:"Premier League",lat:52.055,lng:1.1447},
-  {nom:"Elland Road",club:"Leeds United",ville:"Leeds",pays:"Angleterre",championnat:"Premier League",lat:53.7775,lng:-1.5722},
-  {nom:"King Power Stadium",club:"Leicester City",ville:"Leicester",pays:"Angleterre",championnat:"Premier League",lat:52.6204,lng:-1.1422},
-  {nom:"Anfield",club:"Liverpool FC",ville:"Liverpool",pays:"Angleterre",championnat:"Premier League",lat:53.4308,lng:-2.9608},
-  {nom:"Goodison Park",club:"Everton FC",ville:"Liverpool",pays:"Angleterre",championnat:"Premier League",lat:53.4388,lng:-2.9664},
-  {nom:"Stamford Bridge",club:"Chelsea FC",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.4816,lng:-0.191},
-  {nom:"Emirates Stadium",club:"Arsenal FC",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.5549,lng:-0.1084},
-  {nom:"Tottenham Hotspur Stadium",club:"Tottenham Hotspur",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.6044,lng:-0.0665},
-  {nom:"Wembley Stadium",club:"Sélection Angleterre",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.556,lng:-0.2796},
-  {nom:"Selhurst Park",club:"Crystal Palace",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.3983,lng:-0.0856},
-  {nom:"London Stadium",club:"West Ham United",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.5386,lng:-0.0164},
-  {nom:"Brentford Community Stadium",club:"Brentford FC",ville:"Londres",pays:"Angleterre",championnat:"Premier League",lat:51.4908,lng:-0.2886},
-  {nom:"Old Trafford",club:"Manchester United",ville:"Manchester",pays:"Angleterre",championnat:"Premier League",lat:53.4631,lng:-2.2914},
-  {nom:"Etihad Stadium",club:"Manchester City",ville:"Manchester",pays:"Angleterre",championnat:"Premier League",lat:53.4831,lng:-2.2003},
-  {nom:"Riverside Stadium",club:"Middlesbrough FC",ville:"Middlesbrough",pays:"Angleterre",championnat:"Premier League",lat:54.5781,lng:-1.2175},
-  {nom:"Carrow Road",club:"Norwich City",ville:"Norwich",pays:"Angleterre",championnat:"Premier League",lat:52.6222,lng:1.3094},
-  {nom:"Bramall Lane",club:"Sheffield United",ville:"Sheffield",pays:"Angleterre",championnat:"Premier League",lat:53.3703,lng:-1.4711},
-  {nom:"Molineux Stadium",club:"Wolverhampton Wanderers",ville:"Wolverhampton",pays:"Angleterre",championnat:"Premier League",lat:52.5903,lng:-2.1303},
-
-  // ══════════════════════════════════════════════════
-  // ANGOLA (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Girabola ──
-  {nom:"Estádio 11 de Novembro",club:"Petro de Luanda",ville:"Luanda",pays:"Angola",championnat:"Girabola",lat:-8.8172,lng:13.2339},
-  {nom:"Estadio Cité de Angola",club:"Petro de Luanda",ville:"Luanda",pays:"Angola",championnat:"Girabola",lat:-8.85,lng:13.3},
-
-  // ══════════════════════════════════════════════════
-  // ARABIE SAOUDITE (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Saudi Pro League ──
-  {nom:"King Abdullah Sports City",club:"Al-Ahli",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.6847,lng:39.1861},
-  {nom:"Prince Abdullah Al-Faisal Stadium",club:"Al-Ittihad",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.5433,lng:39.1786},
-  {nom:"King Fahd International Stadium",club:"Sélection Arabie Saoudite",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7156,lng:46.7219},
-  {nom:"Mohammed bin Salman Stadium",club:"Al-Hilal",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7503,lng:46.8231},
-  {nom:"Mrsool Park",club:"Al-Nassr",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.8917,lng:46.8528},
-
-  // ══════════════════════════════════════════════════
-  // ARGENTINE (18 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Profesional Argentina ──
-  {nom:"Estadio Presidente Peron",club:"Racing Club",ville:"Avellaneda",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6614,lng:-58.3669},
-  {nom:"Estadio Libertadores de America",club:"Independiente",ville:"Avellaneda",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6644,lng:-58.3736},
-  {nom:"Estadio Florencio Sola",club:"Banfield",ville:"Banfield",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.7442,lng:-58.3997},
-  {nom:"Estadio Alberto J. Armando",club:"Boca Juniors",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6355,lng:-58.3644},
-  {nom:"Estadio Monumental",club:"River Plate",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.5453,lng:-58.4497},
-  {nom:"Estadio Pedro Bidegain",club:"San Lorenzo",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6432,lng:-58.4378},
-  {nom:"Estadio Jose Amalfitani",club:"Velez Sarsfield",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6347,lng:-58.5197},
-  {nom:"Estadio Tomás Adolfo Ducó",club:"Huracán",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6378,lng:-58.4281},
-  {nom:"Estadio Mario Alberto Kempes",club:"Talleres",ville:"Córdoba",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.4167,lng:-64.2167},
-  {nom:"Estadio Jorge Luis Hirschi",club:"Estudiantes de La Plata",ville:"La Plata",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.9108,lng:-57.9986},
-  {nom:"Estadio Ciudad de La Plata",club:"Estudiantes / Gimnasia LP",ville:"La Plata",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.8917,lng:-57.9833},
-  {nom:"Estadio Juan Carmelo Zerillo",club:"Gimnasia LP",ville:"La Plata",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.9167,lng:-57.95},
-  {nom:"Estadio Néstor Díaz Pérez",club:"Lanús",ville:"Lanús",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.7078,lng:-58.3856},
-  {nom:"Estadio El Gigante de Arroyito",club:"Rosario Central",ville:"Rosario",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-32.9167,lng:-60.6833},
-  {nom:"Estadio Marcelo Bielsa",club:"Newell's Old Boys",ville:"Rosario",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-32.95,lng:-60.65},
-  {nom:"Estadio Brigadier General Estanislao López",club:"Colón",ville:"Santa Fe",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.6167,lng:-60.7333},
-  {nom:"Estadio 15 de Abril",club:"Unión Santa Fe",ville:"Santa Fe",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.65,lng:-60.7167},
-  {nom:"Estadio Monumental Presidente José Fierro",club:"Atlético Tucumán",ville:"Tucumán",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-26.8353,lng:-65.2089},
-
-  // ══════════════════════════════════════════════════
-  // ARMÉNIE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Armenian Premier League ──
-  {nom:"Vazgen Sargsyan Republican Stadium",club:"Sélection Arménie",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1792,lng:44.5089},
-
-  // ══════════════════════════════════════════════════
-  // AUSTRALIE (9 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── A-League ──
-  {nom:"Coopers Stadium",club:"Adelaide United",ville:"Adélaïde",pays:"Australie",championnat:"A-League",lat:-34.8833,lng:138.5},
-  {nom:"Brisbane Stadium",club:"Brisbane Roar",ville:"Brisbane",pays:"Australie",championnat:"A-League",lat:-27.4578,lng:153.0097},
-  {nom:"Central Coast Stadium",club:"Central Coast Mariners",ville:"Gosford",pays:"Australie",championnat:"A-League",lat:-33.4167,lng:151.3333},
-  {nom:"AAMI Park",club:"Melbourne City",ville:"Melbourne",pays:"Australie",championnat:"A-League",lat:-37.8194,lng:144.9833},
-  {nom:"Mackay Stadium",club:"Newcastle Jets",ville:"Newcastle",pays:"Australie",championnat:"A-League",lat:-32.9167,lng:151.75},
-  {nom:"CommBank Stadium",club:"Western Sydney Wanderers",ville:"Parramatta",pays:"Australie",championnat:"A-League",lat:-33.8139,lng:151.0028},
-  {nom:"HBF Park",club:"Perth Glory",ville:"Perth",pays:"Australie",championnat:"A-League",lat:-31.9486,lng:115.8639},
-  {nom:"Stadium Australia",club:"Western Sydney Wanderers",ville:"Sydney",pays:"Australie",championnat:"A-League",lat:-33.8472,lng:151.0633},
-  {nom:"Allianz Stadium",club:"Sydney FC",ville:"Sydney",pays:"Australie",championnat:"A-League",lat:-33.89,lng:151.2233},
-
-  // ══════════════════════════════════════════════════
-  // AUTRICHE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Bundesliga Autriche ──
-  {nom:"Red Bull Arena Salzburg",club:"RB Salzbourg",ville:"Salzbourg",pays:"Autriche",championnat:"Bundesliga Autriche",lat:47.8219,lng:13.0433},
-  {nom:"Ernst-Happel-Stadion",club:"Equipe nationale Autriche",ville:"Vienne",pays:"Autriche",championnat:"Bundesliga Autriche",lat:48.2083,lng:16.4178},
-
-  // ══════════════════════════════════════════════════
-  // AZERBAÏDJAN (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premyer Liqa ──
-  {nom:"Baku Olympic Stadium",club:"Sélection Azerbaïdjan",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4097,lng:49.9669},
-  {nom:"Tofiq Bahramov Stadium",club:"Sélection Azerbaïdjan",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4,lng:49.8667},
-  {nom:"Bakcell Arena",club:"FK Qarabag",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4167,lng:49.9},
-
-  // ══════════════════════════════════════════════════
-  // BAHREÏN (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Bahraini Premier League ──
-  {nom:"Bahrain National Stadium",club:"Sélection Bahreïn",ville:"Riffa",pays:"Bahreïn",championnat:"Bahraini Premier League",lat:26.1167,lng:50.55},
-
-  // ══════════════════════════════════════════════════
-  // BANGLADESH (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Bangladesh Premier League ──
-  {nom:"Bangabandhu National Stadium",club:"Sélection Bangladesh",ville:"Dacca",pays:"Bangladesh",championnat:"Bangladesh Premier League",lat:23.7333,lng:90.4167},
-
-  // ══════════════════════════════════════════════════
-  // BELGIQUE (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Jupiler Pro League ──
-  {nom:"Lotto Park",club:"RSC Anderlecht",ville:"Anderlecht",pays:"Belgique",championnat:"Jupiler Pro League",lat:50.8333,lng:4.2978},
-  {nom:"Bosuil",club:"Royal Antwerp FC",ville:"Anvers",pays:"Belgique",championnat:"Jupiler Pro League",lat:51.2381,lng:4.4394},
-  {nom:"Ghelamco Arena",club:"KAA Gent",ville:"Gand",pays:"Belgique",championnat:"Jupiler Pro League",lat:51.1,lng:3.7167},
-  {nom:"Den Dreef",club:"OH Leuven",ville:"Louvain",pays:"Belgique",championnat:"Jupiler Pro League",lat:50.8803,lng:4.7153},
-
-  // ══════════════════════════════════════════════════
-  // BIÉLORUSSIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Vysshaya Liga ──
-  {nom:"Borisov Arena",club:"FC BATE Borisov",ville:"Borisov",pays:"Biélorussie",championnat:"Vysshaya Liga",lat:54.25,lng:28.4833},
-  {nom:"Dinamo Stadium",club:"Sélection Biélorussie",ville:"Minsk",pays:"Biélorussie",championnat:"Vysshaya Liga",lat:53.9167,lng:27.5833},
-  {nom:"Boris Paichadze Arena",club:"Sélection Biélorussie",ville:"Minsk",pays:"Biélorussie",championnat:"Vysshaya Liga",lat:53.9333,lng:27.5833},
-
-  // ══════════════════════════════════════════════════
-  // BOLIVIE (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── División Profesional Bolivia ──
-  {nom:"Estadio Félix Capriles",club:"Club Bolívar",ville:"Cochabamba",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.3833,lng:-66.1667},
-  {nom:"Estadio Jesús Bermúdez",club:"Club Aurora",ville:"Cochabamba",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.3667,lng:-66.1833},
-  {nom:"Estadio Hernando Siles",club:"Bolívar",ville:"La Paz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-16.5167,lng:-68.0833},
-  {nom:"Estadio Ramón Tahuichi Aguilera",club:"Oriente Petrolero",ville:"Santa Cruz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.7833,lng:-63.1833},
-  {nom:"Estadio Patria",club:"Real Potosí",ville:"Sucre",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-19.0333,lng:-65.2667},
-
-  // ══════════════════════════════════════════════════
-  // BOSNIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premier Liga BiH ──
-  {nom:"Gradski Stadion Banja Luka",club:"FK Borac Banja Luka",ville:"Banja Luka",pays:"Bosnie",championnat:"Premier Liga BiH",lat:44.7667,lng:17.1833},
-  {nom:"Bilino Polje",club:"FK Željezničar",ville:"Zenica",pays:"Bosnie",championnat:"Premier Liga BiH",lat:44.2069,lng:17.9119},
-
-  // ══════════════════════════════════════════════════
-  // BRESIL (16 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Campeonato Brasileiro ──
-  {nom:"Arena MRV",club:"Atletico Mineiro",ville:"Belo Horizonte",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-19.9208,lng:-43.9244},
-  {nom:"Estádio Mineirão",club:"Cruzeiro",ville:"Belo Horizonte",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-19.8658,lng:-43.9706},
-  {nom:"Arena Pantanal",club:"Cuiabá",ville:"Cuiabá",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-15.5989,lng:-56.0969},
-  {nom:"Ligga Arena",club:"Athletico Paranaense",ville:"Curitiba",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-25.4481,lng:-49.2761},
-  {nom:"Arena Castelão",club:"Fortaleza",ville:"Fortaleza",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-3.8075,lng:-38.5225},
-  {nom:"Arena do Gremio",club:"Gremio",ville:"Porto Alegre",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-29.9787,lng:-51.188},
-  {nom:"Estadio Beira-Rio",club:"Internacional",ville:"Porto Alegre",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-30.0653,lng:-51.2353},
-  {nom:"Estadio do Maracana",club:"Flamengo / Fluminense",ville:"Rio de Janeiro",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-22.9121,lng:-43.2302},
-  {nom:"Estadio de Sao Januario",club:"Vasco da Gama",ville:"Rio de Janeiro",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-22.8886,lng:-43.2783},
-  {nom:"São Januário",club:"Vasco da Gama",ville:"Rio de Janeiro",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-22.8958,lng:-43.2261},
-  {nom:"Arena Fonte Nova",club:"Bahia",ville:"Salvador",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-12.9786,lng:-38.5042},
-  {nom:"Estádio Barradão",club:"Vitória",ville:"Salvador",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-12.9833,lng:-38.4667},
-  {nom:"Estadio Vila Belmiro",club:"Santos FC",ville:"Santos",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.9609,lng:-46.3336},
-  {nom:"Neo Quimica Arena",club:"Corinthians",ville:"Sao Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5453,lng:-46.474},
-  {nom:"Allianz Parque",club:"Palmeiras",ville:"Sao Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5273,lng:-46.6786},
-  {nom:"Estadio Morumbi",club:"Sao Paulo FC",ville:"Sao Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5996,lng:-46.7196},
-
-  // ══════════════════════════════════════════════════
-  // BULGARIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Parva liga ──
-  {nom:"Ludogorets Arena",club:"Ludogorets Razgrad",ville:"Razgrad",pays:"Bulgarie",championnat:"Parva liga",lat:43.5333,lng:26.5167},
-  {nom:"Vasil Levski National Stadium",club:"Sélection Bulgarie",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6556,lng:23.3483},
-  {nom:"Stadion Lokomotiv",club:"Lokomotiv Sofia",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6667,lng:23.3333},
-
-  // ══════════════════════════════════════════════════
-  // BURKINA FASO (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Championnat National Burkina ──
-  {nom:"Stade du 4 Août",club:"Sélection Burkina Faso",ville:"Ouagadougou",pays:"Burkina Faso",championnat:"Championnat National Burkina",lat:12.3667,lng:-1.5333},
-
-  // ══════════════════════════════════════════════════
-  // BÉNIN (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue 1 Bénin ──
-  {nom:"Stade de l'Amitié",club:"Sélection Bénin",ville:"Cotonou",pays:"Bénin",championnat:"Ligue 1 Bénin",lat:6.3667,lng:2.4167},
-  {nom:"Stade de l'Amitié Général Mathieu Kérékou",club:"Sélection Bénin",ville:"Cotonou",pays:"Bénin",championnat:"Ligue 1 Bénin",lat:6.35,lng:2.4},
-
-  // ══════════════════════════════════════════════════
-  // CAMBODGE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── C-League ──
-  {nom:"National Stadium Phnom Penh",club:"Sélection Cambodge",ville:"Phnom Penh",pays:"Cambodge",championnat:"C-League",lat:11.5667,lng:104.9167},
-
-  // ══════════════════════════════════════════════════
-  // CAMEROUN (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── MTN Elite One ──
-  {nom:"Stade de la Réunification",club:"Sélection Cameroun",ville:"Douala",pays:"Cameroun",championnat:"MTN Elite One",lat:4.0603,lng:9.7333},
-  {nom:"Stade Omnisports Roumdé Adjia",club:"Coton Sport",ville:"Garoua",pays:"Cameroun",championnat:"MTN Elite One",lat:9.2833,lng:13.3833},
-  {nom:"Stade d'Olembé",club:"Sélection Cameroun",ville:"Yaoundé",pays:"Cameroun",championnat:"MTN Elite One",lat:3.9,lng:11.5333},
-  {nom:"Stade Omnisports de Yaoundé",club:"Sélection Cameroun",ville:"Yaoundé",pays:"Cameroun",championnat:"MTN Elite One",lat:3.8667,lng:11.5167},
-
-  // ══════════════════════════════════════════════════
-  // CANADA (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── MLS Canada ──
-  {nom:"Saputo Stadium",club:"CF Montreal",ville:"Montreal",pays:"Canada",championnat:"MLS Canada",lat:45.5633,lng:-73.5514},
-  {nom:"BMO Field",club:"Toronto FC",ville:"Toronto",pays:"Canada",championnat:"MLS Canada",lat:43.6333,lng:-79.4186},
-  {nom:"BC Place",club:"Vancouver Whitecaps",ville:"Vancouver",pays:"Canada",championnat:"MLS Canada",lat:49.2767,lng:-123.1117},
-
-  // ══════════════════════════════════════════════════
-  // CENTRAFRIQUE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue 1 RCA ──
-  {nom:"Stade Barthélemy Boganda",club:"Sélection Centrafrique",ville:"Bangui",pays:"Centrafrique",championnat:"Ligue 1 RCA",lat:4.3667,lng:18.5833},
-
-  // ══════════════════════════════════════════════════
-  // CHILI (7 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Primera Division Chili ──
-  {nom:"Estadio La Portada",club:"Huachipato",ville:"Antofagasta",pays:"Chili",championnat:"Primera Division Chili",lat:-23.6333,lng:-70.4},
-  {nom:"Estadio Ester Roa Rebolledo",club:"Deportivo Concepción",ville:"Concepción",pays:"Chili",championnat:"Primera Division Chili",lat:-36.8167,lng:-73.0833},
-  {nom:"Estadio El Teniente",club:"O'Higgins",ville:"Rancagua",pays:"Chili",championnat:"Primera Division Chili",lat:-34.1667,lng:-70.7333},
-  {nom:"Estadio Monumental David Arellano",club:"Colo-Colo",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.4911,lng:-70.6147},
-  {nom:"Estadio Nacional Julio Martinez Pradanos",club:"Universidad de Chile",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.4644,lng:-70.6097},
-  {nom:"Estadio San Carlos de Apoquindo",club:"Universidad Católica",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.3833,lng:-70.5667},
-  {nom:"Estadio Bicentenario de La Florida",club:"Universidad de Chile",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.5333,lng:-70.5833},
-
-  // ══════════════════════════════════════════════════
-  // CHINE (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Super League ──
-  {nom:"Tianhe Stadium",club:"Guangzhou FC",ville:"Guangzhou",pays:"Chine",championnat:"Super League",lat:23.1322,lng:113.3597},
-  {nom:"Jiangsu Olympic Sports Centre",club:"Jiangsu FC",ville:"Nankin",pays:"Chine",championnat:"Super League",lat:32.0503,lng:118.7819},
-  {nom:"Workers' Stadium",club:"Beijing Guoan",ville:"Pékin",pays:"Chine",championnat:"Super League",lat:39.9289,lng:116.4436},
-  {nom:"Hongkou Football Stadium",club:"Shanghai Shenhua",ville:"Shanghai",pays:"Chine",championnat:"Super League",lat:31.2597,lng:121.4706},
-  {nom:"Longhua Football Stadium",club:"Shenzhen FC",ville:"Shenzhen",pays:"Chine",championnat:"Super League",lat:22.5431,lng:114.0579},
-
-  // ══════════════════════════════════════════════════
-  // CHYPRE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── 1. Division Chypre ──
-  {nom:"AEK Arena",club:"AEK Larnaca",ville:"Larnaca",pays:"Chypre",championnat:"1. Division Chypre",lat:34.9167,lng:33.6333},
-  {nom:"GSP Stadium",club:"APOEL FC",ville:"Nicosie",pays:"Chypre",championnat:"1. Division Chypre",lat:35.1597,lng:33.3694},
-
-  // ══════════════════════════════════════════════════
-  // COLOMBIE (7 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga BetPlay ──
-  {nom:"Estadio El Campin",club:"Millonarios / Santa Fe",ville:"Bogota",pays:"Colombie",championnat:"Liga BetPlay",lat:4.6473,lng:-74.0773},
-  {nom:"Estadio Atanasio Girardot",club:"Atletico Nacional",ville:"Medellin",pays:"Colombie",championnat:"Liga BetPlay",lat:6.2572,lng:-75.5908},
-
-  // ── Primera A Colombia ──
-  {nom:"Estadio Metropolitano Roberto Meléndez",club:"Junior de Barranquilla",ville:"Barranquilla",pays:"Colombie",championnat:"Primera A Colombia",lat:10.9833,lng:-74.8167},
-  {nom:"Estadio Alfonso López",club:"Millonarios",ville:"Bogotá",pays:"Colombie",championnat:"Primera A Colombia",lat:4.6097,lng:-74.0817},
-  {nom:"Estadio Pascual Guerrero",club:"América de Cali",ville:"Cali",pays:"Colombie",championnat:"Primera A Colombia",lat:3.4333,lng:-76.5333},
-  {nom:"Estadio Palogrande",club:"Once Caldas",ville:"Manizales",pays:"Colombie",championnat:"Primera A Colombia",lat:5.0667,lng:-75.5167},
-  {nom:"Estadio Deportivo Cali",club:"Deportivo Cali",ville:"Palmira",pays:"Colombie",championnat:"Primera A Colombia",lat:3.5167,lng:-76.35},
-
-  // ══════════════════════════════════════════════════
-  // CONGO RDC (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Linafoot ──
-  {nom:"Stade des Martyrs",club:"TP Mazembe",ville:"Kinshasa",pays:"Congo RDC",championnat:"Linafoot",lat:-4.3167,lng:15.3},
-  {nom:"Stade Tata Raphaël",club:"AS Vita Club",ville:"Kinshasa",pays:"Congo RDC",championnat:"Linafoot",lat:-4.3333,lng:15.3333},
-
-  // ══════════════════════════════════════════════════
-  // CORÉE DU SUD (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── K League ──
-  {nom:"Incheon Football Stadium",club:"Incheon United",ville:"Incheon",pays:"Corée du Sud",championnat:"K League",lat:37.4444,lng:126.6972},
-  {nom:"Jeonju World Cup Stadium",club:"Jeonbuk Hyundai Motors",ville:"Jeonju",pays:"Corée du Sud",championnat:"K League",lat:35.8194,lng:127.1281},
-  {nom:"Suwon World Cup Stadium",club:"Suwon Samsung Bluewings",ville:"Suwon",pays:"Corée du Sud",championnat:"K League",lat:37.2972,lng:127.0556},
-  {nom:"Seoul World Cup Stadium",club:"FC Seoul",ville:"Séoul",pays:"Corée du Sud",championnat:"K League",lat:37.5689,lng:126.8972},
-  {nom:"Ulsan Munsu Football Stadium",club:"Ulsan Hyundai",ville:"Ulsan",pays:"Corée du Sud",championnat:"K League",lat:35.5375,lng:129.2611},
-
-  // ══════════════════════════════════════════════════
-  // COSTA RICA (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Promérica ──
-  {nom:"Estadio Nacional de Costa Rica",club:"Sélection Costa Rica",ville:"San José",pays:"Costa Rica",championnat:"Liga Promérica",lat:9.9333,lng:-84.1167},
-  {nom:"Estadio Alejandro Morera Soto",club:"Deportivo Saprissa",ville:"San José",pays:"Costa Rica",championnat:"Liga Promérica",lat:9.95,lng:-84.05},
-
-  // ── Primera División CR ──
-  {nom:"Estadio Ricardo Saprissa",club:"Deportivo Saprissa",ville:"San José",pays:"Costa Rica",championnat:"Primera División CR",lat:9.95,lng:-84.1},
-
-  // ══════════════════════════════════════════════════
-  // CROATIE (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── HNL Croatie ──
-  {nom:"Stadion Poljud",club:"Hajduk Split",ville:"Split",pays:"Croatie",championnat:"HNL Croatie",lat:43.5228,lng:16.4344},
-  {nom:"Poljud",club:"Hajduk Split",ville:"Split",pays:"Croatie",championnat:"HNL Croatie",lat:43.5167,lng:16.4333},
-  {nom:"Stadion Maksimir",club:"Dinamo Zagreb",ville:"Zagreb",pays:"Croatie",championnat:"HNL Croatie",lat:45.8119,lng:16.0119},
-  {nom:"Maksimir",club:"Dinamo Zagreb",ville:"Zagreb",pays:"Croatie",championnat:"HNL Croatie",lat:45.8167,lng:16.0333},
-
-  // ══════════════════════════════════════════════════
-  // CUBA (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Campeonato Nacional Cuba ──
-  {nom:"Estadio Pedro Marrero",club:"Sélection Cuba",ville:"La Havane",pays:"Cuba",championnat:"Campeonato Nacional Cuba",lat:23.1333,lng:-82.3833},
-  {nom:"Estadio Olímpico Nacional Pedro Luis Díaz",club:"Sélection Cuba",ville:"La Havane",pays:"Cuba",championnat:"Campeonato Nacional Cuba",lat:23.1167,lng:-82.3833},
-
-  // ══════════════════════════════════════════════════
-  // CÔTE D'IVOIRE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── MTN Ligue 1 ──
-  {nom:"Stade Olympique Alassane Ouattara",club:"Sélection Côte d'Ivoire",ville:"Abidjan",pays:"Côte d'Ivoire",championnat:"MTN Ligue 1",lat:5.3667,lng:-3.9833},
-  {nom:"Stade Félix Houphouët-Boigny",club:"ASEC Mimosas",ville:"Abidjan",pays:"Côte d'Ivoire",championnat:"MTN Ligue 1",lat:5.35,lng:-4.0167},
-  {nom:"Stade de la Paix",club:"SO Armée",ville:"Bouaké",pays:"Côte d'Ivoire",championnat:"MTN Ligue 1",lat:7.6833,lng:-5.0333},
-
-  // ══════════════════════════════════════════════════
-  // DANEMARK (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Superliga Danemark ──
-  {nom:"Ceres Park",club:"AGF Aarhus",ville:"Aarhus",pays:"Danemark",championnat:"Superliga Danemark",lat:56.1333,lng:10.1833},
-  {nom:"Brøndby Stadion",club:"Brøndby IF",ville:"Brøndby",pays:"Danemark",championnat:"Superliga Danemark",lat:55.6583,lng:12.4333},
-  {nom:"Parken Stadium",club:"FC Copenhague",ville:"Copenhague",pays:"Danemark",championnat:"Superliga Danemark",lat:55.7028,lng:12.5703},
-  {nom:"MCH Arena",club:"FC Midtjylland",ville:"Herning",pays:"Danemark",championnat:"Superliga Danemark",lat:56.1333,lng:8.9667},
-
-  // ══════════════════════════════════════════════════
-  // EL SALVADOR (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Mayor El Salvador ──
-  {nom:"Estadio Cuscatlán",club:"Sélection El Salvador",ville:"San Salvador",pays:"El Salvador",championnat:"Liga Mayor El Salvador",lat:13.7167,lng:-89.2},
-
-  // ══════════════════════════════════════════════════
-  // ESPAGNE (19 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── La Liga ──
-  {nom:"Power Horse Stadium",club:"UD Almería",ville:"Almería",pays:"Espagne",championnat:"La Liga",lat:36.8422,lng:-2.4297},
-  {nom:"Camp Nou",club:"FC Barcelone",ville:"Barcelone",pays:"Espagne",championnat:"La Liga",lat:41.3809,lng:2.1228},
-  {nom:"Estadio de San Mamés",club:"Athletic Bilbao",ville:"Bilbao",pays:"Espagne",championnat:"La Liga",lat:43.2642,lng:-2.9494},
-  {nom:"Estadio Nuevo Mirandilla",club:"Cádiz CF",ville:"Cadix",pays:"Espagne",championnat:"La Liga",lat:36.5333,lng:-6.2833},
-  {nom:"Estadio Municipal de Ipurua",club:"SD Eibar",ville:"Eibar",pays:"Espagne",championnat:"La Liga",lat:43.1819,lng:-2.4769},
-  {nom:"Coliseum Alfonso Pérez",club:"Getafe CF",ville:"Getafe",pays:"Espagne",championnat:"La Liga",lat:40.3244,lng:-3.7133},
-  {nom:"Abanca-Riazor",club:"Deportivo La Coruña",ville:"La Corogne",pays:"Espagne",championnat:"La Liga",lat:43.3703,lng:-8.4158},
-  {nom:"Estadio de Gran Canaria",club:"UD Las Palmas",ville:"Las Palmas",pays:"Espagne",championnat:"La Liga",lat:28.1003,lng:-15.4503},
-  {nom:"Estadio Municipal de Butarque",club:"Leganés",ville:"Leganés",pays:"Espagne",championnat:"La Liga",lat:40.3308,lng:-3.7611},
-  {nom:"Santiago Bernabéu",club:"Real Madrid",ville:"Madrid",pays:"Espagne",championnat:"La Liga",lat:40.4531,lng:-3.6883},
-  {nom:"Estadio Metropolitano",club:"Atlético Madrid",ville:"Madrid",pays:"Espagne",championnat:"La Liga",lat:40.4361,lng:-3.5997},
-  {nom:"Estadio de Vallecas",club:"Rayo Vallecano",ville:"Madrid",pays:"Espagne",championnat:"La Liga",lat:40.3919,lng:-3.6483},
-  {nom:"Estadio El Sadar",club:"CA Osasuna",ville:"Pampelune",pays:"Espagne",championnat:"La Liga",lat:42.7969,lng:-1.6369},
-  {nom:"Reale Arena",club:"Real Sociedad",ville:"Saint-Sébastien",pays:"Espagne",championnat:"La Liga",lat:43.3014,lng:-1.9731},
-  {nom:"Estadio Ramón Sánchez-Pizjuán",club:"Sevilla FC",ville:"Séville",pays:"Espagne",championnat:"La Liga",lat:37.3839,lng:-5.9706},
-  {nom:"Estadio Benito Villamarín",club:"Real Betis",ville:"Séville",pays:"Espagne",championnat:"La Liga",lat:37.3561,lng:-6.0028},
-  {nom:"Mestalla",club:"Valencia CF",ville:"Valence",pays:"Espagne",championnat:"La Liga",lat:39.475,lng:-0.3583},
-  {nom:"El Madrigal",club:"Villarreal CF",ville:"Villarreal",pays:"Espagne",championnat:"La Liga",lat:39.9444,lng:-0.1031},
-  {nom:"Estadio Mendizorrotza",club:"Deportivo Alavés",ville:"Vitoria-Gasteiz",pays:"Espagne",championnat:"La Liga",lat:42.8447,lng:-2.6919},
-
-  // ══════════════════════════════════════════════════
-  // ESTONIE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Meistriliiga ──
-  {nom:"A. Le Coq Arena",club:"FC Flora",ville:"Tallinn",pays:"Estonie",championnat:"Meistriliiga",lat:59.4228,lng:24.8258},
-
-  // ══════════════════════════════════════════════════
-  // FIDJI (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── OFC Nations Cup ──
-  {nom:"Churchill Park",club:"Sélection Fidji",ville:"Lautoka",pays:"Fidji",championnat:"OFC Nations Cup",lat:-17.6167,lng:177.45},
-
-  // ══════════════════════════════════════════════════
-  // FINLANDE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Veikkausliiga ──
-  {nom:"Helsinki Olympic Stadium",club:"Sélection Finlande",ville:"Helsinki",pays:"Finlande",championnat:"Veikkausliiga",lat:60.1878,lng:24.9267},
-  {nom:"Bolt Arena",club:"HJK Helsinki",ville:"Helsinki",pays:"Finlande",championnat:"Veikkausliiga",lat:60.1889,lng:24.925},
-
-  // ══════════════════════════════════════════════════
-  // FRANCE (22 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue 1 ──
-  {nom:"Stade Raymond-Kopa",club:"Angers SCO",ville:"Angers",pays:"France",championnat:"Ligue 1",lat:47.4581,lng:-0.5497},
-  {nom:"Stade Vélodrome",club:"Girondins de Bordeaux",ville:"Bordeaux",pays:"France",championnat:"Ligue 1",lat:44.8283,lng:-0.5564},
-  {nom:"Stade du Pays de Charleroi",club:"Stade Brestois",ville:"Brest",pays:"France",championnat:"Ligue 1",lat:48.4133,lng:-4.5089},
-  {nom:"Stade Michel d'Ornano",club:"SM Caen",ville:"Caen",pays:"France",championnat:"Ligue 1",lat:49.1731,lng:-0.3731},
-  {nom:"Groupama Stadium",club:"Olympique Lyonnais",ville:"Décines-Charpieu",pays:"France",championnat:"Ligue 1",lat:45.7653,lng:5.0825},
-  {nom:"Stade du Roudourou",club:"En Avant Guingamp",ville:"Guingamp",pays:"France",championnat:"Ligue 1",lat:48.5614,lng:-3.155},
-  {nom:"Stade Océane",club:"Le Havre AC",ville:"Le Havre",pays:"France",championnat:"Ligue 1",lat:49.5019,lng:0.1297},
-  {nom:"Stade Bollaert-Delelis",club:"RC Lens",ville:"Lens",pays:"France",championnat:"Ligue 1",lat:50.4333,lng:2.8153},
-  {nom:"Orange Vélodrome",club:"Olympique de Marseille",ville:"Marseille",pays:"France",championnat:"Ligue 1",lat:43.2697,lng:5.3956},
-  {nom:"Stade Louis II",club:"AS Monaco",ville:"Monaco",pays:"France",championnat:"Ligue 1",lat:43.7275,lng:7.4156},
-  {nom:"La Mosson",club:"Montpellier HSC",ville:"Montpellier",pays:"France",championnat:"Ligue 1",lat:43.6219,lng:3.8122},
-  {nom:"Stade de la Beaujoire",club:"FC Nantes",ville:"Nantes",pays:"France",championnat:"Ligue 1",lat:47.2561,lng:-1.5258},
-  {nom:"Allianz Riviera",club:"OGC Nice",ville:"Nice",pays:"France",championnat:"Ligue 1",lat:43.705,lng:7.1925},
-  {nom:"Parc des Princes",club:"Paris Saint-Germain",ville:"Paris",pays:"France",championnat:"Ligue 1",lat:48.8414,lng:2.253},
-  {nom:"Stade du Hameau",club:"Pau FC",ville:"Pau",pays:"France",championnat:"Ligue 1",lat:43.2986,lng:-0.3844},
-  {nom:"Stade Auguste-Delaune",club:"Stade de Reims",ville:"Reims",pays:"France",championnat:"Ligue 1",lat:49.2558,lng:4.0303},
-  {nom:"Roazhon Park",club:"Stade Rennais",ville:"Rennes",pays:"France",championnat:"Ligue 1",lat:48.1072,lng:-1.7128},
-  {nom:"Stade de la France",club:"Sélection France",ville:"Saint-Denis",pays:"France",championnat:"Ligue 1",lat:48.9244,lng:2.3601},
-  {nom:"Stade Geoffroy-Guichard",club:"AS Saint-Étienne",ville:"Saint-Étienne",pays:"France",championnat:"Ligue 1",lat:45.4608,lng:4.3908},
-  {nom:"Stade de la Meinau",club:"RC Strasbourg",ville:"Strasbourg",pays:"France",championnat:"Ligue 1",lat:48.5603,lng:7.7753},
-  {nom:"Stadium de Toulouse",club:"Toulouse FC",ville:"Toulouse",pays:"France",championnat:"Ligue 1",lat:43.5831,lng:1.4344},
-  {nom:"Stade Pierre-Mauroy",club:"Lille OSC",ville:"Villeneuve-d'Ascq",pays:"France",championnat:"Ligue 1",lat:50.6117,lng:3.1303},
-
-  // ══════════════════════════════════════════════════
-  // GABON (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Championnat du Gabon ──
-  {nom:"Stade de Franceville",club:"CF Mounana",ville:"Franceville",pays:"Gabon",championnat:"Championnat du Gabon",lat:-1.6333,lng:13.5667},
-  {nom:"Stade d'Angondjé",club:"Sélection Gabon",ville:"Libreville",pays:"Gabon",championnat:"Championnat du Gabon",lat:0.4667,lng:9.4167},
-  {nom:"Stade de Libreville",club:"CF Mounana",ville:"Libreville",pays:"Gabon",championnat:"Championnat du Gabon",lat:0.3833,lng:9.45},
-
-  // ══════════════════════════════════════════════════
-  // GHANA (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ghana Premier League ──
-  {nom:"Accra Sports Stadium",club:"Hearts of Oak",ville:"Accra",pays:"Ghana",championnat:"Ghana Premier League",lat:5.55,lng:-0.1833},
-  {nom:"Baba Yara Sports Stadium",club:"Asante Kotoko",ville:"Kumasi",pays:"Ghana",championnat:"Ghana Premier League",lat:6.6833,lng:-1.6167},
-
-  // ══════════════════════════════════════════════════
-  // GRÈCE (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Super League Grèce ──
-  {nom:"Stade OAKA",club:"AEK Athènes / Panathinaïkos",ville:"Athènes",pays:"Grèce",championnat:"Super League Grèce",lat:38.0175,lng:23.7858},
-  {nom:"Stade Georgios-Karaïskakis",club:"Olympiakos",ville:"Le Pirée",pays:"Grèce",championnat:"Super League Grèce",lat:37.9408,lng:23.6672},
-  {nom:"Stade Toumba",club:"PAOK",ville:"Thessalonique",pays:"Grèce",championnat:"Super League Grèce",lat:40.6189,lng:22.9767},
-  {nom:"Stade Kleanthis Vikelidis",club:"Aris Thessalonique",ville:"Thessalonique",pays:"Grèce",championnat:"Super League Grèce",lat:40.6158,lng:22.9844},
-  {nom:"Stade Panthessaliko",club:"Olympiakos Volos",ville:"Volos",pays:"Grèce",championnat:"Super League Grèce",lat:39.3544,lng:22.9086},
-
-  // ══════════════════════════════════════════════════
-  // GUATEMALA (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Nacional Guatemala ──
-  {nom:"Estadio Mateo Flores",club:"Sélection Guatemala",ville:"Guatemala City",pays:"Guatemala",championnat:"Liga Nacional Guatemala",lat:14.6333,lng:-90.5167},
-  {nom:"Estadio Doroteo Guamuch Flores",club:"Sélection Guatemala",ville:"Guatemala City",pays:"Guatemala",championnat:"Liga Nacional Guatemala",lat:14.6167,lng:-90.5333},
-
-  // ══════════════════════════════════════════════════
-  // GUINÉE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue Professionnelle Guinée ──
-  {nom:"Stade du 28 Septembre",club:"Sélection Guinée",ville:"Conakry",pays:"Guinée",championnat:"Ligue Professionnelle Guinée",lat:9.55,lng:-13.6667},
-  {nom:"Stade Général Lansana Conté",club:"Sélection Guinée",ville:"Conakry",pays:"Guinée",championnat:"Ligue Professionnelle Guinée",lat:9.5375,lng:-13.6778},
-
-  // ══════════════════════════════════════════════════
-  // GUINÉE ÉQUATORIALE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Nacional ──
-  {nom:"Stade de Malabo",club:"Sélection Guinée Équatoriale",ville:"Malabo",pays:"Guinée Équatoriale",championnat:"Liga Nacional",lat:3.75,lng:8.7833},
-
-  // ══════════════════════════════════════════════════
-  // GÉORGIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Erovnuli Liga ──
-  {nom:"Boris Paichadze Dinamo Arena",club:"Dinamo Tbilissi",ville:"Tbilissi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.7381,lng:44.7661},
-  {nom:"Mikheil Meskhi Stadium",club:"Sélection Géorgie",ville:"Tbilissi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.7333,lng:44.7833},
-
-  // ══════════════════════════════════════════════════
-  // HONDURAS (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Nacional Honduras ──
-  {nom:"Estadio Olímpico Metropolitano",club:"Sélection Honduras",ville:"San Pedro Sula",pays:"Honduras",championnat:"Liga Nacional Honduras",lat:15.5,lng:-88.0167},
-  {nom:"Estadio Nacional",club:"Sélection Honduras",ville:"Tegucigalpa",pays:"Honduras",championnat:"Liga Nacional Honduras",lat:14.1,lng:-87.2167},
-
-  // ══════════════════════════════════════════════════
-  // HONGRIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── OTP Bank Liga ──
-  {nom:"Puskas Arena",club:"Equipe nationale Hongrie",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5014,lng:19.0636},
-  {nom:"Groupama Arena",club:"Ferencvaros",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.4561,lng:19.0986},
-
-  // ══════════════════════════════════════════════════
-  // INDE (8 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── ISL ──
-  {nom:"Kanteerava Stadium",club:"Bengaluru FC",ville:"Bengaluru",pays:"Inde",championnat:"ISL",lat:12.9667,lng:77.5833},
-  {nom:"Fatorda Stadium",club:"FC Goa",ville:"Goa",pays:"Inde",championnat:"ISL",lat:15.35,lng:73.9833},
-  {nom:"Gachibowli Athletic Stadium",club:"Hyderabad FC",ville:"Hyderabad",pays:"Inde",championnat:"ISL",lat:17.4333,lng:78.35},
-  {nom:"Jawaharlal Nehru Stadium",club:"Kerala Blasters",ville:"Kochi",pays:"Inde",championnat:"ISL",lat:9.9594,lng:76.2928},
-  {nom:"Salt Lake Stadium",club:"ATK Mohun Bagan",ville:"Kolkata",pays:"Inde",championnat:"ISL",lat:22.5756,lng:88.3922},
-  {nom:"Mumbai Football Arena",club:"Mumbai City FC",ville:"Mumbai",pays:"Inde",championnat:"ISL",lat:19.0456,lng:72.8717},
-  {nom:"Shree Shiv Chhatrapati Sports Complex",club:"FC Pune City",ville:"Pune",pays:"Inde",championnat:"ISL",lat:18.5233,lng:73.8678},
-  {nom:"Shillong Lajong Ground",club:"Shillong Lajong FC",ville:"Shillong",pays:"Inde",championnat:"ISL",lat:25.5667,lng:91.8833},
-
-  // ══════════════════════════════════════════════════
-  // INDONÉSIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga 1 ──
-  {nom:"Gelora Bandung Lautan Api",club:"Persib Bandung",ville:"Bandung",pays:"Indonésie",championnat:"Liga 1",lat:-6.9381,lng:107.6239},
-  {nom:"Gelora Bung Karno Stadium",club:"Sélection Indonésie",ville:"Jakarta",pays:"Indonésie",championnat:"Liga 1",lat:-6.2183,lng:106.8022},
-
-  // ══════════════════════════════════════════════════
-  // IRAK (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Iraq Stars League ──
-  {nom:"Al-Shaab Stadium",club:"Al-Shorta SC",ville:"Bagdad",pays:"Irak",championnat:"Iraq Stars League",lat:33.3381,lng:44.3811},
-  {nom:"Franso Hariri Stadium",club:"Al-Erbil SC",ville:"Erbil",pays:"Irak",championnat:"Iraq Stars League",lat:36.1897,lng:44.0261},
-
-  // ══════════════════════════════════════════════════
-  // IRAN (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Persian Gulf Pro League ──
-  {nom:"Naghsh-e Jahan Stadium",club:"Zob Ahan",ville:"Ispahan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:32.6572,lng:51.6786},
-  {nom:"Soheil Mahmoudi Stadium",club:"Nassaji Mazandaran",ville:"Qaemshahr",pays:"Iran",championnat:"Persian Gulf Pro League",lat:36.4667,lng:52.8667},
-  {nom:"Azadi Stadium",club:"Persepolis FC",ville:"Téhéran",pays:"Iran",championnat:"Persian Gulf Pro League",lat:35.7292,lng:51.3128},
-
-  // ══════════════════════════════════════════════════
-  // ISLANDE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Úrvalsdeild ──
-  {nom:"Laugardalsvöllur",club:"Sélection Islande",ville:"Reykjavik",pays:"Islande",championnat:"Úrvalsdeild",lat:64.1436,lng:-21.8739},
-
-  // ══════════════════════════════════════════════════
-  // ITALIE (18 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Serie A ──
-  {nom:"Stadio Gewiss",club:"Atalanta",ville:"Bergame",pays:"Italie",championnat:"Serie A",lat:45.7086,lng:9.6789},
-  {nom:"Stadio Renato Dall'Ara",club:"Bologna FC",ville:"Bologne",pays:"Italie",championnat:"Serie A",lat:44.4922,lng:11.3089},
-  {nom:"Stadio Ciro Vigorito",club:"Benevento Calcio",ville:"Bénévent",pays:"Italie",championnat:"Serie A",lat:41.1261,lng:14.7997},
-  {nom:"Unipol Domus",club:"Cagliari Calcio",ville:"Cagliari",pays:"Italie",championnat:"Serie A",lat:39.2044,lng:9.1356},
-  {nom:"Stadio Artemio Franchi",club:"Fiorentina",ville:"Florence",pays:"Italie",championnat:"Serie A",lat:43.7808,lng:11.2822},
-  {nom:"Stadio Pino Zaccheria",club:"Foggia Calcio",ville:"Foggia",pays:"Italie",championnat:"Serie A",lat:41.4622,lng:15.5581},
-  {nom:"Stadio Luigi Ferraris",club:"Sampdoria / Genoa",ville:"Gênes",pays:"Italie",championnat:"Serie A",lat:44.4158,lng:8.9511},
-  {nom:"Stadio Via del Mare",club:"US Lecce",ville:"Lecce",pays:"Italie",championnat:"Serie A",lat:40.3497,lng:18.1831},
-  {nom:"San Siro",club:"AC Milan / Inter Milan",ville:"Milan",pays:"Italie",championnat:"Serie A",lat:45.4781,lng:9.1239},
-  {nom:"Stadio Diego Armando Maradona",club:"SSC Napoli",ville:"Naples",pays:"Italie",championnat:"Serie A",lat:40.8279,lng:14.1931},
-  {nom:"Stadio Adriatico",club:"Pescara Calcio",ville:"Pescara",pays:"Italie",championnat:"Serie A",lat:42.4622,lng:14.2108},
-  {nom:"Stadio Granillo",club:"Reggina",ville:"Reggio de Calabre",pays:"Italie",championnat:"Serie A",lat:38.1172,lng:15.6503},
-  {nom:"Stadio Olimpico",club:"AS Roma / Lazio",ville:"Rome",pays:"Italie",championnat:"Serie A",lat:41.9336,lng:12.4546},
-  {nom:"Stadio Arechi",club:"Salernitana",ville:"Salerne",pays:"Italie",championnat:"Serie A",lat:40.6656,lng:14.8236},
-  {nom:"Juventus Stadium",club:"Juventus",ville:"Turin",pays:"Italie",championnat:"Serie A",lat:45.1097,lng:7.6412},
-  {nom:"Stadio Friuli",club:"Udinese",ville:"Udine",pays:"Italie",championnat:"Serie A",lat:46.0761,lng:13.2011},
-  {nom:"Stadio Romeo Menti",club:"Vicenza",ville:"Vicence",pays:"Italie",championnat:"Serie A",lat:45.5597,lng:11.5247},
-  {nom:"Stadio Marcantonio Bentegodi",club:"Hellas Vérone",ville:"Vérone",pays:"Italie",championnat:"Serie A",lat:45.4358,lng:10.9731},
-
-  // ══════════════════════════════════════════════════
-  // JAMAÏQUE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── National Premier League ──
-  {nom:"National Stadium Jamaica",club:"Sélection Jamaïque",ville:"Kingston",pays:"Jamaïque",championnat:"National Premier League",lat:17.9833,lng:-76.7833},
-
-  // ══════════════════════════════════════════════════
-  // JAPON (8 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── J1 League ──
-  {nom:"Shizuoka Stadium Ecopa",club:"Jubilo Iwata",ville:"Fukuroi",pays:"Japon",championnat:"J1 League",lat:34.7167,lng:137.9167},
-  {nom:"Kashima Soccer Stadium",club:"Kashima Antlers",ville:"Kashima",pays:"Japon",championnat:"J1 League",lat:35.9561,lng:140.6369},
-  {nom:"Noevir Stadium Kobe",club:"Vissel Kobe",ville:"Kobe",pays:"Japon",championnat:"J1 League",lat:34.6769,lng:135.1894},
-  {nom:"Yanmar Stadium Nagai",club:"Gamba Osaka",ville:"Osaka",pays:"Japon",championnat:"J1 League",lat:34.6161,lng:135.5194},
-  {nom:"Saitama Stadium 2002",club:"Urawa Red Diamonds",ville:"Saitama",pays:"Japon",championnat:"J1 League",lat:35.9095,lng:139.7208},
-  {nom:"Japan National Stadium",club:"Sélection Japon",ville:"Tokyo",pays:"Japon",championnat:"J1 League",lat:35.6782,lng:139.7141},
-  {nom:"Toyota Stadium",club:"Nagoya Grampus",ville:"Toyota",pays:"Japon",championnat:"J1 League",lat:35.1333,lng:137.0667},
-  {nom:"Nissan Stadium",club:"Yokohama F. Marinos",ville:"Yokohama",pays:"Japon",championnat:"J1 League",lat:35.51,lng:139.6063},
-
-  // ══════════════════════════════════════════════════
-  // JORDANIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Jordan Pro League ──
-  {nom:"Faisal Al-Husseini Stadium",club:"Hilal Al-Quds",ville:"Al-Ram",pays:"Jordanie",championnat:"Jordan Pro League",lat:31.8667,lng:35.2167},
-  {nom:"King Abdullah II Stadium",club:"Sélection Jordanie",ville:"Amman",pays:"Jordanie",championnat:"Jordan Pro League",lat:31.9667,lng:35.9333},
-  {nom:"Amman International Stadium",club:"Sélection Jordanie",ville:"Amman",pays:"Jordanie",championnat:"Jordan Pro League",lat:31.95,lng:35.9333},
-
-  // ══════════════════════════════════════════════════
-  // KENYA (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── FKF Premier League ──
-  {nom:"Kasarani Stadium",club:"Gor Mahia",ville:"Nairobi",pays:"Kenya",championnat:"FKF Premier League",lat:-1.2208,lng:36.8958},
-
-  // ══════════════════════════════════════════════════
-  // KOWEÏT (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Kuwait Premier League ──
-  {nom:"Kuwait National Stadium",club:"Sélection Koweït",ville:"Koweït",pays:"Koweït",championnat:"Kuwait Premier League",lat:29.3667,lng:47.9833},
-  {nom:"Kuwait SC Stadium",club:"Kuwait SC",ville:"Koweït",pays:"Koweït",championnat:"Kuwait Premier League",lat:29.3333,lng:47.9833},
-
-  // ══════════════════════════════════════════════════
-  // LETTONIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Virslīga ──
-  {nom:"Daugava Stadium",club:"Sélection Lettonie",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.95,lng:24.1167},
-  {nom:"Skonto Stadium",club:"RFS Riga",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.9631,lng:24.0825},
-
-  // ══════════════════════════════════════════════════
-  // LIBAN (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Lebanese Premier League ──
-  {nom:"Camille Chamoun Sports City Stadium",club:"Sélection Liban",ville:"Beyrouth",pays:"Liban",championnat:"Lebanese Premier League",lat:33.8667,lng:35.5333},
-
-  // ══════════════════════════════════════════════════
-  // LIBYE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Libyan Premier League ──
-  {nom:"Tripoli International Stadium",club:"Al-Ahli Tripoli",ville:"Tripoli",pays:"Libye",championnat:"Libyan Premier League",lat:32.9,lng:13.1833},
-
-  // ══════════════════════════════════════════════════
-  // LITUANIE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── A Lyga ──
-  {nom:"LFF Stadium",club:"Žalgiris Vilnius",ville:"Vilnius",pays:"Lituanie",championnat:"A Lyga",lat:54.6783,lng:25.2167},
-
-  // ══════════════════════════════════════════════════
-  // LUXEMBOURG (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── BGL Ligue ──
-  {nom:"Stade de Luxembourg",club:"Sélection Luxembourg",ville:"Luxembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5978,lng:6.2175},
-  {nom:"Josy Barthel Stadion",club:"Sélection Luxembourg",ville:"Luxembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.6167,lng:6.1333},
-
-  // ══════════════════════════════════════════════════
-  // MACÉDOINE DU NORD (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Prva Fudbalska Liga ──
-  {nom:"Toše Proeski Arena",club:"Sélection Macédoine",ville:"Skopje",pays:"Macédoine du Nord",championnat:"Prva Fudbalska Liga",lat:41.9967,lng:21.4144},
-
-  // ══════════════════════════════════════════════════
-  // MADAGASCAR (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Pro League Madagascar ──
-  {nom:"Stade Municipal de Mahamasina",club:"Sélection Madagascar",ville:"Antananarivo",pays:"Madagascar",championnat:"Pro League Madagascar",lat:-18.9167,lng:47.5167},
-  {nom:"Stade Mahamasina",club:"Sélection Madagascar",ville:"Antananarivo",pays:"Madagascar",championnat:"Pro League Madagascar",lat:-18.9167,lng:47.5333},
-
-  // ══════════════════════════════════════════════════
-  // MALAISIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Super League Malaisie ──
-  {nom:"Sultan Ibrahim Stadium",club:"Johor Darul Ta'zim",ville:"Iskandar Puteri",pays:"Malaisie",championnat:"Super League Malaisie",lat:1.5333,lng:103.7833},
-  {nom:"Bukit Jalil National Stadium",club:"Sélection Malaisie",ville:"Kuala Lumpur",pays:"Malaisie",championnat:"Super League Malaisie",lat:3.0572,lng:101.6931},
-  {nom:"Shah Alam Stadium",club:"Selangor FC",ville:"Shah Alam",pays:"Malaisie",championnat:"Super League Malaisie",lat:3.0667,lng:101.5333},
-
-  // ══════════════════════════════════════════════════
-  // MALI (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Championnat National du Mali ──
-  {nom:"Stade du 26 Mars",club:"Sélection Mali",ville:"Bamako",pays:"Mali",championnat:"Championnat National du Mali",lat:12.65,lng:-8.0},
-
-  // ══════════════════════════════════════════════════
-  // MALTE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premier League Malte ──
-  {nom:"Ta' Qali National Stadium",club:"Sélection Malte",ville:"Ta' Qali",pays:"Malte",championnat:"Premier League Malte",lat:35.8972,lng:14.4139},
-
-  // ══════════════════════════════════════════════════
-  // MAROC (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Botola Pro ──
-  {nom:"Stade Adrar",club:"Hassania Agadir",ville:"Agadir",pays:"Maroc",championnat:"Botola Pro",lat:30.4167,lng:-9.5667},
-  {nom:"Stade Mohammed V",club:"Wydad Casablanca",ville:"Casablanca",pays:"Maroc",championnat:"Botola Pro",lat:33.5811,lng:-7.6272},
-  {nom:"Stade de Fès",club:"MAS de Fès",ville:"Fès",pays:"Maroc",championnat:"Botola Pro",lat:34.0433,lng:-5.0072},
-  {nom:"Grand Stade de Tanger",club:"Ittihad Tanger",ville:"Tanger",pays:"Maroc",championnat:"Botola Pro",lat:35.75,lng:-5.8039},
-
-  // ══════════════════════════════════════════════════
-  // MEXIQUE (17 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga MX ──
-  {nom:"Estadio Victoria",club:"Necaxa",ville:"Aguascalientes",pays:"Mexique",championnat:"Liga MX",lat:21.8833,lng:-102.2833},
-  {nom:"Estadio Andrés Quintana Roo",club:"Atlante FC",ville:"Cancún",pays:"Mexique",championnat:"Liga MX",lat:21.1667,lng:-86.85},
-  {nom:"Estadio Akron",club:"Chivas Guadalajara",ville:"Guadalajara",pays:"Mexique",championnat:"Liga MX",lat:20.6861,lng:-103.4657},
-  {nom:"Estadio León",club:"Club León",ville:"León",pays:"Mexique",championnat:"Liga MX",lat:21.15,lng:-101.7},
-  {nom:"Estadio Azteca",club:"Club America / Cruz Azul",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3029,lng:-99.1505},
-  {nom:"Estadio Ciudad de los Deportes",club:"Cruz Azul",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3794,lng:-99.1581},
-  {nom:"Estadio Olimpico Universitario",club:"Pumas UNAM",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3225,lng:-99.1858},
-  {nom:"Estadio Bancomer",club:"Club América",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.4039,lng:-99.1506},
-  {nom:"Estadio Universitario",club:"Tigres UANL",ville:"Monterrey",pays:"Mexique",championnat:"Liga MX",lat:25.6869,lng:-100.3189},
-  {nom:"Estadio BBVA",club:"Monterrey",ville:"Monterrey",pays:"Mexique",championnat:"Liga MX",lat:25.6694,lng:-100.2436},
-  {nom:"Estadio Hidalgo",club:"Pachuca CF",ville:"Pachuca",pays:"Mexique",championnat:"Liga MX",lat:20.1167,lng:-98.7333},
-  {nom:"Estadio La Corregidora",club:"Querétaro FC",ville:"Querétaro",pays:"Mexique",championnat:"Liga MX",lat:20.5833,lng:-100.4},
-  {nom:"Estadio Alfonso Lastras",club:"Atlético San Luis",ville:"San Luis Potosí",pays:"Mexique",championnat:"Liga MX",lat:22.15,lng:-100.9667},
-  {nom:"Estadio Caliente",club:"Club Tijuana",ville:"Tijuana",pays:"Mexique",championnat:"Liga MX",lat:32.5186,lng:-117.0386},
-  {nom:"Estadio Nemesio Diez",club:"Toluca",ville:"Toluca",pays:"Mexique",championnat:"Liga MX",lat:19.2897,lng:-99.6536},
-  {nom:"Estadio Corona",club:"Santos Laguna",ville:"Torreon",pays:"Mexique",championnat:"Liga MX",lat:25.5494,lng:-103.4678},
-  {nom:"Estadio Manuel Barradas",club:"Tiburones Rojos",ville:"Veracruz",pays:"Mexique",championnat:"Liga MX",lat:19.1833,lng:-96.15},
-
-  // ══════════════════════════════════════════════════
-  // MOZAMBIQUE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Moçambola ──
-  {nom:"Estádio do Zimpeto",club:"Sélection Mozambique",ville:"Maputo",pays:"Mozambique",championnat:"Moçambola",lat:-25.8667,lng:32.55},
-
-  // ══════════════════════════════════════════════════
-  // MYANMAR (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── National League Myanmar ──
-  {nom:"Thuwunna Stadium",club:"Sélection Myanmar",ville:"Rangoun",pays:"Myanmar",championnat:"National League Myanmar",lat:16.85,lng:96.1833},
-
-  // ══════════════════════════════════════════════════
-  // NICARAGUA (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Primera Nicaragua ──
-  {nom:"Estadio Nacional de Nicaragua",club:"Sélection Nicaragua",ville:"Managua",pays:"Nicaragua",championnat:"Liga Primera Nicaragua",lat:12.1333,lng:-86.2833},
-
-  // ══════════════════════════════════════════════════
-  // NIGERIA (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── NPFL ──
-  {nom:"Moshood Abiola National Stadium",club:"Sélection Nigeria",ville:"Abuja",pays:"Nigeria",championnat:"NPFL",lat:9.0694,lng:7.4906},
-  {nom:"National Stadium Lagos",club:"Sélection Nigeria",ville:"Lagos",pays:"Nigeria",championnat:"NPFL",lat:6.4969,lng:3.3603},
-  {nom:"Godswill Akpabio Stadium",club:"Akwa United",ville:"Uyo",pays:"Nigeria",championnat:"NPFL",lat:5.0167,lng:7.9333},
-
-  // ══════════════════════════════════════════════════
-  // NORVÈGE (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Eliteserien ──
-  {nom:"Brann Stadion",club:"SK Brann",ville:"Bergen",pays:"Norvège",championnat:"Eliteserien",lat:60.3667,lng:5.3333},
-  {nom:"Ullevaal Stadion",club:"Sélection Norvège",ville:"Oslo",pays:"Norvège",championnat:"Eliteserien",lat:59.9444,lng:10.7264},
-  {nom:"Alfheim Stadion",club:"Tromsø IL",ville:"Tromsø",pays:"Norvège",championnat:"Eliteserien",lat:69.6667,lng:18.9667},
-  {nom:"Lerkendal Stadion",club:"Rosenborg BK",ville:"Trondheim",pays:"Norvège",championnat:"Eliteserien",lat:63.4133,lng:10.3925},
-
-  // ══════════════════════════════════════════════════
-  // NOUVELLE-CALÉDONIE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── OFC Nations Cup ──
-  {nom:"Stade Numa-Daly",club:"Sélection Nouvelle-Calédonie",ville:"Nouméa",pays:"Nouvelle-Calédonie",championnat:"OFC Nations Cup",lat:-22.2667,lng:166.45},
-
-  // ══════════════════════════════════════════════════
-  // NOUVELLE-ZÉLANDE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── National League NZ ──
-  {nom:"Eden Park",club:"Sélection Nouvelle-Zélande",ville:"Auckland",pays:"Nouvelle-Zélande",championnat:"National League NZ",lat:-36.8753,lng:174.7442},
-  {nom:"Wellington Regional Stadium",club:"Wellington Phoenix",ville:"Wellington",pays:"Nouvelle-Zélande",championnat:"National League NZ",lat:-41.2833,lng:174.7833},
-
-  // ══════════════════════════════════════════════════
-  // NÉPAL (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Martyr's Memorial A-Division League ──
-  {nom:"Dasarath Rangasala Stadium",club:"Sélection Népal",ville:"Katmandou",pays:"Népal",championnat:"Martyr's Memorial A-Division League",lat:27.7,lng:85.3333},
-
-  // ══════════════════════════════════════════════════
-  // OMAN (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Oman Professional League ──
-  {nom:"Sultan Qaboos Sports Complex",club:"Sélection Oman",ville:"Mascate",pays:"Oman",championnat:"Oman Professional League",lat:23.5833,lng:58.4},
-
-  // ══════════════════════════════════════════════════
-  // OUGANDA (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Uganda Premier League ──
-  {nom:"Mandela National Stadium",club:"KCCA FC",ville:"Kampala",pays:"Ouganda",championnat:"Uganda Premier League",lat:0.3667,lng:32.6833},
-
-  // ══════════════════════════════════════════════════
-  // PAKISTAN (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Pakistan Premier Football League ──
-  {nom:"Jinnah Stadium",club:"Sélection Pakistan",ville:"Gujranwala",pays:"Pakistan",championnat:"Pakistan Premier Football League",lat:32.1617,lng:74.1883},
-  {nom:"National Football Stadium",club:"Sélection Pakistan",ville:"Lahore",pays:"Pakistan",championnat:"Pakistan Premier Football League",lat:31.5497,lng:74.3436},
-
-  // ══════════════════════════════════════════════════
-  // PANAMA (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── LPF Panama ──
-  {nom:"Estadio Rommel Fernández",club:"Sélection Panama",ville:"Panama City",pays:"Panama",championnat:"LPF Panama",lat:9.0,lng:-79.5333},
-
-  // ══════════════════════════════════════════════════
-  // PARAGUAY (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── División de Honor Paraguay ──
-  {nom:"Estadio Defensores del Chaco",club:"Sélection Paraguay",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.2833,lng:-57.65},
-  {nom:"Estadio La Nueva Olla",club:"Cerro Porteño",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.2667,lng:-57.6333},
-  {nom:"Estadio General Pablo Rojas",club:"Club Olimpia",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.3167,lng:-57.65},
-  {nom:"Estadio Arsenio Erico",club:"Nacional",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.3,lng:-57.6333},
-  {nom:"Estadio Rogelio Livieres",club:"Cerro Porteño",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.2667,lng:-57.65},
-
-  // ══════════════════════════════════════════════════
-  // PAYS-BAS (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Eredivisie ──
-  {nom:"AFAS Stadion",club:"AZ Alkmaar",ville:"Alkmaar",pays:"Pays-Bas",championnat:"Eredivisie",lat:52.6136,lng:4.7414},
-  {nom:"GelreDome",club:"Vitesse Arnhem",ville:"Arnhem",pays:"Pays-Bas",championnat:"Eredivisie",lat:51.9644,lng:5.8928},
-  {nom:"Grolsch Veste",club:"FC Twente",ville:"Enschede",pays:"Pays-Bas",championnat:"Eredivisie",lat:52.2378,lng:6.8561},
-  {nom:"Stadion Galgenwaard",club:"FC Utrecht",ville:"Utrecht",pays:"Pays-Bas",championnat:"Eredivisie",lat:52.0808,lng:5.1483},
-
-  // ══════════════════════════════════════════════════
-  // PEROU (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga 1 Perou ──
-  {nom:"Estadio Iván Elías Moreno",club:"Sport Boys",ville:"Callao",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.05,lng:-77.1333},
-  {nom:"Estadio Nacional del Peru",club:"Alianza Lima / Universitario",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.0647,lng:-77.0333},
-  {nom:"Estadio Alejandro Villanueva",club:"Alianza Lima",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.1058,lng:-77.0197},
-  {nom:"Estadio Monumental de Ate",club:"Universitario",ville:"Lima",pays:"Perou",championnat:"Liga 1 Perou",lat:-12.0833,lng:-76.9833},
-  {nom:"Estadio Mansiche",club:"Mannucci",ville:"Trujillo",pays:"Perou",championnat:"Liga 1 Perou",lat:-8.1,lng:-79.0167},
-
-  // ══════════════════════════════════════════════════
-  // PHILIPPINES (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── PFL ──
-  {nom:"Philippine Arena",club:"Sélection Philippines",ville:"Bulacan",pays:"Philippines",championnat:"PFL",lat:14.9667,lng:120.9333},
-  {nom:"Rizal Memorial Stadium",club:"Sélection Philippines",ville:"Manille",pays:"Philippines",championnat:"PFL",lat:14.5653,lng:120.9928},
-
-  // ══════════════════════════════════════════════════
-  // POLOGNE (6 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ekstraklasa ──
-  {nom:"Wisła Kraków Stadion",club:"Wisła Kraków",ville:"Cracovie",pays:"Pologne",championnat:"Ekstraklasa",lat:50.0644,lng:19.9281},
-  {nom:"Stadion Lecha Poznan",club:"Lech Poznan",ville:"Poznan",pays:"Pologne",championnat:"Ekstraklasa",lat:52.3896,lng:16.8531},
-  {nom:"Stadion Miejski Poznań",club:"Lech Poznań",ville:"Poznań",pays:"Pologne",championnat:"Ekstraklasa",lat:52.3897,lng:16.8583},
-  {nom:"Stadion Narodowy",club:"Equipe nationale Pologne",ville:"Varsovie",pays:"Pologne",championnat:"Ekstraklasa",lat:52.2397,lng:21.0458},
-  {nom:"Stadion Wojska Polskiego",club:"Legia Varsovie",ville:"Varsovie",pays:"Pologne",championnat:"Ekstraklasa",lat:52.2192,lng:21.0336},
-  {nom:"Stadion Miejski Wrocław",club:"Śląsk Wrocław",ville:"Wrocław",pays:"Pologne",championnat:"Ekstraklasa",lat:51.1439,lng:16.9439},
-
-  // ══════════════════════════════════════════════════
-  // POLYNÉSIE FRANÇAISE (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── OFC Nations Cup ──
-  {nom:"Stade Pater",club:"Sélection Tahiti",ville:"Papeete",pays:"Polynésie française",championnat:"OFC Nations Cup",lat:-17.5333,lng:-149.5667},
-
-  // ══════════════════════════════════════════════════
-  // PORTUGAL (10 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Primeira Liga ──
-  {nom:"Estádio Municipal de Braga",club:"SC Braga",ville:"Braga",pays:"Portugal",championnat:"Primeira Liga",lat:41.5731,lng:-8.4267},
-  {nom:"Estádio Cidade de Coimbra",club:"Académica",ville:"Coimbra",pays:"Portugal",championnat:"Primeira Liga",lat:40.2114,lng:-8.4306},
-  {nom:"Estádio de São Luís",club:"Farense",ville:"Faro",pays:"Portugal",championnat:"Primeira Liga",lat:37.0167,lng:-7.9333},
-  {nom:"Estádio da Luz",club:"Benfica",ville:"Lisbonne",pays:"Portugal",championnat:"Primeira Liga",lat:38.7522,lng:-9.1847},
-  {nom:"Estádio José Alvalade",club:"Sporting CP",ville:"Lisbonne",pays:"Portugal",championnat:"Primeira Liga",lat:38.7614,lng:-9.1608},
-  {nom:"Estádio da Nora",club:"Portimonense",ville:"Portimão",pays:"Portugal",championnat:"Primeira Liga",lat:37.1353,lng:-8.5358},
-  {nom:"Estádio do Dragão",club:"FC Porto",ville:"Porto",pays:"Portugal",championnat:"Primeira Liga",lat:41.1614,lng:-8.5836},
-  {nom:"Estádio do Bessa",club:"Boavista FC",ville:"Porto",pays:"Portugal",championnat:"Primeira Liga",lat:41.1608,lng:-8.6531},
-  {nom:"Estádio Municipal de Setúbal",club:"Vitória Setúbal",ville:"Setúbal",pays:"Portugal",championnat:"Primeira Liga",lat:38.5233,lng:-8.8933},
-  {nom:"Estádio do Fontelo",club:"Académico Viseu",ville:"Viseu",pays:"Portugal",championnat:"Primeira Liga",lat:40.6617,lng:-7.9167},
-
-  // ══════════════════════════════════════════════════
-  // QATAR (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Qatar Stars League ──
-  {nom:"Al Bayt Stadium",club:"Al Khor",ville:"Al Khor",pays:"Qatar",championnat:"Qatar Stars League",lat:25.6667,lng:51.5333},
-  {nom:"Ahmad Bin Ali Stadium",club:"Al Rayyan",ville:"Al Rayyan",pays:"Qatar",championnat:"Qatar Stars League",lat:25.2514,lng:51.3681},
-  {nom:"Khalifa International Stadium",club:"Sélection Qatar",ville:"Doha",pays:"Qatar",championnat:"Qatar Stars League",lat:25.2628,lng:51.4514},
-  {nom:"Lusail Stadium",club:"Sélection Qatar",ville:"Lusail",pays:"Qatar",championnat:"Qatar Stars League",lat:25.4333,lng:51.5},
-
-  // ══════════════════════════════════════════════════
-  // ROUMANIE (4 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga 1 Roumanie ──
-  {nom:"Arena Nationala",club:"Steaua Bucarest",ville:"Bucarest",pays:"Roumanie",championnat:"Liga 1 Roumanie",lat:44.4386,lng:26.1225},
-  {nom:"Stadionul Ghencea",club:"FCSB",ville:"Bucarest",pays:"Roumanie",championnat:"Liga 1 Roumanie",lat:44.4189,lng:26.0553},
-  {nom:"Stadionul National",club:"Sélection Roumanie",ville:"Bucarest",pays:"Roumanie",championnat:"Liga 1 Roumanie",lat:44.4361,lng:26.1697},
-  {nom:"Cluj Arena",club:"CFR Cluj",ville:"Cluj-Napoca",pays:"Roumanie",championnat:"Liga 1 Roumanie",lat:46.7667,lng:23.5833},
-
-  // ══════════════════════════════════════════════════
-  // RUSSIE (11 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premier League Russie ──
-  {nom:"Ekaterinburg Arena",club:"Ural Ekaterinburg",ville:"Iekaterinbourg",pays:"Russie",championnat:"Premier League Russie",lat:56.8333,lng:60.6},
-  {nom:"Kazan Arena",club:"Rubin Kazan",ville:"Kazan",pays:"Russie",championnat:"Premier League Russie",lat:55.8214,lng:49.0631},
-  {nom:"Luzhniki Stadium",club:"Sélection Russie",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7156,lng:37.5564},
-  {nom:"VTB Arena",club:"Dynamo Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7906,lng:37.5597},
-  {nom:"RZD Arena",club:"Lokomotiv Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7478,lng:37.7319},
-  {nom:"Otkrytie Bank Arena",club:"Spartak Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.8333,lng:37.4917},
-  {nom:"Stade Lokomotiv",club:"Lokomotiv Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.8333,lng:37.7333},
-  {nom:"CSKA Arena",club:"CSKA Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7667,lng:37.6167},
-  {nom:"Gazprom Arena",club:"Zenit Saint-Pétersbourg",ville:"Saint-Pétersbourg",pays:"Russie",championnat:"Premier League Russie",lat:59.9722,lng:30.2214},
-  {nom:"Stade Petrovsky",club:"Zénith Saint-Pétersbourg",ville:"Saint-Pétersbourg",pays:"Russie",championnat:"Premier League Russie",lat:59.9583,lng:30.2583},
-  {nom:"Fisht Stadium",club:"Sélection Russie",ville:"Sotchi",pays:"Russie",championnat:"Premier League Russie",lat:43.4069,lng:39.9564},
-
-  // ══════════════════════════════════════════════════
-  // RWANDA (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Rwanda Premier League ──
-  {nom:"Amahoro National Stadium",club:"APR FC",ville:"Kigali",pays:"Rwanda",championnat:"Rwanda Premier League",lat:-1.95,lng:30.1167},
-
-  // ══════════════════════════════════════════════════
-  // SAMOA (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── OFC Nations Cup ──
-  {nom:"Alafua Stadium",club:"Sélection Samoa",ville:"Apia",pays:"Samoa",championnat:"OFC Nations Cup",lat:-13.8333,lng:-171.7667},
-
-  // ══════════════════════════════════════════════════
-  // SERBIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── SuperLiga Serbie ──
-  {nom:"Stadion Rajko Mitic",club:"Etoile Rouge de Belgrade",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7833,lng:20.4625},
-  {nom:"Stadion FK Partizan",club:"FK Partizan",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7864,lng:20.4478},
-  {nom:"Rajko Mitić Stadium",club:"Étoile Rouge Belgrade",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7883,lng:20.4617},
-
-  // ══════════════════════════════════════════════════
-  // SLOVAQUIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Niké Liga ──
-  {nom:"Tehelné pole",club:"Slovan Bratislava",ville:"Bratislava",pays:"Slovaquie",championnat:"Niké Liga",lat:48.1708,lng:17.1181},
-  {nom:"Stade Antona Malatinského",club:"FC Spartak Trnava",ville:"Trnava",pays:"Slovaquie",championnat:"Niké Liga",lat:48.3667,lng:17.5833},
-
-  // ══════════════════════════════════════════════════
-  // SLOVÉNIE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── PrvaLiga ──
-  {nom:"Stožice Stadium",club:"NK Olimpija Ljubljana",ville:"Ljubljana",pays:"Slovénie",championnat:"PrvaLiga",lat:46.0433,lng:14.5583},
-  {nom:"Stožice",club:"NK Olimpija Ljubljana",ville:"Ljubljana",pays:"Slovénie",championnat:"PrvaLiga",lat:46.0333,lng:14.5333},
-  {nom:"Ljudski vrt",club:"NK Maribor",ville:"Maribor",pays:"Slovénie",championnat:"PrvaLiga",lat:46.5583,lng:15.6333},
-
-  // ══════════════════════════════════════════════════
-  // SOUDAN (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Sudan Premier League ──
-  {nom:"Omdurman Al-Hilal Stadium",club:"Al-Hilal Omdurman",ville:"Omdurman",pays:"Soudan",championnat:"Sudan Premier League",lat:15.6667,lng:32.4833},
-  {nom:"Stade Omnisports d'Omdourman",club:"Al-Merreikh SC",ville:"Omdurman",pays:"Soudan",championnat:"Sudan Premier League",lat:15.6333,lng:32.4833},
-
-  // ══════════════════════════════════════════════════
-  // SRI LANKA (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── FF Champions League ──
-  {nom:"Sugathadasa Stadium",club:"Sélection Sri Lanka",ville:"Colombo",pays:"Sri Lanka",championnat:"FF Champions League",lat:6.9333,lng:79.8667},
-  {nom:"Stade de Colombo",club:"Sélection Sri Lanka",ville:"Colombo",pays:"Sri Lanka",championnat:"FF Champions League",lat:6.9167,lng:79.8667},
-
-  // ══════════════════════════════════════════════════
-  // SUISSE (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Super League Suisse ──
-  {nom:"Wankdorf Stadion",club:"BSC Young Boys",ville:"Berne",pays:"Suisse",championnat:"Super League Suisse",lat:46.9628,lng:7.4644},
-  {nom:"St. Jakob-Park",club:"FC Bâle",ville:"Bâle",pays:"Suisse",championnat:"Super League Suisse",lat:47.5414,lng:7.6206},
-  {nom:"Stade de Genève",club:"Servette FC",ville:"Genève",pays:"Suisse",championnat:"Super League Suisse",lat:46.1808,lng:6.1233},
-  {nom:"Kybunpark",club:"FC Saint-Gall",ville:"Saint-Gall",pays:"Suisse",championnat:"Super League Suisse",lat:47.4086,lng:9.3086},
-  {nom:"Letzigrund",club:"FC Zurich",ville:"Zurich",pays:"Suisse",championnat:"Super League Suisse",lat:47.3789,lng:8.5044},
-
-  // ══════════════════════════════════════════════════
-  // SUÈDE (6 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Allsvenskan ──
-  {nom:"Gamla Ullevi",club:"IFK Göteborg",ville:"Göteborg",pays:"Suède",championnat:"Allsvenskan",lat:57.7069,lng:11.9756},
-  {nom:"Bravida Arena",club:"BK Häcken",ville:"Göteborg",pays:"Suède",championnat:"Allsvenskan",lat:57.7444,lng:11.9544},
-  {nom:"Guldfågeln Arena",club:"IFK Kalmar",ville:"Kalmar",pays:"Suède",championnat:"Allsvenskan",lat:56.6583,lng:16.3167},
-  {nom:"Eleda Stadion",club:"Malmö FF",ville:"Malmö",pays:"Suède",championnat:"Allsvenskan",lat:55.5667,lng:12.9833},
-  {nom:"Friends Arena",club:"Sélection Suède",ville:"Solna",pays:"Suède",championnat:"Allsvenskan",lat:59.3731,lng:18.0006},
-  {nom:"Tele2 Arena",club:"Djurgårdens IF",ville:"Stockholm",pays:"Suède",championnat:"Allsvenskan",lat:59.2931,lng:18.0831},
-
-  // ══════════════════════════════════════════════════
-  // SÉNÉGAL (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue 1 Sénégal ──
-  {nom:"Stade Léopold Sédar Senghor",club:"Sélection Sénégal",ville:"Dakar",pays:"Sénégal",championnat:"Ligue 1 Sénégal",lat:14.7167,lng:-17.45},
-  {nom:"Stade du Sénégal",club:"Sélection Sénégal",ville:"Diamniadio",pays:"Sénégal",championnat:"Ligue 1 Sénégal",lat:14.7167,lng:-17.25},
-
-  // ══════════════════════════════════════════════════
-  // TANZANIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── NBC Premier League ──
-  {nom:"Benjamin Mkapa Stadium",club:"Sélection Tanzanie",ville:"Dar es Salaam",pays:"Tanzanie",championnat:"NBC Premier League",lat:-6.8342,lng:39.2286},
-  {nom:"Uhuru Stadium",club:"Simba SC",ville:"Dar es Salaam",pays:"Tanzanie",championnat:"NBC Premier League",lat:-6.8,lng:39.2833},
-
-  // ══════════════════════════════════════════════════
-  // TCHEQUE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Fortuna Liga ──
-  {nom:"Doosan Arena",club:"FC Viktoria Plzen",ville:"Plzen",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.7475,lng:13.3875},
-  {nom:"Stadion Eden",club:"SK Slavia Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0675,lng:14.4919},
-  {nom:"Generali Arena",club:"AC Sparta Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0989,lng:14.4003},
-
-  // ══════════════════════════════════════════════════
-  // THAÏLANDE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Thai League 1 ──
-  {nom:"Rajamangala National Stadium",club:"Sélection Thaïlande",ville:"Bangkok",pays:"Thaïlande",championnat:"Thai League 1",lat:13.7667,lng:100.5956},
-  {nom:"Rajamangala Stadium",club:"Sélection Thaïlande",ville:"Bangkok",pays:"Thaïlande",championnat:"Thai League 1",lat:13.7564,lng:100.5922},
-  {nom:"700th Anniversary Stadium",club:"Chiangmai United",ville:"Chiang Mai",pays:"Thaïlande",championnat:"Thai League 1",lat:18.7667,lng:99.0},
-
-  // ══════════════════════════════════════════════════
-  // TUNISIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ligue 1 Tunisie ──
-  {nom:"Stade de Radès",club:"Sélection Tunisie",ville:"Radès",pays:"Tunisie",championnat:"Ligue 1 Tunisie",lat:36.7667,lng:10.2833},
-  {nom:"Stade Hamadi Agrebi",club:"ES Sahel",ville:"Sousse",pays:"Tunisie",championnat:"Ligue 1 Tunisie",lat:35.8167,lng:10.6333},
-
-  // ══════════════════════════════════════════════════
-  // TURQUIE (7 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Süper Lig ──
-  {nom:"Yeni Adana Stadyumu",club:"Adana Demirspor",ville:"Adana",pays:"Turquie",championnat:"Süper Lig",lat:37.0086,lng:35.3289},
-  {nom:"Rams Park",club:"Galatasaray",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0765,lng:28.9834},
-  {nom:"Sukru Saracoglu Stadium",club:"Fenerbahce",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:40.9938,lng:29.0346},
-  {nom:"Vodafone Park",club:"Besiktas",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0388,lng:29.0054},
-  {nom:"Konya Buyuksehir Stadyumu",club:"Konyaspor",ville:"Konya",pays:"Turquie",championnat:"Süper Lig",lat:37.8674,lng:32.4938},
-  {nom:"Kalyon Stadyumu",club:"Sivasspor",ville:"Sivas",pays:"Turquie",championnat:"Süper Lig",lat:39.7477,lng:37.0179},
-  {nom:"Senol Gunes Stadyumu",club:"Trabzonspor",ville:"Trabzon",pays:"Turquie",championnat:"Süper Lig",lat:41.0018,lng:39.7494},
-
-  // ══════════════════════════════════════════════════
-  // USA (25 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── MLS ──
-  {nom:"Mercedes-Benz Stadium",club:"Atlanta United",ville:"Atlanta",pays:"USA",championnat:"MLS",lat:33.7554,lng:-84.401},
-  {nom:"Q2 Stadium",club:"Austin FC",ville:"Austin",pays:"USA",championnat:"MLS",lat:30.3878,lng:-97.7186},
-  {nom:"Bank of America Stadium",club:"Charlotte FC",ville:"Charlotte",pays:"USA",championnat:"MLS",lat:35.2258,lng:-80.8528},
-  {nom:"Subaru Park",club:"Philadelphia Union",ville:"Chester",pays:"USA",championnat:"MLS",lat:39.8329,lng:-75.3788},
-  {nom:"Soldier Field",club:"Chicago Fire",ville:"Chicago",pays:"USA",championnat:"MLS",lat:41.8623,lng:-87.6167},
-  {nom:"Lower.com Field",club:"Columbus Crew",ville:"Columbus",pays:"USA",championnat:"MLS",lat:39.9689,lng:-83.0175},
-  {nom:"Dick's Sporting Goods Park",club:"Colorado Rapids",ville:"Commerce City",pays:"USA",championnat:"MLS",lat:39.805,lng:-104.8922},
-  {nom:"Chase Stadium",club:"Inter Miami",ville:"Fort Lauderdale",pays:"USA",championnat:"MLS",lat:26.1917,lng:-80.1628},
-  {nom:"DRV PNK Stadium",club:"Inter Miami",ville:"Fort Lauderdale",pays:"USA",championnat:"MLS",lat:26.1267,lng:-80.1506},
-  {nom:"Gillette Stadium",club:"New England Revolution",ville:"Foxborough",pays:"USA",championnat:"MLS",lat:42.0908,lng:-71.2644},
-  {nom:"Red Bull Arena",club:"NY Red Bulls",ville:"Harrison",pays:"USA",championnat:"MLS",lat:40.7369,lng:-74.1502},
-  {nom:"Shell Energy Stadium",club:"Houston Dynamo",ville:"Houston",pays:"USA",championnat:"MLS",lat:29.7522,lng:-95.3517},
-  {nom:"Children's Mercy Park",club:"Sporting Kansas City",ville:"Kansas City",pays:"USA",championnat:"MLS",lat:39.1219,lng:-94.8233},
-  {nom:"Dignity Health Sports Park",club:"LA Galaxy",ville:"Los Angeles",pays:"USA",championnat:"MLS",lat:33.8644,lng:-118.2611},
-  {nom:"BMO Stadium",club:"LAFC",ville:"Los Angeles",pays:"USA",championnat:"MLS",lat:34.0131,lng:-118.2846},
-  {nom:"Geodis Park",club:"Nashville SC",ville:"Nashville",pays:"USA",championnat:"MLS",lat:36.1317,lng:-86.7658},
-  {nom:"Yankee Stadium",club:"NYC FC",ville:"New York",pays:"USA",championnat:"MLS",lat:40.8296,lng:-73.9262},
-  {nom:"Exploria Stadium",club:"Orlando City SC",ville:"Orlando",pays:"USA",championnat:"MLS",lat:28.5411,lng:-81.3894},
-  {nom:"Rose Bowl",club:"LA Galaxy (ancien)",ville:"Pasadena",pays:"USA",championnat:"MLS",lat:34.1614,lng:-118.1678},
-  {nom:"Providence Park",club:"Portland Timbers",ville:"Portland",pays:"USA",championnat:"MLS",lat:45.5212,lng:-122.6916},
-  {nom:"Allianz Field",club:"Minnesota United",ville:"Saint Paul",pays:"USA",championnat:"MLS",lat:44.9533,lng:-93.1644},
-  {nom:"PayPal Park",club:"San Jose Earthquakes",ville:"San José",pays:"USA",championnat:"MLS",lat:37.3519,lng:-121.925},
-  {nom:"America First Field",club:"Real Salt Lake",ville:"Sandy",pays:"USA",championnat:"MLS",lat:40.5831,lng:-111.8928},
-  {nom:"Lumen Field",club:"Seattle Sounders",ville:"Seattle",pays:"USA",championnat:"MLS",lat:47.5952,lng:-122.3316},
-  {nom:"Audi Field",club:"DC United",ville:"Washington",pays:"USA",championnat:"MLS",lat:38.8686,lng:-77.0128},
-
-  // ══════════════════════════════════════════════════
-  // UKRAINE (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premier League Ukraine ──
-  {nom:"Dnipro Arena",club:"Dnipro Dnipropetrovsk",ville:"Dnipro",pays:"Ukraine",championnat:"Premier League Ukraine",lat:48.4667,lng:35.05},
-  {nom:"Dnipro-Arena",club:"FC Dnipro",ville:"Dnipro",pays:"Ukraine",championnat:"Premier League Ukraine",lat:48.4667,lng:35.0333},
-  {nom:"Donbass Arena",club:"Shakhtar Donetsk",ville:"Donetsk",pays:"Ukraine",championnat:"Premier League Ukraine",lat:48.0133,lng:37.8044},
-  {nom:"Metalist Stadium",club:"Metalist Kharkiv",ville:"Kharkiv",pays:"Ukraine",championnat:"Premier League Ukraine",lat:49.9833,lng:36.2333},
-  {nom:"Olimpiyskiy Stadium",club:"Dynamo Kiev",ville:"Kiev",pays:"Ukraine",championnat:"Premier League Ukraine",lat:50.4333,lng:30.5214},
-
-  // ══════════════════════════════════════════════════
-  // URUGUAY (6 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Primera Division Uruguay ──
-  {nom:"Estadio Centenario",club:"Nacional / Penarol",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8939,lng:-56.1536},
-  {nom:"Estadio Gran Parque Central",club:"Nacional",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.9003,lng:-56.1617},
-  {nom:"Estadio Campeon del Siglo",club:"Penarol",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8347,lng:-56.0736},
-  {nom:"Estadio Luis Franzini",club:"Defensor Sporting",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8833,lng:-56.1667},
-  {nom:"Estadio Charrúa",club:"Sélection Uruguay",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.9,lng:-56.15},
-  {nom:"Estadio Saroldi",club:"Rampla Juniors",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8667,lng:-56.1833},
-
-  // ══════════════════════════════════════════════════
-  // VENEZUELA (5 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Futve ──
-  {nom:"Estadio Agustín Tovar",club:"Estudiantes de Mérida",ville:"Barinas",pays:"Venezuela",championnat:"Liga Futve",lat:8.6333,lng:-70.2167},
-  {nom:"Estadio Olímpico de la UCV",club:"Caracas FC",ville:"Caracas",pays:"Venezuela",championnat:"Liga Futve",lat:10.4869,lng:-66.8944},
-  {nom:"Estadio Cachamay",club:"Mineros de Guayana",ville:"Ciudad Guayana",pays:"Venezuela",championnat:"Liga Futve",lat:8.3667,lng:-62.6333},
-  {nom:"Estadio Monumental de Maturín",club:"Sélection Venezuela",ville:"Maturín",pays:"Venezuela",championnat:"Liga Futve",lat:9.75,lng:-63.1833},
-  {nom:"Estadio Pueblo Nuevo",club:"Deportivo Táchira",ville:"San Cristóbal",pays:"Venezuela",championnat:"Liga Futve",lat:7.7667,lng:-72.2167},
-
-  // ══════════════════════════════════════════════════
-  // VIETNAM (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── V.League 1 ──
-  {nom:"Mỹ Đình National Stadium",club:"Sélection Vietnam",ville:"Hanoï",pays:"Vietnam",championnat:"V.League 1",lat:21.0208,lng:105.7653},
-  {nom:"Hang Day Stadium",club:"Hà Nội FC",ville:"Hanoï",pays:"Vietnam",championnat:"V.League 1",lat:21.0333,lng:105.8333},
-  {nom:"Thống Nhất Stadium",club:"HCMC FC",ville:"Hô Chi Minh-Ville",pays:"Vietnam",championnat:"V.League 1",lat:10.7731,lng:106.6794},
-
-  // ══════════════════════════════════════════════════
-  // ZAMBIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Super League Zambie ──
-  {nom:"Independence Stadium",club:"Sélection Zambie",ville:"Lusaka",pays:"Zambie",championnat:"Super League Zambie",lat:-15.4167,lng:28.3167},
-  {nom:"Levy Mwanawasa Stadium",club:"Zanaco FC",ville:"Ndola",pays:"Zambie",championnat:"Super League Zambie",lat:-12.9667,lng:28.6333},
-
-  // ══════════════════════════════════════════════════
-  // ZIMBABWE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Premier Soccer League Zimbabwe ──
-  {nom:"National Sports Stadium",club:"Dynamos FC",ville:"Harare",pays:"Zimbabwe",championnat:"Premier Soccer League Zimbabwe",lat:-17.8667,lng:31.05},
-  {nom:"National Stadium Harare",club:"Dynamos FC",ville:"Harare",pays:"Zimbabwe",championnat:"Premier Soccer League Zimbabwe",lat:-17.8167,lng:31.05},
-
-  // ══════════════════════════════════════════════════
-  // ÉCOSSE (9 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Scottish Premiership ──
-  {nom:"Pittodrie Stadium",club:"Aberdeen FC",ville:"Aberdeen",pays:"Écosse",championnat:"Scottish Premiership",lat:57.1597,lng:-2.0878},
-  {nom:"Tannadice Park",club:"Dundee United",ville:"Dundee",pays:"Écosse",championnat:"Scottish Premiership",lat:56.4747,lng:-3.0006},
-  {nom:"Dens Park",club:"Dundee FC",ville:"Dundee",pays:"Écosse",championnat:"Scottish Premiership",lat:56.4744,lng:-3.0039},
-  {nom:"Celtic Park",club:"Celtic FC",ville:"Glasgow",pays:"Écosse",championnat:"Scottish Premiership",lat:55.8497,lng:-4.2053},
-  {nom:"Ibrox Stadium",club:"Rangers FC",ville:"Glasgow",pays:"Écosse",championnat:"Scottish Premiership",lat:55.8511,lng:-4.3092},
-  {nom:"Hampden Park",club:"Queen's Park",ville:"Glasgow",pays:"Écosse",championnat:"Scottish Premiership",lat:55.8236,lng:-4.2519},
-  {nom:"Murrayfield Stadium",club:"Heart of Midlothian",ville:"Édimbourg",pays:"Écosse",championnat:"Scottish Premiership",lat:55.9467,lng:-3.2408},
-  {nom:"Easter Road",club:"Hibernian FC",ville:"Édimbourg",pays:"Écosse",championnat:"Scottish Premiership",lat:55.9614,lng:-3.1653},
-  {nom:"Tynecastle Park",club:"Heart of Midlothian",ville:"Édimbourg",pays:"Écosse",championnat:"Scottish Premiership",lat:55.9386,lng:-3.2317},
-
-  // ══════════════════════════════════════════════════
-  // ÉGYPTE (3 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Egyptian Premier League ──
-  {nom:"Borg El Arab Stadium",club:"Sélection Égypte",ville:"Alexandrie",pays:"Égypte",championnat:"Egyptian Premier League",lat:30.9253,lng:29.5264},
-  {nom:"Cairo International Stadium",club:"Sélection Égypte",ville:"Le Caire",pays:"Égypte",championnat:"Egyptian Premier League",lat:30.0731,lng:31.3122},
-  {nom:"Air Defence Stadium",club:"Zamalek SC",ville:"Le Caire",pays:"Égypte",championnat:"Egyptian Premier League",lat:30.1156,lng:31.3228},
-
-  // ══════════════════════════════════════════════════
-  // ÉMIRATS ARABES UNIS (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── UAE Pro League ──
-  {nom:"Hazza bin Zayed Stadium",club:"Al Ain FC",ville:"Al Ain",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:24.2308,lng:55.7628},
-  {nom:"Al Maktoum Stadium",club:"Al Wasl",ville:"Dubaï",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:25.2289,lng:55.3011},
-
-  // ══════════════════════════════════════════════════
-  // ÉQUATEUR (7 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Liga Pro Ecuador ──
-  {nom:"Estadio Monumental Isidro Romero Carbo",club:"Barcelona SC",ville:"Guayaquil",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-2.15,lng:-79.9333},
-  {nom:"Estadio Banco del Pacífico Capwell",club:"Emelec",ville:"Guayaquil",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-2.1833,lng:-79.9},
-  {nom:"Estadio Monumental Isidro Romero",club:"Barcelona SC",ville:"Guayaquil",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-2.15,lng:-79.8833},
-  {nom:"Estadio Jocay",club:"Manta FC",ville:"Manta",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.95,lng:-80.7333},
-  {nom:"Estadio Rodrigo Paz Delgado",club:"Liga de Quito",ville:"Quito",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.1094,lng:-78.4856},
-  {nom:"Estadio Olímpico Atahualpa",club:"Sélection Équateur",ville:"Quito",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.2167,lng:-78.5},
-  {nom:"Estadio Ciudad de Quito",club:"Deportivo Quito",ville:"Quito",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.2333,lng:-78.5167},
-
-  // ══════════════════════════════════════════════════
-  // ÉTHIOPIE (2 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── Ethiopian Premier League ──
-  {nom:"Addis Ababa Stadium",club:"Sélection Éthiopie",ville:"Addis-Abeba",pays:"Éthiopie",championnat:"Ethiopian Premier League",lat:9.0167,lng:38.75},
-  {nom:"Stade Addis-Abeba",club:"Sélection Éthiopie",ville:"Addis-Abeba",pays:"Éthiopie",championnat:"Ethiopian Premier League",lat:9.0167,lng:38.7667},
-
-  // ══════════════════════════════════════════════════
-  // ÎLES SALOMON (1 stades)
-  // ══════════════════════════════════════════════════
-
-  // ── OFC Nations Cup ──
-  {nom:"Lawson Tama Stadium",club:"Sélection Îles Salomon",ville:"Honiara",pays:"Îles Salomon",championnat:"OFC Nations Cup",lat:-9.4167,lng:160.05}
-];
 
 
 
@@ -2801,9 +1538,9 @@ const STADES_INFO = {
 };
 
 function makeIcon(s) {
-  const col  = s.visite ? '#3fb950' : champColor(s.championnat);
+  const col  = s.visite ? '#00C875' : champColor(s.championnat);
   const size = s.visite ? 13 : 11;
-  const ring = s.visite ? `box-shadow:0 0 0 3px rgba(63,185,80,.35),0 1px 4px rgba(0,0,0,.4)` : `box-shadow:0 1px 4px rgba(0,0,0,.4)`;
+  const ring = s.visite ? `box-shadow:0 0 0 3px rgba(0,200,117,.35),0 1px 4px rgba(0,0,0,.4)` : `box-shadow:0 1px 4px rgba(0,0,0,.4)`;
   return L.divIcon({
     className:'',
     html:`<div class="map-dot" style="width:${size}px;height:${size}px;background:${col};${ring}"></div>`,
@@ -2820,7 +1557,7 @@ function makePopupHTML(s, id) {
     + `<span style="color:var(--text3);font-size:11px">${drapeau(s.pays)} ${esc(s.ville)}</span><br>`
     + `<span style="display:inline-block;margin:4px 0;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:${col}22;color:${col};border:1px solid ${col}44">${esc(s.championnat)}</span>`
     + (s.visite ? `<br><span style="color:var(--accent);font-weight:600;font-size:12px">✅ Visité${annee}</span>` : '')
-    + `<br><button onclick="openFiche(${id})" style="margin-top:8px;width:100%;padding:6px;background:var(--accent);color:#000;border:none;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">${hasInfo ? '📋 Voir la fiche' : '📋 Ouvrir'}</button>`;
+    + `<br><button onclick="openFiche(${id})" style="margin-top:8px;width:100%;padding:6px;background:var(--accent);color:#fff;border:none;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">${hasInfo ? '📋 Voir la fiche' : '📋 Ouvrir'}</button>`;
 }
 
 // ── Cluster ───────────────────────────────────
@@ -2874,7 +1611,7 @@ stades.forEach((s,i) => {
     let prev = row.previousElementSibling;
     while (prev) { prev.classList.remove('hidden'); prev=prev.previousElementSibling; }
     row.classList.remove('hidden'); row.scrollIntoView({behavior:'smooth',block:'center'});
-    row.style.background='rgba(0,230,118,.12)'; setTimeout(()=>{row.style.background='';},1500);
+    row.style.background='rgba(204,25,25,.12)'; setTimeout(()=>{row.style.background='';},1500);
   });
   rawMarkers.push(m);
 });
@@ -3122,7 +1859,7 @@ function renderTableBody(ids) {
           // Mettre à jour visuellement la ligne sans reconstruire le tableau
           const tdV = tr.querySelector('.badge-oui, .badge-non');
           if(tdV) { tdV.className = cb.checked ? 'badge-oui' : 'badge-non'; tdV.textContent = cb.checked ? '✅' : '—'; }
-          tr.style.background = cb.checked ? 'rgba(0,230,118,.04)' : '';
+          tr.style.background = cb.checked ? 'rgba(204,25,25,.04)' : '';
           commit(true);
         });
         tr.insertCell().appendChild(cb);
@@ -3661,10 +2398,10 @@ if ('serviceWorker' in navigator) {
               const banner = document.createElement('div');
               banner.style.cssText = `
                 position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
-                background:#00e676; color:#000; padding:10px 20px; border-radius:8px;
+                background:#CC1919; color:#fff; padding:10px 20px; border-radius:8px;
                 font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700;
                 letter-spacing:.06em; text-transform:uppercase; z-index:99999;
-                box-shadow:0 4px 20px rgba(0,230,118,.4); cursor:pointer;
+                box-shadow:0 4px 20px rgba(204,25,25,.4); cursor:pointer;
                 display:flex; align-items:center; gap:10px;
               `;
               banner.innerHTML = '🔄 Mise à jour disponible — <span style="text-decoration:underline">Recharger</span>';
