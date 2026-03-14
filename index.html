@@ -94,9 +94,13 @@
     .basemap-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 5px 9px; font-family: var(--font-body); font-size: 12px; outline: none; cursor: pointer; }
     .basemap-select option { background: var(--surface); }
 
-    #map { height: 420px; border-radius: 0 0 var(--radius) var(--radius); border: 1px solid var(--border); overflow: hidden; }
+    #map { height: 420px; border-radius: 0 0 var(--radius) var(--radius); border: 1px solid var(--border); overflow: hidden; position: relative; z-index: 1; }
     @media(max-width:600px) { #map { height: 300px; } }
+    .drawer-overlay.open ~ .main-content #map,
+    body.drawer-open #map { z-index: 0; }
     .leaflet-container { background: #2B2F36 !important; }
+    .leaflet-pane { z-index: 4 !important; }
+    .leaflet-top, .leaflet-bottom { z-index: 5 !important; }
     .leaflet-popup-content-wrapper { border-radius: var(--radius); box-shadow: var(--shadow); background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .leaflet-popup-tip { background: var(--surface); }
     .leaflet-popup-content { font-family: var(--font-body); font-size: 13px; line-height: 1.7; min-width: 160px; color: var(--text); }
@@ -1985,11 +1989,13 @@ function openDrawer() {
   drawer.classList.add('open');
   drawerOverlay.classList.add('open');
   btnHamburger.classList.add('open');
+  document.body.classList.add('drawer-open');
 }
 function closeDrawer() {
   drawer.classList.remove('open');
   drawerOverlay.classList.remove('open');
   btnHamburger.classList.remove('open');
+  document.body.classList.remove('drawer-open');
 }
 
 btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
