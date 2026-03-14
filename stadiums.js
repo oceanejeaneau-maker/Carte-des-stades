@@ -219,14 +219,13 @@ const STADES_DATA = [
 
   // ── Girabola ──
   {nom:"Estádio 11 de Novembro",club:"Petro de Luanda",ville:"Luanda",pays:"Angola",championnat:"Girabola",lat:-8.8172,lng:13.2339},
-  {nom:"Estadio Cité de Angola",club:"Petro de Luanda",ville:"Luanda",pays:"Angola",championnat:"Girabola",lat:-8.85,lng:13.3},
 
   // ══════════════════════════════════════════════════
   // ARABIE SAOUDITE (5 stades)
   // ══════════════════════════════════════════════════
 
   // ── Saudi Pro League ──
-  {nom:"King Abdullah Sports City",club:"Al-Ahli",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.6847,lng:39.1861},
+  {nom:"King Abdullah Sports City",club:"Al-Ahli / Al-Ittihad",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.6847,lng:39.1861},
   {nom:"Prince Abdullah Al-Faisal Stadium",club:"Al-Ittihad",ville:"Djeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.5433,lng:39.1786},
   {nom:"King Fahd International Stadium",club:"Sélection Arabie Saoudite",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7156,lng:46.7219},
   {nom:"Mohammed bin Salman Stadium",club:"Al-Hilal",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7503,lng:46.8231},
@@ -529,9 +528,7 @@ const STADES_DATA = [
 
   // ── HNL Croatie ──
   {nom:"Stadion Poljud",club:"Hajduk Split",ville:"Split",pays:"Croatie",championnat:"HNL Croatie",lat:43.5228,lng:16.4344},
-  {nom:"Poljud",club:"Hajduk Split",ville:"Split",pays:"Croatie",championnat:"HNL Croatie",lat:43.5167,lng:16.4333},
   {nom:"Stadion Maksimir",club:"Dinamo Zagreb",ville:"Zagreb",pays:"Croatie",championnat:"HNL Croatie",lat:45.8119,lng:16.0119},
-  {nom:"Maksimir",club:"Dinamo Zagreb",ville:"Zagreb",pays:"Croatie",championnat:"HNL Croatie",lat:45.8167,lng:16.0333},
 
   // ══════════════════════════════════════════════════
   // CÔTE D'IVOIRE (3 stades)
@@ -667,7 +664,6 @@ const STADES_DATA = [
   // ── Veikkausliiga ──
   {nom:"Helsinki Olympic Stadium",club:"Sélection Finlande",ville:"Helsinki",pays:"Finlande",championnat:"Veikkausliiga",lat:60.1878,lng:24.9267},
   {nom:"Bolt Arena",club:"HJK Helsinki",ville:"Helsinki",pays:"Finlande",championnat:"Veikkausliiga",lat:60.1889,lng:24.925},
-  {nom:"Sonera Stadium",club:"HJK Helsinki",ville:"Helsinki",pays:"Finlande",championnat:"Veikkausliiga",lat:60.1878,lng:24.9267},
   {nom:"KuPS Stadion",club:"KuPS",ville:"Kuopio",pays:"Finlande",championnat:"Veikkausliiga",lat:62.8981,lng:27.6783},
   {nom:"Tapiolan Urheilupuisto",club:"FC Honka",ville:"Espoo",pays:"Finlande",championnat:"Veikkausliiga",lat:60.1764,lng:24.8167},
   {nom:"Tammela Stadion",club:"FC Ilves",ville:"Tampere",pays:"Finlande",championnat:"Veikkausliiga",lat:61.4969,lng:23.7539},
@@ -952,7 +948,7 @@ const STADES_DATA = [
   {nom:"Shizuoka Stadium Ecopa",club:"Jubilo Iwata",ville:"Fukuroi",pays:"Japon",championnat:"J1 League",lat:34.7167,lng:137.9167},
   {nom:"Kashima Soccer Stadium",club:"Kashima Antlers",ville:"Kashima",pays:"Japon",championnat:"J1 League",lat:35.9561,lng:140.6369},
   {nom:"Noevir Stadium Kobe",club:"Vissel Kobe",ville:"Kobe",pays:"Japon",championnat:"J1 League",lat:34.6769,lng:135.1894},
-  {nom:"Yanmar Stadium Nagai",club:"Gamba Osaka",ville:"Osaka",pays:"Japon",championnat:"J1 League",lat:34.6161,lng:135.5194},
+  {nom:"Yanmar Stadium Nagai",club:"Cerezo Osaka",ville:"Osaka",pays:"Japon",championnat:"J1 League",lat:34.6161,lng:135.5194},
   {nom:"Saitama Stadium 2002",club:"Urawa Red Diamonds",ville:"Saitama",pays:"Japon",championnat:"J1 League",lat:35.9095,lng:139.7208},
   {nom:"Japan National Stadium",club:"Sélection Japon",ville:"Tokyo",pays:"Japon",championnat:"J1 League",lat:35.6782,lng:139.7141},
   {nom:"Toyota Stadium",club:"Nagoya Grampus",ville:"Toyota",pays:"Japon",championnat:"J1 League",lat:35.1333,lng:137.0667},
@@ -1040,7 +1036,6 @@ const STADES_DATA = [
   // ══════════════════════════════════════════════════
 
   // ── Pro League Madagascar ──
-  {nom:"Stade Municipal de Mahamasina",club:"Sélection Madagascar",ville:"Antananarivo",pays:"Madagascar",championnat:"Pro League Madagascar",lat:-18.9167,lng:47.5167},
   {nom:"Stade Mahamasina",club:"Sélection Madagascar",ville:"Antananarivo",pays:"Madagascar",championnat:"Pro League Madagascar",lat:-18.9167,lng:47.5333},
 
   // ══════════════════════════════════════════════════
@@ -1085,10 +1080,9 @@ const STADES_DATA = [
   {nom:"Estadio Andrés Quintana Roo",club:"Atlante FC",ville:"Cancún",pays:"Mexique",championnat:"Liga MX",lat:21.1667,lng:-86.85},
   {nom:"Estadio Akron",club:"Chivas Guadalajara",ville:"Guadalajara",pays:"Mexique",championnat:"Liga MX",lat:20.6861,lng:-103.4657},
   {nom:"Estadio León",club:"Club León",ville:"León",pays:"Mexique",championnat:"Liga MX",lat:21.15,lng:-101.7},
-  {nom:"Estadio Azteca",club:"Club America / Cruz Azul",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3029,lng:-99.1505},
+  {nom:"Estadio Banorte",club:"Club América",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3029,lng:-99.1505},
   {nom:"Estadio Ciudad de los Deportes",club:"Cruz Azul",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3794,lng:-99.1581},
   {nom:"Estadio Olimpico Universitario",club:"Pumas UNAM",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.3225,lng:-99.1858},
-  {nom:"Estadio Bancomer",club:"Club América",ville:"Mexico",pays:"Mexique",championnat:"Liga MX",lat:19.4039,lng:-99.1506},
   {nom:"Estadio Universitario",club:"Tigres UANL",ville:"Monterrey",pays:"Mexique",championnat:"Liga MX",lat:25.6869,lng:-100.3189},
   {nom:"Estadio BBVA",club:"Monterrey",ville:"Monterrey",pays:"Mexique",championnat:"Liga MX",lat:25.6694,lng:-100.2436},
   {nom:"Estadio Hidalgo",club:"Pachuca CF",ville:"Pachuca",pays:"Mexique",championnat:"Liga MX",lat:20.1167,lng:-98.7333},
@@ -1264,7 +1258,6 @@ const STADES_DATA = [
 
   // ── Ekstraklasa ──
   {nom:"Wisła Kraków Stadion",club:"Wisła Kraków",ville:"Cracovie",pays:"Pologne",championnat:"Ekstraklasa",lat:50.0644,lng:19.9281},
-  {nom:"Stadion Lecha Poznan",club:"Lech Poznan",ville:"Poznan",pays:"Pologne",championnat:"Ekstraklasa",lat:52.3896,lng:16.8531},
   {nom:"Stadion Miejski Poznań",club:"Lech Poznań",ville:"Poznań",pays:"Pologne",championnat:"Ekstraklasa",lat:52.3897,lng:16.8583},
   {nom:"Stadion Narodowy",club:"Equipe nationale Pologne",ville:"Varsovie",pays:"Pologne",championnat:"Ekstraklasa",lat:52.2397,lng:21.0458},
   {nom:"Stadion Wojska Polskiego",club:"Legia Varsovie",ville:"Varsovie",pays:"Pologne",championnat:"Ekstraklasa",lat:52.2192,lng:21.0336},
@@ -1425,10 +1418,8 @@ const STADES_DATA = [
   {nom:"VTB Arena",club:"Dynamo Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7906,lng:37.5597},
   {nom:"RZD Arena",club:"Lokomotiv Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7478,lng:37.7319},
   {nom:"Otkrytie Bank Arena",club:"Spartak Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.8333,lng:37.4917},
-  {nom:"Stade Lokomotiv",club:"Lokomotiv Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.8333,lng:37.7333},
   {nom:"CSKA Arena",club:"CSKA Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier League Russie",lat:55.7667,lng:37.6167},
   {nom:"Gazprom Arena",club:"Zenit Saint-Pétersbourg",ville:"Saint-Pétersbourg",pays:"Russie",championnat:"Premier League Russie",lat:59.9722,lng:30.2214},
-  {nom:"Stade Petrovsky",club:"Zénith Saint-Pétersbourg",ville:"Saint-Pétersbourg",pays:"Russie",championnat:"Premier League Russie",lat:59.9583,lng:30.2583},
   {nom:"Fisht Stadium",club:"Sélection Russie",ville:"Sotchi",pays:"Russie",championnat:"Premier League Russie",lat:43.4069,lng:39.9564},
 
   // ══════════════════════════════════════════════════
@@ -1450,7 +1441,6 @@ const STADES_DATA = [
   // ══════════════════════════════════════════════════
 
   // ── SuperLiga Serbie ──
-  {nom:"Stadion Rajko Mitic",club:"Etoile Rouge de Belgrade",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7833,lng:20.4625},
   {nom:"Stadion FK Partizan",club:"FK Partizan",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7864,lng:20.4478},
   {nom:"Rajko Mitić Stadium",club:"Étoile Rouge Belgrade",ville:"Belgrade",pays:"Serbie",championnat:"SuperLiga Serbie",lat:44.7883,lng:20.4617},
 
@@ -1601,7 +1591,6 @@ const STADES_DATA = [
   {nom:"Lower.com Field",club:"Columbus Crew",ville:"Columbus",pays:"USA",championnat:"MLS",lat:39.9689,lng:-83.0175},
   {nom:"Dick's Sporting Goods Park",club:"Colorado Rapids",ville:"Commerce City",pays:"USA",championnat:"MLS",lat:39.805,lng:-104.8922},
   {nom:"Chase Stadium",club:"Inter Miami",ville:"Fort Lauderdale",pays:"USA",championnat:"MLS",lat:26.1917,lng:-80.1628},
-  {nom:"DRV PNK Stadium",club:"Inter Miami",ville:"Fort Lauderdale",pays:"USA",championnat:"MLS",lat:26.1267,lng:-80.1506},
   {nom:"Gillette Stadium",club:"New England Revolution",ville:"Foxborough",pays:"USA",championnat:"MLS",lat:42.0908,lng:-71.2644},
   {nom:"Red Bull Arena",club:"NY Red Bulls",ville:"Harrison",pays:"USA",championnat:"MLS",lat:40.7369,lng:-74.1502},
   {nom:"Shell Energy Stadium",club:"Houston Dynamo",ville:"Houston",pays:"USA",championnat:"MLS",lat:29.7522,lng:-95.3517},
@@ -1682,7 +1671,6 @@ const STADES_DATA = [
 
   // ── Premier Soccer League Zimbabwe ──
   {nom:"National Sports Stadium",club:"Dynamos FC",ville:"Harare",pays:"Zimbabwe",championnat:"Premier Soccer League Zimbabwe",lat:-17.8667,lng:31.05},
-  {nom:"National Stadium Harare",club:"Dynamos FC",ville:"Harare",pays:"Zimbabwe",championnat:"Premier Soccer League Zimbabwe",lat:-17.8167,lng:31.05},
 
   // ══════════════════════════════════════════════════
   // ÉCOSSE (9 stades)
@@ -1735,7 +1723,6 @@ const STADES_DATA = [
 
   // ── Ethiopian Premier League ──
   {nom:"Addis Ababa Stadium",club:"Sélection Éthiopie",ville:"Addis-Abeba",pays:"Éthiopie",championnat:"Ethiopian Premier League",lat:9.0167,lng:38.75},
-  {nom:"Stade Addis-Abeba",club:"Sélection Éthiopie",ville:"Addis-Abeba",pays:"Éthiopie",championnat:"Ethiopian Premier League",lat:9.0167,lng:38.7667},
 
   // ══════════════════════════════════════════════════
   // ÎLES SALOMON (1 stades)
