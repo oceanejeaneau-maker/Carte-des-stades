@@ -1849,4 +1849,8 @@ const STADES_DATA = [
 
   // ── Premier Soccer League Zimbabwe ──
   {nom:"National Sports Stadium",club:"Dynamos FC",ville:"Harare",pays:"Zimbabwe",championnat:"Premier Soccer League Zimbabwe",lat:-17.8667,lng:31.05},
+<<<<<<< HEAD
 ];
+=======
+];
+>>>>>>> 6f042e010d64d525f51123227bd13867bfa474c1
