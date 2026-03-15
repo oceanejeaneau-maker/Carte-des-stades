@@ -339,30 +339,149 @@
     }
     .auth-overlay.hidden { display: none; }
 
-    /* ── FICHE STADE (panneau) ── */
-    .fiche-overlay { position:fixed; inset:0; z-index:5000; display:flex; align-items:flex-end; justify-content:center; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity .3s; }
-    .fiche-overlay.open { opacity:1; pointer-events:all; }
-    .fiche-panel { background:var(--surface); border:1px solid var(--border); border-radius:20px 20px 0 0; width:100%; max-width:560px; max-height:85vh; overflow-y:auto; transform:translateY(100%); transition:transform .4s cubic-bezier(.4,0,.2,1); box-shadow:0 -8px 40px rgba(204,25,25,.08); }
-    .fiche-overlay.open .fiche-panel { transform:translateY(0); }
-    .fiche-handle { width:40px; height:4px; background:var(--border2); border-radius:2px; margin:12px auto 0; }
-    .fiche-header { padding:16px 20px 12px; border-bottom:1px solid var(--border); }
-    .fiche-champ-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; margin-bottom:10px; }
-    .fiche-nom { font-family:var(--font-disp); font-size:1.8rem; font-weight:800; color:var(--text); letter-spacing:.04em; text-transform:uppercase; line-height:1.1; }
-    .fiche-club { font-size:13px; color:var(--text2); margin-top:4px; }
-    .fiche-location { font-size:12px; color:var(--text3); margin-top:2px; }
-    .fiche-body { padding:16px 20px; display:flex; flex-direction:column; gap:14px; }
-    .fiche-stats-row { display:flex; gap:10px; flex-wrap:wrap; }
-    .fiche-stat { flex:1; min-width:80px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:3px; }
-    .fiche-stat-val { font-family:var(--font-mono); font-size:1.1rem; color:var(--accent);  }
-    .fiche-stat-lbl { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text3); }
-    .fiche-section-title { font-family:var(--font-disp); font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text3); margin-bottom:6px; }
-    .fiche-anecdote { background:rgba(204,25,25,.04); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:12px 14px; font-size:13px; color:var(--text2); line-height:1.6; font-style:italic; }
-    .fiche-visite-btn { width:100%; padding:13px; border-radius:8px; font-family:var(--font-disp); font-size:1rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border:none; cursor:pointer; transition:all .2s; }
-    .fiche-visite-btn.non-visite { background:var(--accent); color:#fff;  }
-    .fiche-visite-btn.non-visite:hover { background:var(--accent2); }
-    .fiche-visite-btn.visite { background:var(--surface2); color:var(--accent); border:1px solid var(--accent); }
-    .fiche-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:1px solid var(--border); color:var(--text3); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all .15s; }
-    .fiche-close:hover { color:var(--text); border-color:var(--border2); }
+    /* ── FICHE STADE GROUNDHOPPER ── */
+.fiche-overlay {
+  position:fixed; inset:0; z-index:5000;
+  display:flex; align-items:flex-end; justify-content:center;
+  background:rgba(0,0,0,.65); backdrop-filter:blur(4px);
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.fiche-overlay.open { opacity:1; pointer-events:all; }
+
+.fiche-panel {
+  background:var(--surface);
+  border:.5px solid var(--border);
+  border-radius:20px 20px 0 0;
+  width:100%; max-width:560px; max-height:88vh;
+  overflow-y:auto;
+  transform:translateY(100%);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -8px 40px rgba(204,25,25,.1);
+  scrollbar-width:none;
+}
+.fiche-panel::-webkit-scrollbar { display:none; }
+.fiche-overlay.open .fiche-panel { transform:translateY(0); }
+
+.fiche-handle {
+  width:40px; height:4px;
+  background:var(--border2); border-radius:2px;
+  margin:12px auto 0;
+}
+
+/* Header */
+.fiche-header { padding:14px 20px 12px; border-bottom:.5px solid var(--border); }
+
+.fiche-champ-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:3px 10px; border-radius:10px;
+  font-size:11px; font-weight:600; margin-bottom:8px;
+}
+.fiche-nom {
+  font-family:var(--font-disp);
+  font-size:1.85rem; font-weight:400;
+  color:var(--text); letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.1;
+}
+.fiche-club { font-size:13px; color:var(--text2); margin-top:4px; }
+.fiche-location { font-size:12px; color:var(--text3); margin-top:2px; }
+
+/* CTA row — 2 boutons côte à côte */
+.fiche-cta-row {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:8px; padding:12px 20px;
+  border-bottom:.5px solid var(--border);
+}
+.fiche-visite-btn {
+  width:100%; padding:11px;
+  border-radius:8px;
+  font-family:var(--font-disp);
+  font-size:.95rem; font-weight:400;
+  letter-spacing:.08em; text-transform:uppercase;
+  border:none; cursor:pointer; transition:all .2s;
+}
+.fiche-visite-btn.non-visite { background:var(--accent); color:#fff; }
+.fiche-visite-btn.non-visite:hover { background:var(--accent2); }
+.fiche-visite-btn.visite {
+  background:var(--green-dim); color:var(--green);
+  border:.5px solid var(--green);
+}
+.fiche-wishlist-btn {
+  width:100%; padding:11px;
+  border-radius:8px;
+  font-family:var(--font-disp);
+  font-size:.95rem; font-weight:400;
+  letter-spacing:.08em; text-transform:uppercase;
+  border:none; cursor:pointer; transition:all .2s;
+}
+.fiche-wishlist-btn.off {
+  background:var(--surface2); color:var(--text3);
+  border:.5px solid var(--border);
+}
+.fiche-wishlist-btn.off:hover { border-color:var(--accent); color:var(--accent); }
+.fiche-wishlist-btn.on {
+  background:var(--accent-dim); color:var(--accent);
+  border:.5px solid var(--accent);
+}
+
+/* Body */
+.fiche-body { padding:14px 20px; display:flex; flex-direction:column; gap:14px; }
+
+.fiche-section-title {
+  font-family:var(--font-disp);
+  font-size:.7rem; text-transform:uppercase;
+  letter-spacing:.12em; color:var(--text3); margin-bottom:6px;
+}
+
+.fiche-stats-row { display:flex; gap:8px; flex-wrap:wrap; }
+.fiche-stat {
+  flex:1; min-width:70px;
+  background:var(--surface2); border:.5px solid var(--border);
+  border-radius:8px; padding:10px 12px;
+}
+.fiche-stat-val {
+  font-family:var(--font-disp);
+  font-size:1.2rem; color:var(--accent); letter-spacing:.02em;
+}
+.fiche-stat-lbl {
+  font-size:.6rem; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--text3); margin-top:2px;
+}
+
+.fiche-anecdote {
+  background:rgba(204,25,25,.04);
+  border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;
+  padding:12px 14px;
+  font-size:13px; color:var(--text2);
+  line-height:1.6; font-style:italic;
+}
+
+/* Stades proches */
+.fiche-nearby-list { display:flex; flex-direction:column; gap:6px; }
+.fiche-nearby-row {
+  background:var(--surface2); border:.5px solid var(--border);
+  border-radius:8px; padding:9px 12px;
+  display:flex; align-items:center; gap:10px;
+  cursor:pointer; transition:background .15s;
+}
+.fiche-nearby-row:hover { background:var(--surface3); }
+.fiche-nearby-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.fiche-nearby-name {
+  font-size:12px; font-weight:500;
+  color:var(--text); flex:1;
+}
+.fiche-nearby-dist { font-size:10px; color:var(--text4); }
+.fiche-nearby-arrow { font-size:13px; color:var(--text4); }
+
+.fiche-close {
+  position:absolute; top:16px; right:16px;
+  background:var(--surface2); border:.5px solid var(--border);
+  color:var(--text3); border-radius:50%;
+  width:32px; height:32px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:16px; transition:all .15s;
+}
+.fiche-close:hover { color:var(--text); border-color:var(--border2); }
     .onboarding-overlay {
       position: fixed; inset: 0; z-index: 10000;
       background: #2B2F36;
@@ -872,13 +991,14 @@
 <body>
 
 <!-- PAGE CONNEXION -->
-<!-- ══ FICHE STADE ══ -->
+<!-- ══ FICHE STADE GROUNDHOPPER ══ -->
 <div class="fiche-overlay" id="ficheOverlay">
   <div class="fiche-panel" id="fichePanel">
     <div class="fiche-handle"></div>
     <div style="position:relative">
       <button class="fiche-close" id="ficheClose">✕</button>
       <div class="fiche-header" id="ficheHeader"></div>
+      <div class="fiche-cta-row" id="ficheCta"></div>
       <div class="fiche-body" id="ficheBody"></div>
     </div>
   </div>
@@ -2717,13 +2837,41 @@ const ficheOverlay = document.getElementById('ficheOverlay');
 const ficheClose   = document.getElementById('ficheClose');
 let ficheStadeId   = null;
 
+// ── Wishlist state (stocké localement) ──────────
+let wishlisted = {};
+try { wishlisted = JSON.parse(localStorage.getItem('gh_wishlist_v1') || '{}'); } catch {}
+function saveWishlist() {
+  try { localStorage.setItem('gh_wishlist_v1', JSON.stringify(wishlisted)); } catch {}
+}
+
+// ── Distance entre deux coords (km) ─────────────
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+  return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+}
+
+// ── Stades proches ───────────────────────────────
+function getStadesProches(id, n = 4) {
+  const s = stades[id];
+  return stades
+    .map((t, i) => ({ i, dist: haversine(s.lat, s.lng, t.lat, t.lng) }))
+    .filter(x => x.i !== id)
+    .sort((a, b) => a.dist - b.dist)
+    .slice(0, n);
+}
+
+// ── Fonction principale ──────────────────────────
 function openFiche(id) {
   ficheStadeId = id;
   const s    = stades[id];
   const info = STADES_INFO[s.nom];
   const col  = champColor(s.championnat);
+  const isWish = !!wishlisted[id];
 
-  // Header
+  // ── Header ────────────────────────────────────
   document.getElementById('ficheHeader').innerHTML = `
     <div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44">
       <span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>
@@ -2734,13 +2882,46 @@ function openFiche(id) {
     <div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>
   `;
 
-  // Body
+  // ── CTA — 2 boutons ───────────────────────────
+  document.getElementById('ficheCta').innerHTML = `
+    <button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">
+      ${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}
+    </button>
+    <button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">
+      ${isWish ? '★ Wishlist' : '☆ Wishlist'}
+    </button>
+  `;
+
+  // Listener visité
+  document.getElementById('ficheVisiteBtn').addEventListener('click', () => {
+    stades[ficheStadeId].visite = !stades[ficheStadeId].visite;
+    if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR;
+    commit(true);
+    const btn = document.getElementById('ficheVisiteBtn');
+    const v = stades[ficheStadeId].visite;
+    btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`;
+    btn.textContent = v ? '✅ Visité — retirer' : 'Marquer visité';
+  });
+
+  // Listener wishlist
+  document.getElementById('ficheWishlistBtn').addEventListener('click', () => {
+    wishlisted[ficheStadeId] = !wishlisted[ficheStadeId];
+    if (!wishlisted[ficheStadeId]) delete wishlisted[ficheStadeId];
+    saveWishlist();
+    const btn = document.getElementById('ficheWishlistBtn');
+    const w = !!wishlisted[ficheStadeId];
+    btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`;
+    btn.textContent = w ? '★ Wishlist' : '☆ Wishlist';
+  });
+
+  // ── Body ──────────────────────────────────────
   let body = '';
 
-  // Stats enrichies
+  // Stats chiffrées
   if (info) {
-    body += `<div>
-      <div class="fiche-section-title">📊 Infos clés</div>
+    body += `
+    <div>
+      <div class="fiche-section-title">Infos clés</div>
       <div class="fiche-stats-row">
         <div class="fiche-stat">
           <div class="fiche-stat-val">${info.capacite ? info.capacite.toLocaleString('fr-FR') : '—'}</div>
@@ -2752,49 +2933,55 @@ function openFiche(id) {
         </div>
         <div class="fiche-stat">
           <div class="fiche-stat-val">${info.record ? info.record.toLocaleString('fr-FR') : '—'}</div>
-          <div class="fiche-stat-lbl">Record affluence</div>
+          <div class="fiche-stat-lbl">Record</div>
         </div>
       </div>
     </div>`;
 
-    body += `<div>
-      <div class="fiche-section-title">💬 Le savais-tu ?</div>
+    body += `
+    <div>
+      <div class="fiche-section-title">Le savais-tu ?</div>
       <div class="fiche-anecdote">${esc(info.anecdote)}</div>
     </div>`;
   } else {
-    body += `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;color:var(--text3);font-size:13px">
-      📋 Fiche détaillée bientôt disponible
+    body += `
+    <div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;color:var(--text3);font-size:13px;">
+      Fiche détaillée bientôt disponible
     </div>`;
   }
 
   // Note perso si existante
-  const noteKey = ficheStadeId; // index numérique comme dans renderNotes
+  const noteKey = ficheStadeId;
   if (notes[noteKey]) {
-    body += `<div>
-      <div class="fiche-section-title">📝 Ta note</div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5">${esc(notes[noteKey])}</div>
+    body += `
+    <div>
+      <div class="fiche-section-title">Ta note</div>
+      <div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;">${esc(notes[noteKey])}</div>
     </div>`;
   }
 
-  // Bouton visiter
-  body += `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">
-    ${s.visite ? '✅ Stade visité — retirer' : '🏟️ Marquer comme visité'}
-  </button>`;
+  // Stades proches
+  const proches = getStadesProches(id, 4);
+  if (proches.length) {
+    body += `<div>
+      <div class="fiche-section-title">Stades proches</div>
+      <div class="fiche-nearby-list">
+        ${proches.map(({ i, dist }) => {
+          const t = stades[i];
+          const dotColor = t.visite ? 'var(--green)' : wishlisted[i] ? 'var(--accent)' : 'var(--unset)';
+          return `
+          <div class="fiche-nearby-row" onclick="ficheOverlay.classList.remove('open');setTimeout(()=>{openFiche(${i});flyTo(${t.lat},${t.lng});},300)">
+            <div class="fiche-nearby-dot" style="background:${dotColor}"></div>
+            <span class="fiche-nearby-name">${esc(t.nom)}</span>
+            <span class="fiche-nearby-dist">${dist} km</span>
+            <span class="fiche-nearby-arrow">›</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
 
   document.getElementById('ficheBody').innerHTML = body;
-
-  // Listener bouton
-  document.getElementById('ficheVisiteBtn').addEventListener('click', () => {
-    stades[ficheStadeId].visite = !stades[ficheStadeId].visite;
-    if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR;
-    commit(true);
-    // Mettre à jour le bouton
-    const btn = document.getElementById('ficheVisiteBtn');
-    const v   = stades[ficheStadeId].visite;
-    btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`;
-    btn.textContent = v ? '✅ Stade visité — retirer' : '🏟️ Marquer comme visité';
-  });
-
   ficheOverlay.classList.add('open');
 }
 
