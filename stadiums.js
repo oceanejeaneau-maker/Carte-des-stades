@@ -428,11 +428,11 @@ const STADES_DATA = [
   // ══════════════════════════════════════════════════
 
   // ── Serie B Brazil ──
-  {nom:"Estádio da Ressacada",club:"Avaí FC",ville:"Florianópolis",pays:"Brésil",championnat:"Serie B Brazil",lat:-27.6472,lng:-48.5364},
-  {nom:"Estádio Rei Pelé",club:"CRB",ville:"Maceió",pays:"Brésil",championnat:"Serie B Brazil",lat:-9.6244,lng:-35.7281},
+  {nom:"Estádio da Ressacada",club:"Avaí FC",ville:"Florianópolis",pays:"Bresil",championnat:"Serie B Brazil",lat:-27.6472,lng:-48.5364},
+  {nom:"Estádio Rei Pelé",club:"CRB",ville:"Maceió",pays:"Bresil",championnat:"Serie B Brazil",lat:-9.6244,lng:-35.7281},
 
   // ── Serie C Brazil ──
-  {nom:"Estádio João Hora de Oliveira",club:"América de Natal",ville:"Natal",pays:"Brésil",championnat:"Serie C Brazil",lat:-5.7969,lng:-35.2042},
+  {nom:"Estádio João Hora de Oliveira",club:"América de Natal",ville:"Natal",pays:"Bresil",championnat:"Serie C Brazil",lat:-5.7969,lng:-35.2042},
 
   // ══════════════════════════════════════════════════
   // BULGARIE (3 stades)
