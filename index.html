@@ -255,13 +255,13 @@
 
     /* Map height ajustée */
     #map {
-      height: 340px !important;
+      height: 300px !important;
       border-radius: 0 !important;
       border-left: none !important;
       border-right: none !important;
     }
     @media(max-width:600px) {
-      #map { height: 260px !important; }
+      #map { height: 240px !important; }
     }
 
     /* ══ Reste du CSS d'origine inchangé ══ */
@@ -940,10 +940,10 @@
         <button class="cfp cfp-green" data-filter="visited">Visités</button>
         <button class="cfp cfp-red" data-filter="wishlist">Wishlist</button>
         <button class="cfp" data-filter="Europe">Europe</button>
-        <button class="cfp" data-filter="Amérique du Sud">Amériques</button>
+        <button class="cfp" data-filter="Amériques">Amériques</button>
         <button class="cfp" data-filter="Afrique">Afrique</button>
         <button class="cfp" data-filter="Asie">Asie</button>
-        <button class="cfp" data-filter="Moyen-Orient">M-Orient</button>
+        <button class="cfp" data-filter="M-Orient">M-Orient</button>
       </div>
 
       <!-- TOOLBAR CARTE -->
@@ -1655,42 +1655,56 @@ function initFilters() {
     commit();
   });
 
-  // ── Pills filtres carte (Variante C) ──────────
-  document.querySelectorAll('#carteFilterPills .cfp').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('#carteFilterPills .cfp').forEach(p => p.classList.remove('cfp-active'));
-      pill.classList.add('cfp-active');
+  // ── Pills filtres carte rapide ─────────────────
+  (function() {
+    const CONT = {
+      'Europe':['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Géorgie','Arménie','Azerbaïdjan','Luxembourg','Malte','Chypre'],
+      'Amériques':['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela','USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Panama','Cuba','Jamaïque'],
+      'Afrique':['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Angola','Madagascar','Mali'],
+      'Asie':['Japon','Corée du Sud','Chine','Australie','Inde','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Bangladesh','Pakistan','Népal','Cambodge','Nouvelle-Zélande'],
+      'M-Orient':['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Koweït','Bahreïn','Oman','Liban'],
+    };
 
-      const f = pill.dataset.filter;
-
-      // Reset tout
-      filter.visitedOnly = false;
-      filter.continent   = '';
-      filter._wishlistOnly = false;
-
-      if (f === 'visited') {
-        filter.visitedOnly = true;
-      } else if (f === 'wishlist') {
-        filter._wishlistOnly = true;
-      } else if (f && f !== 'all' && CONTINENTS_MAP[f]) {
-        filter.continent = f;
-      }
-      renderAll();
+    document.querySelectorAll('#carteFilterPills .cfp').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('#carteFilterPills .cfp').forEach(p => p.classList.remove('cfp-active'));
+        pill.classList.add('cfp-active');
+        const f = pill.dataset.filter;
+        filter.pays = ''; filter.visitedOnly = false; filter._wishlistOnly = false;
+        filter._continentPays = null;
+        document.getElementById('paysFilter').value = '';
+        document.getElementById('btnVisited').textContent = 'Afficher : Tous';
+        document.getElementById('btnVisited').className = 'btn btn-primary';
+        if (f === 'visited') { filter.visitedOnly = true; }
+        else if (f === 'wishlist') { filter._wishlistOnly = true; }
+        else if (CONT[f]) { filter._continentPays = CONT[f]; }
+        renderAll();
+      });
     });
-  });
 
-  // Toggle recherche avancée
-  document.getElementById('btnToggleSearch')?.addEventListener('click', () => {
-    const adv = document.getElementById('carteAdvanced');
-    const btn = document.getElementById('btnToggleSearch');
-    const isOpen = adv.style.display !== 'none';
-    adv.style.display = isOpen ? 'none' : 'block';
-    btn.textContent = isOpen ? '🔍 Recherche avancée' : '✕ Fermer la recherche';
-  });
+    // Toggle recherche avancée
+    document.getElementById('btnToggleSearch')?.addEventListener('click', () => {
+      const adv = document.getElementById('carteAdvanced');
+      const btn = document.getElementById('btnToggleSearch');
+      const open = adv.style.display !== 'none';
+      adv.style.display = open ? 'none' : 'block';
+      btn.textContent = open ? '🔍 Recherche avancée' : '✕ Fermer';
+    });
+  })();
 }
 
-// Patch getFilteredIds pour le mode wishlist
+// Patch getFilteredIds — _continentPays + _wishlistOnly
 const _origGetFilteredIds = getFilteredIds;
+function getFilteredIds() {
+  if (filter._wishlistOnly) {
+    return stades.reduce((acc,s,i) => { if(wishlisted[s._id||i]) acc.push(i); return acc; }, []);
+  }
+  let ids = _origGetFilteredIds();
+  if (filter._continentPays) {
+    ids = ids.filter(i => filter._continentPays.includes(stades[i].pays));
+  }
+  return ids;
+}
 
 function commit(fromCheckbox) { sauvegarder(); updateStats(); if(fromCheckbox) { syncAllMarkers(); } else { renderAll(); } }
 
@@ -1713,9 +1727,7 @@ function updateStats() {
 }
 
 function renderAll() {
-  const ids = filter._wishlistOnly
-    ? stades.reduce((acc,s,i) => { if(wishlisted[i]) acc.push(i); return acc; }, [])
-    : getFilteredIds();
+  const ids = getFilteredIds();
   stades.forEach((_,i)=>syncMarker(i, ids.includes(i)&&layerVisible(stades[i])));
   updateHeatmap(); renderTableBody(ids);
 }
