@@ -1606,8 +1606,11 @@ const CONTINENTS_MAP = {
 const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'' };
 function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly||filter.continent; }
 function getFilteredIds() {
+  if (filter._wishlistOnly) {
+    return stades.reduce((acc,s,i) => { if(wishlisted[s._id||i]) acc.push(i); return acc; }, []);
+  }
   const q = sansAccents(filter.search);
-  return stades.reduce((acc,s,i) => {
+  const acc = stades.reduce((acc,s,i) => {
     if (filter.visitedOnly&&!s.visite) return acc;
     if (filter.pays&&s.pays!==filter.pays) return acc;
     if (filter.championnat&&s.championnat!==filter.championnat) return acc;
@@ -1618,6 +1621,10 @@ function getFilteredIds() {
     if (q) { const hay=sansAccents(`${s.nom} ${s.ville} ${s.pays}`.toLowerCase()); if(!hay.includes(q)) return acc; }
     acc.push(i); return acc;
   }, []);
+  if (filter._continentPays) {
+    return acc.filter(i => filter._continentPays.includes(stades[i].pays));
+  }
+  return acc;
 }
 
 function initFilters() {
@@ -1691,19 +1698,6 @@ function initFilters() {
       btn.textContent = open ? '🔍 Recherche avancée' : '✕ Fermer';
     });
   })();
-}
-
-// Patch getFilteredIds — _continentPays + _wishlistOnly
-const _origGetFilteredIds = getFilteredIds;
-function getFilteredIds() {
-  if (filter._wishlistOnly) {
-    return stades.reduce((acc,s,i) => { if(wishlisted[s._id||i]) acc.push(i); return acc; }, []);
-  }
-  let ids = _origGetFilteredIds();
-  if (filter._continentPays) {
-    ids = ids.filter(i => filter._continentPays.includes(stades[i].pays));
-  }
-  return ids;
 }
 
 function commit(fromCheckbox) { sauvegarder(); updateStats(); if(fromCheckbox) { syncAllMarkers(); } else { renderAll(); } }
