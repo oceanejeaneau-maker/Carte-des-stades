@@ -64,7 +64,122 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-    
+    /* ══════════════════════════════
+       OPTION C — HEADER CARTE
+    ══════════════════════════════ */
+    .carte-header {
+      background: #22252C;
+      padding: 12px 16px 10px;
+      border-bottom: .5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .carte-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 9px;
+    }
+    .carte-header-branding .carte-title {
+      font-family: var(--font-disp);
+      font-size: 1.6rem;
+      letter-spacing: .06em;
+      color: var(--text);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .carte-header-branding .carte-title span { color: var(--accent); }
+    .carte-header-branding .carte-subtitle {
+      font-size: .6rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+    .carte-header-counter {
+      text-align: right;
+    }
+    .carte-header-counter .counter-val {
+      font-family: var(--font-disp);
+      font-size: 1.8rem;
+      color: var(--green);
+      line-height: 1;
+      letter-spacing: .03em;
+    }
+    .carte-header-counter .counter-total {
+      font-size: .85rem;
+      color: var(--text4);
+      font-family: var(--font-disp);
+      letter-spacing: .03em;
+    }
+    .carte-header-counter .counter-label {
+      font-size: .6rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+    .carte-header-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .carte-header-progress .progress-track {
+      flex: 1;
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .carte-header-progress .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width .4s ease;
+      width: 0%;
+    }
+    .carte-header-progress .pct-label {
+      font-size: .65rem;
+      color: var(--text4);
+      font-family: var(--font-mono);
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* Pills de filtre rapide */
+    .carte-filter-pills {
+      display: flex;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border-bottom: .5px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    .carte-filter-pills::-webkit-scrollbar { display: none; }
+    .cfp {
+      font-family: var(--font-body);
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 12px;
+      white-space: nowrap;
+      cursor: pointer;
+      border: .5px solid transparent;
+      transition: all .15s;
+    }
+    .cfp-active  { background: var(--accent);    color: #fff;          border-color: var(--accent); }
+    .cfp-green   { background: var(--green-dim); color: var(--green);  border-color: var(--green); }
+    .cfp-default { background: var(--surface2);  color: var(--text3);  border-color: var(--border); }
+    .cfp-default:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Masquer l'ancienne stat-bar et progress sur la page carte */
+    .page-carte > .stat-bar,
+    .page-carte > .progress-wrap { display: none !important; }
+
+    /* ══ Reste du CSS d'origine inchangé ══ */
 
     .stat-bar { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; scrollbar-width: none; }
     .stat-bar::-webkit-scrollbar { display: none; }
@@ -76,8 +191,6 @@
     .progress-wrap { background: var(--surface); padding: 0 16px 12px; border-bottom: .5px solid var(--border); }
     .progress-track { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width .4s ease; width: 0%; }
-
-
 
     .page-carte .app-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
 
@@ -125,7 +238,6 @@
 
     .map-dot { border-radius: 50%; border: 2px solid rgba(255,255,255,.9); box-shadow: 0 1px 4px rgba(0,0,0,.35); }
 
-    /* Table */
     .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: auto; max-height: 480px; }
     table { width: 100%; border-collapse: collapse; }
     thead { position: sticky; top: 0; z-index: 3; }
@@ -159,10 +271,8 @@
     ::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #8c959f; }
 
-    /* ── LAYOUT PRINCIPAL ── */
     .app-layout { display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* ── TOPBAR ── */
     .topbar {
       background: var(--surface);
       border-bottom: .5px solid var(--border);
@@ -176,7 +286,6 @@
     .topbar-logo .logo-title span { color: var(--accent); }
     .topbar-spacer { width: 40px; flex-shrink: 0; }
 
-    /* ── HAMBURGER ── */
     .btn-hamburger {
       width: 40px; height: 40px; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 5px;
@@ -193,7 +302,6 @@
     .btn-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .btn-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--text); }
 
-    /* ── DRAWER ── */
     .drawer-overlay {
       position: fixed; inset: 0; z-index: 200;
       background: rgba(0,0,0,.5); backdrop-filter: blur(2px);
@@ -255,20 +363,16 @@
       display: flex; flex-direction: column; gap: 8px;
     }
 
-    /* ── CONTENU PRINCIPAL ── */
     .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-x: hidden; }
 
-    /* ── PAGES ── */
     .page { display: none; flex-direction: column; }
     .page.active { display: flex; }
 
-    /* ── PAGE CARTE STAT BAR ── */
     .page-carte .stat-bar { display: flex; flex-wrap: wrap; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; }
     .page-carte .stat-item { display: flex; flex-direction: column; padding: 12px 20px 12px 0; margin-right: 20px; border-right: 1px solid var(--border); min-width: 80px; }
     .page-carte .stat-item:last-child { border-right: none; }
     .page-carte .app-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* ── PAGE NOTES ── */
     .page-notes { padding: 16px; gap: 14px; }
     .page-header { margin-bottom: 4px; }
     .page-header h2 { font-family: var(--font-disp); font-size: 1.8rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 0 16px var(--accent-glow); }
@@ -289,7 +393,6 @@
     .note-card textarea::placeholder { color: var(--text3); }
     .note-empty { text-align: center; padding: 48px; color: var(--text3); font-size: 14px; }
 
-    /* ── PAGE MATCHS ── */
     .page-matchs { padding: 16px; gap: 14px; }
     .match-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
     .match-form h3 { font-family: var(--font-disp); font-size: 1.2rem; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
@@ -315,7 +418,6 @@
     .match-stat-item { display: flex; flex-direction: column; padding: 12px 20px 12px 0; margin-right: 20px; border-right: 1px solid var(--border); }
     .match-stat-item:last-child { border-right: none; }
 
-    /* ── PAGE CONNEXION ── */
     .auth-overlay {
       position: fixed; inset: 0;
       background: var(--bg);
@@ -328,269 +430,90 @@
     }
     .auth-overlay.hidden { display: none; }
 
-    /* ── FICHE STADE GROUNDHOPPER ── */
-.fiche-overlay {
-  position:fixed; inset:0; z-index:5000;
-  display:flex; align-items:flex-end; justify-content:center;
-  background:rgba(0,0,0,.65); backdrop-filter:blur(4px);
-  opacity:0; pointer-events:none; transition:opacity .3s;
-}
-.fiche-overlay.open { opacity:1; pointer-events:all; }
-
-.fiche-panel {
-  background:var(--surface);
-  border:.5px solid var(--border);
-  border-radius:20px 20px 0 0;
-  width:100%; max-width:560px; max-height:88vh;
-  overflow-y:auto;
-  transform:translateY(100%);
-  transition:transform .4s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 -8px 40px rgba(204,25,25,.1);
-  scrollbar-width:none;
-}
-.fiche-panel::-webkit-scrollbar { display:none; }
-.fiche-overlay.open .fiche-panel { transform:translateY(0); }
-
-.fiche-handle {
-  width:40px; height:4px;
-  background:var(--border2); border-radius:2px;
-  margin:12px auto 0;
-}
-
-/* Header */
-.fiche-header { padding:14px 20px 12px; border-bottom:.5px solid var(--border); }
-
-.fiche-champ-badge {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:3px 10px; border-radius:10px;
-  font-size:11px; font-weight:600; margin-bottom:8px;
-}
-.fiche-nom {
-  font-family:var(--font-disp);
-  font-size:1.85rem; font-weight:400;
-  color:var(--text); letter-spacing:.04em;
-  text-transform:uppercase; line-height:1.1;
-}
-.fiche-club { font-size:13px; color:var(--text2); margin-top:4px; }
-.fiche-location { font-size:12px; color:var(--text3); margin-top:2px; }
-
-/* CTA row — 2 boutons côte à côte */
-.fiche-cta-row {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:8px; padding:12px 20px;
-  border-bottom:.5px solid var(--border);
-}
-.fiche-visite-btn {
-  width:100%; padding:11px;
-  border-radius:8px;
-  font-family:var(--font-disp);
-  font-size:.95rem; font-weight:400;
-  letter-spacing:.08em; text-transform:uppercase;
-  border:none; cursor:pointer; transition:all .2s;
-}
-.fiche-visite-btn.non-visite { background:var(--accent); color:#fff; }
-.fiche-visite-btn.non-visite:hover { background:var(--accent2); }
-.fiche-visite-btn.visite {
-  background:var(--green-dim); color:var(--green);
-  border:.5px solid var(--green);
-}
-.fiche-wishlist-btn {
-  width:100%; padding:11px;
-  border-radius:8px;
-  font-family:var(--font-disp);
-  font-size:.95rem; font-weight:400;
-  letter-spacing:.08em; text-transform:uppercase;
-  border:none; cursor:pointer; transition:all .2s;
-}
-.fiche-wishlist-btn.off {
-  background:var(--surface2); color:var(--text3);
-  border:.5px solid var(--border);
-}
-.fiche-wishlist-btn.off:hover { border-color:var(--accent); color:var(--accent); }
-.fiche-wishlist-btn.on {
-  background:var(--accent-dim); color:var(--accent);
-  border:.5px solid var(--accent);
-}
-
-/* Body */
-.fiche-body { padding:14px 20px; display:flex; flex-direction:column; gap:14px; }
-
-.fiche-section-title {
-  font-family:var(--font-disp);
-  font-size:.7rem; text-transform:uppercase;
-  letter-spacing:.12em; color:var(--text3); margin-bottom:6px;
-}
-
-.fiche-stats-row { display:flex; gap:8px; flex-wrap:wrap; }
-.fiche-stat {
-  flex:1; min-width:70px;
-  background:var(--surface2); border:.5px solid var(--border);
-  border-radius:8px; padding:10px 12px;
-}
-.fiche-stat-val {
-  font-family:var(--font-disp);
-  font-size:1.2rem; color:var(--accent); letter-spacing:.02em;
-}
-.fiche-stat-lbl {
-  font-size:.6rem; text-transform:uppercase;
-  letter-spacing:.1em; color:var(--text3); margin-top:2px;
-}
-
-.fiche-anecdote {
-  background:rgba(204,25,25,.04);
-  border-left:3px solid var(--accent);
-  border-radius:0 8px 8px 0;
-  padding:12px 14px;
-  font-size:13px; color:var(--text2);
-  line-height:1.6; font-style:italic;
-}
-
-/* Stades proches */
-.fiche-nearby-list { display:flex; flex-direction:column; gap:6px; }
-.fiche-nearby-row {
-  background:var(--surface2); border:.5px solid var(--border);
-  border-radius:8px; padding:9px 12px;
-  display:flex; align-items:center; gap:10px;
-  cursor:pointer; transition:background .15s;
-}
-.fiche-nearby-row:hover { background:var(--surface3); }
-.fiche-nearby-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.fiche-nearby-name {
-  font-size:12px; font-weight:500;
-  color:var(--text); flex:1;
-}
-.fiche-nearby-dist { font-size:10px; color:var(--text4); }
-.fiche-nearby-arrow { font-size:13px; color:var(--text4); }
-
-.fiche-close {
-  position:absolute; top:16px; right:16px;
-  background:var(--surface2); border:.5px solid var(--border);
-  color:var(--text3); border-radius:50%;
-  width:32px; height:32px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:16px; transition:all .15s;
-}
-.fiche-close:hover { color:var(--text); border-color:var(--border2); }
-    .onboarding-overlay {
-      position: fixed; inset: 0; z-index: 10000;
-      background: #2B2F36;
-      display: flex; flex-direction: column;
-      overflow: hidden;
+    .fiche-overlay {
+      position:fixed; inset:0; z-index:5000;
+      display:flex; align-items:flex-end; justify-content:center;
+      background:rgba(0,0,0,.65); backdrop-filter:blur(4px);
+      opacity:0; pointer-events:none; transition:opacity .3s;
     }
+    .fiche-overlay.open { opacity:1; pointer-events:all; }
+    .fiche-panel {
+      background:var(--surface);
+      border:.5px solid var(--border);
+      border-radius:20px 20px 0 0;
+      width:100%; max-width:560px; max-height:88vh;
+      overflow-y:auto;
+      transform:translateY(100%);
+      transition:transform .4s cubic-bezier(.4,0,.2,1);
+      box-shadow:0 -8px 40px rgba(204,25,25,.1);
+      scrollbar-width:none;
+    }
+    .fiche-panel::-webkit-scrollbar { display:none; }
+    .fiche-overlay.open .fiche-panel { transform:translateY(0); }
+    .fiche-handle { width:40px; height:4px; background:var(--border2); border-radius:2px; margin:12px auto 0; }
+    .fiche-header { padding:14px 20px 12px; border-bottom:.5px solid var(--border); }
+    .fiche-champ-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; margin-bottom:8px; }
+    .fiche-nom { font-family:var(--font-disp); font-size:1.85rem; font-weight:400; color:var(--text); letter-spacing:.04em; text-transform:uppercase; line-height:1.1; }
+    .fiche-club { font-size:13px; color:var(--text2); margin-top:4px; }
+    .fiche-location { font-size:12px; color:var(--text3); margin-top:2px; }
+    .fiche-cta-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:12px 20px; border-bottom:.5px solid var(--border); }
+    .fiche-visite-btn { width:100%; padding:11px; border-radius:8px; font-family:var(--font-disp); font-size:.95rem; font-weight:400; letter-spacing:.08em; text-transform:uppercase; border:none; cursor:pointer; transition:all .2s; }
+    .fiche-visite-btn.non-visite { background:var(--accent); color:#fff; }
+    .fiche-visite-btn.non-visite:hover { background:var(--accent2); }
+    .fiche-visite-btn.visite { background:var(--green-dim); color:var(--green); border:.5px solid var(--green); }
+    .fiche-wishlist-btn { width:100%; padding:11px; border-radius:8px; font-family:var(--font-disp); font-size:.95rem; font-weight:400; letter-spacing:.08em; text-transform:uppercase; border:none; cursor:pointer; transition:all .2s; }
+    .fiche-wishlist-btn.off { background:var(--surface2); color:var(--text3); border:.5px solid var(--border); }
+    .fiche-wishlist-btn.off:hover { border-color:var(--accent); color:var(--accent); }
+    .fiche-wishlist-btn.on { background:var(--accent-dim); color:var(--accent); border:.5px solid var(--accent); }
+    .fiche-body { padding:14px 20px; display:flex; flex-direction:column; gap:14px; }
+    .fiche-section-title { font-family:var(--font-disp); font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text3); margin-bottom:6px; }
+    .fiche-stats-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .fiche-stat { flex:1; min-width:70px; background:var(--surface2); border:.5px solid var(--border); border-radius:8px; padding:10px 12px; }
+    .fiche-stat-val { font-family:var(--font-disp); font-size:1.2rem; color:var(--accent); letter-spacing:.02em; }
+    .fiche-stat-lbl { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text3); margin-top:2px; }
+    .fiche-anecdote { background:rgba(204,25,25,.04); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:12px 14px; font-size:13px; color:var(--text2); line-height:1.6; font-style:italic; }
+    .fiche-nearby-list { display:flex; flex-direction:column; gap:6px; }
+    .fiche-nearby-row { background:var(--surface2); border:.5px solid var(--border); border-radius:8px; padding:9px 12px; display:flex; align-items:center; gap:10px; cursor:pointer; transition:background .15s; }
+    .fiche-nearby-row:hover { background:var(--surface3); }
+    .fiche-nearby-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .fiche-nearby-name { font-size:12px; font-weight:500; color:var(--text); flex:1; }
+    .fiche-nearby-dist { font-size:10px; color:var(--text4); }
+    .fiche-nearby-arrow { font-size:13px; color:var(--text4); }
+    .fiche-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:.5px solid var(--border); color:var(--text3); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all .15s; }
+    .fiche-close:hover { color:var(--text); border-color:var(--border2); }
+
+    .onboarding-overlay { position: fixed; inset: 0; z-index: 10000; background: #2B2F36; display: flex; flex-direction: column; overflow: hidden; }
     .onboarding-overlay.hidden { display: none; }
-
-    .onboarding-bg {
-      position: absolute; inset: 0; overflow: hidden;
-    }
-    .onboarding-bg::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 50% 110%, rgba(204,25,25,.10) 0%, transparent 60%),
-        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(204,25,25,.02) 60px, rgba(204,25,25,.02) 61px),
-        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(204,25,25,.02) 60px, rgba(204,25,25,.02) 61px);
-    }
-    .onboarding-bg .pitch-lines {
-      position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 400px; opacity: .06;
-      border: 3px solid #CC1919; border-radius: 12px;
-    }
-    .onboarding-bg .pitch-lines::before {
-      content: ''; position: absolute; top: 50%; left: 0; right: 0;
-      height: 3px; background: #CC1919;
-    }
-    .onboarding-bg .pitch-lines::after {
-      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 120px; height: 120px; border-radius: 50%; border: 3px solid #CC1919;
-    }
-
-    .onboarding-slides {
-      flex: 1; display: flex; transition: transform .5s cubic-bezier(.4,0,.2,1);
-    }
-    .onboarding-slide {
-      min-width: 100%; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 40px 28px; text-align: center; position: relative; z-index: 1;
-    }
-    .onboarding-icon {
-      font-size: 5rem; margin-bottom: 24px;
-      animation: iconPop .6s cubic-bezier(.34,1.56,.64,1) both;
-    }
+    .onboarding-bg { position: absolute; inset: 0; overflow: hidden; }
+    .onboarding-bg::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 110%, rgba(204,25,25,.10) 0%, transparent 60%), repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(204,25,25,.02) 60px, rgba(204,25,25,.02) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(204,25,25,.02) 60px, rgba(204,25,25,.02) 61px); }
+    .onboarding-bg .pitch-lines { position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%); width: 700px; height: 400px; opacity: .06; border: 3px solid #CC1919; border-radius: 12px; }
+    .onboarding-bg .pitch-lines::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: #CC1919; }
+    .onboarding-bg .pitch-lines::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; border-radius: 50%; border: 3px solid #CC1919; }
+    .onboarding-slides { flex: 1; display: flex; transition: transform .5s cubic-bezier(.4,0,.2,1); }
+    .onboarding-slide { min-width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 28px; text-align: center; position: relative; z-index: 1; }
+    .onboarding-icon { font-size: 5rem; margin-bottom: 24px; animation: iconPop .6s cubic-bezier(.34,1.56,.64,1) both; }
     @keyframes iconPop { from { transform: scale(0) rotate(-20deg); opacity:0; } to { transform: scale(1) rotate(0); opacity:1; } }
-    .onboarding-slide h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.4rem; font-weight: 800; color: #fff;
-      letter-spacing: .06em; text-transform: uppercase;
-      line-height: 1.1; margin-bottom: 16px;
-    }
+    .onboarding-slide h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; font-weight: 800; color: #fff; letter-spacing: .06em; text-transform: uppercase; line-height: 1.1; margin-bottom: 16px; }
     .onboarding-slide h2 span { color: #CC1919; text-shadow: 0 0 20px rgba(204,25,25,.5); }
-    .onboarding-slide p {
-      font-family: 'Barlow', sans-serif;
-      color: #8A909A; font-size: 1rem; line-height: 1.6;
-      max-width: 300px; margin: 0 auto 32px;
-    }
-    .onboarding-stats {
-      display: flex; gap: 24px; margin-bottom: 8px;
-    }
-    .onboarding-stat {
-      display: flex; flex-direction: column; align-items: center;
-      background: rgba(204,25,25,.06); border: 1px solid rgba(204,25,25,.15);
-      border-radius: 12px; padding: 14px 20px;
-    }
-    .onboarding-stat-val {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 2rem; color: #CC1919;
-      text-shadow: 0 0 12px rgba(204,25,25,.4);
-    }
-    .onboarding-stat-lbl {
-      font-size: .7rem; color: #7A8090;
-      text-transform: uppercase; letter-spacing: .1em; margin-top: 4px;
-    }
-
-    .onboarding-footer {
-      position: relative; z-index: 1;
-      padding: 20px 28px 36px;
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-    }
-    .onboarding-dots {
-      display: flex; gap: 8px;
-    }
-    .onboarding-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #4E5565; transition: all .3s;
-    }
-    .onboarding-dot.active {
-      background: #CC1919; width: 24px; border-radius: 4px;
-      box-shadow: 0 0 8px rgba(204,25,25,.5);
-    }
-    .onboarding-btn {
-      width: 100%; max-width: 320px;
-      padding: 15px; border-radius: 8px;
-      background: #CC1919; color: #fff;
-      border: none; font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; cursor: pointer;
-      box-shadow: 0 0 32px rgba(204,25,25,.3);
-      transition: all .2s;
-    }
+    .onboarding-slide p { font-family: 'Barlow', sans-serif; color: #8A909A; font-size: 1rem; line-height: 1.6; max-width: 300px; margin: 0 auto 32px; }
+    .onboarding-stats { display: flex; gap: 24px; margin-bottom: 8px; }
+    .onboarding-stat { display: flex; flex-direction: column; align-items: center; background: rgba(204,25,25,.06); border: 1px solid rgba(204,25,25,.15); border-radius: 12px; padding: 14px 20px; }
+    .onboarding-stat-val { font-family: 'Share Tech Mono', monospace; font-size: 2rem; color: #CC1919; text-shadow: 0 0 12px rgba(204,25,25,.4); }
+    .onboarding-stat-lbl { font-size: .7rem; color: #7A8090; text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
+    .onboarding-footer { position: relative; z-index: 1; padding: 20px 28px 36px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .onboarding-dots { display: flex; gap: 8px; }
+    .onboarding-dot { width: 8px; height: 8px; border-radius: 50%; background: #4E5565; transition: all .3s; }
+    .onboarding-dot.active { background: #CC1919; width: 24px; border-radius: 4px; box-shadow: 0 0 8px rgba(204,25,25,.5); }
+    .onboarding-btn { width: 100%; max-width: 320px; padding: 15px; border-radius: 8px; background: #CC1919; color: #fff; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 32px rgba(204,25,25,.3); transition: all .2s; }
     .onboarding-btn:hover { background: #E52020; transform: translateY(-1px); }
-    .onboarding-skip {
-      font-size: .8rem; color: #7A8090; cursor: pointer;
-      font-family: 'Barlow', sans-serif; background: none; border: none;
-      transition: color .15s;
-    }
+    .onboarding-skip { font-size: .8rem; color: #7A8090; cursor: pointer; font-family: 'Barlow', sans-serif; background: none; border: none; transition: color .15s; }
     .onboarding-skip:hover { color: #8A909A; }
-    .auth-box {
-      background: var(--surface); border: 1px solid var(--accent); border-radius: 12px;
-      padding: 28px 24px; width: 100%; max-width: 340px;
-      display: flex; flex-direction: column; gap: 14px;
-      box-shadow: 0 0 60px var(--accent-glow), 0 32px 64px rgba(0,0,0,.6);
-      animation: slideUp .4s cubic-bezier(.4,0,.2,1);
-    }
+
+    .auth-box { background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 28px 24px; width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 0 60px var(--accent-glow), 0 32px 64px rgba(0,0,0,.6); animation: slideUp .4s cubic-bezier(.4,0,.2,1); }
     @keyframes slideUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
     .auth-logo { text-align: center; margin-bottom: 4px; }
     .auth-logo .logo-big { font-size: 2.5rem; }
-    .auth-logo h1 { font-family: var(--font-disp); font-size: 2rem; font-weight: 700; color: var(--accent); margin-top: 8px; letter-spacing: .1em; text-transform: uppercase;  }
+    .auth-logo h1 { font-family: var(--font-disp); font-size: 2rem; font-weight: 700; color: var(--accent); margin-top: 8px; letter-spacing: .1em; text-transform: uppercase; }
     .auth-logo p { color: var(--text2); font-size: 13px; margin-top: 4px; }
     .auth-tabs { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .auth-tab { flex: 1; padding: 9px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text2); background: transparent; transition: all .15s; }
@@ -600,8 +523,8 @@
     .auth-field input { background: transparent; border: 1px solid var(--border2); color: var(--accent2); border-radius: 6px; padding: 11px 14px; font-family: var(--font-mono); font-size: 14px; outline: none; transition: all .2s; }
     .auth-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow), 0 0 12px var(--accent-glow); }
     .auth-field input::placeholder { color: var(--text3); }
-    .btn-auth { padding: 12px; border-radius: 6px; font-family: var(--font-disp); font-size: 15px; font-weight: 700; cursor: pointer; border: 1px solid var(--accent); transition: all .2s; background: var(--accent); color: #fff; width: 100%;  letter-spacing: .1em; text-transform: uppercase; }
-    .btn-auth:hover { background: var(--accent2); transform: translateY(-1px);  }
+    .btn-auth { padding: 12px; border-radius: 6px; font-family: var(--font-disp); font-size: 15px; font-weight: 700; cursor: pointer; border: 1px solid var(--accent); transition: all .2s; background: var(--accent); color: #fff; width: 100%; letter-spacing: .1em; text-transform: uppercase; }
+    .btn-auth:hover { background: var(--accent2); transform: translateY(-1px); }
     .btn-google { background: transparent; color: var(--text2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: none; font-family: var(--font-body); }
     .btn-google:hover { border-color: var(--text2); color: var(--text); transform: translateY(-1px); }
     .auth-sep { display: flex; align-items: center; gap: 12px; color: var(--text3); font-size: 12px; }
@@ -609,7 +532,6 @@
     .auth-error { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3); border-radius: 8px; padding: 10px 14px; color: #f87171; font-size: 13px; display: none; }
     .auth-error.visible { display: block; }
 
-    /* ── TOPBAR USER ── */
     .topbar-user { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding-left: 12px; border-left: 1px solid var(--border); }
     .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; font-family: var(--font-disp); }
     .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -618,34 +540,29 @@
     .btn-logout { background: none; border: 1px solid var(--border); color: var(--text3); border-radius: 4px; padding: 4px 8px; font-size: 10px; cursor: pointer; font-family: var(--font-disp); transition: all .15s; white-space: nowrap; letter-spacing: .06em; text-transform: uppercase; }
     .btn-logout:hover { border-color: var(--red); color: var(--red); }
 
-    /* ── PAGE STATS ── */
     .page-stats { padding: 16px; gap: 16px; max-width: 640px; margin: 0 auto; width: 100%; }
     .stats-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
     .stats-card-title { font-family: var(--font-disp); font-size: 1rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-    /* Graphique barres */
     .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
     .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
     .bar-wrap { width: 100%; display: flex; align-items: flex-end; justify-content: center; height: 100px; }
     .bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--accent); min-height: 2px; transition: height .6s cubic-bezier(.4,0,.2,1); position: relative; }
     .bar:hover::after { content: attr(data-val); position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; color: var(--accent); white-space: nowrap; }
     .bar-lbl { font-family: var(--font-mono); font-size: 9px; color: var(--text3); }
-    /* Continents */
     .continent-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .continent-name { font-size: 12px; color: var(--text2); min-width: 110px; font-family: var(--font-disp); text-transform: uppercase; letter-spacing: .04em; }
     .continent-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
     .continent-bar { height: 100%; border-radius: 4px; transition: width .8s cubic-bezier(.4,0,.2,1); }
     .continent-count { font-family: var(--font-mono); font-size: 11px; color: var(--accent); min-width: 28px; text-align: right; }
-    /* Objectifs */
     .objectif-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
     .objectif-header { display: flex; justify-content: space-between; align-items: center; }
     .objectif-name { font-size: 13px; color: var(--text); font-weight: 500; }
     .objectif-pct { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
     .objectif-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-    .objectif-fill { height: 100%; border-radius: 3px; background: var(--accent);  transition: width .8s cubic-bezier(.4,0,.2,1); }
+    .objectif-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width .8s cubic-bezier(.4,0,.2,1); }
     .objectif-fill.done { background: var(--amber); box-shadow: 0 0 6px var(--amber-dim); }
     .objectif-badge { font-size: .65rem; padding: 2px 7px; border-radius: 10px; background: var(--accent-dim); color: var(--accent); font-family: var(--font-disp); letter-spacing: .06em; text-transform: uppercase; }
     .objectif-badge.done { background: var(--amber-dim); color: var(--amber); }
-    /* Top pays */
     .top-pays-grid { display: flex; flex-direction: column; gap: 6px; }
     .top-pays-row { display: flex; align-items: center; gap: 8px; }
     .top-pays-flag { font-size: 1rem; min-width: 22px; }
@@ -653,6 +570,7 @@
     .top-pays-bar-wrap { width: 80px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
     .top-pays-bar { height: 100%; background: var(--accent); border-radius: 3px; }
     .top-pays-count { font-family: var(--font-mono); font-size: 11px; color: var(--text3); min-width: 22px; text-align: right; }
+
     .page-classement { padding: 16px; gap: 14px; }
     .leaderboard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .leaderboard-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); transition: background .15s; }
@@ -667,44 +585,29 @@
     .leaderboard-info { flex: 1; }
     .leaderboard-name { font-weight: 600; font-size: 14px; color: var(--text); }
     .leaderboard-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
-    .leaderboard-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .05em; font-weight: 400;  }
+    .leaderboard-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .05em; font-weight: 400; }
     .leaderboard-me { background: rgba(204,25,25,.04) !important; border-left: 3px solid var(--accent); }
 
-    /* ── PAGE PROFIL ── */
     .page-profil { padding: 16px; gap: 16px; max-width: 560px; margin: 0 auto; width: 100%; }
     .profil-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .profil-banner { height: 72px; background: linear-gradient(90deg, var(--surface) 0%, rgba(204,25,25,.12) 50%, var(--surface) 100%); border-bottom: 1px solid var(--accent); position: relative; overflow: hidden; }
     .profil-banner::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(204,25,25,.04) 20px, rgba(204,25,25,.04) 21px); }
     .profil-header { padding: 0 20px 20px; position: relative; }
     .profil-avatar-wrap { position: relative; display: inline-block; margin-top: -28px; }
-    .profil-avatar {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; font-weight: 700; color: #fff;
-      border: 3px solid var(--surface); overflow: hidden;
-    }
+    .profil-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8b5cf6); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 700; color: #fff; border: 3px solid var(--surface); overflow: hidden; }
     .profil-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .profil-avatar-edit {
-      position: absolute; bottom: 0; right: 0;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--surface);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; cursor: pointer; transition: background .15s;
-    }
+    .profil-avatar-edit { position: absolute; bottom: 0; right: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 2px solid var(--surface); display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; transition: background .15s; }
     .profil-avatar-edit:hover { background: #2563eb; }
     .profil-name-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; gap: 8px; }
     .profil-name { font-family: var(--font-disp); font-size: 1.4rem; font-weight: 700; color: var(--text); }
     .profil-email { font-size: 12px; color: var(--text3); margin-top: 2px; }
     .profil-share-btn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 20px; background: var(--surface2); border: 1px solid var(--border); color: var(--text2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; font-family: var(--font-body); }
     .profil-share-btn:hover { border-color: var(--accent); color: var(--accent2); background: rgba(59,130,246,.08); }
-
     .profil-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
     .profil-stat { background: var(--surface); padding: 14px; text-align: center; }
-    .profil-stat-val { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 400; color: var(--accent); line-height: 1;  }
-    .profil-stat-val.green { color: var(--accent);  }
+    .profil-stat-val { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 400; color: var(--accent); line-height: 1; }
+    .profil-stat-val.green { color: var(--accent); }
     .profil-stat-lbl { font-size: .6rem; text-transform: uppercase; letter-spacing: .14em; color: var(--text3); margin-top: 4px; font-weight: 600; }
-
     .profil-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
     .profil-section h3 { font-family: var(--font-disp); font-size: 1rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
     .profil-field { display: flex; flex-direction: column; gap: 6px; }
@@ -712,275 +615,72 @@
     .profil-field input { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 14px; font-family: var(--font-body); font-size: 14px; outline: none; transition: all .2s; }
     .profil-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     .profil-field input::placeholder { color: var(--text3); }
-    .profil-save-btn { align-self: flex-start; padding: 10px 24px; border-radius: var(--radius-sm); background: var(--accent); color: #fff; border: none; font-family: var(--font-disp); font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s;  letter-spacing: .08em; text-transform: uppercase; }
-    .profil-save-btn:hover { background: var(--accent2); transform: translateY(-1px);  }
+    .profil-save-btn { align-self: flex-start; padding: 10px 24px; border-radius: var(--radius-sm); background: var(--accent); color: #fff; border: none; font-family: var(--font-disp); font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; letter-spacing: .08em; text-transform: uppercase; }
+    .profil-save-btn:hover { background: var(--accent2); transform: translateY(-1px); }
     .profil-save-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
     .profil-toast { padding: 10px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; text-align: center; display: none; }
     .profil-toast.success { display: block; background: var(--green-dim); color: var(--green); border: 1px solid rgba(0,200,117,.3); }
     .profil-toast.error { display: block; background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
-
     .profil-link-box { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; }
     .profil-link-url { flex: 1; font-family: var(--font-mono); font-size: 12px; color: var(--accent2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .profil-link-copy { background: none; border: 1px solid var(--border); color: var(--text2); border-radius: 6px; padding: 5px 10px; font-size: 11px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all .15s; white-space: nowrap; }
     .profil-link-copy:hover { border-color: var(--accent); color: var(--accent2); }
 
-  /* ════════════════════════════════
-     BOTTOM NAV — remplace le drawer
-  ════════════════════════════════ */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: var(--nav-h);
-    background: rgba(34,37,44,0.97);
-    border-top: .5px solid var(--border2);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-around;
-    padding-top: 8px;
-    z-index: 500;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  .bn-item {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 3px; flex: 1; cursor: pointer;
-    padding: 0 4px;
-    transition: opacity .15s;
-  }
-  .bn-item:active { opacity: .7; }
-  .bn-icon {
-    width: 34px; height: 34px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    transition: background .15s;
-  }
-  .bn-icon svg { width: 20px; height: 20px; transition: stroke .15s; }
-  .bn-item.active .bn-icon { background: var(--accent-dim); }
-  .bn-item.active .bn-icon svg { stroke: var(--accent); }
-  .bn-label {
-    font-family: var(--font-body);
-    font-size: 10px; font-weight: 500;
-    color: var(--text4);
-    transition: color .15s;
-  }
-  .bn-item.active .bn-label { color: var(--accent); }
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(34,37,44,0.97);
+      border-top: .5px solid var(--border2);
+      display: flex; align-items: flex-start; justify-content: space-around;
+      padding-top: 8px; z-index: 500;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    .bn-item { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; cursor: pointer; padding: 0 4px; transition: opacity .15s; }
+    .bn-item:active { opacity: .7; }
+    .bn-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .bn-icon svg { width: 20px; height: 20px; transition: stroke .15s; }
+    .bn-item.active .bn-icon { background: var(--accent-dim); }
+    .bn-item.active .bn-icon svg { stroke: var(--accent); }
+    .bn-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: var(--text4); transition: color .15s; }
+    .bn-item.active .bn-label { color: var(--accent); }
 
-  /* ── TOPBAR SIMPLIFIÉE ── */
-  .topbar-logo .logo-badge {
-    width: 36px; height: 36px;
-    background: var(--accent); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .topbar-logo .logo-badge svg { width: 20px; height: 20px; }
-  .topbar-right {
-    display: flex; align-items: center; gap: 8px;
-  }
-  .topbar-user-btn {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-disp); font-size: 14px;
-    color: #fff; cursor: pointer; overflow: hidden;
-    border: 2px solid var(--surface2);
-  }
-  .topbar-user-btn img { width: 100%; height: 100%; object-fit: cover; }
+    .topbar-logo .logo-badge { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .topbar-logo .logo-badge svg { width: 20px; height: 20px; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .topbar-user-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-disp); font-size: 14px; color: #fff; cursor: pointer; overflow: hidden; border: 2px solid var(--surface2); }
+    .topbar-user-btn img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* ── STAT BAR REDESIGNÉE ── */
-  .stat-bar {
-    display: flex; background: var(--surface);
-    border-bottom: .5px solid var(--border);
-    padding: 0 16px; gap: 0;
-    overflow-x: auto; scrollbar-width: none;
-  }
-  .stat-bar::-webkit-scrollbar { display: none; }
-  .stat-item {
-    display: flex; flex-direction: column;
-    padding: 12px 20px 12px 0; margin-right: 20px;
-    border-right: .5px solid var(--border2);
-    min-width: 80px; flex-shrink: 0;
-  }
-  .stat-item:last-child { border-right: none; margin-right: 0; }
-  .stat-label {
-    font-size: .6rem; text-transform: uppercase;
-    letter-spacing: .14em; color: var(--text3);
-    margin-bottom: 3px; font-weight: 600;
-    font-family: var(--font-body);
-  }
-  .stat-value {
-    font-family: var(--font-disp);
-    font-size: 1.8rem; color: var(--text);
-    line-height: 1; letter-spacing: .03em;
-  }
-  .stat-value.green { color: var(--green); }
-  .stat-value.red   { color: var(--accent); }
+    /* Masquer drawer (remplacé par bottom nav) */
+    .drawer, .drawer-overlay, .btn-hamburger, .topbar-spacer { display: none !important; }
+    .main-content { padding-bottom: 0; }
 
-  /* ── CARTE STADE AVEC LISÈRE ── */
-  .data-row {
-    position: relative;
-    transition: background .15s;
-  }
-  .data-row td:nth-child(2) {
-    padding-left: 14px !important;
-    position: relative;
-  }
-  .data-row .stade-strip {
-    display: inline-block;
-    width: 3px; height: 100%;
-    border-radius: 2px;
-    position: absolute; left: 4px; top: 0;
-    background: var(--unset);
-  }
-  .data-row.visited .stade-strip { background: var(--green); }
-  .data-row.wishlist .stade-strip { background: var(--accent); }
+    .stats-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 0; }
+    .stats-kpi-card { background: var(--surface2); border: .5px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+    .stats-kpi-val { font-family: var(--font-disp); font-size: 2rem; line-height: 1; letter-spacing: .04em; }
+    .stats-kpi-lbl { font-size: 11px; color: var(--text3); margin-top: 3px; }
+    .stats-kpi-sub { font-size: 10px; color: var(--text4); margin-top: 2px; }
 
-  /* Badge statut dans la table */
-  .status-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 10px; font-weight: 600;
-    padding: 2px 7px; border-radius: 4px;
-  }
-  .status-badge::before {
-    content: ''; width: 5px; height: 5px;
-    border-radius: 1px; flex-shrink: 0;
-  }
-  .status-badge.visited {
-    color: var(--green); background: var(--green-dim);
-  }
-  .status-badge.visited::before { background: var(--green); }
-  .status-badge.wishlist {
-    color: var(--accent); background: var(--accent-dim);
-  }
-  .status-badge.wishlist::before { background: var(--accent); }
-  .status-badge.unset {
-    color: var(--text3); background: var(--surface2);
-  }
-  .status-badge.unset::before { background: var(--unset); }
-
-  /* Nom stade en Bebas dans la table */
-  .stade-name-cell {
-    font-family: var(--font-disp);
-    font-size: 15px; letter-spacing: .03em;
-    color: var(--text); line-height: 1.1;
-  }
-  .stade-meta-cell {
-    font-size: 11px; color: var(--text3);
-    margin-top: 1px;
-  }
-
-  /* ── PAGE HEADER REDESIGNÉ ── */
-  .page-header h2 {
-    font-family: var(--font-disp);
-    font-size: 1.8rem; letter-spacing: .06em;
-    color: var(--text); text-transform: uppercase;
-  }
-  .page-header h2 .accent { color: var(--accent); }
-
-  /* ── STATS PAGE REDESIGNÉE ── */
-  .stats-kpi-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 8px; margin-bottom: 0;
-  }
-  .stats-kpi-card {
-    background: var(--surface2);
-    border: .5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-  }
-  .stats-kpi-val {
-    font-family: var(--font-disp);
-    font-size: 2rem; line-height: 1;
-    letter-spacing: .04em;
-  }
-  .stats-kpi-lbl {
-    font-size: 11px; color: var(--text3);
-    margin-top: 3px;
-  }
-  .stats-kpi-sub {
-    font-size: 10px; color: var(--text4);
-    margin-top: 2px;
-  }
-
-  /* Barre de stat continent redesignée */
-  .continent-row {
-    display: flex; align-items: center;
-    gap: 10px; margin-bottom: 10px;
-  }
-  .continent-name {
-    font-family: var(--font-disp);
-    font-size: .85rem; text-transform: uppercase;
-    letter-spacing: .06em; color: var(--text2);
-    min-width: 120px;
-  }
-  .continent-bar-wrap {
-    flex: 1; height: 5px;
-    background: var(--surface2); border-radius: 3px; overflow: hidden;
-  }
-  .continent-bar { height: 100%; border-radius: 3px; transition: width .8s cubic-bezier(.4,0,.2,1); }
-  .continent-count {
-    font-family: var(--font-disp);
-    font-size: .95rem; color: var(--accent);
-    min-width: 36px; text-align: right;
-  }
-
-  /* Stats card title en Bebas */
-  .stats-card-title {
-    font-family: var(--font-disp);
-    font-size: 1.1rem; font-weight: 400;
-    color: var(--accent); text-transform: uppercase;
-    letter-spacing: .08em; margin-bottom: 14px;
-  }
-
-  /* ── FICHE STADE — nom en Bebas ── */
-  .fiche-nom {
-    font-family: var(--font-disp);
-    font-size: 1.9rem; letter-spacing: .04em;
-    text-transform: uppercase; line-height: 1.1;
-    color: var(--text);
-  }
-
-  /* ── PROGRESS BAR ── */
-  .progress-wrap {
-    background: var(--surface);
-    padding: 0 16px 10px;
-    border-bottom: .5px solid var(--border);
-  }
-  .progress-track {
-    height: 4px; background: var(--surface2);
-    border-radius: 2px; overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%; background: var(--accent);
-    border-radius: 2px; transition: width .4s ease;
-  }
-
-  /* ── DRAWER MASQUÉ (remplacé par bottom nav) ── */
-  .drawer, .drawer-overlay, .btn-hamburger, .topbar-spacer {
-    display: none !important;
-  }
-
-  /* Adaptation main content avec bottom nav */
-  .main-content {
-    padding-bottom: 0;
-  }
-
-  /* ── ONBOARDING — titre en Bebas ── */
-  .onboarding-slide h2 {
-    font-family: var(--font-disp);
-    font-size: 2.6rem; letter-spacing: .06em;
-  }
-
-  /* ── AUTH BOX ── */
-  .auth-logo h1 {
-    font-family: var(--font-disp);
-    font-size: 2.2rem; letter-spacing: .08em;
-    color: var(--accent);
-  }
+    .data-row { position: relative; transition: background .15s; }
+    .data-row td:nth-child(2) { padding-left: 14px !important; position: relative; }
+    .data-row .stade-strip { display: inline-block; width: 3px; height: 100%; border-radius: 2px; position: absolute; left: 4px; top: 0; background: var(--unset); }
+    .data-row.visited .stade-strip { background: var(--green); }
+    .data-row.wishlist .stade-strip { background: var(--accent); }
+    .status-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
+    .status-badge::before { content: ''; width: 5px; height: 5px; border-radius: 1px; flex-shrink: 0; }
+    .status-badge.visited { color: var(--green); background: var(--green-dim); }
+    .status-badge.visited::before { background: var(--green); }
+    .status-badge.wishlist { color: var(--accent); background: var(--accent-dim); }
+    .status-badge.wishlist::before { background: var(--accent); }
+    .status-badge.unset { color: var(--text3); background: var(--surface2); }
+    .status-badge.unset::before { background: var(--unset); }
+    .stade-name-cell { font-family: var(--font-disp); font-size: 15px; letter-spacing: .03em; color: var(--text); line-height: 1.1; }
+    .stade-meta-cell { font-size: 11px; color: var(--text3); margin-top: 1px; }
   </style>
 </head>
 <body>
 
-<!-- PAGE CONNEXION -->
-<!-- ══ FICHE STADE GROUNDHOPPER ══ -->
+<!-- FICHE STADE -->
 <div class="fiche-overlay" id="ficheOverlay">
   <div class="fiche-panel" id="fichePanel">
     <div class="fiche-handle"></div>
@@ -993,57 +693,30 @@
   </div>
 </div>
 
-<!-- ══ ONBOARDING ══ -->
+<!-- ONBOARDING -->
 <div class="onboarding-overlay hidden" id="onboardingOverlay">
-  <div class="onboarding-bg">
-    <div class="pitch-lines"></div>
-  </div>
-
+  <div class="onboarding-bg"><div class="pitch-lines"></div></div>
   <div class="onboarding-slides" id="onboardingSlides">
-
-    <!-- Slide 1 -->
     <div class="onboarding-slide">
       <div class="onboarding-icon">🏟️</div>
       <h2>GROUND<br><span>HOPPER</span></h2>
       <p>Le tracker ultime pour les fans de foot qui visitent les stades du monde entier.</p>
       <div class="onboarding-stats">
-        <div class="onboarding-stat">
-          <div class="onboarding-stat-val" id="ob-stades">630</div>
-          <div class="onboarding-stat-lbl">Stades</div>
-        </div>
-        <div class="onboarding-stat">
-          <div class="onboarding-stat-val" id="ob-pays">118</div>
-          <div class="onboarding-stat-lbl">Pays</div>
-        </div>
-        <div class="onboarding-stat">
-          <div class="onboarding-stat-val" id="ob-champs">∞</div>
-          <div class="onboarding-stat-lbl">Championnats</div>
-        </div>
+        <div class="onboarding-stat"><div class="onboarding-stat-val" id="ob-stades">630</div><div class="onboarding-stat-lbl">Stades</div></div>
+        <div class="onboarding-stat"><div class="onboarding-stat-val" id="ob-pays">118</div><div class="onboarding-stat-lbl">Pays</div></div>
+        <div class="onboarding-stat"><div class="onboarding-stat-val" id="ob-champs">∞</div><div class="onboarding-stat-lbl">Championnats</div></div>
       </div>
     </div>
-
-    <!-- Slide 2 -->
     <div class="onboarding-slide">
       <div class="onboarding-icon">🗺️</div>
       <h2>Trace ta<br><span>Route</span></h2>
       <p>Coche chaque stade visité. Suis ta progression sur la carte interactive. Compare-toi au monde entier.</p>
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px">
-        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
-          <span style="font-size:1.4rem">✅</span>
-          <span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Coche les stades visités</span>
-        </div>
-        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
-          <span style="font-size:1.4rem">🔥</span>
-          <span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Carte de chaleur de tes voyages</span>
-        </div>
-        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
-          <span style="font-size:1.4rem">🏆</span>
-          <span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Classement mondial en temps réel</span>
-        </div>
+        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px"><span style="font-size:1.4rem">✅</span><span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Coche les stades visités</span></div>
+        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px"><span style="font-size:1.4rem">🔥</span><span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Carte de chaleur de tes voyages</span></div>
+        <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px"><span style="font-size:1.4rem">🏆</span><span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Classement mondial en temps réel</span></div>
       </div>
     </div>
-
-    <!-- Slide 3 -->
     <div class="onboarding-slide">
       <div class="onboarding-icon">🥇</div>
       <h2>Rejoins la<br><span>Communauté</span></h2>
@@ -1058,9 +731,7 @@
         </div>
       </div>
     </div>
-
   </div>
-
   <div class="onboarding-footer">
     <div class="onboarding-dots">
       <div class="onboarding-dot active" data-i="0"></div>
@@ -1072,10 +743,10 @@
   </div>
 </div>
 
+<!-- AUTH -->
 <div class="auth-overlay hidden" id="authOverlay">
   <div class="auth-box">
     <div class="auth-logo">
-      
       <h1>Groundhopper</h1>
       <p>Connecte-toi pour synchroniser ta progression</p>
     </div>
@@ -1089,18 +760,9 @@
       <div class="auth-tab active" id="tabLogin">Connexion</div>
       <div class="auth-tab" id="tabRegister">Inscription</div>
     </div>
-    <div class="auth-field">
-      <label>Email</label>
-      <input type="email" id="authEmail" placeholder="ton@email.com">
-    </div>
-    <div class="auth-field">
-      <label>Mot de passe</label>
-      <input type="password" id="authPassword" placeholder="••••••••">
-    </div>
-    <div class="auth-field" id="fieldName" style="display:none">
-      <label>Pseudo</label>
-      <input type="text" id="authName" placeholder="Ton prénom ou pseudo">
-    </div>
+    <div class="auth-field"><label>Email</label><input type="email" id="authEmail" placeholder="ton@email.com"></div>
+    <div class="auth-field"><label>Mot de passe</label><input type="password" id="authPassword" placeholder="••••••••"></div>
+    <div class="auth-field" id="fieldName" style="display:none"><label>Pseudo</label><input type="text" id="authName" placeholder="Ton prénom ou pseudo"></div>
     <button class="btn-auth" id="btnAuthSubmit">Se connecter</button>
     <div class="auth-sep">ou</div>
     <button class="btn-auth" id="btnGuest" style="background:transparent;color:var(--text3);border:1px solid var(--border);box-shadow:none;font-family:var(--font-body);font-size:13px;letter-spacing:0;text-transform:none;">
@@ -1111,37 +773,20 @@
 
 <div class="app-layout">
 
-  <!-- DRAWER OVERLAY -->
+  <!-- DRAWER OVERLAY (masqué, requis par le JS) -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
-
-  <!-- DRAWER -->
   <div class="drawer" id="drawer">
-    <div class="drawer-header">
-      <div class="drawer-title">Menu</div>
-      <div class="drawer-close" id="drawerClose">✕</div>
-    </div>
+    <div class="drawer-header"><div class="drawer-title">Menu</div><div class="drawer-close" id="drawerClose">✕</div></div>
     <nav class="drawer-nav">
-      <div class="drawer-item active" data-page="carte">
-        <span class="drawer-icon">🗺️</span> Carte & Stades
-      </div>
-      <div class="drawer-item" data-page="notes">
-        <span class="drawer-icon">📝</span> Notes
-      </div>
-      <div class="drawer-item" data-page="matchs">
-        <span class="drawer-icon">🏆</span> Matchs vus
-      </div>
-      <div class="drawer-item" data-page="classement">
-        <span class="drawer-icon">🥇</span> Classement
-      </div>
-      <div class="drawer-item" data-page="stats">
-        <span class="drawer-icon">📊</span> Stats
-      </div>
-      <div class="drawer-item" data-page="profil">
-        <span class="drawer-icon">👤</span> Profil
-      </div>
+      <div class="drawer-item active" data-page="carte"><span class="drawer-icon">🗺️</span> Carte & Stades</div>
+      <div class="drawer-item" data-page="notes"><span class="drawer-icon">📝</span> Notes</div>
+      <div class="drawer-item" data-page="matchs"><span class="drawer-icon">🏆</span> Matchs vus</div>
+      <div class="drawer-item" data-page="classement"><span class="drawer-icon">🥇</span> Classement</div>
+      <div class="drawer-item" data-page="stats"><span class="drawer-icon">📊</span> Stats</div>
+      <div class="drawer-item" data-page="profil"><span class="drawer-icon">👤</span> Profil</div>
     </nav>
     <div class="drawer-footer">
-      <span class="user-name" id="userName" style="font-size:12px;color:var(--text3)"></span>
+      <span class="user-name" id="userName"></span>
       <div style="display:flex;gap:8px;align-items:center">
         <div class="user-avatar" id="userAvatar" style="display:none"></div>
         <button class="btn-logout" id="btnLogout" style="display:none">Déconnexion</button>
@@ -1169,12 +814,8 @@
     <div class="topbar-right">
       <div class="topbar-user-btn" id="userAvatarTop" style="display:none"></div>
       <button class="btn-logout" id="btnLogoutTop" style="display:none">Déco</button>
-      <button class="btn-logout" id="btnShowAuthTop"
-        style="background:transparent;border:.5px solid var(--accent);color:var(--accent);font-size:11px;padding:5px 10px">
-        Connexion
-      </button>
+      <button class="btn-logout" id="btnShowAuthTop" style="background:transparent;border:.5px solid var(--accent);color:var(--accent);font-size:11px;padding:5px 10px">Connexion</button>
     </div>
-    <!-- Bouton hamburger caché — requis par le JS existant -->
     <button class="btn-hamburger" id="btnHamburger" aria-label="Menu" style="display:none !important">
       <span></span><span></span><span></span>
     </button>
@@ -1183,16 +824,51 @@
   <!-- CONTENU -->
   <div class="main-content">
 
-    <!-- PAGE CARTE -->
+    <!-- ══ PAGE CARTE ══ -->
     <div class="page page-carte active" id="page-carte">
-      <div class="stat-bar">
-        <div class="stat-item"><span class="stat-label">Visités</span><span class="stat-value green" id="statVisites">0</span></div>
-        <div class="stat-item"><span class="stat-label">Total</span><span class="stat-value" id="statTotal">0</span></div>
-        <div class="stat-item"><span class="stat-label">Progression</span><span class="stat-value" id="statPct">0%</span></div>
+
+      <!-- ▼▼▼ OPTION C : HEADER STATS + CARTE ▼▼▼ -->
+      <div class="carte-header">
+        <div class="carte-header-top">
+          <div class="carte-header-branding">
+            <div class="carte-title">GROUND<span>HOPPER</span></div>
+            <div class="carte-subtitle">Tour du monde des stades</div>
+          </div>
+          <div class="carte-header-counter">
+            <div class="counter-val" id="statVisites">0 <span class="counter-total">/ <span id="statTotal">0</span></span></div>
+            <div class="counter-label">stades visités</div>
+          </div>
+        </div>
+        <div class="carte-header-progress">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="pct-label" id="statPct">0%</span>
+        </div>
       </div>
-      <div class="progress-wrap" style="background:var(--surface);padding:0 16px 12px;border-bottom:1px solid var(--border)">
-        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+      <!-- Pills de filtre rapide -->
+      <div class="carte-filter-pills" id="carteFilterPills">
+        <div class="cfp cfp-active" data-filter="tous">Tous</div>
+        <div class="cfp cfp-green" data-filter="visites">✅ Visités</div>
+        <div class="cfp cfp-default" data-filter="wishlist">★ Wishlist</div>
+        <div class="cfp cfp-default" data-continent="Europe">🇪🇺 Europe</div>
+        <div class="cfp cfp-default" data-continent="Amérique du Sud">🌎 Amér. Sud</div>
+        <div class="cfp cfp-default" data-continent="Afrique">🌍 Afrique</div>
+        <div class="cfp cfp-default" data-continent="Asie">🌏 Asie</div>
+        <div class="cfp cfp-default" data-continent="Moyen-Orient">🕌 M.-Orient</div>
+        <div class="cfp cfp-default" data-continent="Amérique du Nord">🌎 Amér. Nord</div>
       </div>
+      <!-- ▲▲▲ FIN OPTION C ▲▲▲ -->
+
+      <!-- Ancienne stat-bar masquée (conservée pour compatibilité JS) -->
+      <div class="stat-bar" style="display:none !important">
+        <div class="stat-item"><span class="stat-label">Visités</span><span class="stat-value green" id="statVisites2">0</span></div>
+        <div class="stat-item"><span class="stat-label">Total</span><span class="stat-value" id="statTotal2">0</span></div>
+        <div class="stat-item"><span class="stat-label">Progression</span><span class="stat-value" id="statPct2">0%</span></div>
+      </div>
+      <div class="progress-wrap" style="display:none !important">
+        <div class="progress-track"><div class="progress-fill" id="progressFill2"></div></div>
+      </div>
+
       <div class="app-body">
         <div class="filters">
           <input type="text" id="searchInput" placeholder="Rechercher (stade, ville…)">
@@ -1234,33 +910,22 @@
 
     <!-- PAGE NOTES -->
     <div class="page page-notes" id="page-notes">
-      <div class="page-header">
-        <h2>📝 Notes par stade</h2>
-        <p>Ajoute des souvenirs ou commentaires sur les stades visités</p>
-      </div>
+      <div class="page-header"><h2>📝 Notes par stade</h2><p>Ajoute des souvenirs ou commentaires sur les stades visités</p></div>
       <div class="notes-search">
         <input type="text" id="notesSearch" placeholder="Rechercher un stade…">
-        <select id="notesFilter">
-          <option value="visites">Stades visités</option>
-          <option value="tous">Tous les stades</option>
-        </select>
+        <select id="notesFilter"><option value="visites">Stades visités</option><option value="tous">Tous les stades</option></select>
       </div>
       <div class="notes-list" id="notesList"></div>
     </div>
 
     <!-- PAGE MATCHS -->
     <div class="page page-matchs" id="page-matchs">
-      <div class="page-header">
-        <h2>🏆 Matchs vus</h2>
-        <p>Liste des matchs que tu as vus en direct</p>
-      </div>
-
+      <div class="page-header"><h2>🏆 Matchs vus</h2><p>Liste des matchs que tu as vus en direct</p></div>
       <div class="match-stats-bar" id="matchStatsBar">
         <div class="match-stat-item"><span class="stat-label">Matchs</span><span class="stat-value" id="matchTotal">0</span></div>
         <div class="match-stat-item"><span class="stat-label">Clubs différents</span><span class="stat-value" id="matchClubs">0</span></div>
         <div class="match-stat-item"><span class="stat-label">Pays différents</span><span class="stat-value" id="matchPays">0</span></div>
       </div>
-
       <div class="match-form">
         <h3>➕ Ajouter un match</h3>
         <div class="match-form-row">
@@ -1273,75 +938,43 @@
           <select id="matchStade"><option value="">-- Sélectionner un stade --</option></select>
           <select id="matchChamp"><option value="">-- Championnat --</option></select>
         </div>
-        <div>
-          <button class="btn btn-primary" id="btnAjouterMatch">Ajouter le match</button>
-        </div>
+        <div><button class="btn btn-primary" id="btnAjouterMatch">Ajouter le match</button></div>
       </div>
-
       <div class="match-filters">
         <input type="text" id="matchSearch" placeholder="Rechercher (équipe, stade…)">
         <select id="matchFilterChamp"><option value="">Tous les championnats</option></select>
         <select id="matchFilterPays"><option value="">Tous les pays</option></select>
       </div>
-
       <div class="match-list" id="matchList"></div>
     </div>
 
     <!-- PAGE STATS -->
     <div class="page page-stats" id="page-stats">
-
-      <!-- Progression par année -->
-      <div class="stats-card">
-        <div class="stats-card-title">📈 Progression par année</div>
-        <div class="bar-chart" id="statsBarChart">
-          <div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div>
-        </div>
-      </div>
-
-      <!-- Répartition continents -->
-      <div class="stats-card">
-        <div class="stats-card-title">🌍 Répartition par continent</div>
-        <div id="statsContinents"></div>
-      </div>
-
-      <!-- Top pays -->
-      <div class="stats-card">
-        <div class="stats-card-title">🏴 Top pays visités</div>
-        <div class="top-pays-grid" id="statsTopPays">
-          <div style="color:var(--text3);font-size:12px">Aucun stade visité</div>
-        </div>
-      </div>
-
-      <!-- Objectifs -->
+      <div class="stats-card"><div class="stats-card-title">📈 Progression par année</div><div class="bar-chart" id="statsBarChart"><div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">🌍 Répartition par continent</div><div id="statsContinents"></div></div>
+      <div class="stats-card"><div class="stats-card-title">🏴 Top pays visités</div><div class="top-pays-grid" id="statsTopPays"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
       <div class="stats-card">
         <div class="stats-card-title">🎯 Objectifs</div>
         <div id="statsObjectifs"></div>
         <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
           <div style="font-size:11px;color:var(--text3);font-family:var(--font-disp);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Objectif personnalisé</div>
           <div style="display:flex;gap:8px;align-items:center">
-            <input type="number" id="customGoalInput" min="1" max="630" placeholder="Ex: 50"
-              style="width:80px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-mono);font-size:13px;outline:none">
+            <input type="number" id="customGoalInput" min="1" max="630" placeholder="Ex: 50" style="width:80px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-mono);font-size:13px;outline:none">
             <button id="customGoalBtn" style="padding:7px 14px;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:var(--font-disp);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">Définir</button>
             <span id="customGoalDisplay" style="font-size:11px;color:var(--text3)"></span>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- PAGE CLASSEMENT -->
     <div class="page page-classement" id="page-classement">
-      <div class="page-header">
-        <h2>🥇 Classement mondial</h2>
-        <p>Les explorateurs de stades les plus actifs</p>
-      </div>
+      <div class="page-header"><h2>🥇 Classement mondial</h2><p>Les explorateurs de stades les plus actifs</p></div>
       <div class="match-stats-bar" style="margin-bottom:0">
         <div class="match-stat-item"><span class="stat-label">Joueurs</span><span class="stat-value" id="classNbJoueurs">0</span></div>
         <div class="match-stat-item"><span class="stat-label">Ton rang</span><span class="stat-value" id="classMonRang">—</span></div>
       </div>
-      <div class="leaderboard" id="leaderboard">
-        <div style="text-align:center;padding:32px;color:var(--muted)">Chargement…</div>
-      </div>
+      <div class="leaderboard" id="leaderboard"><div style="text-align:center;padding:32px;color:var(--muted)">Chargement…</div></div>
     </div>
 
     <!-- PAGE PROFIL -->
@@ -1349,15 +982,9 @@
       <div class="profil-card">
         <div class="profil-banner"></div>
         <div class="profil-header">
-          <div class="profil-avatar-wrap">
-            <div class="profil-avatar" id="profilAvatar"></div>
-            <div class="profil-avatar-edit" id="profilAvatarEdit" title="Changer la photo">✏️</div>
-          </div>
+          <div class="profil-avatar-wrap"><div class="profil-avatar" id="profilAvatar"></div><div class="profil-avatar-edit" id="profilAvatarEdit" title="Changer la photo">✏️</div></div>
           <div class="profil-name-row">
-            <div>
-              <div class="profil-name" id="profilName">—</div>
-              <div class="profil-email" id="profilEmail">—</div>
-            </div>
+            <div><div class="profil-name" id="profilName">—</div><div class="profil-email" id="profilEmail">—</div></div>
             <button class="profil-share-btn" id="btnShareProfil">🔗 Partager</button>
             <button class="profil-share-btn" id="btnInstallApp" style="display:none;background:var(--accent);color:#000;border-color:var(--accent);font-family:var(--font-disp);letter-spacing:.06em;text-transform:uppercase;">📲 Installer l'app</button>
           </div>
@@ -1370,14 +997,8 @@
       </div>
       <div class="profil-section">
         <h3>✏️ Modifier mes informations</h3>
-        <div class="profil-field">
-          <label>Pseudo</label>
-          <input type="text" id="profilInputNom" placeholder="Ton pseudo…" maxlength="30">
-        </div>
-        <div class="profil-field">
-          <label>URL photo de profil</label>
-          <input type="url" id="profilInputPhoto" placeholder="https://…">
-        </div>
+        <div class="profil-field"><label>Pseudo</label><input type="text" id="profilInputNom" placeholder="Ton pseudo…" maxlength="30"></div>
+        <div class="profil-field"><label>URL photo de profil</label><input type="url" id="profilInputPhoto" placeholder="https://…"></div>
         <div id="profilToast" class="profil-toast"></div>
         <button class="profil-save-btn" id="btnSauvegarderProfil">Sauvegarder</button>
       </div>
@@ -1396,67 +1017,34 @@
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav" id="bottomNav">
     <div class="bn-item active" data-page="carte" onclick="navTo('carte')">
-      <div class="bn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-        </svg>
-      </div>
+      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
       <span class="bn-label">Carte</span>
     </div>
     <div class="bn-item" data-page="notes" onclick="navTo('notes')">
-      <div class="bn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="8" y1="6" x2="21" y2="6"/>
-          <line x1="8" y1="12" x2="21" y2="12"/>
-          <line x1="8" y1="18" x2="21" y2="18"/>
-          <circle cx="3" cy="6" r="1" fill="#5A6070" stroke="none"/>
-          <circle cx="3" cy="12" r="1" fill="#5A6070" stroke="none"/>
-          <circle cx="3" cy="18" r="1" fill="#5A6070" stroke="none"/>
-        </svg>
-      </div>
+      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="#5A6070" stroke="none"/><circle cx="3" cy="12" r="1" fill="#5A6070" stroke="none"/><circle cx="3" cy="18" r="1" fill="#5A6070" stroke="none"/></svg></div>
       <span class="bn-label">Liste</span>
     </div>
     <div class="bn-item" data-page="stats" onclick="navTo('stats')">
-      <div class="bn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="20" x2="18" y2="10"/>
-          <line x1="12" y1="20" x2="12" y2="4"/>
-          <line x1="6" y1="20" x2="6" y2="14"/>
-        </svg>
-      </div>
+      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
       <span class="bn-label">Stats</span>
     </div>
     <div class="bn-item" data-page="matchs" onclick="navTo('matchs')">
-      <div class="bn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="8" r="6"/>
-          <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-        </svg>
-      </div>
+      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
       <span class="bn-label">Matchs</span>
     </div>
     <div class="bn-item" data-page="profil" onclick="navTo('profil')">
-      <div class="bn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-      </div>
+      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
       <span class="bn-label">Profil</span>
     </div>
   </nav>
 
 </div>
 
-<!-- Firebase SDK via CDN classique (non-module) -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
-// ════════════════════════════════════
-// FIREBASE — script classique, non bloquant
-// ════════════════════════════════════
 (function() {
 try {
 
@@ -1474,7 +1062,6 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-// Shims pour compat API
 function signInWithEmailAndPassword(a, e, p) { return auth.signInWithEmailAndPassword(e, p); }
 function createUserWithEmailAndPassword(a, e, p) { return auth.createUserWithEmailAndPassword(e, p); }
 function signInWithPopup(a, p) { return auth.signInWithPopup(p); }
@@ -1493,37 +1080,23 @@ function orderBy(field, dir='asc') { return {_type:'orderBy',field,dir}; }
 function limit(n) { return {_type:'limit',n}; }
 function onSnapshot(ref, cb) { return ref.onSnapshot(cb); }
 
-
 let currentUser = null;
 let guestMode = false;
 
-// ── Auth UI ──────────────────────────────
 const authOverlay = document.getElementById('authOverlay');
 const authError = document.getElementById('authError');
 let isLogin = true;
 
-// ── Bouton "Connexion" dans la topbar ────────
-document.getElementById('btnShowAuth').addEventListener('click', () => {
-  authOverlay.classList.remove('hidden');
-});
-
-// ── Mode invité ───────────────────────────
+document.getElementById('btnShowAuth').addEventListener('click', () => { authOverlay.classList.remove('hidden'); });
 document.getElementById('btnGuest').addEventListener('click', () => {
-  guestMode = true;
-  authOverlay.classList.add('hidden');
+  guestMode = true; authOverlay.classList.add('hidden');
   document.getElementById('btnShowAuth').style.display = 'block';
   document.getElementById('btnLogout').style.display = 'none';
   document.getElementById('userAvatar').style.display = 'none';
   document.getElementById('userName').textContent = '';
 });
-
-// Remplacer le comportement de Déconnexion en mode invité
 document.getElementById('btnLogout').addEventListener('click', () => {
-  if (guestMode) {
-    guestMode = false;
-    authOverlay.classList.remove('hidden');
-    return;
-  }
+  if (guestMode) { guestMode = false; authOverlay.classList.remove('hidden'); return; }
   signOut(auth);
 });
 
@@ -1549,15 +1122,10 @@ function showError(msg) { authError.textContent = msg; authError.classList.add('
 document.getElementById('btnGoogle').addEventListener('click', async () => {
   try {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      await signInWithRedirect(auth, googleProvider);
-    } else {
-      await signInWithPopup(auth, googleProvider);
-    }
+    if (isMobile) { await signInWithRedirect(auth, googleProvider); }
+    else { await signInWithPopup(auth, googleProvider); }
   } catch(e) { showError('Erreur Google : ' + e.message); }
 });
-
-// Récupérer le résultat après redirect mobile
 getRedirectResult(auth).catch(e => { if (e.code) showError('Erreur Google : ' + e.message); });
 
 document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
@@ -1566,9 +1134,8 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const name = document.getElementById('authName').value.trim();
   if (!email || !password) { showError('Remplis email et mot de passe.'); return; }
   try {
-    if (isLogin) {
-      await signInWithEmailAndPassword(auth, email, password);
-    } else {
+    if (isLogin) { await signInWithEmailAndPassword(auth, email, password); }
+    else {
       if (!name) { showError('Entre un pseudo.'); return; }
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(cred.user, { displayName: name });
@@ -1579,16 +1146,13 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   }
 });
 
-// ── Auth state ────────────────────────────
 onAuthStateChanged(auth, async user => {
   if (user) {
-    guestMode = false;
-    currentUser = user;
+    guestMode = false; currentUser = user;
     authOverlay.classList.add('hidden');
     const name = user.displayName || user.email.split('@')[0];
     document.getElementById('userName').textContent = name;
-    const av = document.getElementById('userAvatar');
-    av.style.display = 'flex';
+    const av = document.getElementById('userAvatar'); av.style.display = 'flex';
     document.getElementById('btnLogout').style.display = 'block';
     document.getElementById('btnShowAuth').style.display = 'none';
     if (user.photoURL) { av.innerHTML = `<img src="${user.photoURL}">`; }
@@ -1599,13 +1163,9 @@ onAuthStateChanged(auth, async user => {
       const t = setInterval(() => { if (window._app) { clearInterval(t); resolve(); } }, 50);
     });
     await waitApp();
-    window._app.updateStats();
-    window._app.renderAll();
-    window._app.renderMatchs();
-    renderProfil();
+    window._app.updateStats(); window._app.renderAll(); window._app.renderMatchs(); renderProfil();
   } else {
     currentUser = null;
-    // L'app reste accessible sans compte — pas de blocage
     document.getElementById('userAvatar').style.display = 'none';
     document.getElementById('btnLogout').style.display = 'none';
     document.getElementById('btnShowAuth').style.display = 'block';
@@ -1613,32 +1173,20 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-// ── Firestore sauvegarde ──────────────────
 async function sauvegarder() {
   if (guestMode) {
-    // Sauvegarde locale pour invité
-    try {
-      const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
-      localStorage.setItem('stades_guest_v1', JSON.stringify({ stades: data, matchs, notes }));
-    } catch {}
+    try { const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null })); localStorage.setItem('stades_guest_v1', JSON.stringify({ stades: data, matchs, notes })); } catch {}
     return;
   }
   if (!currentUser) return;
   const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
   const visites = stades.filter(s => s.visite).length;
   const pays = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
-  await setDoc(doc(db, 'users', currentUser.uid), {
-    stades: data, matchs, notes,
-    displayName: currentUser.displayName || currentUser.email.split('@')[0],
-    photoURL: currentUser.photoURL || null,
-    visites, pays, updatedAt: Date.now()
-  });
+  await setDoc(doc(db, 'users', currentUser.uid), { stades: data, matchs, notes, displayName: currentUser.displayName || currentUser.email.split('@')[0], photoURL: currentUser.photoURL || null, visites, pays, updatedAt: Date.now() });
 }
 
-// ── Profil ────────────────────────────────
 function renderProfil() {
   if (!currentUser) {
-    // Mode invité
     document.getElementById('profilAvatar').textContent = '👤';
     document.getElementById('profilName').textContent = 'Mode invité';
     document.getElementById('profilEmail').textContent = 'Données sauvegardées localement';
@@ -1654,8 +1202,7 @@ function renderProfil() {
   }
   const name = currentUser.displayName || currentUser.email.split('@')[0];
   const av = document.getElementById('profilAvatar');
-  if (currentUser.photoURL) { av.innerHTML = `<img src="${currentUser.photoURL}">`; }
-  else { av.textContent = name[0].toUpperCase(); }
+  if (currentUser.photoURL) { av.innerHTML = `<img src="${currentUser.photoURL}">`; } else { av.textContent = name[0].toUpperCase(); }
   document.getElementById('profilName').textContent = name;
   document.getElementById('profilEmail').textContent = currentUser.email;
   document.getElementById('profilInputNom').value = name;
@@ -1671,26 +1218,20 @@ function renderProfil() {
 
 document.getElementById('btnSauvegarderProfil').addEventListener('click', async () => {
   if (!currentUser) return;
-  const btn = document.getElementById('btnSauvegarderProfil');
-  const toast = document.getElementById('profilToast');
-  const nom = document.getElementById('profilInputNom').value.trim();
-  const photo = document.getElementById('profilInputPhoto').value.trim();
+  const btn = document.getElementById('btnSauvegarderProfil'), toast = document.getElementById('profilToast');
+  const nom = document.getElementById('profilInputNom').value.trim(), photo = document.getElementById('profilInputPhoto').value.trim();
   if (!nom) { toast.className = 'profil-toast error'; toast.textContent = 'Le pseudo ne peut pas être vide.'; return; }
   btn.disabled = true; btn.textContent = 'Sauvegarde…';
   try {
     await updateProfile(currentUser, { displayName: nom, photoURL: photo || null });
     await sauvegarder();
-    // Mettre à jour la topbar
     document.getElementById('userName').textContent = nom;
     const av = document.getElementById('userAvatar');
-    if (photo) { av.innerHTML = `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`; }
-    else { av.textContent = nom[0].toUpperCase(); }
+    if (photo) { av.innerHTML = `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`; } else { av.textContent = nom[0].toUpperCase(); }
     renderProfil();
     toast.className = 'profil-toast success'; toast.textContent = '✅ Profil mis à jour !';
     setTimeout(() => { toast.className = 'profil-toast'; }, 3000);
-  } catch(e) {
-    toast.className = 'profil-toast error'; toast.textContent = 'Erreur : ' + e.message;
-  }
+  } catch(e) { toast.className = 'profil-toast error'; toast.textContent = 'Erreur : ' + e.message; }
   btn.disabled = false; btn.textContent = 'Sauvegarder';
 });
 
@@ -1725,18 +1266,15 @@ async function chargerDepuisFirestore() {
     if (d.matchs) matchs.splice(0, matchs.length, ...d.matchs);
     if (d.notes) Object.assign(notes, d.notes);
   } else {
-    // Premier login : migrer les données localStorage vers Firestore
     const localNotes = {}; const localMatchs = [];
     try { Object.assign(localNotes, JSON.parse(localStorage.getItem('stades_notes_v1') || '{}')); } catch {}
     try { localMatchs.push(...JSON.parse(localStorage.getItem('stades_matchs_v1') || '[]')); } catch {}
     if (Object.keys(localNotes).length) Object.assign(notes, localNotes);
     if (localMatchs.length) matchs.splice(0, matchs.length, ...localMatchs);
-    // Sauvegarder immédiatement pour créer le doc Firestore
     await sauvegarder();
   }
 }
 
-// ── Classement ────────────────────────────
 async function chargerClassement() {
   if (guestMode) {
     document.getElementById('leaderboard').innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3);font-size:13px">Connecte-toi pour accéder au classement mondial 🌍</div>';
@@ -1744,8 +1282,7 @@ async function chargerClassement() {
   }
   const q = query(collection(db, 'users'), orderBy('visites', 'desc'), limit(50));
   const snap = await getDocs(q);
-  const lb = document.getElementById('leaderboard');
-  const rows = [];
+  const lb = document.getElementById('leaderboard'), rows = [];
   snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
   document.getElementById('classNbJoueurs').textContent = rows.length;
   const monRang = rows.findIndex(r => r.id === currentUser?.uid);
@@ -1759,27 +1296,19 @@ async function chargerClassement() {
     return `<div class="leaderboard-row ${isMe ? 'leaderboard-me' : ''}">
       <div class="leaderboard-rank ${rankClass}">${rankIcon}</div>
       <div class="leaderboard-avatar">${av}</div>
-      <div class="leaderboard-info">
-        <div class="leaderboard-name">${r.displayName || 'Anonyme'}${isMe ? ' <span style="color:var(--accent2);font-size:11px">(toi)</span>' : ''}</div>
-        <div class="leaderboard-sub">${r.matchs?.length || 0} matchs vus</div>
-      </div>
+      <div class="leaderboard-info"><div class="leaderboard-name">${r.displayName || 'Anonyme'}${isMe ? ' <span style="color:var(--accent2);font-size:11px">(toi)</span>' : ''}</div><div class="leaderboard-sub">${r.matchs?.length || 0} matchs vus</div></div>
       <div class="leaderboard-score">${r.visites || 0}<span style="font-size:12px;color:var(--muted);font-family:var(--font-body);margin-left:4px">stades</span></div>
     </div>`;
   }).join('');
 }
 
-// Exposer les fonctions au scope global pour le reste du script
 window._firebase = { sauvegarder, chargerClassement, renderProfil };
-// Exposer guestMode pour le script principal
 Object.defineProperty(window, 'guestMode', { get: () => guestMode });
 } catch(e) {
   console.warn('Firebase init échoué:', e.message);
   window._firebase = {
     sauvegarder: () => {},
-    chargerClassement: () => {
-      const el = document.getElementById('leaderboard');
-      if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3)">Connexion requise pour le classement</div>';
-    },
+    chargerClassement: () => { const el = document.getElementById('leaderboard'); if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3)">Connexion requise pour le classement</div>'; },
     renderProfil: () => {}
   };
 }
@@ -1795,150 +1324,24 @@ Object.defineProperty(window, 'guestMode', { get: () => guestMode });
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-// Déclaré tôt — utilisé par makeIcon avant la section FICHE
 let wishlisted = {};
 try { wishlisted = JSON.parse(localStorage.getItem('gh_wishlist_v1') || '{}'); } catch {}
 
 function sauvegarder() { if (window._firebase) window._firebase.sauvegarder(); }
 function charger() {
-  // Charger depuis localStorage (mode invité ou données locales)
   try {
     const saved = JSON.parse(localStorage.getItem('stades_guest_v1') || 'null');
-    if (saved && saved.stades) {
-      saved.stades.forEach((s, i) => {
-        if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; }
-      });
-    }
+    if (saved && saved.stades) { saved.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } }); }
     if (saved && saved.matchs) matchs.splice(0, matchs.length, ...saved.matchs);
     if (saved && saved.notes) Object.assign(notes, saved.notes);
   } catch {}
 }
 
-const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA',
-  Japon:'JP', 'Corée du Sud':'KR', Chine:'CN', Australie:'AU', 'Arabie Saoudite':'SA', 'Émirats Arabes Unis':'AE', Qatar:'QA', Inde:'IN', Iran:'IR', Indonésie:'ID', Thaïlande:'TH',
-  'Afrique du Sud':'ZA', Maroc:'MA', Nigeria:'NG', Égypte:'EG', Sénégal:'SN', Cameroun:'CM', "Côte d'Ivoire":'CI', Ghana:'GH', Tanzanie:'TZ', Kenya:'KE', Algérie:'DZ', Tunisie:'TN',
-  'Nouvelle-Zélande':'NZ',
-  Norvège:'NO', Danemark:'DK', Suède:'SE', Finlande:'FI', Islande:'IS',
-  Russie:'RU', Ukraine:'UA', Pologne:'PL', Bulgarie:'BG', Slovaquie:'SK',
-  Slovénie:'SI', Géorgie:'GE', Arménie:'AM', Azerbaïdjan:'AZ', Biélorussie:'BY',
-  Albanie:'AL', 'Macédoine du Nord':'MK', Bosnie:'BA', Luxembourg:'LU', Malte:'MT', Chypre:'CY',
-  Mali:'ML', 'Burkina Faso':'BF', Bénin:'BJ', Guinée:'GN', 'Guinée Équatoriale':'GQ',
-  Gabon:'GA', Centrafrique:'CF', 'Congo RDC':'CD', Ouganda:'UG', Rwanda:'RW',
-  Zimbabwe:'ZW', Zambie:'ZM', Éthiopie:'ET', Soudan:'SD', Angola:'AO',
-  Madagascar:'MG', Mozambique:'MZ',
-  Jordanie:'JO', Liban:'LB', Koweït:'KW', Bahreïn:'BH', Oman:'OM', Irak:'IQ',
-  Malaisie:'MY', Philippines:'PH', Myanmar:'MM', Cambodge:'KH', Bangladesh:'BD',
-  Pakistan:'PK', Népal:'NP', 'Sri Lanka':'LK',
-  Honduras:'HN', 'El Salvador':'SV', Guatemala:'GT', Nicaragua:'NI', Panama:'PA',
-  Jamaïque:'JM', Cuba:'CU',
-  Paraguay:'PY', Équateur:'EC', Bolivie:'BO', Venezuela:'VE',
-  Népal:'NP', Cambodge:'KH'
-};
+const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA', Japon:'JP', 'Corée du Sud':'KR', Chine:'CN', Australie:'AU', 'Arabie Saoudite':'SA', 'Émirats Arabes Unis':'AE', Qatar:'QA', Inde:'IN', Iran:'IR', Indonésie:'ID', Thaïlande:'TH', 'Afrique du Sud':'ZA', Maroc:'MA', Nigeria:'NG', Égypte:'EG', Sénégal:'SN', Cameroun:'CM', "Côte d'Ivoire":'CI', Ghana:'GH', Tanzanie:'TZ', Kenya:'KE', Algérie:'DZ', Tunisie:'TN', 'Nouvelle-Zélande':'NZ', Norvège:'NO', Danemark:'DK', Suède:'SE', Finlande:'FI', Islande:'IS', Russie:'RU', Ukraine:'UA', Bulgarie:'BG', Slovaquie:'SK', Slovénie:'SI', Géorgie:'GE', Arménie:'AM', Azerbaïdjan:'AZ', Biélorussie:'BY', Albanie:'AL', 'Macédoine du Nord':'MK', Bosnie:'BA', Luxembourg:'LU', Malte:'MT', Chypre:'CY', Mali:'ML', 'Burkina Faso':'BF', Bénin:'BJ', Guinée:'GN', 'Guinée Équatoriale':'GQ', Gabon:'GA', Centrafrique:'CF', 'Congo RDC':'CD', Ouganda:'UG', Rwanda:'RW', Zimbabwe:'ZW', Zambie:'ZM', Éthiopie:'ET', Soudan:'SD', Angola:'AO', Madagascar:'MG', Mozambique:'MZ', Jordanie:'JO', Liban:'LB', Koweït:'KW', Bahreïn:'BH', Oman:'OM', Irak:'IQ', Malaisie:'MY', Philippines:'PH', Myanmar:'MM', Cambodge:'KH', Bangladesh:'BD', Pakistan:'PK', Népal:'NP', 'Sri Lanka':'LK', Honduras:'HN', 'El Salvador':'SV', Guatemala:'GT', Nicaragua:'NI', Panama:'PA', Jamaïque:'JM', Cuba:'CU', Paraguay:'PY', Équateur:'EC', Bolivie:'BO', Venezuela:'VE' };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
-  'Ligue 1':'#1e90ff','Ligue 2':'#74b9ff','National':'#a8c8ff',
-  'Bundesliga':'#e84393','2. Bundesliga':'#fd79a8',
-  'La Liga':'#e17055','Segunda División':'#fab1a0',
-  'Premier League':'#6c5ce7','Championship':'#b8860b',
-  'Serie A':'#00b894','Serie B':'#52c7aa',
-  'Eredivisie':'#fdcb6e',
-  'Jupiler Pro League':'#e67e22',
-  'Primeira Liga':'#27ae60','Segunda Liga':'#a8d8a8',
-  'Liga Portugal 2':'#2ecc71','Serie B':'#52c7aa','Serie B Brazil':'#009c3b','J2 League':'#e67e22','K League 2':'#1f8dd6','USL Championship':'#16a085',
-  'League One':'#9b59b6','Primera Federación':'#2980b9','Liga':'#f39c12','National':'#8e44ad','Serie C':'#d35400','Serie C Brazil':'#27ae60','USL League One':'#f1c40f','J3 League':'#e74c3c','League Two':'#34495e','National 2':'#2c3e50','Regionalliga':'#27ae60','Serie D':'#8e44ad','Segunda Federación':'#e67e22','Japan Football League':'#16a085',
-  'Scottish Premiership':'#9b59b6',
-  'Super League Suisse':'#c0392b',
-  'Super League Grèce':'#1abc9c',
-  'League of Ireland':'#2ecc71',
-  'Süper Lig':'#e74c3c',
-  'SuperLiga Serbie':'#c0392b',
-  'HNL Croatie':'#3498db',
-  'Liga 1 Roumanie':'#f39c12',
-  'Ekstraklasa':'#e67e22',
-  'Fortuna Liga':'#2980b9',
-  'Bundesliga Autriche':'#8e44ad',
-  'OTP Bank Liga':'#27ae60',
-  'Serie A Bresil':'#009c3b',
-  'Liga Profesional':'#74acdf',
-  'Primera Division Uruguay':'#001489',
-  'Primera Division Chili':'#d52b1e',
-  'Liga BetPlay':'#fcd116',
-  'Liga 1 Perou':'#d91023',
-  'MLS':'#002855',
-  'Liga MX':'#006847',
-  'MLS Canada':'#d52b1e',
-  // Asie
-  'J1 League':'#e63946',
-  'K League':'#003594',
-  'Super League':'#de2910',
-  'A-League':'#00843d',
-  'Saudi Pro League':'#006c35',
-  'UAE Pro League':'#00732f',
-  'Qatar Stars League':'#8d1b3d',
-  'ISL':'#ff6600',
-  'Persian Gulf Pro League':'#239f40',
-  'Thai League 1':'#003087',
-  'Liga 1':'#ce1126',
-  // Afrique
-  'PSL':'#007a4d',
-  'Botola Pro':'#c1272d',
-  'NPFL':'#008751',
-  'Egyptian Premier League':'#c09300',
-  'Ligue 1 Sénégal':'#00853f',
-  'MTN Elite One':'#007a5e',
-  'MTN Ligue 1':'#f77f00',
-  'Ghana Premier League':'#006b3f',
-  'NBC Premier League':'#1eb53a',
-  'FKF Premier League':'#006600',
-  'Ligue Professionnelle 1':'#006233',
-  'Ligue 1 Tunisie':'#e70013',
-  // Océanie
-  'National League NZ':'#00247d',
-  // Europe complément
-  'Eliteserien':'#ef2b2d', 'Superliga':'#c8102e', 'Allsvenskan':'#006aa7',
-  'Veikkausliiga':'#003580', 'Úrvalsdeild':'#003897',
-  'Premier League Ukraine':'#005bbc', 'Premier League Russie':'#cc0000',
-  'Ekstraklasa':'#e03a3e', 'Liga 1 Roumanie':'#fcd116',
-  'SuperLiga Serbie':'#c0392b', 'HNL Croatie':'#ff0000',
-  'Fortuna Liga':'#003da5', 'PrvaLiga':'#003da5',
-  'Erovnuli Liga':'#da291c', 'Armenian Premier League':'#d90012',
-  'Premyer Liqa':'#0092bc', 'Vysshaya Liga':'#cf101a',
-  'Kategoria Superiore':'#e41e20', 'Prva MFL':'#f5e800',
-  'Premier Liga BiH':'#002395', 'First Professional League':'#00966e',
-  'A Lyga':'#fdb913', 'SynotTip Virsliga':'#9e1b32',
-  'Meistriliiga':'#0072ce', 'BGL Ligue':'#ef3340',
-  'Premier League Malte':'#ce1126', '1. Division Chypre':'#0032a0',
-  'Super League Suisse':'#ff0000',
-  // Afrique complément
-  'Ligue 1 Mali':'#009a00', 'Ligue 1 Burkina':'#ef2b2d',
-  'Ligue 1 Guinée':'#009460', 'Liga Nacional':'#3a7728',
-  'Championnat Gabon':'#009e60', 'Ligue 1 RCA':'#003082',
-  'Linafoot':'#007fff', 'FUFA Super League':'#ffcd00',
-  'Rwanda Premier League':'#20603d', 'Premier Soccer League':'#009f6b',
-  'Super League Zambie':'#198a00', 'Ethiopian Premier League':'#078930',
-  'Sudan Premier League':'#d21034', 'Girabola':'#cc0000',
-  'Pro League Madagascar':'#fc3d32', 'Moçambola':'#009a44',
-  // Moyen-Orient complément
-  'Jordan Pro League':'#007a3d', 'Lebanese Premier League':'#00a651',
-  'Kuwait Premier League':'#007a3d', 'Bahraini Premier League':'#ce1126',
-  'Oman Professional League':'#db161b', 'Iraq Stars League':'#ce1126',
-  // Asie complément
-  'Super League Malaisie':'#cc0001', 'PFL':'#0038a8',
-  'MNL':'#fecb00', 'V.League 1':'#da251d',
-  'C-League':'#032ea1', 'Bangladesh Premier League':'#006a4e',
-  'Pakistan Premier Football League':'#01411c',
-  "Martyr's Memorial A-Division League":'#003580',
-  'Dialog Champions League':'#8d153a',
-  // Amérique centrale & Caraïbes
-  'Liga Nacional Honduras':'#0073cf', 'Liga Mayor El Salvador':'#0f47af',
-  'Liga Nacional Guatemala':'#4997d0', 'Liga Primera Nicaragua':'#74acdf',
-  'Primera División CR':'#d90000', 'LPF Panama':'#c0392b',
-  'National Premier League':'#007847', 'Campeonato Cuba':'#002a8f',
-  // Amérique du Sud complément
-  'División de Honor':'#d52b1e', 'Liga Pro Ecuador':'#ffdd00',
-  'División Profesional Bolivia':'#007a3d', 'Liga Futve':'#cf142b',
-  'Primera Division Chili':'#d52b1e',
+  'Ligue 1':'#1e90ff','Ligue 2':'#74b9ff','National':'#a8c8ff','Bundesliga':'#e84393','2. Bundesliga':'#fd79a8','La Liga':'#e17055','Segunda División':'#fab1a0','Premier League':'#6c5ce7','Championship':'#b8860b','Serie A':'#00b894','Serie B':'#52c7aa','Eredivisie':'#fdcb6e','Jupiler Pro League':'#e67e22','Primeira Liga':'#27ae60','Segunda Liga':'#a8d8a8','Liga Portugal 2':'#2ecc71','Serie B Brazil':'#009c3b','J2 League':'#e67e22','K League 2':'#1f8dd6','USL Championship':'#16a085','League One':'#9b59b6','Primera Federación':'#2980b9','Liga':'#f39c12','Serie C':'#d35400','Serie C Brazil':'#27ae60','USL League One':'#f1c40f','J3 League':'#e74c3c','League Two':'#34495e','National 2':'#2c3e50','Regionalliga':'#27ae60','Serie D':'#8e44ad','Segunda Federación':'#e67e22','Japan Football League':'#16a085','Scottish Premiership':'#9b59b6','Super League Suisse':'#c0392b','Super League Grèce':'#1abc9c','League of Ireland':'#2ecc71','Süper Lig':'#e74c3c','SuperLiga Serbie':'#c0392b','HNL Croatie':'#3498db','Liga 1 Roumanie':'#f39c12','Ekstraklasa':'#e67e22','Fortuna Liga':'#2980b9','Bundesliga Autriche':'#8e44ad','OTP Bank Liga':'#27ae60','Serie A Bresil':'#009c3b','Liga Profesional':'#74acdf','Primera Division Uruguay':'#001489','Primera Division Chili':'#d52b1e','Liga BetPlay':'#fcd116','Liga 1 Perou':'#d91023','MLS':'#002855','Liga MX':'#006847','MLS Canada':'#d52b1e','J1 League':'#e63946','K League':'#003594','Super League':'#de2910','A-League':'#00843d','Saudi Pro League':'#006c35','UAE Pro League':'#00732f','Qatar Stars League':'#8d1b3d','ISL':'#ff6600','Persian Gulf Pro League':'#239f40','Thai League 1':'#003087','Liga 1':'#ce1126','PSL':'#007a4d','Botola Pro':'#c1272d','NPFL':'#008751','Egyptian Premier League':'#c09300','Ligue 1 Sénégal':'#00853f','MTN Elite One':'#007a5e','MTN Ligue 1':'#f77f00','Ghana Premier League':'#006b3f','NBC Premier League':'#1eb53a','FKF Premier League':'#006600','Ligue Professionnelle 1':'#006233','Ligue 1 Tunisie':'#e70013','National League NZ':'#00247d','Eliteserien':'#ef2b2d','Superliga':'#c8102e','Allsvenskan':'#006aa7','Veikkausliiga':'#003580','Úrvalsdeild':'#003897','Premier League Ukraine':'#005bbc','Premier League Russie':'#cc0000'
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
 
@@ -1949,32 +1352,28 @@ function drapeau(pays) {
 }
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function sansAccents(s) { return s ? s.normalize('NFD').replace(/[\u0300-\u036f]/g,'') : ''; }
-function makeBtn(cls,label,title) { const b=document.createElement('button'); b.className=`btn-action ${cls}`; b.textContent=label; b.title=title; return b; }
 function makeCheckbox(checked) { const c=document.createElement('input'); c.type='checkbox'; c.checked=checked; return c; }
 
-// ════════════════════════════════════
-// DONNÉES
-// ════════════════════════════════════
+const STADES_INFO = {
+  'Allianz Arena':        { capacite:75024, ouverture:2005, record:75000, anecdote:"Seul stade au monde à changer de couleur selon l'équipe qui joue : rouge pour le Bayern, blanc pour l'Allemagne. Son éclairage LED est visible à des kilomètres." },
+  'Signal Iduna Park':    { capacite:81365, ouverture:1974, record:81365, anecdote:"Le Mur Jaune, la tribune debout du Borussia Dortmund, est la plus grande tribune d'Europe avec 25 000 places debout." },
+  'Olympiastadion Berlin':{ capacite:74475, ouverture:1936, record:100000, anecdote:"Construit pour les JO de 1936 sous Hitler, il a accueilli la finale de la Coupe du Monde 2006. Jesse Owens y avait remporté 4 médailles d'or." },
+  'Wembley':              { capacite:90000, ouverture:2007, record:90000, anecdote:"Son arc emblématique de 133m est visible à 13 miles. Lieu de la finale de l'Euro 2021." },
+  'Old Trafford':         { capacite:74310, ouverture:1910, record:76962, anecdote:"Surnommé 'le Théâtre des Rêves' par Bobby Charlton. Détruit pendant le Blitz de 1941, reconstruit grâce à Arsenal." },
+  'Anfield':              { capacite:61276, ouverture:1884, record:61905, anecdote:"You'll Never Walk Alone retentit à Anfield depuis 1963. La Kop peut générer 130 décibels." },
+  'Santiago Bernabéu':    { capacite:81044, ouverture:1947, record:124000, anecdote:"Rénové pour 900M€ avec un toit rétractable et une façade titanium. Son record de 124 000 spectateurs date de 1956." },
+  'Camp Nou':             { capacite:99354, ouverture:1957, record:120000, anecdote:"Le plus grand stade d'Europe en capacité. En cours de rénovation pour 1,5 milliard €." },
+  'Stade de France':      { capacite:81338, ouverture:1998, record:81338, anecdote:"Construit en 26 mois pour la Coupe du Monde 1998. Zidane y a marqué deux buts de la tête en finale." },
+  'Parc des Princes':     { capacite:48712, ouverture:1897, record:50370, anecdote:"Le seul grand stade de football au cœur de Paris. Sa rénovation de 1972 par Roger Taillibert en a fait une icône architecturale." },
+  'San Siro':             { capacite:75817, ouverture:1926, record:85000, anecdote:"Partagé par les deux grands rivaux milanais depuis 1926, il sera démoli d'ici 2030. Classé monument historique par les Milanais." },
+  'Estádio do Maracanã':  { capacite:78838, ouverture:1950, record:199854, anecdote:"Le record du monde de spectateurs (199 854) date de 1950. La 'Maracanazo' reste le plus grand trauma du football brésilien." },
+  'La Bombonera':         { capacite:49000, ouverture:1940, record:57395, anecdote:"Ses tribunes verticales à 90° créent des vibrations si intenses que les joueurs sentent le sol trembler. Classé monument historique." },
+  'FNB Stadium':          { capacite:94736, ouverture:1989, record:94736, anecdote:"Surnommé 'Soccer City', c'est ici que Nelson Mandela a fait sa première apparition publique après sa libération en 1990." },
+};
 
-// ════════════════════════════════════
-// DONNÉES (externalisées dans stadiums.js)
-// ════════════════════════════════════
-
-
-
-
-
-// ════════════════════════════════════
-// STATE
-// ════════════════════════════════════
 const stades = STADES_DATA.map(s => ({...s, visite:false, annee:null}));
-// charger() est appelée plus bas, après la déclaration de notes et matchs
 
-// ════════════════════════════════════
-// CARTE
-// ════════════════════════════════════
 const map = L.map('map').setView([48.0, 6.0], 5);
-
 const BASEMAPS = {
   osm:       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'© OpenStreetMap', maxZoom:19}),
   topo:      L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',   {attribution:'© OpenTopoMap',  maxZoom:17}),
@@ -1988,90 +1387,15 @@ document.getElementById('basemapSelect').addEventListener('change', e => {
   BASEMAPS[currentBasemap].remove(); currentBasemap = e.target.value; BASEMAPS[currentBasemap].addTo(map);
 });
 
-// ── Icônes par championnat ────────────────────
-
-const STADES_INFO = {
-  // ALLEMAGNE
-  'Allianz Arena':        { capacite:75024, ouverture:2005, record:75000, anecdote:"Seul stade au monde à changer de couleur selon l'équipe qui joue : rouge pour le Bayern, blanc pour l'Allemagne, bleu pour les Girondins (avant leur départ). Son éclairage LED est visible à des kilomètres." },
-  'Signal Iduna Park':    { capacite:81365, ouverture:1974, record:81365, anecdote:"Le Mur Jaune, la tribune debout du Borussia Dortmund, est la plus grande tribune d'Europe avec 25 000 places debout. L'ambiance y est considérée comme la meilleure d'Allemagne." },
-  'Olympiastadion Berlin':{ capacite:74475, ouverture:1936, record:100000, anecdote:"Construit pour les JO de 1936 sous Hitler, il a accueilli la finale de la Coupe du Monde 2006. Jesse Owens y avait humilié le régime nazi en remportant 4 médailles d'or." },
-  'Volksparkstadion':     { capacite:57000, ouverture:1953, record:76000, anecdote:"Surnommé 'la forteresse' par les supporters du HSV, ce stade a accueilli des matchs de la Coupe du Monde 1974 et de l'Euro 1988." },
-  'Deutsche Bank Park':   { capacite:58000, ouverture:1925, record:61000, anecdote:"L'un des plus vieux stades de Bundesliga encore en usage. Surnommé le 'Waldstadion', il est entouré de forêt et possède une atmosphère unique en Europe." },
-  // ANGLETERRE
-  'Wembley':              { capacite:90000, ouverture:2007, record:90000, anecdote:"Reconstruit pour 757 millions £, son arc emblématique de 133m est visible à 13 miles. Lieu de la finale de l'Euro 2021, il a vu l'Angleterre attendre sa gloire depuis 1966." },
-  'Old Trafford':         { capacite:74310, ouverture:1910, record:76962, anecdote:"Surnommé 'le Théâtre des Rêves' par Bobby Charlton. Détruit pendant le Blitz de 1941, reconstruit grâce à... Arsenal qui prêta son stade à United pendant 8 ans." },
-  'Anfield':              { capacite:61276, ouverture:1884, record:61905, anecdote:"You'll Never Walk Alone retentit à Anfield depuis 1963. La Kop — sa tribune légendaire — peut générer 130 décibels, l'équivalent d'un avion au décollage." },
-  'Etihad Stadium':       { capacite:53400, ouverture:2003, record:54693, anecdote:"Construit pour les Jeux du Commonwealth 2002, il a été transformé en stade de foot. Depuis l'ère City, il est devenu l'un des stades les plus modernes d'Angleterre." },
-  'Emirates Stadium':     { capacite:60704, ouverture:2006, record:60161, anecdote:"Arsenal a quitté Highbury après 93 ans pour ce bijou. Premier stade anglais avec des sièges individuels numérotés en Ligue des Champions, construit sans dette publique." },
-  'Tottenham Hotspur Stadium':{ capacite:62850, ouverture:2019, record:62850, anecdote:"Le stade le plus moderne d'Angleterre possède la plus grande brasserie intégrée d'un stade en Europe et un terrain synthétique rétractable pour accueillir des matchs de NFL." },
-  'Villa Park':           { capacite:42682, ouverture:1897, record:76588, anecdote:"L'un des plus anciens stades professionnels d'Angleterre. La tribune Holte End, construite en 1939, est l'une des plus imposantes tribunes couvertes du pays." },
-  // ESPAGNE
-  'Santiago Bernabéu':    { capacite:81044, ouverture:1947, record:124000, anecdote:"Rénové pour 900M€ avec un toit rétractable et une façade titanium, il peut désormais accueillir des concerts en 24h. Son record de 124 000 spectateurs date de 1956." },
-  'Camp Nou':             { capacite:99354, ouverture:1957, record:120000, anecdote:"Le plus grand stade d'Europe en capacité. En cours de rénovation pour 1,5 milliard €, il rouvre en 2025 avec un toit acoustique permettant des concerts sans riverains plaignants." },
-  'Metropolitano':        { capacite:68456, ouverture:2017, record:68456, anecdote:"Ancienne piste d'athlétisme transformée, il a accueilli la finale de la Ligue des Champions 2019. Son ambiance est réputée la plus intense de Madrid selon les joueurs visiteurs." },
-  'Mestalla':             { capacite:49430, ouverture:1923, record:65000, anecdote:"L'un des plus vieux stades d'Espagne encore en activité. Ses tribunes très verticales créent une atmosphère oppressante pour les visiteurs. Impossible à rénover selon les architectes — donc irremplaçable." },
-  'Ramón Sánchez-Pizjuán':{ capacite:43883, ouverture:1958, record:70000, anecdote:"Considéré comme l'enfer pour les équipes visitantes. Liverpool et Manchester United y ont subi des défaites mémorables en C1. La chaleur sévillane et le bruit en font un cauchemar." },
-  // FRANCE
-  'Stade de France':      { capacite:81338, ouverture:1998, record:81338, anecdote:"Construit en 26 mois pour la Coupe du Monde 1998, il est le 5e plus grand stade d'Europe. Zidane y a marqué deux buts de la tête en finale contre le Brésil devant 80 000 personnes." },
-  'Parc des Princes':     { capacite:48712, ouverture:1897, record:50370, anecdote:"Troisième stade à porter ce nom depuis 1897, il est le seul grand stade de football au cœur de Paris. Sa rénovation de 1972 par Roger Taillibert en a fait une icône architecturale." },
-  'Groupama Stadium':     { capacite:59186, ouverture:2016, record:59186, anecdote:"Le plus grand stade de club en France, entièrement construit sur fonds privés. Sa façade maillage métallique de 12 000m² est unique en Europe et change d'aspect selon la lumière." },
-  'Orange Vélodrome':     { capacite:67394, ouverture:1937, record:67394, anecdote:"Le stade le plus bruyant de France selon les mesures acoustiques. La 'chaudière' marseillaise peut atteindre 120 décibels lors des grands soirs européens." },
-  'Allianz Riviera':      { capacite:35624, ouverture:2013, record:35624, anecdote:"Premier stade français certifié HQE (Haute Qualité Environnementale). Son toit photovoltaïque produit suffisamment d'énergie pour alimenter 500 foyers par an." },
-  'Roazhon Park':         { capacite:29778, ouverture:1912, record:33448, anecdote:"L'un des plus anciens stades de France encore en activité. Surnommé 'le chaudron', ses quatre tribunes très proches du terrain créent une atmosphère unique en Ligue 1." },
-  // ITALIE
-  'San Siro':             { capacite:75817, ouverture:1926, record:85000, anecdote:"Partagé par les deux grands rivaux milanais depuis 1926, il sera démoli d'ici 2030 pour laisser place à un nouveau stade. Classé monument historique par les Milanais, sa démolition fait débat." },
-  'Stadio Olimpico':      { capacite:70634, ouverture:1953, record:100000, anecdote:"Construit pour les JO de 1960, partagé par la Lazio et la Roma comme San Siro. Les deux clubs ont des tribunes séparées et ne se mélangent jamais — même physiquement dans le stade." },
-  'Juventus Stadium':     { capacite:41507, ouverture:2011, record:41507, anecdote:"Premier stade moderne entièrement privé en Italie, construit sur l'emplacement du mythique Delle Alpi. La Juventus a mis fin à 100 ans de stades municipaux dans le football italien." },
-  "Stadio Diego Armando Maradona":{ capacite:54726, ouverture:1959, record:85000, anecdote:"Rebaptisé en l'honneur de Maradona après sa mort en 2020. C'est ici qu'il a fait vibrer Naples, transformant une ville en capitale mondiale du football pendant 7 ans." },
-  // PORTUGAL
-  'Estádio da Luz':       { capacite:64642, ouverture:2003, record:65647, anecdote:"La 'Cathédrale' du Benfica. Son nom vient du quartier de la Luz où il est situé. L'acoustique de son toit crée un écho qui amplifie le 'Glorioso' chanté par 65 000 Benfiquistas." },
-  'Estádio do Dragão':    { capacite:50033, ouverture:2003, record:52000, anecdote:"Construit pour l'Euro 2004, il a été le théâtre de la première grande gloire du Portugal. Ses murs de verre permettent aux passants de voir l'intérieur du stade depuis la rue." },
-  // PAYS-BAS
-  'Johan Cruyff ArenA':   { capacite:54990, ouverture:1996, record:54990, anecdote:"Premier stade européen à toit rétractable entièrement électrique. Rebaptisé en 2018 en hommage à Johan Cruyff, il est équipé de 4200 panneaux solaires et de batteries de stockage géantes." },
-  // BELGIQUE
-  'Jan Breydel Stadion':  { capacite:29062, ouverture:1975, record:32000, anecdote:"Partagé par Bruges et Courtrai, c'est l'un des rares stades partagés par des rivaux en Belgique. Sa pelouse synthétique chauffée permet de jouer par -10°C." },
-  // TURQUIE
-  'Türk Telekom Stadium': { capacite:52652, ouverture:2011, record:52652, anecdote:"Surnommé 'le nid' par les supporters de Galatasaray. Classé parmi les stades les plus bruyants du monde — les visiteurs de C1 le décrivent souvent comme un cauchemar acoustique." },
-  'Vodafone Park':        { capacite:41903, ouverture:2016, record:41903, anecdote:"Construit sur l'emplacement mythique de l'İnönü Stadyumu. Besiktas a refusé le naming pendant 2 ans pour ne pas changer de nom. Vue sur le Bosphore depuis les tribunes." },
-  // RUSSIE / UKRAINE
-  'Luzhniki':             { capacite:81000, ouverture:1956, record:103000, anecdote:"Le plus grand stade de Russie, scène de la finale de la Coupe du Monde 2018. C'est ici que France-Croatie (4-2) a été joué. Reconstruit pour 450M€, il garde son look soviétique historique." },
-  'NSC Olimpiyskiy':      { capacite:70050, ouverture:1923, record:100000, anecdote:"Inauguré pour les JO de 1980 à Moscou, c'est le plus ancien grand stade d'Europe encore en activité. Son histoire traverse l'URSS, l'Ukraine indépendante et les guerres contemporaines." },
-  // BRÉSIL
-  'Estádio do Maracanã':  { capacite:78838, ouverture:1950, record:199854, anecdote:"Le record du monde de spectateurs (199 854) date de 1950. La 'Maracanazo' — défaite du Brésil contre l'Uruguay en finale du Mondial — reste le plus grand trauma du football brésilien." },
-  'Arena Corinthians':    { capacite:47605, ouverture:2014, record:47605, anecdote:"Construit spécialement pour la Coupe du Monde 2014, il a accueilli le match d'ouverture Brésil-Croatie. Surnommé 'l'Itaquerão', son financement a déclenché des manifestations au Brésil." },
-  // ARGENTINE
-  'El Monumental':        { capacite:84567, ouverture:1938, record:100000, anecdote:"Le plus grand stade d'Amérique du Sud. La finale de la Coupe du Monde 1978 entre Argentine et Pays-Bas s'y est jouée, avec Videla en tribune. 84 000 confettis tombaient depuis les tribunes." },
-  'La Bombonera':         { capacite:49000, ouverture:1940, record:57395, anecdote:"En forme de boîte de chocolats (d'où son nom), ses tribunes verticales à 90° créent des vibrations si intenses que les joueurs sentent le sol trembler. Classé monument historique." },
-  // QATAR
-  'Lusail Stadium':       { capacite:88966, ouverture:2021, record:88966, anecdote:"Théâtre de la finale du Mondial 2022 (Argentine-France), il sera partiellement démoli après la compétition, ses matériaux recyclés pour construire des cliniques et des écoles au Qatar." },
-  // ARABIE SAOUDITE
-  'King Fahd International Stadium':{ capacite:68752, ouverture:1987, record:68752, anecdote:"Son toit en forme de tentes bédouines est un chef-d'œuvre d'ingénierie. Il a accueilli Ronaldo (CR7) pour le match le plus regardé de Saudi Pro League — 1,5 milliard de téléspectateurs mondiaux." },
-  // AFRIQUE DU SUD
-  'FNB Stadium':          { capacite:94736, ouverture:1989, record:94736, anecdote:"Surnommé 'Soccer City', il a accueilli la finale de la Coupe du Monde 2010. C'est ici que Nelson Mandela a fait sa première apparition publique après sa libération de prison en 1990." },
-  // JAPON
-  'Japan National Stadium':{ capacite:68000, ouverture:2019, record:68000, anecdote:"Construit pour les JO de Tokyo 2020 (reportés en 2021), sa façade en bois de cyprès japonais est une ode au design traditionnel. Zaha Hadid avait gagné le concours initial avant d'être évinctée." },
-  'Nissan Stadium':       { capacite:72327, ouverture:1998, record:72327, anecdote:"Le plus grand stade de club en Asie. La finale de la Coupe du Monde 2002 entre Brésil et Allemagne s'y est jouée, avec le doublé de Ronaldo face à Oliver Kahn." },
-  // AUSTRALIE
-  'Stadium Australia':    { capacite:83500, ouverture:1999, record:109874, anecdote:"Construit pour les JO de Sydney 2000, son record de 109 874 spectateurs lors d'un concert de U2 en 2010 en fait le stade multi-usage le plus utilisé d'Océanie." },
-  // MAROC
-  'Stade Mohammed V':     { capacite:67000, ouverture:1955, record:75000, anecdote:"Le stade historique du football marocain, théâtre des premières gloires du Wydad et du Raja. Rénové pour accueillir la Coupe du Monde 2030 co-organisée par le Maroc." },
-};
-
 function makeIcon(s) {
   const col  = s.visite ? '#00C875' : (wishlisted && wishlisted[s._id] ? '#CC1919' : '#5A6070');
   const size = s.visite ? 13 : 11;
-  const ring = s.visite
-    ? 'box-shadow:0 0 0 3px rgba(0,200,117,.35),0 1px 4px rgba(0,0,0,.4)'
-    : 'box-shadow:0 1px 4px rgba(0,0,0,.4)';
-  return L.divIcon({
-    className:'',
-    html:`<div class="map-dot" style="width:${size}px;height:${size}px;background:${col};${ring}"></div>`,
-    iconSize:[size,size], iconAnchor:[size/2,size/2], popupAnchor:[0,-size/2],
-  });
+  const ring = s.visite ? 'box-shadow:0 0 0 3px rgba(0,200,117,.35),0 1px 4px rgba(0,0,0,.4)' : 'box-shadow:0 1px 4px rgba(0,0,0,.4)';
+  return L.divIcon({ className:'', html:`<div class="map-dot" style="width:${size}px;height:${size}px;background:${col};${ring}"></div>`, iconSize:[size,size], iconAnchor:[size/2,size/2], popupAnchor:[0,-size/2] });
 }
 
 function makePopupHTML(s, id) {
-  const col   = champColor(s.championnat);
+  const col = champColor(s.championnat);
   const annee = s.annee ? ` <small style="color:var(--text3)">(${s.annee})</small>` : '';
   const hasInfo = !!STADES_INFO[s.nom];
   return `<b style="font-family:'Bebas Neue',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--text)">${esc(s.nom)}</b><br>`
@@ -2082,11 +1406,9 @@ function makePopupHTML(s, id) {
     + `<br><button onclick="openFiche(${id})" style="margin-top:8px;width:100%;padding:6px;background:var(--accent);color:#fff;border:none;border-radius:5px;font-family:'Bebas Neue',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">${hasInfo ? '📋 Voir la fiche' : '📋 Ouvrir'}</button>`;
 }
 
-// ── Cluster ───────────────────────────────────
 let clusterMode = true;
 const clusterGroup = L.markerClusterGroup({
-  showCoverageOnHover: false,
-  maxClusterRadius: 40,
+  showCoverageOnHover: false, maxClusterRadius: 40,
   iconCreateFunction: cluster => {
     const n = cluster.getChildCount();
     const sz = n<10?'small':n<50?'medium':'large';
@@ -2095,7 +1417,6 @@ const clusterGroup = L.markerClusterGroup({
 });
 clusterGroup.addTo(map);
 
-// ── Heatmap ───────────────────────────────────
 let heatLayer = null, heatVisible = false;
 function buildHeatData() { return stades.filter(s=>s.visite).map(s=>[s.lat,s.lng,1]); }
 function updateHeatmap() {
@@ -2122,7 +1443,6 @@ document.getElementById('btnCluster').addEventListener('click', () => {
   rawMarkers.forEach((m,i) => { if (map.hasLayer(m)) m.remove(); if (markerVisible[i]) _addToMap(i); });
 });
 
-// ── Markers ───────────────────────────────────
 const rawMarkers    = [];
 const markerVisible = new Array(stades.length).fill(false);
 
@@ -2155,7 +1475,6 @@ function syncMarker(i, visible) {
 
 function flyTo(lat,lng) { map.flyTo([lat,lng],14,{duration:0.8}); }
 
-// ── Géolocalisation ───────────────────────────
 document.getElementById('btnGeolocate').addEventListener('click', () => {
   if (!navigator.geolocation) { alert('Géolocalisation non supportée.'); return; }
   navigator.geolocation.getCurrentPosition(
@@ -2164,68 +1483,13 @@ document.getElementById('btnGeolocate').addEventListener('click', () => {
   );
 });
 
-// ── Zoom visités ──────────────────────────────
 document.getElementById('btnZoomVisited').addEventListener('click', () => {
   const vis = stades.filter(s=>s.visite);
   if (!vis.length) { alert('Aucun stade visité.'); return; }
   map.flyToBounds(L.latLngBounds(vis.map(s=>[s.lat,s.lng])).pad(0.1), {duration:0.8});
 });
 
-// ── Légende cliquable repliable ───────────────
 const champFilter = { active: null };
-function buildLegend() {
-  const grid = document.getElementById('legendGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  const champs = [...new Set(stades.map(s=>s.championnat))].sort();
-  champs.forEach(champ => {
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    item.dataset.champ = champ.toLowerCase();
-    item.innerHTML = `<div class="legend-dot" style="background:${champColor(champ)}"></div><span>${champ}</span>`;
-    item.addEventListener('click', () => {
-      if (champFilter.active === champ) {
-        champFilter.active = null;
-        document.getElementById('champFilter').value = '';
-        filter.championnat = '';
-      } else {
-        champFilter.active = champ;
-        document.getElementById('champFilter').value = champ;
-        filter.championnat = champ;
-      }
-      grid.querySelectorAll('.legend-item').forEach(el => {
-        const name = el.querySelector('span').textContent;
-        el.classList.toggle('dimmed', champFilter.active !== null && name !== champFilter.active);
-      });
-      renderAll();
-    });
-    grid.appendChild(item);
-  });
-  // Item "Visité"
-  const vis = document.createElement('div'); vis.className='legend-item'; vis.dataset.champ='visité';
-  vis.innerHTML=`<div class="legend-dot" style="background:var(--accent);box-shadow:0 0 0 2px var(--accent-dim)"></div><span style="color:var(--accent);font-weight:600">Visité ✅</span>`;
-  grid.appendChild(vis);
-
-  // Toggle légende
-  document.getElementById('legendHeader').addEventListener('click', () => {
-    const body = document.getElementById('legendBody');
-    const btn = document.getElementById('legendToggleBtn');
-    const open = body.classList.toggle('open');
-    btn.textContent = open ? 'Masquer ▲' : 'Afficher ▼';
-  });
-
-  // Recherche dans la légende
-  document.getElementById('legendSearch').addEventListener('input', e => {
-    const q = e.target.value.toLowerCase();
-    grid.querySelectorAll('.legend-item').forEach(el => {
-      el.classList.toggle('hidden-search', q && !el.dataset.champ.includes(q));
-    });
-  });
-}
-
-// ════════════════════════════════════
-// COUCHES (interne)
-// ════════════════════════════════════
 const mapLayers = {};
 function layerKey(p,c) { return `${p}|||${c}`; }
 function layerVisible(s) { return mapLayers[layerKey(s.pays,s.championnat)] !== false; }
@@ -2235,17 +1499,27 @@ function initMapLayers() {
   Object.entries(struct).forEach(([p,cs]) => cs.forEach(c => { mapLayers[layerKey(p,c)]=true; }));
 }
 
-// ════════════════════════════════════
-// FILTRES
-// ════════════════════════════════════
-const filter = { search:'', pays:'', championnat:'', visitedOnly:false };
-function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly; }
+const CONTINENTS_MAP = {
+  'Europe':        ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Macédoine du Nord','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie'],
+  'Amérique du Sud': ['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela'],
+  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
+  'Afrique':       ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique'],
+  'Asie':          ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande'],
+  'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
+};
+
+const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'' };
+function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly||filter.continent; }
 function getFilteredIds() {
   const q = sansAccents(filter.search);
   return stades.reduce((acc,s,i) => {
     if (filter.visitedOnly&&!s.visite) return acc;
     if (filter.pays&&s.pays!==filter.pays) return acc;
     if (filter.championnat&&s.championnat!==filter.championnat) return acc;
+    if (filter.continent) {
+      const list = CONTINENTS_MAP[filter.continent] || [];
+      if (!list.includes(s.pays)) return acc;
+    }
     if (q) { const hay=sansAccents(`${s.nom} ${s.ville} ${s.pays}`.toLowerCase()); if(!hay.includes(q)) return acc; }
     acc.push(i); return acc;
   }, []);
@@ -2260,15 +1534,8 @@ function initFilters() {
 
   document.getElementById('searchInput').addEventListener('input', e=>{filter.search=sansAccents(e.target.value.toLowerCase());renderAll();});
   pS.addEventListener('change', e=>{filter.pays=e.target.value;renderAll();});
-  cS.addEventListener('change', e=>{
-    filter.championnat=e.target.value;
-    champFilter.active=e.target.value||null;
-    document.querySelectorAll('#legendGrid .legend-item').forEach(el=>{
-      const name=el.querySelector('span')?.textContent;
-      if(name) el.classList.toggle('dimmed', champFilter.active!==null && name!==champFilter.active);
-    });
-    renderAll();
-  });
+  cS.addEventListener('change', e=>{filter.championnat=e.target.value; champFilter.active=e.target.value||null; renderAll();});
+
   const btnV=document.getElementById('btnVisited');
   btnV.addEventListener('click', ()=>{
     filter.visitedOnly=!filter.visitedOnly;
@@ -2277,12 +1544,14 @@ function initFilters() {
     renderAll();
   });
   document.getElementById('btnReset').addEventListener('click', ()=>{
-    filter.search=''; filter.pays=''; filter.championnat=''; filter.visitedOnly=false;
+    filter.search=''; filter.pays=''; filter.championnat=''; filter.visitedOnly=false; filter.continent='';
     champFilter.active=null;
     document.getElementById('searchInput').value=''; pS.value=''; cS.value='';
     document.getElementById('btnVisited').textContent='Afficher : Tous';
     document.getElementById('btnVisited').className='btn btn-primary';
-    document.querySelectorAll('#legendGrid .legend-item').forEach(el=>el.classList.remove('dimmed'));
+    // Reset pills
+    document.querySelectorAll('.cfp').forEach(p=>p.classList.remove('cfp-active'));
+    document.querySelector('.cfp[data-filter="tous"]').classList.add('cfp-active');
     renderAll();
   });
   document.getElementById('selectAll').addEventListener('change', e=>{
@@ -2290,11 +1559,41 @@ function initFilters() {
     getFilteredIds().forEach(id=>{stades[id].visite=checked; if(checked&&!stades[id].annee) stades[id].annee=CURRENT_YEAR;});
     commit();
   });
+
+  // ── Pills de filtre rapide (Option C) ──────────
+  document.querySelectorAll('.cfp').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.cfp').forEach(p => p.classList.remove('cfp-active'));
+      pill.classList.add('cfp-active');
+
+      const f = pill.dataset.filter;
+      const cont = pill.dataset.continent;
+
+      // Reset tout
+      filter.visitedOnly = false;
+      filter.continent   = '';
+      document.getElementById('btnVisited').textContent = 'Afficher : Tous';
+      document.getElementById('btnVisited').className   = 'btn btn-primary';
+
+      if (f === 'visites') {
+        filter.visitedOnly = true;
+        document.getElementById('btnVisited').textContent = 'Afficher : Visités';
+        document.getElementById('btnVisited').className   = 'btn btn-active';
+      } else if (f === 'wishlist') {
+        // Filtre wishlist : on filtre sur les IDs en wishlist
+        filter._wishlistOnly = true;
+      } else if (cont) {
+        filter.continent = cont;
+      }
+      if (f !== 'wishlist') filter._wishlistOnly = false;
+      renderAll();
+    });
+  });
 }
 
-// ════════════════════════════════════
-// RENDU
-// ════════════════════════════════════
+// Patch getFilteredIds pour le mode wishlist
+const _origGetFilteredIds = getFilteredIds;
+
 function commit(fromCheckbox) { sauvegarder(); updateStats(); if(fromCheckbox) { syncAllMarkers(); } else { renderAll(); } }
 
 function syncAllMarkers() {
@@ -2305,14 +1604,21 @@ function syncAllMarkers() {
 
 function updateStats() {
   const total=stades.length, visites=stades.filter(s=>s.visite).length, pct=total?Math.round(visites/total*100):0;
-  document.getElementById('statVisites').textContent=visites;
-  document.getElementById('statTotal').textContent=total;
-  document.getElementById('statPct').textContent=`${pct}%`;
-  document.getElementById('progressFill').style.width=`${pct}%`;
+  // Header Option C
+  const counterVal = document.getElementById('statVisites');
+  if (counterVal) {
+    counterVal.innerHTML = `${visites} <span class="counter-total">/ <span id="statTotal">${total}</span></span>`;
+  }
+  const pctEl = document.getElementById('statPct');
+  if (pctEl) pctEl.textContent = `${pct}%`;
+  const fill = document.getElementById('progressFill');
+  if (fill) fill.style.width = `${pct}%`;
 }
 
 function renderAll() {
-  const ids=getFilteredIds();
+  const ids = filter._wishlistOnly
+    ? stades.reduce((acc,s,i) => { if(wishlisted[i]) acc.push(i); return acc; }, [])
+    : getFilteredIds();
   stades.forEach((_,i)=>syncMarker(i, ids.includes(i)&&layerVisible(stades[i])));
   updateHeatmap(); renderTableBody(ids);
 }
@@ -2326,8 +1632,6 @@ function grouper(ids) {
   },{});
 }
 
-function makeGroupActions() { return document.createDocumentFragment(); }
-
 const expandedState = {};
 
 function renderTableBody(ids) {
@@ -2339,7 +1643,6 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    // Par défaut ouvert (true), sauf si l'utilisateur a explicitement fermé ce pays
     let expanded = (pays in expandedState) ? expandedState[pays] : false;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
@@ -2353,7 +1656,7 @@ function renderTableBody(ids) {
       let next=trP.nextElementSibling;
       while(next&&!next.classList.contains('group-header')){next.classList.toggle('hidden',!expanded); next=next.nextElementSibling;}
     });
-    tdP.append(sp,makeGroupActions(paysIds));
+    tdP.append(sp);
 
     Object.keys(groups[pays]).sort().forEach(champ=>{
       const champIds=groups[pays][champ];
@@ -2362,7 +1665,7 @@ function renderTableBody(ids) {
       const sc=document.createElement('span');
       const dot=`<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${champColor(champ)};margin-right:6px;vertical-align:middle"></span>`;
       sc.innerHTML=dot+esc(champ);
-      tdC.append(sc,makeGroupActions(champIds));
+      tdC.append(sc);
 
       champIds.forEach(id=>{
         const s=stades[id];
@@ -2370,15 +1673,13 @@ function renderTableBody(ids) {
         tr.style.cursor='pointer';
         tr.addEventListener('click', e => {
           if (e.target.type === 'checkbox' || e.target.closest('input')) return;
-          openFiche(id);
-          flyTo(s.lat, s.lng);
+          openFiche(id); flyTo(s.lat, s.lng);
         });
 
         const cb=makeCheckbox(s.visite);
         cb.addEventListener('change',()=>{
           stades[id].visite=cb.checked;
           if(cb.checked&&!stades[id].annee) stades[id].annee=CURRENT_YEAR;
-          // Mettre à jour visuellement la ligne sans reconstruire le tableau
           const tdV = tr.querySelector('.badge-oui, .badge-non');
           if(tdV) { tdV.className = cb.checked ? 'badge-oui' : 'badge-non'; tdV.textContent = cb.checked ? '✅' : '—'; }
           tr.style.background = cb.checked ? 'rgba(204,25,25,.04)' : '';
@@ -2413,32 +1714,16 @@ function renderTableBody(ids) {
   });
 }
 
-// ════════════════════════════════════
-// NAVIGATION TOPBAR
-// ════════════════════════════════════
-// ── Drawer navigation ─────────────────────
+// ── Navigation drawer (masqué mais requis par le JS) ──
 const drawer        = document.getElementById('drawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
 const btnHamburger  = document.getElementById('btnHamburger');
 const drawerClose   = document.getElementById('drawerClose');
-
-function openDrawer() {
-  drawer.classList.add('open');
-  drawerOverlay.classList.add('open');
-  btnHamburger.classList.add('open');
-  document.body.classList.add('drawer-open');
-}
-function closeDrawer() {
-  drawer.classList.remove('open');
-  drawerOverlay.classList.remove('open');
-  btnHamburger.classList.remove('open');
-  document.body.classList.remove('drawer-open');
-}
-
+function openDrawer() { drawer.classList.add('open'); drawerOverlay.classList.add('open'); btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
+function closeDrawer() { drawer.classList.remove('open'); drawerOverlay.classList.remove('open'); btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
 btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
 drawerClose.addEventListener('click', closeDrawer);
 drawerOverlay.addEventListener('click', closeDrawer);
-
 document.querySelectorAll('.drawer-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
@@ -2455,84 +1740,48 @@ document.querySelectorAll('.drawer-item').forEach(item => {
   });
 });
 
-// ════════════════════════════════════
-// PAGE NOTES
-// ════════════════════════════════════
+// ── Notes ──────────────────────────────────────
 const NOTES_KEY = 'stades_notes_v1';
 let notes = {};
-
-function saveNotes() { sauvegarder(); }
-
 function saveNotes() { sauvegarder(); }
 
 function renderNotes() {
   const search = document.getElementById('notesSearch').value.toLowerCase();
-  const filter = document.getElementById('notesFilter').value;
+  const filterV = document.getElementById('notesFilter').value;
   const list = document.getElementById('notesList');
   list.innerHTML = '';
-
-  const filtered = stades.filter((s, i) => {
-    if (filter === 'visites' && !s.visite) return false;
+  const filtered = stades.filter((s) => {
+    if (filterV === 'visites' && !s.visite) return false;
     if (search && !s.nom.toLowerCase().includes(search) && !s.ville.toLowerCase().includes(search)) return false;
     return true;
   });
-
-  if (!filtered.length) {
-    list.innerHTML = '<div class="note-empty">Aucun stade trouvé.<br><small>Visite des stades sur la page Carte pour les voir ici !</small></div>';
-    return;
-  }
-
-  filtered.forEach((s, _) => {
+  if (!filtered.length) { list.innerHTML = '<div class="note-empty">Aucun stade trouvé.<br><small>Visite des stades sur la page Carte pour les voir ici !</small></div>'; return; }
+  filtered.forEach((s) => {
     const i = stades.indexOf(s);
-    const card = document.createElement('div');
-    card.className = 'note-card';
+    const card = document.createElement('div'); card.className = 'note-card';
     const col = champColor(s.championnat);
-    card.innerHTML = `
-      <div class="note-card-header">
-        <div>
-          <div class="note-card-title">${esc(s.nom)} ${s.visite ? '✅' : ''}</div>
-          <div class="note-card-meta">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.annee ? ' · ' + s.annee : ''}</div>
-        </div>
-      </div>
-      <textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[i] || '')}</textarea>
-    `;
+    card.innerHTML = `<div class="note-card-header"><div><div class="note-card-title">${esc(s.nom)} ${s.visite ? '✅' : ''}</div><div class="note-card-meta">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.annee ? ' · ' + s.annee : ''}</div></div></div><textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[i] || '')}</textarea>`;
     const ta = card.querySelector('textarea');
     ta.addEventListener('input', () => { notes[i] = ta.value; saveNotes(); });
     list.appendChild(card);
   });
 }
-
 document.getElementById('notesSearch').addEventListener('input', renderNotes);
 document.getElementById('notesFilter').addEventListener('change', renderNotes);
 
-// ════════════════════════════════════
-// PAGE MATCHS
-// ════════════════════════════════════
+// ── Matchs ─────────────────────────────────────
 const MATCHS_KEY = 'stades_matchs_v1';
 let matchs = [];
-
-// Charger les données locales (mode invité ou première visite)
 charger();
-
 function saveMatchs() { sauvegarder(); }
 
-// Remplir le select stade et championnat
 const matchStadeEl = document.getElementById('matchStade');
 const matchChampEl = document.getElementById('matchChamp');
 const matchFilterChampEl = document.getElementById('matchFilterChamp');
 const matchFilterPaysEl = document.getElementById('matchFilterPays');
-
-[...new Set(stades.map(s => s.championnat))].sort().forEach(c => {
-  matchChampEl.add(new Option(c, c));
-  matchFilterChampEl.add(new Option(c, c));
-});
-[...new Set(stades.map(s => s.pays))].sort().forEach(p => {
-  matchFilterPaysEl.add(new Option(`${drapeau(p)} ${p}`, p));
-});
-stades.slice().sort((a,b) => a.nom.localeCompare(b.nom)).forEach((s, _) => {
-  const i = stades.indexOf(s);
-  matchStadeEl.add(new Option(`${s.nom} (${s.ville})`, i));
-});
+[...new Set(stades.map(s => s.championnat))].sort().forEach(c => { matchChampEl.add(new Option(c, c)); matchFilterChampEl.add(new Option(c, c)); });
+[...new Set(stades.map(s => s.pays))].sort().forEach(p => { matchFilterPaysEl.add(new Option(`${drapeau(p)} ${p}`, p)); });
+stades.slice().sort((a,b) => a.nom.localeCompare(b.nom)).forEach((s) => { const i = stades.indexOf(s); matchStadeEl.add(new Option(`${s.nom} (${s.ville})`, i)); });
 
 document.getElementById('btnAjouterMatch').addEventListener('click', () => {
   const eq1 = document.getElementById('matchEquipe1').value.trim();
@@ -2545,12 +1794,9 @@ document.getElementById('btnAjouterMatch').addEventListener('click', () => {
   const s = stadeIdx !== '' ? stades[parseInt(stadeIdx)] : null;
   matchs.unshift({ eq1, eq2, score, date, stadeIdx: stadeIdx !== '' ? parseInt(stadeIdx) : null, champ: champ || (s ? s.championnat : ''), pays: s ? s.pays : '' });
   saveMatchs();
-  document.getElementById('matchEquipe1').value = '';
-  document.getElementById('matchEquipe2').value = '';
-  document.getElementById('matchScore').value = '';
-  document.getElementById('matchDate').value = '';
-  document.getElementById('matchStade').value = '';
-  document.getElementById('matchChamp').value = '';
+  document.getElementById('matchEquipe1').value = ''; document.getElementById('matchEquipe2').value = '';
+  document.getElementById('matchScore').value = ''; document.getElementById('matchDate').value = '';
+  document.getElementById('matchStade').value = ''; document.getElementById('matchChamp').value = '';
   renderMatchs();
 });
 
@@ -2558,434 +1804,156 @@ function renderMatchs() {
   const search = document.getElementById('matchSearch').value.toLowerCase();
   const fChamp = document.getElementById('matchFilterChamp').value;
   const fPays = document.getElementById('matchFilterPays').value;
-  const list = document.getElementById('matchList');
-  list.innerHTML = '';
-
+  const list = document.getElementById('matchList'); list.innerHTML = '';
   const filtered = matchs.filter(m => {
     if (fChamp && m.champ !== fChamp) return false;
     if (fPays && m.pays !== fPays) return false;
-    if (search) {
-      const stadeNom = m.stadeIdx !== null ? stades[m.stadeIdx]?.nom || '' : '';
-      const hay = `${m.eq1} ${m.eq2} ${stadeNom}`.toLowerCase();
-      if (!hay.includes(search)) return false;
-    }
+    if (search) { const stadeNom = m.stadeIdx !== null ? stades[m.stadeIdx]?.nom || '' : ''; const hay = `${m.eq1} ${m.eq2} ${stadeNom}`.toLowerCase(); if (!hay.includes(search)) return false; }
     return true;
   });
-
-  // Stats
   document.getElementById('matchTotal').textContent = matchs.length;
   const clubs = new Set(matchs.flatMap(m => [m.eq1, m.eq2]));
   document.getElementById('matchClubs').textContent = clubs.size;
   const pays = new Set(matchs.filter(m => m.pays).map(m => m.pays));
   document.getElementById('matchPays').textContent = pays.size;
-
-  if (!filtered.length) {
-    list.innerHTML = '<div class="match-empty">Aucun match trouvé.<br><small>Ajoute ton premier match ci-dessus !</small></div>';
-    return;
-  }
-
-  filtered.forEach((m, fi) => {
+  if (!filtered.length) { list.innerHTML = '<div class="match-empty">Aucun match trouvé.<br><small>Ajoute ton premier match ci-dessus !</small></div>'; return; }
+  filtered.forEach((m) => {
     const realIdx = matchs.indexOf(m);
     const s = m.stadeIdx !== null ? stades[m.stadeIdx] : null;
     const col = m.champ ? champColor(m.champ) : '#aaa';
-    const card = document.createElement('div');
-    card.className = 'match-card';
+    const card = document.createElement('div'); card.className = 'match-card';
     const dateStr = m.date ? new Date(m.date).toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric'}) : '—';
-    card.innerHTML = `
-      <div class="match-card-date">${dateStr}</div>
-      <div class="match-card-info">
-        <div class="match-card-teams">${esc(m.eq1)} <span style="color:var(--muted)">vs</span> ${esc(m.eq2)}</div>
-        <div class="match-card-meta">
-          ${s ? `🏟 ${esc(s.nom)} · ${drapeau(s.pays)} ${esc(s.ville)}` : ''}
-          ${m.champ ? ` · <span style="color:${col}">${esc(m.champ)}</span>` : ''}
-        </div>
-      </div>
-      <div class="match-card-score">${esc(m.score || '—')}</div>
-      <button class="match-card-del" title="Supprimer">🗑</button>
-    `;
-    card.querySelector('.match-card-del').addEventListener('click', () => {
-      matchs.splice(realIdx, 1); saveMatchs(); renderMatchs();
-    });
+    card.innerHTML = `<div class="match-card-date">${dateStr}</div><div class="match-card-info"><div class="match-card-teams">${esc(m.eq1)} <span style="color:var(--muted)">vs</span> ${esc(m.eq2)}</div><div class="match-card-meta">${s ? `🏟 ${esc(s.nom)} · ${drapeau(s.pays)} ${esc(s.ville)}` : ''}${m.champ ? ` · <span style="color:${col}">${esc(m.champ)}</span>` : ''}</div></div><div class="match-card-score">${esc(m.score || '—')}</div><button class="match-card-del" title="Supprimer">🗑</button>`;
+    card.querySelector('.match-card-del').addEventListener('click', () => { matchs.splice(realIdx, 1); saveMatchs(); renderMatchs(); });
     list.appendChild(card);
   });
 }
-
 document.getElementById('matchSearch').addEventListener('input', renderMatchs);
 document.getElementById('matchFilterChamp').addEventListener('change', renderMatchs);
 document.getElementById('matchFilterPays').addEventListener('change', renderMatchs);
-
 renderMatchs();
 
-// Exposer les fonctions pour le module Firebase
-// ════════════════════════════════════
-// PAGE STATS
-// ════════════════════════════════════
+// ── Stats ───────────────────────────────────────
 const CONTINENTS = {
-  'Europe':        ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Macédoine du Nord','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie'],
+  'Europe':        ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Macédoine du Nord','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre'],
   'Amérique du Sud': ['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela'],
-  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
-  'Afrique':       ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique','Libye'],
-  'Asie':          ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande','Îles Salomon','Samoa','Fidji','Polynésie française','Nouvelle-Calédonie'],
+  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Panama','Cuba','Jamaïque'],
+  'Afrique':       ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique'],
+  'Asie':          ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande'],
   'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
 };
-const CONTINENT_COLORS = {
-  'Europe':'#3b82f6','Amérique du Sud':'#f59e0b','Amérique du Nord':'#ef4444',
-  'Afrique':'#10b981','Asie':'#8b5cf6','Moyen-Orient':'#f97316'
-};
-
-function getContinent(pays) {
-  for (const [c, list] of Object.entries(CONTINENTS)) {
-    if (list.includes(pays)) return c;
-  }
-  return 'Autre';
-}
+const CONTINENT_COLORS = { 'Europe':'#3b82f6','Amérique du Sud':'#f59e0b','Amérique du Nord':'#ef4444','Afrique':'#10b981','Asie':'#8b5cf6','Moyen-Orient':'#f97316' };
+function getContinent(pays) { for (const [c, list] of Object.entries(CONTINENTS)) { if (list.includes(pays)) return c; } return 'Autre'; }
 
 function renderStats() {
   const visites = stades.filter(s => s.visite);
-
-  // ── Graphique par année ──
   const byYear = {};
-  visites.forEach(s => {
-    const y = s.annee || 'N/A';
-    byYear[y] = (byYear[y] || 0) + 1;
-  });
+  visites.forEach(s => { const y = s.annee || 'N/A'; byYear[y] = (byYear[y] || 0) + 1; });
   const chart = document.getElementById('statsBarChart');
-  if (!visites.length) {
-    chart.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;width:100%;padding:20px 0">Commence à cocher des stades !</div>';
-  } else {
+  if (!visites.length) { chart.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;width:100%;padding:20px 0">Commence à cocher des stades !</div>'; }
+  else {
     const years = Object.keys(byYear).filter(y=>y!=='N/A').sort();
     if (byYear['N/A']) years.push('N/A');
     const max = Math.max(...Object.values(byYear));
-    chart.innerHTML = years.map(y => {
-      const val = byYear[y];
-      const pct = Math.round((val/max)*100);
-      return `<div class="bar-col">
-        <div class="bar-wrap"><div class="bar" style="height:${pct}%;opacity:${0.5+pct/200}" data-val="${val}"></div></div>
-        <div class="bar-lbl">${y === 'N/A' ? '?' : y.toString().slice(2)}</div>
-      </div>`;
-    }).join('');
+    chart.innerHTML = years.map(y => { const val = byYear[y]; const pct = Math.round((val/max)*100); return `<div class="bar-col"><div class="bar-wrap"><div class="bar" style="height:${pct}%;opacity:${0.5+pct/200}" data-val="${val}"></div></div><div class="bar-lbl">${y === 'N/A' ? '?' : y.toString().slice(2)}</div></div>`; }).join('');
   }
-
-  // ── Continents ──
   const byCont = {};
-  visites.forEach(s => {
-    const c = getContinent(s.pays);
-    byCont[c] = (byCont[c] || 0) + 1;
-  });
-  const totalStadesCont = Object.entries(CONTINENTS).reduce((a,[,l])=>a+stades.filter(s=>l.includes(s.pays)).length, 0);
+  visites.forEach(s => { const c = getContinent(s.pays); byCont[c] = (byCont[c] || 0) + 1; });
   const contEl = document.getElementById('statsContinents');
-  const contList = Object.entries(CONTINENTS).map(([c, list]) => {
-    const total = stades.filter(s => list.includes(s.pays)).length;
-    const done  = visites.filter(s => list.includes(s.pays)).length;
-    return { c, total, done };
-  }).filter(x => x.total > 0).sort((a,b) => b.done - a.done);
-  const maxDone = Math.max(...contList.map(x=>x.done), 1);
-  contEl.innerHTML = contList.map(({c, total, done}) => `
-    <div class="continent-row">
-      <div class="continent-name">${c}</div>
-      <div class="continent-bar-wrap">
-        <div class="continent-bar" style="width:${Math.round((done/total)*100)}%;background:${CONTINENT_COLORS[c]||'#aaa'}"></div>
-      </div>
-      <div class="continent-count">${done}<span style="color:var(--text3);font-size:9px">/${total}</span></div>
-    </div>
-  `).join('');
-
-  // ── Top pays ──
+  const contList = Object.entries(CONTINENTS).map(([c, list]) => { const total = stades.filter(s => list.includes(s.pays)).length; const done = visites.filter(s => list.includes(s.pays)).length; return { c, total, done }; }).filter(x => x.total > 0).sort((a,b) => b.done - a.done);
+  contEl.innerHTML = contList.map(({c, total, done}) => `<div class="continent-row"><div class="continent-name">${c}</div><div class="continent-bar-wrap"><div class="continent-bar" style="width:${Math.round((done/total)*100)}%;background:${CONTINENT_COLORS[c]||'#aaa'}"></div></div><div class="continent-count">${done}<span style="color:var(--text3);font-size:9px">/${total}</span></div></div>`).join('');
   const byPays = {};
   visites.forEach(s => { byPays[s.pays] = (byPays[s.pays] || 0) + 1; });
   const topPays = Object.entries(byPays).sort((a,b)=>b[1]-a[1]).slice(0,8);
   const topMax = topPays[0]?.[1] || 1;
   const topEl = document.getElementById('statsTopPays');
-  if (!topPays.length) {
-    topEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Aucun stade visité</div>';
-  } else {
-    topEl.innerHTML = topPays.map(([pays, count]) => `
-      <div class="top-pays-row">
-        <span class="top-pays-flag">${drapeau(pays)}</span>
-        <span class="top-pays-name">${pays}</span>
-        <div class="top-pays-bar-wrap"><div class="top-pays-bar" style="width:${Math.round((count/topMax)*100)}%"></div></div>
-        <span class="top-pays-count">${count}</span>
-      </div>
-    `).join('');
-  }
-
-  // ── Objectifs ──
-  const total = stades.length;
-  const done  = visites.length;
+  if (!topPays.length) { topEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Aucun stade visité</div>'; }
+  else { topEl.innerHTML = topPays.map(([pays, count]) => `<div class="top-pays-row"><span class="top-pays-flag">${drapeau(pays)}</span><span class="top-pays-name">${pays}</span><div class="top-pays-bar-wrap"><div class="top-pays-bar" style="width:${Math.round((count/topMax)*100)}%"></div></div><span class="top-pays-count">${count}</span></div>`).join(''); }
+  const done = visites.length, total = stades.length;
   const customGoal = parseInt(localStorage.getItem('stades_custom_goal') || '0');
   const objectifs = [
-    { name: '🥉 Premiers pas',    target: 10,           icon:'🥉' },
-    { name: '🥈 En route',        target: 50,           icon:'🥈' },
-    { name: '🥇 Explorateur',     target: 100,          icon:'🥇' },
-    { name: '🌍 Globe-trotter',   target: 200,          icon:'🌍' },
-    { name: '🏆 Légende',         target: 500,          icon:'🏆' },
+    { name: '🥉 Premiers pas',  target: 10 },
+    { name: '🥈 En route',      target: 50 },
+    { name: '🥇 Explorateur',   target: 100 },
+    { name: '🌍 Globe-trotter', target: 200 },
+    { name: '🏆 Légende',       target: 500 },
   ];
-  if (customGoal > 0) {
-    objectifs.push({ name: `🎯 Mon objectif : ${customGoal} stades`, target: customGoal, custom: true });
-  }
+  if (customGoal > 0) objectifs.push({ name: `🎯 Mon objectif : ${customGoal} stades`, target: customGoal, custom: true });
   document.getElementById('statsObjectifs').innerHTML = objectifs.map(obj => {
     const pct = Math.min(Math.round((done/obj.target)*100), 100);
     const isDone = done >= obj.target;
-    return `<div class="objectif-row">
-      <div class="objectif-header">
-        <span class="objectif-name">${obj.name}</span>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span class="objectif-pct">${done}/${obj.target}</span>
-          ${isDone ? `<span class="objectif-badge done">✓ Atteint</span>` : `<span class="objectif-badge">${pct}%</span>`}
-        </div>
-      </div>
-      <div class="objectif-track"><div class="objectif-fill${isDone?' done':''}" style="width:${pct}%"></div></div>
-    </div>`;
+    return `<div class="objectif-row"><div class="objectif-header"><span class="objectif-name">${obj.name}</span><div style="display:flex;align-items:center;gap:6px"><span class="objectif-pct">${done}/${obj.target}</span>${isDone ? `<span class="objectif-badge done">✓ Atteint</span>` : `<span class="objectif-badge">${pct}%</span>`}</div></div><div class="objectif-track"><div class="objectif-fill${isDone?' done':''}" style="width:${pct}%"></div></div></div>`;
   }).join('');
-
-  // Afficher objectif custom actuel
-  if (customGoal > 0) {
-    document.getElementById('customGoalDisplay').textContent = `Actuel : ${customGoal}`;
-    document.getElementById('customGoalInput').value = customGoal;
-  }
+  if (customGoal > 0) { document.getElementById('customGoalDisplay').textContent = `Actuel : ${customGoal}`; document.getElementById('customGoalInput').value = customGoal; }
 }
 
-// Objectif personnalisé
 document.getElementById('customGoalBtn').addEventListener('click', () => {
   const val = parseInt(document.getElementById('customGoalInput').value);
-  if (val > 0 && val <= 9999) {
-    try { localStorage.setItem('stades_custom_goal', val); } catch {}
-    document.getElementById('customGoalDisplay').textContent = `Actuel : ${val}`;
-    renderStats();
-  }
+  if (val > 0 && val <= 9999) { try { localStorage.setItem('stades_custom_goal', val); } catch {} document.getElementById('customGoalDisplay').textContent = `Actuel : ${val}`; renderStats(); }
 });
 
-// Appeler renderStats quand on navigue sur la page
-
+// ── Onboarding ──────────────────────────────────
 (function() {
   const overlay = document.getElementById('onboardingOverlay');
   const slides  = document.getElementById('onboardingSlides');
   const btn     = document.getElementById('onboardingBtn');
   const skip    = document.getElementById('onboardingSkip');
   const dots    = document.querySelectorAll('.onboarding-dot');
-  let current   = 0;
-  const TOTAL   = 3;
-
-  // Mettre à jour les stats dynamiquement
+  let current   = 0; const TOTAL = 3;
   const obStades = document.getElementById('ob-stades');
   const obPays   = document.getElementById('ob-pays');
   if (obStades) obStades.textContent = typeof STADES_DATA !== 'undefined' ? STADES_DATA.length : 630;
-  if (obPays)   obPays.textContent   = typeof STADES_DATA !== 'undefined'
-    ? new Set(STADES_DATA.map(s=>s.pays)).size : 118;
-
-  function goTo(i) {
-    current = i;
-    slides.style.transform = `translateX(-${i * 100}%)`;
-    dots.forEach((d,j) => d.classList.toggle('active', j === i));
-    btn.textContent = i === TOTAL - 1 ? "C'est parti ! 🚀" : 'Suivant';
-    // Relancer l'animation de l'icône
-    const icon = slides.children[i].querySelector('.onboarding-icon');
-    if (icon) { icon.style.animation='none'; void icon.offsetWidth; icon.style.animation=''; }
-  }
-
-  function finish() {
-    overlay.classList.add('hidden');
-    try { localStorage.setItem('stades_onboarded', '1'); } catch {}
-  }
-
-  btn.addEventListener('click', () => {
-    if (current < TOTAL - 1) goTo(current + 1);
-    else finish();
-  });
+  if (obPays)   obPays.textContent   = typeof STADES_DATA !== 'undefined' ? new Set(STADES_DATA.map(s=>s.pays)).size : 118;
+  function goTo(i) { current = i; slides.style.transform = `translateX(-${i * 100}%)`; dots.forEach((d,j) => d.classList.toggle('active', j === i)); btn.textContent = i === TOTAL - 1 ? "C'est parti ! 🚀" : 'Suivant'; const icon = slides.children[i].querySelector('.onboarding-icon'); if (icon) { icon.style.animation='none'; void icon.offsetWidth; icon.style.animation=''; } }
+  function finish() { overlay.classList.add('hidden'); try { localStorage.setItem('stades_onboarded', '1'); } catch {} }
+  btn.addEventListener('click', () => { if (current < TOTAL - 1) goTo(current + 1); else finish(); });
   skip.addEventListener('click', finish);
-
-  // Swipe support mobile
   let startX = 0;
   overlay.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
-  overlay.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx < -50 && current < TOTAL-1) goTo(current+1);
-    if (dx > 50  && current > 0)       goTo(current-1);
-  }, {passive:true});
-
-  // Afficher seulement au 1er lancement
-  try {
-    if (!localStorage.getItem('stades_onboarded')) {
-      overlay.classList.remove('hidden');
-    }
-  } catch {
-    overlay.classList.remove('hidden');
-  }
+  overlay.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - startX; if (dx < -50 && current < TOTAL-1) goTo(current+1); if (dx > 50 && current > 0) goTo(current-1); }, {passive:true});
+  try { if (!localStorage.getItem('stades_onboarded')) { overlay.classList.remove('hidden'); } } catch { overlay.classList.remove('hidden'); }
 })();
 
-// ════════════════════════════════════
-// FICHE STADE ENRICHIE
-// ════════════════════════════════════
-
-// ── Panneau fiche stade ───────────────────────
+// ── Fiche stade ─────────────────────────────────
 const ficheOverlay = document.getElementById('ficheOverlay');
 const ficheClose   = document.getElementById('ficheClose');
 let ficheStadeId   = null;
+function saveWishlist() { try { localStorage.setItem('gh_wishlist_v1', JSON.stringify(wishlisted)); } catch {} }
+function haversine(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2; return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))); }
+function getStadesProches(id, n = 4) { const s = stades[id]; return stades.map((t, i) => ({ i, dist: haversine(s.lat, s.lng, t.lat, t.lng) })).filter(x => x.i !== id).sort((a, b) => a.dist - b.dist).slice(0, n); }
 
-// ── Wishlist state ──────────────────────────────
-function saveWishlist() {
-  try { localStorage.setItem('gh_wishlist_v1', JSON.stringify(wishlisted)); } catch {}
-}
-
-// ── Distance entre deux coords (km) ─────────────
-function haversine(lat1, lng1, lat2, lng2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
-  return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
-}
-
-// ── Stades proches ───────────────────────────────
-function getStadesProches(id, n = 4) {
-  const s = stades[id];
-  return stades
-    .map((t, i) => ({ i, dist: haversine(s.lat, s.lng, t.lat, t.lng) }))
-    .filter(x => x.i !== id)
-    .sort((a, b) => a.dist - b.dist)
-    .slice(0, n);
-}
-
-// ── Fonction principale ──────────────────────────
 function openFiche(id) {
   ficheStadeId = id;
-  const s    = stades[id];
-  const info = STADES_INFO[s.nom];
-  const col  = champColor(s.championnat);
-  const isWish = !!wishlisted[id];
-
-  // ── Header ────────────────────────────────────
-  document.getElementById('ficheHeader').innerHTML = `
-    <div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44">
-      <span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>
-      ${esc(s.championnat)}
-    </div>
-    <div class="fiche-nom">${esc(s.nom)}</div>
-    ${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}
-    <div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>
-  `;
-
-  // ── CTA — 2 boutons ───────────────────────────
-  document.getElementById('ficheCta').innerHTML = `
-    <button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">
-      ${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}
-    </button>
-    <button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">
-      ${isWish ? '★ Wishlist' : '☆ Wishlist'}
-    </button>
-  `;
-
-  // Listener visité
-  document.getElementById('ficheVisiteBtn').addEventListener('click', () => {
-    stades[ficheStadeId].visite = !stades[ficheStadeId].visite;
-    if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR;
-    commit(true);
-    const btn = document.getElementById('ficheVisiteBtn');
-    const v = stades[ficheStadeId].visite;
-    btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`;
-    btn.textContent = v ? '✅ Visité — retirer' : 'Marquer visité';
-  });
-
-  // Listener wishlist
-  document.getElementById('ficheWishlistBtn').addEventListener('click', () => {
-    wishlisted[ficheStadeId] = !wishlisted[ficheStadeId];
-    if (!wishlisted[ficheStadeId]) delete wishlisted[ficheStadeId];
-    saveWishlist();
-    const btn = document.getElementById('ficheWishlistBtn');
-    const w = !!wishlisted[ficheStadeId];
-    btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`;
-    btn.textContent = w ? '★ Wishlist' : '☆ Wishlist';
-  });
-
-  // ── Body ──────────────────────────────────────
+  const s = stades[id]; const info = STADES_INFO[s.nom];
+  const col = champColor(s.championnat); const isWish = !!wishlisted[id];
+  document.getElementById('ficheHeader').innerHTML = `<div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44"><span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>${esc(s.championnat)}</div><div class="fiche-nom">${esc(s.nom)}</div>${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}<div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>`;
+  document.getElementById('ficheCta').innerHTML = `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}</button><button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">${isWish ? '★ Wishlist' : '☆ Wishlist'}</button>`;
+  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { stades[ficheStadeId].visite = !stades[ficheStadeId].visite; if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR; commit(true); const btn = document.getElementById('ficheVisiteBtn'); const v = stades[ficheStadeId].visite; btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`; btn.textContent = v ? '✅ Visité — retirer' : 'Marquer visité'; });
+  document.getElementById('ficheWishlistBtn').addEventListener('click', () => { wishlisted[ficheStadeId] = !wishlisted[ficheStadeId]; if (!wishlisted[ficheStadeId]) delete wishlisted[ficheStadeId]; saveWishlist(); const btn = document.getElementById('ficheWishlistBtn'); const w = !!wishlisted[ficheStadeId]; btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`; btn.textContent = w ? '★ Wishlist' : '☆ Wishlist'; });
   let body = '';
-
-  // Stats chiffrées
   if (info) {
-    body += `
-    <div>
-      <div class="fiche-section-title">Infos clés</div>
-      <div class="fiche-stats-row">
-        <div class="fiche-stat">
-          <div class="fiche-stat-val">${info.capacite ? info.capacite.toLocaleString('fr-FR') : '—'}</div>
-          <div class="fiche-stat-lbl">Capacité</div>
-        </div>
-        <div class="fiche-stat">
-          <div class="fiche-stat-val">${info.ouverture || '—'}</div>
-          <div class="fiche-stat-lbl">Ouverture</div>
-        </div>
-        <div class="fiche-stat">
-          <div class="fiche-stat-val">${info.record ? info.record.toLocaleString('fr-FR') : '—'}</div>
-          <div class="fiche-stat-lbl">Record</div>
-        </div>
-      </div>
-    </div>`;
-
-    body += `
-    <div>
-      <div class="fiche-section-title">Le savais-tu ?</div>
-      <div class="fiche-anecdote">${esc(info.anecdote)}</div>
-    </div>`;
-  } else {
-    body += `
-    <div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;color:var(--text3);font-size:13px;">
-      Fiche détaillée bientôt disponible
-    </div>`;
-  }
-
-  // Note perso si existante
+    body += `<div><div class="fiche-section-title">Infos clés</div><div class="fiche-stats-row"><div class="fiche-stat"><div class="fiche-stat-val">${info.capacite ? info.capacite.toLocaleString('fr-FR') : '—'}</div><div class="fiche-stat-lbl">Capacité</div></div><div class="fiche-stat"><div class="fiche-stat-val">${info.ouverture || '—'}</div><div class="fiche-stat-lbl">Ouverture</div></div><div class="fiche-stat"><div class="fiche-stat-val">${info.record ? info.record.toLocaleString('fr-FR') : '—'}</div><div class="fiche-stat-lbl">Record</div></div></div></div>`;
+    body += `<div><div class="fiche-section-title">Le savais-tu ?</div><div class="fiche-anecdote">${esc(info.anecdote)}</div></div>`;
+  } else { body += `<div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;color:var(--text3);font-size:13px;">Fiche détaillée bientôt disponible</div>`; }
   const noteKey = ficheStadeId;
-  if (notes[noteKey]) {
-    body += `
-    <div>
-      <div class="fiche-section-title">Ta note</div>
-      <div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;">${esc(notes[noteKey])}</div>
-    </div>`;
-  }
-
-  // Stades proches
+  if (notes[noteKey]) { body += `<div><div class="fiche-section-title">Ta note</div><div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;">${esc(notes[noteKey])}</div></div>`; }
   const proches = getStadesProches(id, 4);
   if (proches.length) {
-    body += `<div>
-      <div class="fiche-section-title">Stades proches</div>
-      <div class="fiche-nearby-list">
-        ${proches.map(({ i, dist }) => {
-          const t = stades[i];
-          const dotColor = t.visite ? 'var(--green)' : wishlisted[i] ? 'var(--accent)' : 'var(--unset)';
-          return `
-          <div class="fiche-nearby-row" onclick="ficheOverlay.classList.remove('open');setTimeout(()=>{openFiche(${i});flyTo(${t.lat},${t.lng});},300)">
-            <div class="fiche-nearby-dot" style="background:${dotColor}"></div>
-            <span class="fiche-nearby-name">${esc(t.nom)}</span>
-            <span class="fiche-nearby-dist">${dist} km</span>
-            <span class="fiche-nearby-arrow">›</span>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`;
+    body += `<div><div class="fiche-section-title">Stades proches</div><div class="fiche-nearby-list">${proches.map(({ i, dist }) => { const t = stades[i]; const dotColor = t.visite ? 'var(--green)' : wishlisted[i] ? 'var(--accent)' : 'var(--unset)'; return `<div class="fiche-nearby-row" onclick="ficheOverlay.classList.remove('open');setTimeout(()=>{openFiche(${i});flyTo(${t.lat},${t.lng});},300)"><div class="fiche-nearby-dot" style="background:${dotColor}"></div><span class="fiche-nearby-name">${esc(t.nom)}</span><span class="fiche-nearby-dist">${dist} km</span><span class="fiche-nearby-arrow">›</span></div>`; }).join('')}</div></div>`;
   }
-
   document.getElementById('ficheBody').innerHTML = body;
   ficheOverlay.classList.add('open');
 }
-
 ficheClose.addEventListener('click', () => ficheOverlay.classList.remove('open'));
 ficheOverlay.addEventListener('click', e => { if (e.target === ficheOverlay) ficheOverlay.classList.remove('open'); });
-
-// Swipe down pour fermer
 let ficheStartY = 0;
 document.getElementById('fichePanel').addEventListener('touchstart', e => { ficheStartY = e.touches[0].clientY; }, {passive:true});
-document.getElementById('fichePanel').addEventListener('touchend', e => {
-  if (e.changedTouches[0].clientY - ficheStartY > 80) ficheOverlay.classList.remove('open');
-}, {passive:true});
-
+document.getElementById('fichePanel').addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ficheStartY > 80) ficheOverlay.classList.remove('open'); }, {passive:true});
 window.openFiche = openFiche;
 
-// ════════════════════════════════════
-// DÉMARRAGE (après charger())
-// ════════════════════════════════════
+// ── Démarrage ───────────────────────────────────
 initMapLayers();
 initFilters();
-buildLegend();
 updateStats();
 renderAll();
 
@@ -2993,231 +1961,79 @@ window._app = { updateStats, renderAll, renderMatchs };
 </script>
 
 <script>
-// ── Enregistrement du Service Worker ──────────
+// ── Service Worker ──────────────────────────────
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => {
-        console.log('✅ SW enregistré:', reg.scope);
-
-        // Détecter une mise à jour disponible
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Afficher une petite bannière de mise à jour
-              const banner = document.createElement('div');
-              banner.style.cssText = `
-                position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
-                background:#CC1919; color:#fff; padding:10px 20px; border-radius:8px;
-                font-family:'Bebas Neue',sans-serif; font-size:14px; font-weight:700;
-                letter-spacing:.06em; text-transform:uppercase; z-index:99999;
-                box-shadow:0 4px 20px rgba(204,25,25,.4); cursor:pointer;
-                display:flex; align-items:center; gap:10px;
-              `;
-              banner.innerHTML = '🔄 Mise à jour disponible — <span style="text-decoration:underline">Recharger</span>';
-              banner.onclick = () => { newWorker.postMessage({ type: 'SKIP_WAITING' }); location.reload(); };
-              document.body.appendChild(banner);
-            }
-          });
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            const banner = document.createElement('div');
+            banner.style.cssText = `position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#CC1919;color:#fff;padding:10px 20px;border-radius:8px;font-family:'Bebas Neue',sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;z-index:99999;box-shadow:0 4px 20px rgba(204,25,25,.4);cursor:pointer;display:flex;align-items:center;gap:10px;`;
+            banner.innerHTML = '🔄 Mise à jour disponible — <span style="text-decoration:underline">Recharger</span>';
+            banner.onclick = () => { newWorker.postMessage({ type: 'SKIP_WAITING' }); location.reload(); };
+            document.body.appendChild(banner);
+          }
         });
-      })
-      .catch(err => console.warn('SW échec:', err));
+      });
+    }).catch(err => console.warn('SW échec:', err));
   });
 }
 
-// ── Bannière "Installer l'app" ─────────────────
+// ── Install prompt ──────────────────────────────
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  // Afficher le bouton "Installer" sur la page profil
+  e.preventDefault(); deferredPrompt = e;
   const btn = document.getElementById('btnInstallApp');
-  if (btn) {
-    btn.style.display = 'flex';
-    btn.addEventListener('click', async () => {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') btn.style.display = 'none';
-      deferredPrompt = null;
-    });
-  }
+  if (btn) { btn.style.display = 'flex'; btn.addEventListener('click', async () => { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') btn.style.display = 'none'; deferredPrompt = null; }); }
 });
+window.addEventListener('appinstalled', () => { const btn = document.getElementById('btnInstallApp'); if (btn) btn.style.display = 'none'; deferredPrompt = null; });
 
-window.addEventListener('appinstalled', () => {
-  const btn = document.getElementById('btnInstallApp');
-  if (btn) btn.style.display = 'none';
-  deferredPrompt = null;
-});
-</script>
-
-<script>
-// ── NAVIGATION BOTTOM BAR ──────────────────────
+// ── Navigation Bottom Bar ───────────────────────
 function navTo(page) {
-  // Pages
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById('page-' + page);
   if (target) target.classList.add('active');
-
-  // Onglets actifs
   document.querySelectorAll('.bn-item').forEach(item => {
     item.classList.toggle('active', item.dataset.page === page);
-    // Changer la couleur du SVG
     const svg = item.querySelector('svg');
-    if (svg) {
-      svg.style.stroke = item.dataset.page === page ? 'var(--accent)' : '#5A6070';
-    }
-    // Cercles dans la liste
-    item.querySelectorAll('circle[fill]').forEach(c => {
-      c.setAttribute('fill', item.dataset.page === page ? 'var(--accent)' : '#5A6070');
-    });
+    if (svg) svg.style.stroke = item.dataset.page === page ? 'var(--accent)' : '#5A6070';
+    item.querySelectorAll('circle[fill]').forEach(c => { c.setAttribute('fill', item.dataset.page === page ? 'var(--accent)' : '#5A6070'); });
   });
-
-  // Callbacks pages
   if (page === 'notes') renderNotes();
   if (page === 'matchs') renderMatchs();
   if (page === 'stats') renderStats();
   if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
   if (page === 'profil' && window._firebase) window._firebase.renderProfil();
-
-  // Scroll en haut
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── PATCH renderTableBody — LISÈRE COLORÉ ──────
-const _origRenderTableBody = window.renderTableBody;
-function renderTableBodyPatched(ids) {
-  if (typeof _origRenderTableBody === 'function') {
-    _origRenderTableBody(ids);
-  }
-
-  document.querySelectorAll('#stadesTable tbody .data-row').forEach(tr => {
-    const id = parseInt(tr.dataset.stadeid);
-    if (isNaN(id)) return;
-    const s = stades[id];
-    if (!s) return;
-
-    // Lisère coloré
-    const tdNom = tr.cells[1];
-    if (tdNom && !tdNom.querySelector('.stade-strip')) {
-      const strip = document.createElement('span');
-      strip.className = 'stade-strip';
-      tdNom.style.position = 'relative';
-      tdNom.style.paddingLeft = '14px';
-      tdNom.insertBefore(strip, tdNom.firstChild);
-    }
-    tr.classList.toggle('visited', s.visite);
-    tr.classList.remove('wishlist');
-
-    // Nom en Bebas
-    const bTag = tr.cells[1]?.querySelector('b');
-    if (bTag && !bTag.classList.contains('stade-name-cell')) {
-      bTag.classList.add('stade-name-cell');
-    }
-
-    // Badge statut Groundhopper
-    const tdV = tr.querySelector('.badge-oui, .badge-non');
-    if (tdV) {
-      if (s.visite) {
-        tdV.className = 'status-badge visited';
-        tdV.textContent = 'Visité';
-      } else {
-        tdV.className = 'status-badge unset';
-        tdV.textContent = '—';
-      }
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Synchroniser les drawer-items cachés avec la bottom nav
-  document.querySelectorAll('.drawer-item[data-page]').forEach(item => {
-    item.addEventListener('click', () => {
-      navTo(item.dataset.page);
-    });
-  });
-});
-
-window.addEventListener('load', () => {
-  const origRender = window._app?.renderAll;
-  if (window._app) {
-    window._app.renderAll = function() {
-      if (origRender) origRender();
-      const ids = typeof getFilteredIds === 'function' ? getFilteredIds() : [];
-      renderTableBodyPatched(ids);
-    };
-  }
-});
-
-// ── STATS KPIs DYNAMIQUES ─────────────────────
+// ── Stats KPIs ──────────────────────────────────
 function injectStatsKpis() {
   const statsPage = document.getElementById('page-stats');
   if (!statsPage || document.getElementById('stats-kpi-injected')) return;
-
   const kpiDiv = document.createElement('div');
-  kpiDiv.id = 'stats-kpi-injected';
-  kpiDiv.className = 'stats-kpi-grid';
+  kpiDiv.id = 'stats-kpi-injected'; kpiDiv.className = 'stats-kpi-grid';
   kpiDiv.style.cssText = 'margin: 16px 16px 0;';
-  kpiDiv.innerHTML = `
-    <div class="stats-kpi-card">
-      <div class="stats-kpi-val" id="kpi-visites" style="color:var(--green)">0</div>
-      <div class="stats-kpi-lbl">Stades visités</div>
-      <div class="stats-kpi-sub" id="kpi-visites-sub">0 ce mois-ci</div>
-    </div>
-    <div class="stats-kpi-card">
-      <div class="stats-kpi-val" id="kpi-pays" style="color:var(--accent)">0</div>
-      <div class="stats-kpi-lbl">Pays visités</div>
-      <div class="stats-kpi-sub" id="kpi-pays-sub">sur 80 disponibles</div>
-    </div>
-    <div class="stats-kpi-card">
-      <div class="stats-kpi-val" id="kpi-pct" style="color:var(--text2)">0%</div>
-      <div class="stats-kpi-lbl">Complétion</div>
-      <div class="stats-kpi-sub" id="kpi-rest">1760 restants</div>
-    </div>
-    <div class="stats-kpi-card">
-      <div class="stats-kpi-val" id="kpi-matchs" style="color:var(--amber)">0</div>
-      <div class="stats-kpi-lbl">Matchs vus</div>
-      <div class="stats-kpi-sub">en direct</div>
-    </div>
-  `;
-
+  kpiDiv.innerHTML = `<div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-visites" style="color:var(--green)">0</div><div class="stats-kpi-lbl">Stades visités</div><div class="stats-kpi-sub" id="kpi-visites-sub">0 ce mois-ci</div></div><div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-pays" style="color:var(--accent)">0</div><div class="stats-kpi-lbl">Pays visités</div><div class="stats-kpi-sub" id="kpi-pays-sub">sur 80 disponibles</div></div><div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-pct" style="color:var(--text2)">0%</div><div class="stats-kpi-lbl">Complétion</div><div class="stats-kpi-sub" id="kpi-rest">restants</div></div><div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-matchs" style="color:var(--amber)">0</div><div class="stats-kpi-lbl">Matchs vus</div><div class="stats-kpi-sub">en direct</div></div>`;
   const first = statsPage.querySelector('.stats-card');
-  if (first) statsPage.insertBefore(kpiDiv, first);
-  else statsPage.prepend(kpiDiv);
+  if (first) statsPage.insertBefore(kpiDiv, first); else statsPage.prepend(kpiDiv);
 }
-
-const _origRenderStats = window.renderStats;
-function renderStatsPatched() {
+function updateStatsKpis() {
   injectStatsKpis();
-
-  const visites = (typeof stades !== 'undefined') ? stades.filter(s => s.visite).length : 0;
-  const total   = (typeof stades !== 'undefined') ? stades.length : 1760;
-  const pays    = (typeof stades !== 'undefined') ? new Set(stades.filter(s => s.visite).map(s => s.pays)).size : 0;
+  const visites = stades.filter(s => s.visite).length;
+  const total   = stades.length;
+  const pays    = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
   const pct     = total ? (visites / total * 100).toFixed(1) : 0;
-  const nbMatchs = (typeof matchs !== 'undefined') ? matchs.length : 0;
-
-  const kV = document.getElementById('kpi-visites');
-  const kP = document.getElementById('kpi-pays');
-  const kPct = document.getElementById('kpi-pct');
-  const kM = document.getElementById('kpi-matchs');
-  const kR = document.getElementById('kpi-rest');
-
-  if (kV) kV.textContent = visites;
-  if (kP) kP.textContent = pays;
-  if (kPct) kPct.textContent = pct + '%';
-  if (kM) kM.textContent = nbMatchs;
-  if (kR) kR.textContent = (total - visites).toLocaleString('fr-FR') + ' restants';
-
-  if (typeof _origRenderStats === 'function') _origRenderStats();
+  const nbMatchs = matchs.length;
+  const kV = document.getElementById('kpi-visites'); if (kV) kV.textContent = visites;
+  const kP = document.getElementById('kpi-pays');    if (kP) kP.textContent = pays;
+  const kPct = document.getElementById('kpi-pct');   if (kPct) kPct.textContent = pct + '%';
+  const kM = document.getElementById('kpi-matchs');  if (kM) kM.textContent = nbMatchs;
+  const kR = document.getElementById('kpi-rest');    if (kR) kR.textContent = (total - visites).toLocaleString('fr-FR') + ' restants';
 }
-
-window.addEventListener('load', () => {
-  if (typeof renderStats === 'function') {
-    window.renderStats = renderStatsPatched;
-  }
-  injectStatsKpis();
-});
+window.addEventListener('load', () => { injectStatsKpis(); updateStatsKpis(); });
 </script>
 </body>
 </html>
