@@ -1,36 +1,39 @@
 {
-  "name": "Carte des Stades",
-  "short_name": "Stades",
-  "description": "Tracker de stades de football visités dans le monde entier",
+  "name": "Groundhopper",
+  "short_name": "Groundhopper",
+  "description": "Tour du monde des stades de football",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#080c0a",
-  "theme_color": "#00e676",
+  "background_color": "#2B2F36",
+  "theme_color": "#CC1919",
   "orientation": "any",
   "lang": "fr",
   "categories": ["sports", "travel"],
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/727/727606.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/256/727/727606.png",
-      "sizes": "256x256",
-      "type": "image/png"
+      "src": "icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/192/727/727606.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/128/727/727606.png",
-      "sizes": "128x128",
-      "type": "image/png"
+      "src": "icons/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
@@ -38,13 +41,13 @@
       "name": "Ma carte",
       "short_name": "Carte",
       "url": "/?page=carte",
-      "icons": [{ "src": "https://cdn-icons-png.flaticon.com/96/727/727606.png", "sizes": "96x96" }]
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Classement",
       "short_name": "Classement",
       "url": "/?page=classement",
-      "icons": [{ "src": "https://cdn-icons-png.flaticon.com/96/727/727606.png", "sizes": "96x96" }]
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     }
   ]
 }
