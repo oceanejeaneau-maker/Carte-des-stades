@@ -1,10 +1,16 @@
 // ═══════════════════════════════════════════════
-// SERVICE WORKER — Carte des Stades v4
+// SERVICE WORKER — Groundhopper v5
 // ═══════════════════════════════════════════════
 
-const CACHE_NAME = 'stades-v4';
+const CACHE_NAME = 'groundhopper-v5';
 
-const PRECACHE_URLS = ['/index.html', '/manifest.json', '/icon.svg'];
+const PRECACHE_URLS = [
+  '/index.html',
+  '/manifest.json',
+  '/icons/icon-512.png',
+  '/icons/icon-192.png',
+  '/icons/icon-96.png'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -17,7 +23,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME && k !== 'stades-tiles').map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME && k !== 'groundhopper-tiles').map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -38,7 +44,7 @@ self.addEventListener('fetch', event => {
   if (url.hostname.includes('openstreetmap.org') || url.hostname.includes('cartocdn.com') ||
       url.hostname.includes('stadiamaps.com') || url.hostname.includes('arcgisonline.com')) {
     event.respondWith(
-      caches.open('stades-tiles').then(async cache => {
+      caches.open('groundhopper-tiles').then(async cache => {
         const cached = await cache.match(event.request);
         if (cached) return cached;
         try {
@@ -64,8 +70,7 @@ self.addEventListener('fetch', event => {
   // Assets statiques → cache d'abord
   if (url.hostname === self.location.hostname ||
       url.hostname.includes('unpkg.com') || url.hostname.includes('fonts.g') ||
-      url.hostname.includes('cdnjs.') || url.hostname.includes('flaticon.com') ||
-      url.hostname.includes('flagcdn.com')) {
+      url.hostname.includes('cdnjs.') || url.hostname.includes('flagcdn.com')) {
     event.respondWith(
       caches.match(event.request).then(cached => {
         const net = fetch(event.request)
