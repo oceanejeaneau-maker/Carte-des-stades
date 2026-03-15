@@ -419,6 +419,17 @@ const STADES_DATA = [
   {nom:"Estadio Hernando Siles",club:"Bolívar",ville:"La Paz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-16.5167,lng:-68.0833},
   {nom:"Estadio Ramón Tahuichi Aguilera",club:"Oriente Petrolero",ville:"Santa Cruz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.7833,lng:-63.1833},
   {nom:"Estadio Patria",club:"Real Potosí",ville:"Sucre",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-19.0333,lng:-65.2667},
+  {nom:"Estadio Hernando Siles",club:"The Strongest",ville:"La Paz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-16.4972,lng:-68.1228},
+  {nom:"Estadio Municipal Villa Ingenio",club:"Always Ready",ville:"El Alto",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-16.5006,lng:-68.1722},
+  {nom:"Estadio Víctor Agustín Ugarte",club:"Nacional Potosí",ville:"Potosí",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-19.5867,lng:-65.7528},
+  {nom:"Estadio Gilberto Parada",club:"Guabirá",ville:"Montero",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.3428,lng:-63.2556},
+  {nom:"Estadio Ramón Tahuichi Aguilera",club:"Blooming",ville:"Santa Cruz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.7547,lng:-63.1819},
+  {nom:"Estadio Félix Capriles",club:"Jorge Wilstermann",ville:"Cochabamba",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.3878,lng:-66.1681},
+  {nom:"Estadio Real Santa Cruz",club:"Royal Pari",ville:"Santa Cruz",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.7597,lng:-63.1969},
+  {nom:"Estadio Patria",club:"Universitario de Sucre",ville:"Sucre",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-19.0508,lng:-65.2594},
+  {nom:"Estadio Jesús Bermúdez",club:"GV San José",ville:"Oruro",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-17.9694,lng:-67.1239},
+  {nom:"Estadio Municipal Bulo Bulo",club:"San Antonio Bulo Bulo",ville:"Bulo Bulo",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-16.6556,lng:-64.8386},
+  {nom:"Estadio Bellavista de Tarija",club:"Real Tomayapo",ville:"Tarija",pays:"Bolivie",championnat:"División Profesional Bolivia",lat:-21.5233,lng:-64.7281},
 
   // ══════════════════════════════════════════════════
   // BOSNIE (2 stades)
@@ -640,6 +651,14 @@ const STADES_DATA = [
   {nom:"Estadio Pascual Guerrero",club:"América de Cali",ville:"Cali",pays:"Colombie",championnat:"Primera A Colombia",lat:3.4333,lng:-76.5333},
   {nom:"Estadio Palogrande",club:"Once Caldas",ville:"Manizales",pays:"Colombie",championnat:"Primera A Colombia",lat:5.0667,lng:-75.5167},
   {nom:"Estadio Deportivo Cali",club:"Deportivo Cali",ville:"Palmira",pays:"Colombie",championnat:"Primera A Colombia",lat:3.5167,lng:-76.35},
+  {nom:"Estadio Hernán Ramírez Villegas",club:"Deportivo Pereira",ville:"Pereira",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:4.8008,lng:-75.7044},
+  {nom:"Estadio Metropolitano de Techo",club:"La Equidad",ville:"Bogotá",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:4.6347,lng:-74.1597},
+  {nom:"Estadio La Independencia",club:"Llaneros FC",ville:"Villavicencio",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:4.1378,lng:-73.6439},
+  {nom:"Estadio La Independencia",club:"Patriotas FC",ville:"Tunja",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:5.5333,lng:-73.3667},
+  {nom:"Estadio Atanasio Girardot",club:"Independiente Medellín",ville:"Medellín",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:6.2567,lng:-75.5897},
+  {nom:"Estadio Departamental Libertad",club:"Deportivo Pasto",ville:"Pasto",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:1.2033,lng:-77.2928},
+  {nom:"Estadio La Independencia",club:"Boyacá Chicó",ville:"Tunja",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:5.5333,lng:-73.3667},
+  {nom:"Estadio El Campín",club:"Independiente Santa Fe",ville:"Bogotá",pays:"Colombie",championnat:"Liga BetPlay Colombia",lat:4.6472,lng:-74.0833},
 
   // ══════════════════════════════════════════════════
   // CONGO RDC (2 stades)
@@ -779,6 +798,18 @@ const STADES_DATA = [
   {nom:"Estadio Rodrigo Paz Delgado",club:"Liga de Quito",ville:"Quito",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.1094,lng:-78.4856},
   {nom:"Estadio Olímpico Atahualpa",club:"Sélection Équateur",ville:"Quito",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.2167,lng:-78.5},
   {nom:"Estadio Ciudad de Quito",club:"Deportivo Quito",ville:"Quito",pays:"Équateur",championnat:"Liga Pro Ecuador",lat:-0.2333,lng:-78.5167},
+  {nom:"Estadio Rumiñahui",club:"Independiente del Valle",ville:"Sangolquí",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.3203,lng:-78.4472},
+  {nom:"Estadio Alejandro Serrano Aguilar",club:"Deportivo Cuenca",ville:"Cuenca",pays:"Équateur",championnat:"LigaPro Serie A",lat:-2.9044,lng:-79.0053},
+  {nom:"Estadio Christian Benítez",club:"Delfín SC",ville:"Santo Domingo",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.2558,lng:-79.17},
+  {nom:"Estadio Gonzalo Pozo Ripalda",club:"SD Aucas",ville:"Quito",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.2264,lng:-78.5039},
+  {nom:"Estadio Olímpico Ciudad de Riobamba",club:"Universidad Católica del Ecuador",ville:"Riobamba",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.6558,lng:-78.6481},
+  {nom:"Estadio Olímpico Atahualpa",club:"El Nacional",ville:"Quito",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.1861,lng:-78.4983},
+  {nom:"Estadio COAC Mushuc Runa",club:"Mushuc Runa",ville:"Ambato",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.2464,lng:-78.6181},
+  {nom:"Estadio Ciudad de Ibarra",club:"Imbabura SC",ville:"Ibarra",pays:"Équateur",championnat:"LigaPro Serie A",lat:0.3619,lng:-78.1222},
+  {nom:"Estadio Bellavista",club:"CSD Macará",ville:"Ambato",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.2333,lng:-78.6197},
+  {nom:"Estadio Bellavista",club:"Técnico Universitario",ville:"Ambato",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.2333,lng:-78.6197},
+  {nom:"Estadio Reales Tamarindos",club:"CD Libertad",ville:"Portoviejo",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.0511,lng:-80.4539},
+  {nom:"Estadio de Cumbayá",club:"Cumbayá FC",ville:"Cumbayá",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.1869,lng:-78.4361},
 
   // ══════════════════════════════════════════════════
   // ESPAGNE (59 stades)
@@ -1573,6 +1604,15 @@ const STADES_DATA = [
   {nom:"Estadio La Nueva Olla",club:"Cerro Porteño",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.2667,lng:-57.6333},
   {nom:"Estadio General Pablo Rojas",club:"Club Olimpia",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.3167,lng:-57.65},
   {nom:"Estadio Arsenio Erico",club:"Nacional",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.3,lng:-57.6333},
+  {nom:"Estadio Nicolás Leoz",club:"Club Libertad",ville:"Asunción",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.2939,lng:-57.6475},
+  {nom:"Estadio Rogelio Livieres",club:"Club Guaraní",ville:"Asunción",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.3333,lng:-57.5667},
+  {nom:"Estadio Luis Alberto del Solar",club:"Sol de América",ville:"Asunción",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.3203,lng:-57.6019},
+  {nom:"Estadio General Caballero",club:"General Caballero JLM",ville:"Juan León Mallorquín",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.5167,lng:-56.6},
+  {nom:"Estadio Pedro Juan Caballero",club:"2 de Mayo",ville:"Pedro Juan Caballero",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-22.5386,lng:-55.7283},
+  {nom:"Estadio Luis Alberto Salinas",club:"Sportivo Ameliano",ville:"Asunción",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.3047,lng:-57.6311},
+  {nom:"Estadio Defensores del Chaco",club:"Tacuary FBC",ville:"Asunción",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.2939,lng:-57.6364},
+  {nom:"Estadio Feliciano Cáceres",club:"Sportivo Luqueño",ville:"Luque",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.2667,lng:-57.4833},
+  {nom:"Estadio Barrio Obrero",club:"Sportivo Trinidense",ville:"Asunción",pays:"Paraguay",championnat:"Division Profesional Paraguay",lat:-25.2597,lng:-57.6175},
   {nom:"Estadio Rogelio Livieres",club:"Cerro Porteño",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.2667,lng:-57.65},
   
   
@@ -2101,6 +2141,14 @@ const STADES_DATA = [
   {nom:"Estadio Cachamay",club:"Mineros de Guayana",ville:"Ciudad Guayana",pays:"Venezuela",championnat:"Liga Futve",lat:8.3667,lng:-62.6333},
   {nom:"Estadio Monumental de Maturín",club:"Sélection Venezuela",ville:"Maturín",pays:"Venezuela",championnat:"Liga Futve",lat:9.75,lng:-63.1833},
   {nom:"Estadio Pueblo Nuevo",club:"Deportivo Táchira",ville:"San Cristóbal",pays:"Venezuela",championnat:"Liga Futve",lat:7.7667,lng:-72.2167},
+  {nom:"Estadio Misael Delgado",club:"Carabobo FC",ville:"Valencia",pays:"Venezuela",championnat:"Liga FUTVE",lat:10.1833,lng:-68.0167},
+  {nom:"Estadio Olímpico de la UCV",club:"Deportivo La Guaira",ville:"Caracas",pays:"Venezuela",championnat:"Liga FUTVE",lat:10.4839,lng:-66.9033},
+  {nom:"Estadio Monumental de Maturín",club:"Monagas SC",ville:"Maturín",pays:"Venezuela",championnat:"Liga FUTVE",lat:9.7533,lng:-63.1758},
+  {nom:"Estadio Brígido Iriarte",club:"Metropolitanos FC",ville:"Caracas",pays:"Venezuela",championnat:"Liga FUTVE",lat:10.4778,lng:-66.8711},
+  {nom:"Estadio José Antonio Páez",club:"Academia Puerto Cabello",ville:"Puerto Cabello",pays:"Venezuela",championnat:"Liga FUTVE",lat:10.4792,lng:-68.0108},
+  {nom:"Estadio César Falcón",club:"Zamora FC",ville:"Punto Fijo",pays:"Venezuela",championnat:"Liga FUTVE",lat:11.6983,lng:-70.2081},
+  {nom:"Estadio Agustín Tovar",club:"Inter de Barinas",ville:"Barinas",pays:"Venezuela",championnat:"Liga FUTVE",lat:8.6236,lng:-70.2097},
+  {nom:"Estadio General de División José Francisco Bermúdez",club:"Angostura FC",ville:"Ciudad Bolívar",pays:"Venezuela",championnat:"Liga FUTVE",lat:8.1219,lng:-63.5492},
 
   // ══════════════════════════════════════════════════
   // VIETNAM (3 stades)
