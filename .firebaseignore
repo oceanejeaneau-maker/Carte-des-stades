@@ -1,6 +1,0 @@
-deploy.ps1
-deployer.bat
-*.ps1
-*.bat
-.git
-.gitignore
