@@ -2236,4 +2236,118 @@ const STADES_DATA = [
 
   // ── Premier Soccer League Zimbabwe ──
   {nom:"National Sports Stadium",club:"Dynamos FC",ville:"Harare",pays:"Zimbabwe",championnat:"Premier Soccer League Zimbabwe",lat:-17.8667,lng:31.05},
+
+  // ── Ajouts 2026-03-15 ──────────────────────────────
+
+  // ── Premier Liga Russe ──
+  {nom:"CSKA Arena",club:"CSKA Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier Liga Russe",lat:55.7667,lng:37.6167},
+  {nom:"Otkritie Arena",club:"Spartak Moscou",ville:"Moscou",pays:"Russie",championnat:"Premier Liga Russe",lat:55.8336,lng:37.4403},
+  {nom:"Rostov Arena",club:"FC Rostov",ville:"Rostov-sur-le-Don",pays:"Russie",championnat:"Premier Liga Russe",lat:47.2211,lng:39.6714},
+  {nom:"Samara Arena",club:"Krylia Sovetov",ville:"Samara",pays:"Russie",championnat:"Premier Liga Russe",lat:53.3558,lng:50.1628},
+  {nom:"Akhmat Arena",club:"Akhmat Grozny",ville:"Grozny",pays:"Russie",championnat:"Premier Liga Russe",lat:43.3186,lng:45.6958},
+  {nom:"Krasnodar Stadium",club:"FK Krasnodar",ville:"Krasnodar",pays:"Russie",championnat:"Premier Liga Russe",lat:45.0222,lng:38.9761},
+  {nom:"Nizhny Novgorod Stadium",club:"FC Nizhny Novgorod",ville:"Nijni Novgorod",pays:"Russie",championnat:"Premier Liga Russe",lat:56.3383,lng:43.9636},
+
+  // ── Süper Lig Turquie ──
+  {nom:"Eyüpspor Stadyumu",club:"Eyüpspor",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0503,lng:28.9289},
+  {nom:"Ülker Stadyumu",club:"Fenerbahçe",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:40.9767,lng:29.0353},
+  {nom:"Tüpraş Stadyumu",club:"Beşiktaş",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0436,lng:29.0089},
+  {nom:"Papara Park",club:"Trabzonspor",ville:"Trabzon",pays:"Turquie",championnat:"Süper Lig",lat:40.9872,lng:39.8111},
+  {nom:"Başakşehir Fatih Terim Stadyumu",club:"Başakşehir FK",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.1233,lng:28.8153},
+  {nom:"Kasımpaşa Stadyumu",club:"Kasımpaşa SK",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0467,lng:28.9614},
+  {nom:"Bahçeşehir Okulları Stadyumu",club:"Alanyaspor",ville:"Alanya",pays:"Turquie",championnat:"Süper Lig",lat:36.5483,lng:31.9944},
+  {nom:"Yeni 4 Eylül Stadyumu",club:"Sivasspor",ville:"Sivas",pays:"Turquie",championnat:"Süper Lig",lat:39.7528,lng:36.9878},
+  {nom:"Konya Büyükşehir Stadyumu",club:"Konyaspor",ville:"Konya",pays:"Turquie",championnat:"Süper Lig",lat:37.9081,lng:32.5406},
+  {nom:"Kalyon Gaziantep Stadyumu",club:"Gaziantep FK",ville:"Gaziantep",pays:"Turquie",championnat:"Süper Lig",lat:37.0653,lng:37.3589},
+  {nom:"Bodrum Stadyumu",club:"Bodrum FK",ville:"Bodrum",pays:"Turquie",championnat:"Süper Lig",lat:37.0347,lng:27.4197},
+  {nom:"Göztepe Stadyumu",club:"Göztepe SK",ville:"İzmir",pays:"Turquie",championnat:"Süper Lig",lat:38.4025,lng:27.1194},
+  {nom:"Ali Sami Yen Spor Kompleksi",club:"Fatih Karagümrük",ville:"Istanbul",pays:"Turquie",championnat:"Süper Lig",lat:41.0553,lng:28.9872},
+
+  // ── Indian Super League ──
+  {nom:"Sree Kanteerava Stadium",club:"Bengaluru FC",ville:"Bangalore",pays:"Inde",championnat:"Indian Super League",lat:12.9767,lng:77.5931},
+  {nom:"Jawaharlal Nehru Stadium Kochi",club:"Kerala Blasters",ville:"Kochi",pays:"Inde",championnat:"Indian Super League",lat:9.9331,lng:76.2678},
+  {nom:"Jawaharlal Nehru Stadium Delhi",club:"Delhi Dynamos (ancien)",ville:"New Delhi",pays:"Inde",championnat:"Indian Super League",lat:28.5881,lng:77.2336},
+  {nom:"Hyderabad FC Stadium",club:"Hyderabad FC",ville:"Hyderabad",pays:"Inde",championnat:"Indian Super League",lat:17.4408,lng:78.3958},
+
+  // ── UAE Pro League ──
+  {nom:"Zabeel Stadium",club:"Al Wasl FC",ville:"Dubaï",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:25.23,lng:55.3058},
+  {nom:"Mohammed bin Zayed Stadium",club:"Al Jazira",ville:"Abu Dhabi",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:24.4619,lng:54.3678},
+  {nom:"Khalifa International Stadium Abu Dhabi",club:"Al Wahda FC",ville:"Abu Dhabi",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:24.4233,lng:54.4778},
+  {nom:"Baniyas Stadium",club:"Baniyas SC",ville:"Abu Dhabi",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:24.3181,lng:54.6281},
+  {nom:"Sharjah Stadium",club:"Sharjah FC",ville:"Sharjah",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:25.3733,lng:55.4158},
+  {nom:"Fujairah Stadium",club:"FC Fujairah",ville:"Fujairah",pays:"Émirats Arabes Unis",championnat:"UAE Pro League",lat:25.1278,lng:56.3264},
+
+  // ── Qatar Stars League ──
+  {nom:"Lusail Iconic Stadium",club:"Al Duhail SC",ville:"Lusail",pays:"Qatar",championnat:"Qatar Stars League",lat:25.4342,lng:51.4881},
+  {nom:"Al Janoub Stadium",club:"Al Wakrah SC",ville:"Al Wakrah",pays:"Qatar",championnat:"Qatar Stars League",lat:25.1617,lng:51.5308},
+  {nom:"Al Thumama Stadium",club:"Qatar SC",ville:"Doha",pays:"Qatar",championnat:"Qatar Stars League",lat:25.2294,lng:51.5211},
+  {nom:"Education City Stadium",club:"Al Rayan SC",ville:"Al Rayyan",pays:"Qatar",championnat:"Qatar Stars League",lat:25.3117,lng:51.4239},
+  {nom:"Qatar Foundation Stadium",club:"Al Gharafa SC",ville:"Doha",pays:"Qatar",championnat:"Qatar Stars League",lat:25.3158,lng:51.4281},
+
+  // ── Liga 1 Indonésie ──
+  {nom:"Gelora Bung Karno",club:"Persija Jakarta",ville:"Jakarta",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-6.2181,lng:106.8006},
+  {nom:"Stadion Manahan",club:"Persis Solo",ville:"Solo",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-7.5597,lng:110.8175},
+  {nom:"Stadion Kapten I Wayan Dipta",club:"Bali United",ville:"Gianyar",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-8.5319,lng:115.2197},
+  {nom:"Stadion Pakansari",club:"Persita Tangerang",ville:"Cibinong",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-6.4958,lng:106.8372},
+  {nom:"Stadion Gelora Sriwijaya",club:"Sriwijaya FC",ville:"Palembang",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-2.9736,lng:104.775},
+  {nom:"Stadion Kanjuruhan",club:"Arema FC",ville:"Malang",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-8.0661,lng:112.6267},
+  {nom:"Stadion Jatidiri",club:"PSIS Semarang",ville:"Semarang",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-7.0181,lng:110.4239},
+  {nom:"Stadion Gelora Bung Tomo",club:"Persebaya Surabaya",ville:"Surabaya",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-7.2872,lng:112.6261},
+  {nom:"Stadion Batakan",club:"Borneo FC",ville:"Balikpapan",pays:"Indonésie",championnat:"Liga 1 Indonésie",lat:-1.2544,lng:116.8678},
+
+  // ── Thai League 1 ──
+  {nom:"Chang Arena",club:"Buriram United",ville:"Buriram",pays:"Thaïlande",championnat:"Thai League 1",lat:14.9975,lng:103.1044},
+  {nom:"700th Anniversary Stadium",club:"Chiangmai United",ville:"Chiang Mai",pays:"Thaïlande",championnat:"Thai League 1",lat:18.7667,lng:99.0},
+  {nom:"Suphan Buri Provincial Stadium",club:"Suphanburi FC",ville:"Suphanburi",pays:"Thaïlande",championnat:"Thai League 1",lat:14.4736,lng:100.1178},
+  {nom:"PAT Stadium",club:"Port FC",ville:"Bangkok",pays:"Thaïlande",championnat:"Thai League 1",lat:13.695,lng:100.565},
+  {nom:"Thunder Castle Stadium",club:"Nakhon Ratchasima FC",ville:"Nakhon Ratchasima",pays:"Thaïlande",championnat:"Thai League 1",lat:14.9742,lng:102.1008},
+  {nom:"Thammasat Stadium",club:"BG Pathum United",ville:"Pathum Thani",pays:"Thaïlande",championnat:"Thai League 1",lat:14.0622,lng:100.605},
+  {nom:"SCG Stadium",club:"Muangthong United",ville:"Nonthaburi",pays:"Thaïlande",championnat:"Thai League 1",lat:13.9297,lng:100.5631},
+
+  // ── V.League 1 Vietnam (ajouts) ──
+  {nom:"Thiên Trường Stadium",club:"Nam Định FC",ville:"Nam Định",pays:"Vietnam",championnat:"V.League 1",lat:20.42,lng:106.1631},
+  {nom:"Hàng Đẫy Stadium",club:"Hà Nội FC (alt)",ville:"Hanoi",pays:"Vietnam",championnat:"V.League 1",lat:21.0272,lng:105.8408},
+  {nom:"Gò Đậu Stadium",club:"Bình Dương FC",ville:"Thủ Dầu Một",pays:"Vietnam",championnat:"V.League 1",lat:10.9833,lng:106.65},
+  {nom:"Pleiku Stadium",club:"Hoàng Anh Gia Lai",ville:"Pleiku",pays:"Vietnam",championnat:"V.League 1",lat:13.9833,lng:108.0167},
+
+  // ── Super League Malaisie ──
+  {nom:"Larkin Stadium",club:"Johor Darul Takzim",ville:"Johor Bahru",pays:"Malaisie",championnat:"Super League Malaisie",lat:1.4742,lng:103.7328},
+  {nom:"Darul Makmur Stadium",club:"Pahang FA",ville:"Kuantan",pays:"Malaisie",championnat:"Super League Malaisie",lat:3.81,lng:103.3256},
+  {nom:"Stadium Negeri",club:"Perak FC",ville:"Ipoh",pays:"Malaisie",championnat:"Super League Malaisie",lat:4.6097,lng:101.0739},
+  {nom:"Hang Jebat Stadium",club:"Melaka United",ville:"Melaka",pays:"Malaisie",championnat:"Super League Malaisie",lat:2.25,lng:102.2833},
+  {nom:"Tuanku Abdul Halim Stadium",club:"Kedah FC",ville:"Alor Setar",pays:"Malaisie",championnat:"Super League Malaisie",lat:6.1356,lng:100.3733},
+
+  // ── Philippines Football League ──
+  {nom:"Panaad Park",club:"Ceres-Negros FC",ville:"Bacolod",pays:"Philippines",championnat:"Philippines Football League",lat:10.6833,lng:122.95},
+  {nom:"Biñan Football Stadium",club:"Mendiola FC",ville:"Biñan",pays:"Philippines",championnat:"Philippines Football League",lat:14.3358,lng:121.0817},
+
+  // ── Iraq Premier League ──
+  {nom:"Basra International Stadium",club:"Al-Minaa SC",ville:"Basra",pays:"Irak",championnat:"Iraq Premier League",lat:30.4958,lng:47.82},
+  {nom:"Al-Talaba Stadium",club:"Al-Talaba SC",ville:"Bagdad",pays:"Irak",championnat:"Iraq Premier League",lat:33.3253,lng:44.3653},
+  {nom:"Karbala Stadium",club:"Karbalaa FC",ville:"Karbala",pays:"Irak",championnat:"Iraq Premier League",lat:32.6361,lng:44.0258},
+  {nom:"Sulaymaniyah Stadium",club:"Duhok SC",ville:"Sulaymaniyah",pays:"Irak",championnat:"Iraq Premier League",lat:35.5578,lng:45.4358},
+
+  // ── Jordan Pro League ──
+  {nom:"Prince Mohammed Stadium",club:"Al-Wehdat SC",ville:"Amman",pays:"Jordanie",championnat:"Jordan Pro League",lat:31.9381,lng:35.9272},
+  {nom:"Al-Ramtha Stadium",club:"Al-Ramtha SC",ville:"Ramtha",pays:"Jordanie",championnat:"Jordan Pro League",lat:32.5567,lng:35.9883},
+
+  // ── Kuwait Premier League ──
+  {nom:"Kazma SC Stadium",club:"Kazma SC",ville:"Kuwait City",pays:"Koweït",championnat:"Kuwait Premier League",lat:29.335,lng:47.9853},
+  {nom:"Al-Kuwait SC Stadium",club:"Al-Kuwait SC",ville:"Kuwait City",pays:"Koweït",championnat:"Kuwait Premier League",lat:29.3583,lng:48.0008},
+  {nom:"Jaber Al-Ahmad International Stadium",club:"Al-Qadsia SC",ville:"Kuwait City",pays:"Koweït",championnat:"Kuwait Premier League",lat:29.2494,lng:47.9817},
+
+  // ── Bahrain Premier League ──
+  {nom:"National Stadium Bahrain",club:"Al-Riffa Club",ville:"Riffa",pays:"Bahreïn",championnat:"Bahrain Premier League",lat:26.1083,lng:50.5558},
+  {nom:"Al-Qadhem Stadium",club:"Al-Muharraq Club",ville:"Muharraq",pays:"Bahreïn",championnat:"Bahrain Premier League",lat:26.2589,lng:50.6228},
+  {nom:"Al Fateh Stadium",club:"Al-Fateh SC",ville:"Al Malikiyah",pays:"Bahreïn",championnat:"Bahrain Premier League",lat:26.2017,lng:50.5678},
+  {nom:"Isa Town Stadium",club:"Al-Ahli Bahrain",ville:"Isa Town",pays:"Bahreïn",championnat:"Bahrain Premier League",lat:26.1722,lng:50.5461},
+
+  // ── Oman Professional League ──
+  {nom:"Al-Seeb Club Stadium",club:"Al-Seeb FC",ville:"Seeb",pays:"Oman",championnat:"Oman Professional League",lat:23.6833,lng:58.1833},
+  {nom:"Nizwa Stadium",club:"Sohar FC",ville:"Nizwa",pays:"Oman",championnat:"Oman Professional League",lat:22.9333,lng:57.5333},
+  {nom:"Suwayq Stadium",club:"Dhofar Club",ville:"Suwayq",pays:"Oman",championnat:"Oman Professional League",lat:23.85,lng:57.4333},
+
+  // ── Lebanese Premier League ──
+  {nom:"Municipal Stadium Tripoli",club:"Al-Salam Zgharta",ville:"Tripoli",pays:"Liban",championnat:"Lebanese Premier League",lat:34.4461,lng:35.8361},
+  {nom:"Sidon International Stadium",club:"Al-Ansar FC",ville:"Sidon",pays:"Liban",championnat:"Lebanese Premier League",lat:33.5561,lng:35.3761},
 ];

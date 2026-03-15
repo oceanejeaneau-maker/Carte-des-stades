@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp /tmp/existing_stadiums.txt /c/Users/oceje/AppData/Local/Temp/existing_stadiums.txt)",
+      "Read(//c/Users/oceje/AppData/Local/Temp/**)"
+    ]
+  }
+}
