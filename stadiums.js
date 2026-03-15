@@ -254,6 +254,19 @@ const STADES_DATA = [
   {nom:"King Fahd International Stadium",club:"Sélection Arabie Saoudite",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7156,lng:46.7219},
   {nom:"Mohammed bin Salman Stadium",club:"Al-Hilal",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7503,lng:46.8231},
   {nom:"Mrsool Park",club:"Al-Nassr",ville:"Riyad",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.8917,lng:46.8528},
+  {nom:"King Abdullah Sports City",club:"Al-Ahli",ville:"Jeddah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.5853,lng:39.1733},
+  {nom:"Prince Faisal bin Fahd Stadium",club:"Al-Shabab FC",ville:"Riyadh",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.7736,lng:46.7311},
+  {nom:"Prince Mohammed bin Fahd Stadium",club:"Al-Ettifaq",ville:"Dammam",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:26.4283,lng:50.1028},
+  {nom:"Prince Abdullah bin Jalawi Stadium",club:"Al-Qadsiah",ville:"Al-Ahsa",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:25.3658,lng:49.585},
+  {nom:"Prince Sultan bin Mohammed bin Saud Stadium",club:"Al-Raed",ville:"Burayda",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:26.3597,lng:43.9825},
+  {nom:"Al-Majma'ah Sports City",club:"Al-Fayha",ville:"Al-Majma'ah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:25.9,lng:45.3464},
+  {nom:"Prince Mutaib bin Abdulaziz Stadium",club:"Al-Taawoun",ville:"Buraidah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:26.3392,lng:43.9736},
+  {nom:"King Abdul Aziz Stadium",club:"Al-Wehda FC",ville:"La Mecque",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:21.4275,lng:39.8172},
+  {nom:"Prince Saud bin Jalawi Stadium",club:"Al-Khaleej FC",ville:"Saihat",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:26.4689,lng:50.0469},
+  {nom:"Prince Hathloul bin Abdul Aziz Stadium",club:"Al-Okhdood",ville:"Najran",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:17.5625,lng:44.2292},
+  {nom:"Prince Faisal bin Turki Stadium",club:"Al-Kholood",ville:"Riyadh",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:24.6236,lng:46.7564},
+  {nom:"Orobah Stadium",club:"Al-Orobah",ville:"Unaizah",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:26.0878,lng:43.9928},
+  {nom:"Abha Stadium",club:"DAMAC FC",ville:"Abha",pays:"Arabie Saoudite",championnat:"Saudi Pro League",lat:18.2547,lng:42.47},
 
   // ══════════════════════════════════════════════════
   // ARGENTINE (18 stades)
@@ -321,6 +334,10 @@ const STADES_DATA = [
   {nom:"HBF Park",club:"Perth Glory",ville:"Perth",pays:"Australie",championnat:"A-League",lat:-31.9486,lng:115.8639},
   {nom:"Stadium Australia",club:"Western Sydney Wanderers",ville:"Sydney",pays:"Australie",championnat:"A-League",lat:-33.8472,lng:151.0633},
   {nom:"Allianz Stadium",club:"Sydney FC",ville:"Sydney",pays:"Australie",championnat:"A-League",lat:-33.89,lng:151.2233},
+  {nom:"AAMI Park",club:"Melbourne Victory",ville:"Melbourne",pays:"Australie",championnat:"A-League Australia",lat:-37.8064,lng:144.9836},
+  {nom:"Sky Stadium",club:"Wellington Phoenix",ville:"Wellington",pays:"Australie",championnat:"A-League Australia",lat:-41.2756,lng:174.805},
+  {nom:"Campbelltown Sports Stadium",club:"Macarthur FC",ville:"Campbelltown",pays:"Australie",championnat:"A-League Australia",lat:-34.0636,lng:150.8111},
+  {nom:"AAMI Park",club:"Western United FC",ville:"Melbourne",pays:"Australie",championnat:"A-League Australia",lat:-37.8064,lng:144.9836},
 
   // ══════════════════════════════════════════════════
   // AUTRICHE (11 stades)
@@ -594,6 +611,9 @@ const STADES_DATA = [
   {nom:"Estadio Santa Laura",club:"Unión Española",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.4394,lng:-70.6497},
   {nom:"Estadio Municipal Germán Becker",club:"Deportes Temuco",ville:"Temuco",pays:"Chili",championnat:"Primera Division Chili",lat:-38.7317,lng:-72.5881},
   {nom:"Estadio Sausalito",club:"Everton de Viña del Mar",ville:"Viña del Mar",pays:"Chili",championnat:"Primera Division Chili",lat:-33.0369,lng:-71.5875},
+  {nom:"Estadio Municipal de La Florida",club:"Audax Italiano",ville:"Santiago",pays:"Chili",championnat:"Primera Division Chili",lat:-33.5156,lng:-70.5872},
+  {nom:"Estadio Nelson Oyarzún",club:"Ñublense",ville:"Chillán",pays:"Chili",championnat:"Primera Division Chili",lat:-36.6028,lng:-72.0972},
+  {nom:"Estadio Cavancha",club:"Deportes Iquique",ville:"Iquique",pays:"Chili",championnat:"Primera Division Chili",lat:-20.2258,lng:-70.1439},
 
   // ══════════════════════════════════════════════════
   // CHINE (5 stades)
@@ -605,6 +625,17 @@ const STADES_DATA = [
   {nom:"Workers' Stadium",club:"Beijing Guoan",ville:"Pékin",pays:"Chine",championnat:"Super League",lat:39.9289,lng:116.4436},
   {nom:"Hongkou Football Stadium",club:"Shanghai Shenhua",ville:"Shanghai",pays:"Chine",championnat:"Super League",lat:31.2597,lng:121.4706},
   {nom:"Longhua Football Stadium",club:"Shenzhen FC",ville:"Shenzhen",pays:"Chine",championnat:"Super League",lat:22.5431,lng:114.0579},
+  {nom:"Shanghai Stadium",club:"Shanghai Port FC",ville:"Shanghai",pays:"Chine",championnat:"Chinese Super League",lat:31.1836,lng:121.3997},
+  {nom:"Jinan Olympic Sports Center",club:"Shandong Taishan",ville:"Jinan",pays:"Chine",championnat:"Chinese Super League",lat:36.6839,lng:117.1203},
+  {nom:"Wuhan Sports Center Stadium",club:"Wuhan Three Towns",ville:"Wuhan",pays:"Chine",championnat:"Chinese Super League",lat:30.5825,lng:114.3142},
+  {nom:"Huzhou Olympic Sports Center",club:"Zhejiang FC",ville:"Huzhou",pays:"Chine",championnat:"Chinese Super League",lat:30.8753,lng:120.0892},
+  {nom:"Changchun Olympic Stadium",club:"Changchun Yatai",ville:"Changchun",pays:"Chine",championnat:"Chinese Super League",lat:43.8722,lng:125.3628},
+  {nom:"Tianjin Olympic Center Stadium",club:"Tianjin Jinmen Tiger",ville:"Tianjin",pays:"Chine",championnat:"Chinese Super League",lat:39.095,lng:117.06},
+  {nom:"Bao'an Stadium",club:"Shenzhen Peng City",ville:"Shenzhen",pays:"Chine",championnat:"Chinese Super League",lat:22.5847,lng:113.8853},
+  {nom:"Qingdao Youth Football Stadium",club:"Qingdao Hainiu",ville:"Qingdao",pays:"Chine",championnat:"Chinese Super League",lat:36.0847,lng:120.3322},
+  {nom:"Phoenix Hill Football Stadium",club:"Chengdu Rongcheng",ville:"Chengdu",pays:"Chine",championnat:"Chinese Super League",lat:30.5925,lng:104.1678},
+  {nom:"Zhengzhou Olympic Sports Center",club:"Henan Songshan Longmen",ville:"Zhengzhou",pays:"Chine",championnat:"Chinese Super League",lat:34.7581,lng:113.7083},
+  {nom:"Rugao Olympic Sports Center",club:"Nantong Zhiyun",ville:"Rugao",pays:"Chine",championnat:"Chinese Super League",lat:32.3961,lng:120.5567},
 
   // ══════════════════════════════════════════════════
   // CHYPRE (2 stades)
@@ -681,6 +712,13 @@ const STADES_DATA = [
 
   // ── K League 2 ──
   {nom:"Daejeon World Cup Stadium",club:"Daejeon Hana Citizen",ville:"Daejeon",pays:"Corée du Sud",championnat:"K League 2",lat:36.3022,lng:127.4042},
+  {nom:"Chuncheon Songam Sports Town",club:"Gangwon FC",ville:"Chuncheon",pays:"Corée du Sud",championnat:"K League 1",lat:37.8814,lng:127.7342},
+  {nom:"Gimcheon Stadium",club:"Gimcheon Sangmu FC",ville:"Gimcheon",pays:"Corée du Sud",championnat:"K League 1",lat:36.1339,lng:128.1178},
+  {nom:"Suwon Sports Complex",club:"Suwon FC",ville:"Suwon",pays:"Corée du Sud",championnat:"K League 1",lat:37.2667,lng:127.0194},
+  {nom:"Pohang Steel Yard",club:"Pohang Steelers",ville:"Pohang",pays:"Corée du Sud",championnat:"K League 1",lat:36.0344,lng:129.3608},
+  {nom:"Jeju World Cup Stadium",club:"Jeju United FC",ville:"Seogwipo",pays:"Corée du Sud",championnat:"K League 1",lat:33.2783,lng:126.4664},
+  {nom:"Gwangju Football Stadium",club:"Gwangju FC",ville:"Gwangju",pays:"Corée du Sud",championnat:"K League 1",lat:35.1661,lng:126.8956},
+  {nom:"DGB Daegu Bank Park",club:"Daegu FC",ville:"Daegu",pays:"Corée du Sud",championnat:"K League 1",lat:35.8717,lng:128.6564},
 
   // ══════════════════════════════════════════════════
   // COSTA RICA (3 stades)
@@ -1164,6 +1202,19 @@ const STADES_DATA = [
   {nom:"Naghsh-e Jahan Stadium",club:"Zob Ahan",ville:"Ispahan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:32.6572,lng:51.6786},
   {nom:"Soheil Mahmoudi Stadium",club:"Nassaji Mazandaran",ville:"Qaemshahr",pays:"Iran",championnat:"Persian Gulf Pro League",lat:36.4667,lng:52.8667},
   {nom:"Azadi Stadium",club:"Persepolis FC",ville:"Téhéran",pays:"Iran",championnat:"Persian Gulf Pro League",lat:35.7292,lng:51.3128},
+  {nom:"Azadi Stadium",club:"Esteghlal FC",ville:"Téhéran",pays:"Iran",championnat:"Persian Gulf Pro League",lat:35.7292,lng:51.3758},
+  {nom:"Foolad Shahr Stadium",club:"Sepahan FC",ville:"Isfahan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:32.565,lng:51.5908},
+  {nom:"Yadegar-e Emam Stadium",club:"Tractor SC",ville:"Tabriz",pays:"Iran",championnat:"Persian Gulf Pro League",lat:37.9947,lng:46.3128},
+  {nom:"Foolad Arena",club:"Foolad FC",ville:"Ahvaz",pays:"Iran",championnat:"Persian Gulf Pro League",lat:31.3289,lng:48.6956},
+  {nom:"Shahid Bahonar Stadium",club:"Gol Gohar Sirjan",ville:"Sirjan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:29.4819,lng:55.6917},
+  {nom:"Arak Municipal Stadium",club:"Aluminium FC",ville:"Arak",pays:"Iran",championnat:"Persian Gulf Pro League",lat:34.0883,lng:49.6972},
+  {nom:"Takhti Stadium Anzali",club:"Malavan FC",ville:"Bandar Anzali",pays:"Iran",championnat:"Persian Gulf Pro League",lat:37.4703,lng:49.4725},
+  {nom:"Shahid Dastgerdi Stadium",club:"Paykan FC",ville:"Téhéran",pays:"Iran",championnat:"Persian Gulf Pro League",lat:35.7397,lng:51.5283},
+  {nom:"Azadi Stadium",club:"Havadar SC",ville:"Téhéran",pays:"Iran",championnat:"Persian Gulf Pro League",lat:35.7292,lng:51.3758},
+  {nom:"Samen Stadium",club:"Shahr Khodro FC",ville:"Mashhad",pays:"Iran",championnat:"Persian Gulf Pro League",lat:36.2825,lng:59.6158},
+  {nom:"Omid Ahvaz Stadium",club:"Naft M.I.S.",ville:"Mahshahr",pays:"Iran",championnat:"Persian Gulf Pro League",lat:30.5589,lng:49.1886},
+  {nom:"Shahid Bahonar Stadium Rafsanjan",club:"Mes Rafsanjan",ville:"Rafsanjan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:30.3958,lng:56.0031},
+  {nom:"Behnam Mohammadi Stadium",club:"Sanat Naft",ville:"Abadan",pays:"Iran",championnat:"Persian Gulf Pro League",lat:30.3411,lng:48.3058},
 
   // ══════════════════════════════════════════════════
   // ISLANDE (1 stade)
@@ -1269,6 +1320,18 @@ const STADES_DATA = [
 
   // ── Japan Football League ──
   {nom:"Edion Stadium Hiroshima",club:"FC Imabari",ville:"Hiroshima",pays:"Japon",championnat:"Japan Football League",lat:34.4192,lng:132.4528},
+  {nom:"Edion Peace Wing Hiroshima",club:"Sanfrecce Hiroshima",ville:"Hiroshima",pays:"Japon",championnat:"J1 League",lat:34.3856,lng:132.4553},
+  {nom:"Panasonic Stadium Suita",club:"Gamba Osaka",ville:"Suita",pays:"Japon",championnat:"J1 League",lat:34.7956,lng:135.5208},
+  {nom:"Ajinomoto Stadium",club:"FC Tokyo",ville:"Chōfu",pays:"Japon",championnat:"J1 League",lat:35.6645,lng:139.5275},
+  {nom:"Machida GIONs Stadium",club:"FC Machida Zelvia",ville:"Machida",pays:"Japon",championnat:"J1 League",lat:35.5542,lng:139.4733},
+  {nom:"Ajinomoto Stadium",club:"Tokyo Verdy",ville:"Chōfu",pays:"Japon",championnat:"J1 League",lat:35.6645,lng:139.5275},
+  {nom:"Best Denki Stadium",club:"Avispa Fukuoka",ville:"Fukuoka",pays:"Japon",championnat:"J1 League",lat:33.6061,lng:130.4211},
+  {nom:"Sanga Stadium by Kyocera",club:"Kyoto Sanga FC",ville:"Kameoka",pays:"Japon",championnat:"J1 League",lat:34.9983,lng:135.5697},
+  {nom:"Denka Big Swan Stadium",club:"Albirex Niigata",ville:"Niigata",pays:"Japon",championnat:"J1 League",lat:37.9192,lng:139.0556},
+  {nom:"Lemon Gas Stadium Hiratsuka",club:"Shonan Bellmare",ville:"Hiratsuka",pays:"Japon",championnat:"J1 League",lat:35.3236,lng:139.3258},
+  {nom:"Sapporo Dome",club:"Hokkaido Consadole Sapporo",ville:"Sapporo",pays:"Japon",championnat:"J1 League",lat:43.0153,lng:141.4106},
+  {nom:"Ekimae Real Estate Stadium",club:"Sagan Tosu",ville:"Tosu",pays:"Japon",championnat:"J1 League",lat:33.3697,lng:130.5008},
+  {nom:"Todoroki Athletics Stadium",club:"Kawasaki Frontale",ville:"Kawasaki",pays:"Japon",championnat:"J1 League",lat:35.5731,lng:139.6558},
 
   // ══════════════════════════════════════════════════
   // JORDANIE (3 stades)
