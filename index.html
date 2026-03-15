@@ -64,9 +64,11 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-    /* ══════════════════════════════
-       OPTION C — HEADER CARTE
-    ══════════════════════════════ */
+    /* ════════════════════════════════
+       PAGE CARTE — VARIANTE C
+    ════════════════════════════════ */
+
+    /* Header stats */
     .carte-header {
       background: #22252C;
       padding: 12px 16px 10px;
@@ -77,107 +79,190 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
     }
-    .carte-header-branding .carte-title {
+    .carte-header-title {
       font-family: var(--font-disp);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       letter-spacing: .06em;
       color: var(--text);
       line-height: 1;
-      text-transform: uppercase;
     }
-    .carte-header-branding .carte-title span { color: var(--accent); }
-    .carte-header-branding .carte-subtitle {
-      font-size: .6rem;
+    .carte-header-title span { color: var(--accent); }
+    .carte-header-sub {
+      font-size: 10px;
       color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .14em;
+      letter-spacing: .1em;
       margin-top: 2px;
-      font-weight: 600;
     }
-    .carte-header-counter {
+    .carte-header-right {
       text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
-    .carte-header-counter .counter-val {
+    .carte-kpi-val {
       font-family: var(--font-disp);
       font-size: 1.8rem;
       color: var(--green);
       line-height: 1;
-      letter-spacing: .03em;
+      letter-spacing: .04em;
     }
-    .carte-header-counter .counter-total {
-      font-size: .85rem;
+    .carte-kpi-total {
+      font-size: 11px;
       color: var(--text4);
-      font-family: var(--font-disp);
-      letter-spacing: .03em;
+      margin-top: 1px;
     }
-    .carte-header-counter .counter-label {
-      font-size: .6rem;
+    .carte-kpi-lbl {
+      font-size: 9px;
       color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .12em;
-      margin-top: 2px;
-      font-weight: 600;
+      letter-spacing: .08em;
     }
-    .carte-header-progress {
+    .carte-progress-row {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .carte-header-progress .progress-track {
+    .carte-progress-track {
       flex: 1;
-      height: 4px;
+      height: 3px;
       background: var(--surface2);
       border-radius: 2px;
       overflow: hidden;
     }
-    .carte-header-progress .progress-fill {
+    .carte-progress-fill {
       height: 100%;
       background: var(--accent);
       border-radius: 2px;
       transition: width .4s ease;
       width: 0%;
     }
-    .carte-header-progress .pct-label {
-      font-size: .65rem;
+    .carte-progress-pct {
+      font-size: 10px;
       color: var(--text4);
-      font-family: var(--font-mono);
       min-width: 32px;
       text-align: right;
     }
 
-    /* Pills de filtre rapide */
-    .carte-filter-pills {
+    /* Filtres pills */
+    .carte-filters-pills {
       display: flex;
-      gap: 6px;
-      padding: 8px 16px;
+      gap: 5px;
+      padding: 8px 12px;
       background: var(--surface);
       border-bottom: .5px solid var(--border);
       overflow-x: auto;
       scrollbar-width: none;
       flex-shrink: 0;
     }
-    .carte-filter-pills::-webkit-scrollbar { display: none; }
+    .carte-filters-pills::-webkit-scrollbar { display: none; }
     .cfp {
       font-family: var(--font-body);
-      font-size: .7rem;
+      font-size: 11px;
       font-weight: 600;
       padding: 4px 12px;
-      border-radius: 12px;
+      border-radius: 20px;
       white-space: nowrap;
+      flex-shrink: 0;
       cursor: pointer;
-      border: .5px solid transparent;
+      background: var(--surface2);
+      border: .5px solid var(--border);
+      color: var(--text3);
       transition: all .15s;
     }
-    .cfp-active  { background: var(--accent);    color: #fff;          border-color: var(--accent); }
-    .cfp-green   { background: var(--green-dim); color: var(--green);  border-color: var(--green); }
-    .cfp-default { background: var(--surface2);  color: var(--text3);  border-color: var(--border); }
-    .cfp-default:hover { border-color: var(--accent); color: var(--accent); }
+    .cfp:hover { color: var(--text); border-color: var(--border2); }
+    .cfp-active { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .cfp-green  { background: var(--green-dim) !important; border-color: var(--green) !important; color: var(--green) !important; }
+    .cfp-red    { background: var(--accent-dim) !important; border-color: var(--accent) !important; color: var(--accent) !important; }
 
-    /* Masquer l'ancienne stat-bar et progress sur la page carte */
-    .page-carte > .stat-bar,
-    .page-carte > .progress-wrap { display: none !important; }
+    /* Toolbar carte */
+    .carte-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--surface);
+      border-bottom: .5px solid var(--border);
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .carte-tb-select {
+      background: var(--surface2);
+      border: .5px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-family: var(--font-body);
+      font-size: 11px;
+      outline: none;
+      cursor: pointer;
+    }
+    .carte-tb-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--surface2);
+      border: .5px solid var(--border);
+      color: var(--text3);
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .carte-tb-btn:hover { color: var(--text); border-color: var(--border2); }
+    .carte-tb-sep { width: .5px; height: 18px; background: var(--border); margin: 0 2px; }
+
+    /* Bouton recherche avancée */
+    .carte-search-toggle {
+      width: 100%;
+      padding: 8px;
+      background: var(--surface);
+      border: none;
+      border-top: .5px solid var(--border);
+      border-bottom: .5px solid var(--border);
+      color: var(--text3);
+      font-family: var(--font-body);
+      font-size: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: background .15s;
+    }
+    .carte-search-toggle:hover { background: var(--surface2); color: var(--text); }
+
+    /* Légende statuts */
+    .carte-legende {
+      display: flex;
+      gap: 14px;
+      padding: 6px 14px;
+      background: var(--surface);
+      border-bottom: .5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .carte-legende-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text3);
+    }
+    .carte-leg-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Map height ajustée */
+    #map {
+      height: 340px !important;
+      border-radius: 0 !important;
+      border-left: none !important;
+      border-right: none !important;
+    }
+    @media(max-width:600px) {
+      #map { height: 260px !important; }
+    }
 
     /* ══ Reste du CSS d'origine inchangé ══ */
 
@@ -825,51 +910,62 @@
   <div class="main-content">
 
     <!-- ══ PAGE CARTE ══ -->
+    <!-- PAGE CARTE — VARIANTE C -->
     <div class="page page-carte active" id="page-carte">
 
-      <!-- ▼▼▼ OPTION C : HEADER STATS + CARTE ▼▼▼ -->
+      <!-- HEADER STATS -->
       <div class="carte-header">
         <div class="carte-header-top">
-          <div class="carte-header-branding">
-            <div class="carte-title">GROUND<span>HOPPER</span></div>
-            <div class="carte-subtitle">Tour du monde des stades</div>
+          <div>
+            <div class="carte-header-title">GROUND<span>HOPPER</span></div>
+            <div class="carte-header-sub">Tour du monde des stades</div>
           </div>
-          <div class="carte-header-counter">
-            <div class="counter-val" id="statVisites">0 <span class="counter-total">/ <span id="statTotal">0</span></span></div>
-            <div class="counter-label">stades visités</div>
+          <div class="carte-header-right">
+            <div class="carte-kpi-val" id="statVisites">0</div>
+            <div class="carte-kpi-total">/ <span id="statTotal">0</span></div>
+            <div class="carte-kpi-lbl">stades visités</div>
           </div>
         </div>
-        <div class="carte-header-progress">
-          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-          <span class="pct-label" id="statPct">0%</span>
+        <div class="carte-progress-row">
+          <div class="carte-progress-track">
+            <div class="carte-progress-fill" id="progressFill"></div>
+          </div>
+          <span class="carte-progress-pct" id="statPct">0%</span>
         </div>
       </div>
 
-      <!-- Pills de filtre rapide -->
-      <div class="carte-filter-pills" id="carteFilterPills">
-        <div class="cfp cfp-active" data-filter="tous">Tous</div>
-        <div class="cfp cfp-green" data-filter="visites">✅ Visités</div>
-        <div class="cfp cfp-default" data-filter="wishlist">★ Wishlist</div>
-        <div class="cfp cfp-default" data-continent="Europe">🇪🇺 Europe</div>
-        <div class="cfp cfp-default" data-continent="Amérique du Sud">🌎 Amér. Sud</div>
-        <div class="cfp cfp-default" data-continent="Afrique">🌍 Afrique</div>
-        <div class="cfp cfp-default" data-continent="Asie">🌏 Asie</div>
-        <div class="cfp cfp-default" data-continent="Moyen-Orient">🕌 M.-Orient</div>
-        <div class="cfp cfp-default" data-continent="Amérique du Nord">🌎 Amér. Nord</div>
-      </div>
-      <!-- ▲▲▲ FIN OPTION C ▲▲▲ -->
-
-      <!-- Ancienne stat-bar masquée (conservée pour compatibilité JS) -->
-      <div class="stat-bar" style="display:none !important">
-        <div class="stat-item"><span class="stat-label">Visités</span><span class="stat-value green" id="statVisites2">0</span></div>
-        <div class="stat-item"><span class="stat-label">Total</span><span class="stat-value" id="statTotal2">0</span></div>
-        <div class="stat-item"><span class="stat-label">Progression</span><span class="stat-value" id="statPct2">0%</span></div>
-      </div>
-      <div class="progress-wrap" style="display:none !important">
-        <div class="progress-track"><div class="progress-fill" id="progressFill2"></div></div>
+      <!-- FILTRES PILLS -->
+      <div class="carte-filters-pills" id="carteFilterPills">
+        <button class="cfp cfp-active" data-filter="all">Tous</button>
+        <button class="cfp cfp-green" data-filter="visited">Visités</button>
+        <button class="cfp cfp-red" data-filter="wishlist">Wishlist</button>
+        <button class="cfp" data-filter="Europe">Europe</button>
+        <button class="cfp" data-filter="Amérique du Sud">Amériques</button>
+        <button class="cfp" data-filter="Afrique">Afrique</button>
+        <button class="cfp" data-filter="Asie">Asie</button>
+        <button class="cfp" data-filter="Moyen-Orient">M-Orient</button>
       </div>
 
-      <div class="app-body">
+      <!-- TOOLBAR CARTE -->
+      <div class="carte-toolbar">
+        <select class="carte-tb-select" id="basemapSelect">
+          <option value="osm">🗺️ Clair</option>
+          <option value="topo">🏔️ Topo</option>
+          <option value="satellite">🛰️ Satellite</option>
+          <option value="dark">🌑 Sombre</option>
+        </select>
+        <div class="carte-tb-sep"></div>
+        <button class="carte-tb-btn" id="btnGeolocate">📍 Moi</button>
+        <button class="carte-tb-btn" id="btnZoomVisited">🎯 Visités</button>
+        <button class="carte-tb-btn" id="btnHeatmap">🔥 Heatmap</button>
+        <button class="carte-tb-btn" id="btnCluster" style="color:#0969da;border-color:#0969da">⬡ Clusters</button>
+      </div>
+
+      <!-- CARTE LEAFLET -->
+      <div id="map"></div>
+
+      <!-- RECHERCHE + FILTRES AVANCÉS (masqués par défaut, togglés) -->
+      <div class="carte-advanced" id="carteAdvanced" style="display:none">
         <div class="filters">
           <input type="text" id="searchInput" placeholder="Rechercher (stade, ville…)">
           <select id="paysFilter"><option value="">Tous les pays</option></select>
@@ -877,35 +973,34 @@
           <button class="btn btn-primary" id="btnVisited">Afficher : Tous</button>
           <button class="btn btn-ghost" id="btnReset">Réinitialiser</button>
         </div>
-        <div class="map-toolbar">
-          <span class="toolbar-label">Fond</span>
-          <select class="basemap-select" id="basemapSelect">
-            <option value="osm">🗺️ Clair</option>
-            <option value="topo">🏔️ Topographique</option>
-            <option value="satellite">🛰️ Satellite</option>
-            <option value="dark">🌑 Sombre</option>
-          </select>
-          <div class="sep"></div>
-          <button class="btn btn-ghost btn-sm" id="btnGeolocate">📍 Ma position</button>
-          <button class="btn btn-ghost btn-sm" id="btnZoomVisited">🎯 Zoom visités</button>
-          <div class="sep"></div>
-          <button class="btn btn-ghost btn-sm" id="btnHeatmap">🔥 Heatmap</button>
-          <button class="btn btn-ghost btn-sm" id="btnCluster" style="color:#0969da;border-color:#0969da">⬡ Clusters ON</button>
-        </div>
-        <div id="map"></div>
-        <div class="table-container">
-          <table id="stadesTable">
-            <thead>
-              <tr>
-                <th width="36"><input type="checkbox" id="selectAll" title="Tout cocher/décocher"></th>
-                <th>Stade</th><th>Club</th><th>Ville</th><th>Pays</th><th>Championnat</th>
-                <th width="80">Année</th><th width="60">Visité</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
       </div>
+
+      <!-- BOUTON TOGGLE RECHERCHE AVANCÉE -->
+      <button class="carte-search-toggle" id="btnToggleSearch">
+        🔍 Recherche avancée
+      </button>
+
+      <!-- LÉGENDE STATUTS (simple, 3 couleurs) -->
+      <div class="carte-legende">
+        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#00C875"></span>Visité</div>
+        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#CC1919"></span>Wishlist</div>
+        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#5A6070"></span>Non classé</div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-container">
+        <table id="stadesTable">
+          <thead>
+            <tr>
+              <th width="36"><input type="checkbox" id="selectAll" title="Tout cocher/décocher"></th>
+              <th>Stade</th><th>Club</th><th>Ville</th><th>Pays</th><th>Championnat</th>
+              <th width="80">Année</th><th width="60">Visité</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
     </div>
 
     <!-- PAGE NOTES -->
@@ -1550,8 +1645,8 @@ function initFilters() {
     document.getElementById('btnVisited').textContent='Afficher : Tous';
     document.getElementById('btnVisited').className='btn btn-primary';
     // Reset pills
-    document.querySelectorAll('.cfp').forEach(p=>p.classList.remove('cfp-active'));
-    document.querySelector('.cfp[data-filter="tous"]').classList.add('cfp-active');
+    document.querySelectorAll('#carteFilterPills .cfp').forEach(p=>p.classList.remove('cfp-active'));
+    document.querySelector('#carteFilterPills .cfp[data-filter="all"]').classList.add('cfp-active');
     renderAll();
   });
   document.getElementById('selectAll').addEventListener('change', e=>{
@@ -1560,34 +1655,37 @@ function initFilters() {
     commit();
   });
 
-  // ── Pills de filtre rapide (Option C) ──────────
-  document.querySelectorAll('.cfp').forEach(pill => {
+  // ── Pills filtres carte (Variante C) ──────────
+  document.querySelectorAll('#carteFilterPills .cfp').forEach(pill => {
     pill.addEventListener('click', () => {
-      document.querySelectorAll('.cfp').forEach(p => p.classList.remove('cfp-active'));
+      document.querySelectorAll('#carteFilterPills .cfp').forEach(p => p.classList.remove('cfp-active'));
       pill.classList.add('cfp-active');
 
       const f = pill.dataset.filter;
-      const cont = pill.dataset.continent;
 
       // Reset tout
       filter.visitedOnly = false;
       filter.continent   = '';
-      document.getElementById('btnVisited').textContent = 'Afficher : Tous';
-      document.getElementById('btnVisited').className   = 'btn btn-primary';
+      filter._wishlistOnly = false;
 
-      if (f === 'visites') {
+      if (f === 'visited') {
         filter.visitedOnly = true;
-        document.getElementById('btnVisited').textContent = 'Afficher : Visités';
-        document.getElementById('btnVisited').className   = 'btn btn-active';
       } else if (f === 'wishlist') {
-        // Filtre wishlist : on filtre sur les IDs en wishlist
         filter._wishlistOnly = true;
-      } else if (cont) {
-        filter.continent = cont;
+      } else if (f && f !== 'all' && CONTINENTS_MAP[f]) {
+        filter.continent = f;
       }
-      if (f !== 'wishlist') filter._wishlistOnly = false;
       renderAll();
     });
+  });
+
+  // Toggle recherche avancée
+  document.getElementById('btnToggleSearch')?.addEventListener('click', () => {
+    const adv = document.getElementById('carteAdvanced');
+    const btn = document.getElementById('btnToggleSearch');
+    const isOpen = adv.style.display !== 'none';
+    adv.style.display = isOpen ? 'none' : 'block';
+    btn.textContent = isOpen ? '🔍 Recherche avancée' : '✕ Fermer la recherche';
   });
 }
 
@@ -1604,13 +1702,12 @@ function syncAllMarkers() {
 
 function updateStats() {
   const total=stades.length, visites=stades.filter(s=>s.visite).length, pct=total?Math.round(visites/total*100):0;
-  // Header Option C
-  const counterVal = document.getElementById('statVisites');
-  if (counterVal) {
-    counterVal.innerHTML = `${visites} <span class="counter-total">/ <span id="statTotal">${total}</span></span>`;
-  }
-  const pctEl = document.getElementById('statPct');
-  if (pctEl) pctEl.textContent = `${pct}%`;
+  const elV = document.getElementById('statVisites');
+  if (elV) elV.textContent = visites;
+  const elT = document.getElementById('statTotal');
+  if (elT) elT.textContent = total;
+  const elP = document.getElementById('statPct');
+  if (elP) elP.textContent = `${pct}%`;
   const fill = document.getElementById('progressFill');
   if (fill) fill.style.width = `${pct}%`;
 }
