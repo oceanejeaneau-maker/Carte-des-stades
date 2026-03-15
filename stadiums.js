@@ -25,6 +25,14 @@ const STADES_DATA = [
   // ── Kategoria Superiore ──
   {nom:"Air Albania Stadium",club:"Sélection Albanie",ville:"Tirana",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.3281,lng:19.8308},
   {nom:"Qemal Stafa Stadium",club:"SK Tirana",ville:"Tirana",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.3333,lng:19.8167},
+  {nom:"Egnatia Arena",club:"KF Egnatia",ville:"Rrogozhinë",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.0736,lng:19.6681},
+  {nom:"Loro Borici Stadium",club:"KF Vllaznia",ville:"Shkodër",pays:"Albanie",championnat:"Kategoria Superiore",lat:42.0597,lng:19.5058},
+  {nom:"Selman Stërmasi Stadium",club:"FK Partizani Tirana",ville:"Tirana",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.3267,lng:19.8369},
+  {nom:"Stadiumi Laçi",club:"KF Laçi",ville:"Laç",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.6356,lng:19.7128},
+  {nom:"Niko Dovana Stadium",club:"KS Teuta Durrës",ville:"Durrës",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.3228,lng:19.4486},
+  {nom:"Stadiumi Skënderbeu",club:"KF Skënderbeu",ville:"Korçë",pays:"Albanie",championnat:"Kategoria Superiore",lat:40.6167,lng:20.7667},
+  {nom:"Elbasan Arena",club:"FC Dinamo City / AF Elbasani",ville:"Elbasan",pays:"Albanie",championnat:"Kategoria Superiore",lat:41.1108,lng:20.0819},
+  {nom:"Stadiumi Bylis",club:"KF Bylis",ville:"Ballsh",pays:"Albanie",championnat:"Kategoria Superiore",lat:40.5994,lng:19.7322},
 
   // ══════════════════════════════════════════════════
   // ALGÉRIE (12 stades)
@@ -270,6 +278,18 @@ const STADES_DATA = [
   {nom:"Estadio Brigadier General Estanislao López",club:"Colón",ville:"Santa Fe",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.6167,lng:-60.7333},
   {nom:"Estadio 15 de Abril",club:"Unión Santa Fe",ville:"Santa Fe",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.65,lng:-60.7167},
   {nom:"Estadio Monumental Presidente José Fierro",club:"Atlético Tucumán",ville:"Tucumán",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-26.8353,lng:-65.2089},
+  {nom:"Estadio Diego Armando Maradona",club:"Argentinos Juniors",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6056,lng:-58.4528},
+  {nom:"Estadio Julio César Villagra",club:"Belgrano",ville:"Córdoba",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.4028,lng:-64.1953},
+  {nom:"Estadio Norberto Tomaghello",club:"Defensa y Justicia",ville:"Florencio Varela",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.8142,lng:-58.2747},
+  {nom:"Estadio Malvinas Argentinas",club:"Godoy Cruz",ville:"Mendoza",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-32.9072,lng:-68.8458},
+  {nom:"Estadio Bautista Gargantini",club:"Independiente Rivadavia",ville:"Mendoza",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-32.8942,lng:-68.8281},
+  {nom:"Estadio Juan Domingo Perón",club:"Instituto",ville:"Córdoba",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-31.3706,lng:-64.1767},
+  {nom:"Estadio Ciudad de Vicente López",club:"Platense",ville:"Vicente López",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.5511,lng:-58.4764},
+  {nom:"Estadio Eva Perón",club:"Sarmiento",ville:"Junín",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.5872,lng:-60.9444},
+  {nom:"Estadio José Dellagiovanna",club:"Tigre",ville:"Victoria",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.4547,lng:-58.5342},
+  {nom:"Estadio Guillermo Laza",club:"Barracas Central",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6619,lng:-58.3836},
+  {nom:"Estadio Don León Kolbowski",club:"Deportivo Riestra",ville:"Buenos Aires",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-34.6581,lng:-58.4556},
+  {nom:"Estadio Alfredo Terrera",club:"Central Córdoba SdE",ville:"Santiago del Estero",pays:"Argentine",championnat:"Liga Profesional Argentina",lat:-27.7894,lng:-64.2614},
 
   // ══════════════════════════════════════════════════
   // ARMÉNIE (1 stade)
@@ -277,6 +297,15 @@ const STADES_DATA = [
 
   // ── Armenian Premier League ──
   {nom:"Vazgen Sargsyan Republican Stadium",club:"Sélection Arménie",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1792,lng:44.5089},
+  {nom:"Vazgen Sargsyan Stadium",club:"FC Noah",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1792,lng:44.5089},
+  {nom:"Vazgen Sargsyan Stadium",club:"FC Pyunik",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1792,lng:44.5089},
+  {nom:"Urartu Stadium",club:"FC Urartu",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1939,lng:44.5394},
+  {nom:"Ararat-Armenia Stadium",club:"FC Ararat-Armenia",ville:"Abovyan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.27,lng:44.6256},
+  {nom:"Alashkert Stadium",club:"FC Alashkert",ville:"Charentsavan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.4133,lng:44.6419},
+  {nom:"BKMA Stadium",club:"FC BKMA Yerevan",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1628,lng:44.5147},
+  {nom:"Gyumri City Stadium",club:"FC Shirak",ville:"Gyumri",pays:"Arménie",championnat:"Armenian Premier League",lat:40.7928,lng:43.8439},
+  {nom:"Ararat Stadium",club:"FC Ararat Yerevan",ville:"Erevan",pays:"Arménie",championnat:"Armenian Premier League",lat:40.1803,lng:44.5186},
+  {nom:"Gandzasar Stadium",club:"FC Gandzasar Kapan",ville:"Kapan",pays:"Arménie",championnat:"Armenian Premier League",lat:39.2069,lng:46.4047},
 
   // ══════════════════════════════════════════════════
   // AUSTRALIE (9 stades)
@@ -318,6 +347,15 @@ const STADES_DATA = [
   {nom:"Baku Olympic Stadium",club:"Sélection Azerbaïdjan",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4097,lng:49.9669},
   {nom:"Tofiq Bahramov Stadium",club:"Sélection Azerbaïdjan",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4,lng:49.8667},
   {nom:"Bakcell Arena",club:"FK Qarabag",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4167,lng:49.9},
+  {nom:"Neftçi PFK Arena",club:"Neftçi Baku",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.3828,lng:49.8603},
+  {nom:"Sabah Stadium",club:"Sabah FC",ville:"Masazır",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4256,lng:49.6883},
+  {nom:"Zirə Stadium",club:"Zirə FK",ville:"Zirə",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.3194,lng:49.9783},
+  {nom:"Tovuz City Stadium",club:"Turan Tovuz",ville:"Tovuz",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.9894,lng:45.6197},
+  {nom:"Şamaxı City Stadium",club:"Şamaxı FK",ville:"Şamaxı",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.6294,lng:48.6408},
+  {nom:"Gəncə City Stadium",club:"Kapaz PFK",ville:"Gəncə",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.5728,lng:46.3328},
+  {nom:"Sumqayıt Stadium",club:"Sumqayıt FK",ville:"Sumqayıt",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.5819,lng:49.6764},
+  {nom:"Dalğa Arena",club:"Səbail FK",ville:"Bakou",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:40.4072,lng:49.8394},
+  {nom:"Naxçıvan City Stadium",club:"Araz-Naxçıvan",ville:"Naxçıvan",pays:"Azerbaïdjan",championnat:"Premyer Liqa",lat:39.2094,lng:45.4119},
 
   // ══════════════════════════════════════════════════
   // BAHREÏN (1 stade)
@@ -387,8 +425,17 @@ const STADES_DATA = [
   // ══════════════════════════════════════════════════
 
   // ── Premier Liga BiH ──
-  {nom:"Gradski Stadion Banja Luka",club:"FK Borac Banja Luka",ville:"Banja Luka",pays:"Bosnie",championnat:"Premier Liga BiH",lat:44.7667,lng:17.1833},
-  {nom:"Bilino Polje",club:"FK Željezničar",ville:"Zenica",pays:"Bosnie",championnat:"Premier Liga BiH",lat:44.2069,lng:17.9119},
+  {nom:"Gradski Stadion Banja Luka",club:"FK Borac Banja Luka",ville:"Banja Luka",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:44.7667,lng:17.1833},
+  {nom:"Bilino Polje",club:"FK Čelik Zenica",ville:"Zenica",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:44.2069,lng:17.9119},
+  {nom:"Stadion HŠK Zrinjski",club:"HŠK Zrinjski Mostar",ville:"Mostar",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:43.3425,lng:17.8119},
+  {nom:"Asim Ferhatović Hase Stadium",club:"FK Sarajevo",ville:"Sarajevo",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:43.8461,lng:18.3714},
+  {nom:"Grbavica Stadium",club:"FK Željezničar",ville:"Sarajevo",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:43.8433,lng:18.3867},
+  {nom:"Stadion Pecara",club:"NK Široki Brijeg",ville:"Široki Brijeg",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:43.3844,lng:17.595},
+  {nom:"Stadion Velež",club:"FK Velež Mostar",ville:"Mostar",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:43.3481,lng:17.8053},
+  {nom:"Stadion Mokri Dolac",club:"HŠK Posušje",ville:"Posušje",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:43.4667,lng:17.3333},
+  {nom:"Gradski Stadion Trebinje",club:"FK Leotar",ville:"Trebinje",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:42.7117,lng:18.3428},
+  {nom:"Tušanj Stadium",club:"FK Sloboda Tuzla",ville:"Tuzla",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:44.5375,lng:18.6728},
+  {nom:"Gradski Stadion Bijeljina",club:"FK Radnik Bijeljina",ville:"Bijeljina",pays:"Bosnie-Herzégovine",championnat:"Premier Liga BiH",lat:44.7542,lng:19.2172},
 
   // ══════════════════════════════════════════════════
   // BRESIL (27 stades)
@@ -422,12 +469,37 @@ const STADES_DATA = [
   {nom:"Allianz Parque",club:"Palmeiras",ville:"São Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5273,lng:-46.6789},
   {nom:"Neo Química Arena",club:"Corinthians",ville:"São Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5456,lng:-46.4736},
   {nom:"Estádio do Morumbi",club:"São Paulo FC",ville:"São Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.6008,lng:-46.7197},
+
+  // ══════════════════════════════════════════════════
+  // BRÉSIL (3 stades)
+  // ══════════════════════════════════════════════════
+
   // ── Serie B Brazil ──
-  {nom:"Estádio da Ressacada",club:"Avaí FC",ville:"Florianópolis",pays:"Bresil",championnat:"Serie B Brazil",lat:-27.6472,lng:-48.5364},
-  {nom:"Estádio Rei Pelé",club:"CRB",ville:"Maceió",pays:"Bresil",championnat:"Serie B Brazil",lat:-9.6244,lng:-35.7281},
+  {nom:"Estádio da Ressacada",club:"Avaí FC",ville:"Florianópolis",pays:"Brésil",championnat:"Serie B Brazil",lat:-27.6472,lng:-48.5364},
+  {nom:"Estádio Rei Pelé",club:"CRB",ville:"Maceió",pays:"Brésil",championnat:"Serie B Brazil",lat:-9.6244,lng:-35.7281},
 
   // ── Serie C Brazil ──
-  {nom:"Estádio João Hora de Oliveira",club:"América de Natal",ville:"Natal",pays:"Bresil",championnat:"Serie C Brazil",lat:-5.7969,lng:-35.2042},
+  {nom:"Estádio João Hora de Oliveira",club:"América de Natal",ville:"Natal",pays:"Brésil",championnat:"Serie C Brazil",lat:-5.7969,lng:-35.2042},
+  {nom:"Estádio Nilton Santos",club:"Botafogo",ville:"Rio de Janeiro",pays:"Brésil",championnat:"Série A Brazil",lat:-22.8978,lng:-43.2278},
+  {nom:"Allianz Parque",club:"Palmeiras",ville:"São Paulo",pays:"Brésil",championnat:"Série A Brazil",lat:-23.5267,lng:-46.6781},
+  {nom:"Maracanã",club:"Flamengo",ville:"Rio de Janeiro",pays:"Brésil",championnat:"Série A Brazil",lat:-22.9122,lng:-43.2302},
+  {nom:"Arena MRV",club:"Atlético Mineiro",ville:"Belo Horizonte",pays:"Brésil",championnat:"Série A Brazil",lat:-19.9208,lng:-44.0011},
+  {nom:"Maracanã",club:"Fluminense",ville:"Rio de Janeiro",pays:"Brésil",championnat:"Série A Brazil",lat:-22.9122,lng:-43.2302},
+  {nom:"Estádio Beira-Rio",club:"Internacional",ville:"Porto Alegre",pays:"Brésil",championnat:"Série A Brazil",lat:-30.0658,lng:-51.2369},
+  {nom:"MorumBIS",club:"São Paulo FC",ville:"São Paulo",pays:"Brésil",championnat:"Série A Brazil",lat:-23.5983,lng:-46.7228},
+  {nom:"Estádio Mineirão",club:"Cruzeiro",ville:"Belo Horizonte",pays:"Brésil",championnat:"Série A Brazil",lat:-19.8658,lng:-43.9706},
+  {nom:"Ligga Arena",club:"Athletico Paranaense",ville:"Curitiba",pays:"Brésil",championnat:"Série A Brazil",lat:-25.4481,lng:-49.2769},
+  {nom:"Arena do Grêmio",club:"Grêmio",ville:"Porto Alegre",pays:"Brésil",championnat:"Série A Brazil",lat:-29.9711,lng:-51.1853},
+  {nom:"Estádio São Januário",club:"Vasco da Gama",ville:"Rio de Janeiro",pays:"Brésil",championnat:"Série A Brazil",lat:-22.8914,lng:-43.2186},
+  {nom:"Arena Fonte Nova",club:"Bahia",ville:"Salvador",pays:"Brésil",championnat:"Série A Brazil",lat:-12.9786,lng:-38.5042},
+  {nom:"Arena Castelão",club:"Fortaleza EC",ville:"Fortaleza",pays:"Brésil",championnat:"Série A Brazil",lat:-3.8072,lng:-38.5225},
+  {nom:"Estádio Nabi Abi Chedid",club:"RB Bragantino",ville:"Bragança Paulista",pays:"Brésil",championnat:"Série A Brazil",lat:-22.9567,lng:-46.5281},
+  {nom:"Neo Química Arena",club:"Corinthians",ville:"São Paulo",pays:"Brésil",championnat:"Série A Brazil",lat:-23.5454,lng:-46.4742},
+  {nom:"Arena Pantanal",club:"Cuiabá EC",ville:"Cuiabá",pays:"Brésil",championnat:"Série A Brazil",lat:-15.5936,lng:-56.0972},
+  {nom:"Estádio Alfredo Jaconi",club:"Juventude",ville:"Caxias do Sul",pays:"Brésil",championnat:"Série A Brazil",lat:-29.1483,lng:-51.1764},
+  {nom:"Estádio Heriberto Hülse",club:"Criciúma",ville:"Criciúma",pays:"Brésil",championnat:"Série A Brazil",lat:-28.6911,lng:-49.3644},
+  {nom:"Estádio Manoel Barradas",club:"Vitória",ville:"Salvador",pays:"Brésil",championnat:"Série A Brazil",lat:-12.9528,lng:-38.4867},
+  {nom:"Estádio Antônio Accioly",club:"Atlético Goianiense",ville:"Goiânia",pays:"Brésil",championnat:"Série A Brazil",lat:-16.6972,lng:-49.2856},
 
   // ══════════════════════════════════════════════════
   // BULGARIE (3 stades)
@@ -437,6 +509,18 @@ const STADES_DATA = [
   {nom:"Ludogorets Arena",club:"Ludogorets Razgrad",ville:"Razgrad",pays:"Bulgarie",championnat:"Parva liga",lat:43.5333,lng:26.5167},
   {nom:"Vasil Levski National Stadium",club:"Sélection Bulgarie",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6556,lng:23.3483},
   {nom:"Stadion Lokomotiv",club:"Lokomotiv Sofia",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6667,lng:23.3333},
+  {nom:"Stadion Georgi Asparuhov",club:"Levski Sofia",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6736,lng:23.3317},
+  {nom:"Stadion Balgarska Armia",club:"CSKA Sofia",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6658,lng:23.3256},
+  {nom:"Stadion Slavia",club:"Slavia Sofia",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.6903,lng:23.2886},
+  {nom:"Stadion Ticha",club:"Cherno More Varna",ville:"Varna",pays:"Bulgarie",championnat:"Parva liga",lat:43.2081,lng:27.9244},
+  {nom:"Stadion Hristo Botev",club:"Botev Plovdiv",ville:"Plovdiv",pays:"Bulgarie",championnat:"Parva liga",lat:42.1486,lng:24.7481},
+  {nom:"Stadion Beroe",club:"PFC Beroe",ville:"Stara Zagora",pays:"Bulgarie",championnat:"Parva liga",lat:42.425,lng:25.6317},
+  {nom:"Stadion Vitosha Bistritsa",club:"FK CSKA 1948",ville:"Sofia",pays:"Bulgarie",championnat:"Parva liga",lat:42.5681,lng:23.3636},
+  {nom:"Stadion Spartak Varna",club:"Spartak 1918 Varna",ville:"Varna",pays:"Bulgarie",championnat:"Parva liga",lat:43.2167,lng:27.9333},
+  {nom:"Stadion Arda",club:"Arda Kardzhali",ville:"Kardzhali",pays:"Bulgarie",championnat:"Parva liga",lat:41.6431,lng:25.3756},
+  {nom:"Stadion Hristo Botev Vratsa",club:"Botev Vratsa",ville:"Vratsa",pays:"Bulgarie",championnat:"Parva liga",lat:43.2086,lng:23.5536},
+  {nom:"Stadion Lokomotiv Plovdiv",club:"Lokomotiv Plovdiv",ville:"Plovdiv",pays:"Bulgarie",championnat:"Parva liga",lat:42.1417,lng:24.7492},
+  {nom:"Stadion Krumovgrad",club:"FC Krumovgrad",ville:"Krumovgrad",pays:"Bulgarie",championnat:"Parva liga",lat:41.4731,lng:25.6553},
 
   // ══════════════════════════════════════════════════
   // BURKINA FASO (1 stade)
@@ -518,6 +602,18 @@ const STADES_DATA = [
   // ── 1. Division Chypre ──
   {nom:"AEK Arena",club:"AEK Larnaca",ville:"Larnaca",pays:"Chypre",championnat:"1. Division Chypre",lat:34.9167,lng:33.6333},
   {nom:"GSP Stadium",club:"APOEL FC",ville:"Nicosie",pays:"Chypre",championnat:"1. Division Chypre",lat:35.1597,lng:33.3694},
+  {nom:"Pafos Municipal Stadium",club:"Pafos FC",ville:"Paphos",pays:"Chypre",championnat:"1. Division Chypre",lat:34.7756,lng:32.4208},
+  {nom:"GSP Stadium",club:"AC Omonia",ville:"Nicosie",pays:"Chypre",championnat:"1. Division Chypre",lat:35.1597,lng:33.3694},
+  {nom:"Antonis Papadopoulos Stadium",club:"Anorthosis Famagusta",ville:"Larnaca",pays:"Chypre",championnat:"1. Division Chypre",lat:34.8978,lng:33.6475},
+  {nom:"Tsirion Stadium",club:"Apollon Limassol",ville:"Limassol",pays:"Chypre",championnat:"1. Division Chypre",lat:34.6783,lng:33.0397},
+  {nom:"Tsirion Stadium",club:"AEL Limassol",ville:"Limassol",pays:"Chypre",championnat:"1. Division Chypre",lat:34.6783,lng:33.0397},
+  {nom:"Tsirion Stadium",club:"Aris Limassol",ville:"Limassol",pays:"Chypre",championnat:"1. Division Chypre",lat:34.6783,lng:33.0397},
+  {nom:"Karmiotissa Stadium",club:"Karmiotissa FC",ville:"Pano Polemidia",pays:"Chypre",championnat:"1. Division Chypre",lat:34.7167,lng:33.0667},
+  {nom:"Ammochostos Stadium",club:"Omonia 29M",ville:"Paralimni",pays:"Chypre",championnat:"1. Division Chypre",lat:35.0369,lng:33.9833},
+  {nom:"Dasaki Achnas Stadium",club:"Ethnikos Achna",ville:"Derynia",pays:"Chypre",championnat:"1. Division Chypre",lat:35.0644,lng:33.9353},
+  {nom:"Nea Salamis Stadium",club:"Nea Salamis",ville:"Larnaca",pays:"Chypre",championnat:"1. Division Chypre",lat:34.915,lng:33.6422},
+  {nom:"Makario Stadium",club:"Olympiakos Nicosia",ville:"Nicosie",pays:"Chypre",championnat:"1. Division Chypre",lat:35.1528,lng:33.3642},
+  {nom:"Othellos Stadium",club:"Othellos Athienou",ville:"Athienou",pays:"Chypre",championnat:"1. Division Chypre",lat:34.9917,lng:33.5386},
 
   // ══════════════════════════════════════════════════
   // COLOMBIE (18 stades)
@@ -761,6 +857,15 @@ const STADES_DATA = [
 
   // ── Meistriliiga ──
   {nom:"A. Le Coq Arena",club:"FC Flora",ville:"Tallinn",pays:"Estonie",championnat:"Meistriliiga",lat:59.4228,lng:24.8258},
+  {nom:"Kadrioru Stadion",club:"FCI Levadia Tallinn",ville:"Tallinn",pays:"Estonie",championnat:"Meistriliiga",lat:59.4411,lng:24.79},
+  {nom:"Hiiu Staadion",club:"Nõmme Kalju FC",ville:"Tallinn",pays:"Estonie",championnat:"Meistriliiga",lat:59.3928,lng:24.6836},
+  {nom:"Paide Linnameeskond Staadion",club:"Paide Linnameeskond",ville:"Paide",pays:"Estonie",championnat:"Meistriliiga",lat:58.8853,lng:25.5578},
+  {nom:"Kuressaare Linnastaadion",club:"FC Kuressaare",ville:"Kuressaare",pays:"Estonie",championnat:"Meistriliiga",lat:58.2531,lng:22.4906},
+  {nom:"Pärnu Rannastaadion",club:"Pärnu JK Vaprus",ville:"Pärnu",pays:"Estonie",championnat:"Meistriliiga",lat:58.3939,lng:24.4728},
+  {nom:"Kreenholm Staadion",club:"Narva Trans",ville:"Narva",pays:"Estonie",championnat:"Meistriliiga",lat:59.3847,lng:28.2028},
+  {nom:"Tamme Staadion",club:"JK Tammeka Tartu",ville:"Tartu",pays:"Estonie",championnat:"Meistriliiga",lat:58.3633,lng:26.7203},
+  {nom:"Kalevi Keskstaadion",club:"Tallinna Kalev",ville:"Tallinn",pays:"Estonie",championnat:"Meistriliiga",lat:59.4283,lng:24.7478},
+  {nom:"Nõmme Kunstmurustaadion",club:"FC Nõmme United",ville:"Tallinn",pays:"Estonie",championnat:"Meistriliiga",lat:59.3764,lng:24.6994},
 
   // ══════════════════════════════════════════════════
   // ÉTHIOPIE (1 stade)
@@ -891,6 +996,15 @@ const STADES_DATA = [
   // ── Erovnuli Liga ──
   {nom:"Boris Paichadze Dinamo Arena",club:"Dinamo Tbilissi",ville:"Tbilissi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.7381,lng:44.7661},
   {nom:"Mikheil Meskhi Stadium",club:"Sélection Géorgie",ville:"Tbilissi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.7333,lng:44.7833},
+  {nom:"Stadioni Givi Chokheli",club:"FC Iberia 1999",ville:"Tbilissi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.7472,lng:44.8019},
+  {nom:"Ramaz Shengelia Stadium",club:"Torpedo Kutaisi",ville:"Kutaisi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:42.2681,lng:42.7069},
+  {nom:"Tengiz Burjanadze Stadium",club:"FC Dila Gori",ville:"Gori",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.985,lng:44.1119},
+  {nom:"Adjarabet Arena",club:"FC Dinamo Batumi",ville:"Batumi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.6564,lng:41.6342},
+  {nom:"Tskaltubo Stadium",club:"FC Samgurali",ville:"Tskaltubo",pays:"Géorgie",championnat:"Erovnuli Liga",lat:42.3344,lng:42.5925},
+  {nom:"Poti Stadium",club:"Kolkheti 1913 Poti",ville:"Poti",pays:"Géorgie",championnat:"Erovnuli Liga",lat:42.1583,lng:41.6731},
+  {nom:"Stadioni Gagra",club:"FC Gagra",ville:"Tbilissi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.7614,lng:44.8542},
+  {nom:"Telavi Stadium",club:"FC Telavi",ville:"Telavi",pays:"Géorgie",championnat:"Erovnuli Liga",lat:41.9186,lng:45.4753},
+  {nom:"Erosi Manjgaladze Stadium",club:"FC Samtredia",ville:"Samtredia",pays:"Géorgie",championnat:"Erovnuli Liga",lat:42.1583,lng:42.3453},
 
   // ══════════════════════════════════════════════════
   // GHANA (2 stades)
@@ -958,6 +1072,17 @@ const STADES_DATA = [
   // ── OTP Bank Liga ──
   {nom:"Puskas Arena",club:"Equipe nationale Hongrie",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5014,lng:19.0636},
   {nom:"Groupama Arena",club:"Ferencvaros",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.4561,lng:19.0986},
+  {nom:"Szusza Ferenc Stadion",club:"Újpest FC",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5647,lng:19.0836},
+  {nom:"Hidegkuti Nándor Stadion",club:"MTK Budapest",ville:"Budapest",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5256,lng:19.0794},
+  {nom:"Paksi FC Stadion",club:"Paksi FC",ville:"Paks",pays:"Hongrie",championnat:"OTP Bank Liga",lat:46.6281,lng:18.8614},
+  {nom:"Sóstói Stadion",club:"Fehérvár FC",ville:"Székesfehérvár",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.1836,lng:18.4183},
+  {nom:"Nagyerdei Stadion",club:"Debreceni VSC",ville:"Debrecen",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.55,lng:21.6114},
+  {nom:"ZTE Aréna",club:"Zalaegerszegi TE",ville:"Zalaegerszeg",pays:"Hongrie",championnat:"OTP Bank Liga",lat:46.8347,lng:16.8556},
+  {nom:"Pancho Aréna",club:"Puskás Akadémia FC",ville:"Felcsút",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.5978,lng:18.4897},
+  {nom:"Diósgyőri Stadion",club:"Diósgyőri VTK",ville:"Miskolc",pays:"Hongrie",championnat:"OTP Bank Liga",lat:48.1019,lng:20.7711},
+  {nom:"Széktói Stadion",club:"Kecskeméti TE",ville:"Kecskemét",pays:"Hongrie",championnat:"OTP Bank Liga",lat:46.8908,lng:19.6878},
+  {nom:"Nyíregyháza Városi Stadion",club:"Nyíregyháza Spartacus",ville:"Nyíregyháza",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.9536,lng:21.7244},
+  {nom:"ETO Park",club:"Győri ETO FC",ville:"Győr",pays:"Hongrie",championnat:"OTP Bank Liga",lat:47.6772,lng:17.6297},
 
   // ══════════════════════════════════════════════════
   // ÎLES SALOMON (1 stade)
@@ -1015,6 +1140,18 @@ const STADES_DATA = [
 
   // ── Úrvalsdeild ──
   {nom:"Laugardalsvöllur",club:"Sélection Islande",ville:"Reykjavik",pays:"Islande",championnat:"Úrvalsdeild",lat:64.1436,lng:-21.8739},
+  {nom:"Kópavogsvöllur",club:"Breiðablik",ville:"Kópavogur",pays:"Islande",championnat:"Besta deild karla",lat:64.1097,lng:-21.9194},
+  {nom:"Víkingsvöllur",club:"Víkingur Reykjavík",ville:"Reykjavík",pays:"Islande",championnat:"Besta deild karla",lat:64.1483,lng:-21.9456},
+  {nom:"KR-völlur",club:"KR Reykjavík",ville:"Reykjavík",pays:"Islande",championnat:"Besta deild karla",lat:64.1461,lng:-21.9369},
+  {nom:"Akureyrarvöllur",club:"KA Akureyri",ville:"Akureyri",pays:"Islande",championnat:"Besta deild karla",lat:65.6806,lng:-18.0906},
+  {nom:"Hlíðarendi Stadium",club:"Valur Reykjavík",ville:"Reykjavík",pays:"Islande",championnat:"Besta deild karla",lat:64.1319,lng:-21.8819},
+  {nom:"Kaplakriki",club:"FH Hafnarfjörður",ville:"Hafnarfjörður",pays:"Islande",championnat:"Besta deild karla",lat:64.0689,lng:-21.9606},
+  {nom:"Laugardalsvöllur",club:"Fram Reykjavík",ville:"Reykjavík",pays:"Islande",championnat:"Besta deild karla",lat:64.1436,lng:-21.8739},
+  {nom:"Kórinn",club:"HK Kópavogur",ville:"Kópavogur",pays:"Islande",championnat:"Besta deild karla",lat:64.1081,lng:-21.9231},
+  {nom:"Stjörnuvöllur",club:"Ungmennafélagið Stjarnan",ville:"Garðabær",pays:"Islande",championnat:"Besta deild karla",lat:64.0833,lng:-21.9236},
+  {nom:"Fylkisvöllur",club:"Fylkir Reykjavík",ville:"Reykjavík",pays:"Islande",championnat:"Besta deild karla",lat:64.1253,lng:-21.8722},
+  {nom:"Akranesvöllur",club:"ÍA Akranes",ville:"Akranes",pays:"Islande",championnat:"Besta deild karla",lat:64.3133,lng:-22.0764},
+  {nom:"Vestrivöllur",club:"Vestri",ville:"Ísafjörður",pays:"Islande",championnat:"Besta deild karla",lat:66.075,lng:-23.1347},
 
   // ══════════════════════════════════════════════════
   // ITALIE (44 stades)
@@ -1132,7 +1269,16 @@ const STADES_DATA = [
 
   // ── Virslīga ──
   {nom:"Daugava Stadium",club:"Sélection Lettonie",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.95,lng:24.1167},
-  {nom:"Skonto Stadium",club:"RFS Riga",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.9631,lng:24.0825},
+  {nom:"Skonto Stadium",club:"Riga FC",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.9631,lng:24.0825},
+  {nom:"Daugavas Stadionā",club:"FK RFS",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.9531,lng:24.1061},
+  {nom:"Sporta Komplekss Keizarmežs",club:"FK Auda",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:57.0219,lng:24.0978},
+  {nom:"Esplanādes Stadions",club:"BFC Daugavpils",ville:"Daugavpils",pays:"Lettonie",championnat:"Virslīga",lat:55.8744,lng:26.5319},
+  {nom:"Stadions Daugava",club:"FK Liepāja",ville:"Liepāja",pays:"Lettonie",championnat:"Virslīga",lat:56.5058,lng:21.0108},
+  {nom:"Daugavas Stadionā",club:"FS Metta/LU",ville:"Riga",pays:"Lettonie",championnat:"Virslīga",lat:56.9531,lng:24.1061},
+  {nom:"Tukuma Stadions",club:"FK Tukums 2000",ville:"Tukums",pays:"Lettonie",championnat:"Virslīga",lat:56.9678,lng:23.1536},
+  {nom:"Stadions Daugava",club:"Grobiņas SC",ville:"Liepāja",pays:"Lettonie",championnat:"Virslīga",lat:56.5058,lng:21.0108},
+  {nom:"Zemgales Olimpiskais Centrs",club:"FS Jelgava",ville:"Jelgava",pays:"Lettonie",championnat:"Virslīga",lat:56.6503,lng:23.7181},
+  {nom:"Vidzemes Olimpiskais Centrs",club:"Valmiera FK",ville:"Valmiera",pays:"Lettonie",championnat:"Virslīga",lat:57.5372,lng:25.4281},
 
   // ══════════════════════════════════════════════════
   // LIBAN (1 stade)
@@ -1154,6 +1300,15 @@ const STADES_DATA = [
 
   // ── A Lyga ──
   {nom:"LFF Stadium",club:"Žalgiris Vilnius",ville:"Vilnius",pays:"Lituanie",championnat:"A Lyga",lat:54.6783,lng:25.2167},
+  {nom:"Raudondvario Stadionas",club:"FC Hegelmann",ville:"Raudondvaris",pays:"Lituanie",championnat:"A Lyga",lat:54.9258,lng:23.8642},
+  {nom:"Kauno Žalgirio Stadionas",club:"FK Kauno Žalgiris",ville:"Kaunas",pays:"Lituanie",championnat:"A Lyga",lat:54.9003,lng:23.9028},
+  {nom:"Panevėžio Stadionas",club:"FK Panevėžys",ville:"Panevėžys",pays:"Lituanie",championnat:"A Lyga",lat:55.7347,lng:24.3578},
+  {nom:"Ąžuolyno Stadionas",club:"FK Banga",ville:"Gargždai",pays:"Lituanie",championnat:"A Lyga",lat:55.7147,lng:21.3958},
+  {nom:"Alytaus Miesto Stadionas",club:"DFK Dainava",ville:"Alytus",pays:"Lituanie",championnat:"A Lyga",lat:54.4019,lng:24.0508},
+  {nom:"Telšių Stadionas",club:"FC Džiugas",ville:"Telšiai",pays:"Lituanie",championnat:"A Lyga",lat:55.9839,lng:22.2511},
+  {nom:"LFF Stadionas",club:"FK Riteriai",ville:"Vilnius",pays:"Lituanie",championnat:"A Lyga",lat:54.6783,lng:25.2167},
+  {nom:"Marijampolės Stadionas",club:"FK Sūduva",ville:"Marijampolė",pays:"Lituanie",championnat:"A Lyga",lat:54.5592,lng:23.3533},
+  {nom:"Šiaulių Stadionas",club:"FA Šiauliai",ville:"Šiauliai",pays:"Lituanie",championnat:"A Lyga",lat:55.9333,lng:23.3131},
 
   // ══════════════════════════════════════════════════
   // LUXEMBOURG (2 stades)
@@ -1162,6 +1317,21 @@ const STADES_DATA = [
   // ── BGL Ligue ──
   {nom:"Stade de Luxembourg",club:"Sélection Luxembourg",ville:"Luxembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5978,lng:6.2175},
   {nom:"Josy Barthel Stadion",club:"Sélection Luxembourg",ville:"Luxembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.6167,lng:6.1333},
+  {nom:"Stade de la Frontière",club:"AS Jeunesse d'Esch",ville:"Esch-sur-Alzette",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.4944,lng:5.9811},
+  {nom:"Stade Émile-Mayrisch",club:"CS Fola Esch",ville:"Esch-sur-Alzette",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5028,lng:5.9806},
+  {nom:"Stade Jos Nosbaum",club:"F91 Dudelange",ville:"Dudelange",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.4808,lng:6.0869},
+  {nom:"Stade du Thillenberg",club:"FC Differdange 03",ville:"Differdange",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5239,lng:5.8856},
+  {nom:"Stade Am Deich",club:"FC Etzella Ettelbruck",ville:"Ettelbruck",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.8467,lng:6.1019},
+  {nom:"Stade Communal Mondercange",club:"FC Mondercange",ville:"Mondercange",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5317,lng:6.0344},
+  {nom:"Stade Jos Haupert",club:"FC Progrès Niederkorn",ville:"Niederkorn",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5331,lng:5.8878},
+  {nom:"Stade Municipal Hesperange",club:"FC Swift Hesperange",ville:"Hesperange",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5656,lng:6.1694},
+  {nom:"Terrain Strassen",club:"FC UNA Strassen",ville:"Strassen",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.6153,lng:6.0758},
+  {nom:"Stade Municipal Bonnevoie",club:"RFCU Luxembourg",ville:"Luxembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5972,lng:6.1408},
+  {nom:"Stade de la Ville de Luxembourg",club:"Racing FC Union Luxembourg",ville:"Luxembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.6036,lng:6.1317},
+  {nom:"Stade Municipal Pétange",club:"UT Pétange",ville:"Pétange",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5553,lng:5.8736},
+  {nom:"Terrain Bettembourg",club:"SC Bettembourg",ville:"Bettembourg",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5192,lng:6.1033},
+  {nom:"Stade Municipal Rodange",club:"FC Rodange 91",ville:"Rodange",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.5483,lng:5.8461},
+  {nom:"Stade du Wiltzhof",club:"FC Wiltz 71",ville:"Wiltz",pays:"Luxembourg",championnat:"BGL Ligue",lat:49.9658,lng:5.9314},
 
   // ══════════════════════════════════════════════════
   // MACÉDOINE DU NORD (1 stade)
@@ -1169,6 +1339,16 @@ const STADES_DATA = [
 
   // ── Prva Fudbalska Liga ──
   {nom:"Toše Proeski Arena",club:"Sélection Macédoine",ville:"Skopje",pays:"Macédoine du Nord",championnat:"Prva Fudbalska Liga",lat:41.9967,lng:21.4144},
+  {nom:"Gradski Stadion Tetovo",club:"KF Shkëndija",ville:"Tetovo",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.9967,lng:20.9714},
+  {nom:"Sileks Stadion",club:"FK Sileks",ville:"Kratovo",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:42.0775,lng:22.1789},
+  {nom:"Čair Stadium",club:"FK Rabotnički",ville:"Skopje",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:42.0033,lng:21.4397},
+  {nom:"Gradski Stadion Skopje",club:"FK Vardar",ville:"Skopje",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.9953,lng:21.4311},
+  {nom:"Gradski Stadion Struga",club:"FK Struga Trim-Lum",ville:"Struga",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.1778,lng:20.6792},
+  {nom:"Stadion Gjorče Petrov",club:"FK Shkupi",ville:"Skopje",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.9964,lng:21.3736},
+  {nom:"Gradski Stadion Kavadarci",club:"FK Tikveš",ville:"Kavadarci",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.4333,lng:22.0},
+  {nom:"Tumbe Kafe Stadium",club:"FK Pelister",ville:"Bitola",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.0361,lng:21.3422},
+  {nom:"Borola Stadium",club:"AP Brera Strumica",ville:"Strumica",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.4361,lng:22.6422},
+  {nom:"Gradski Stadion Gostivar",club:"FK Gostivar",ville:"Gostivar",pays:"Macédoine du Nord",championnat:"Prva Makedonska Fudbalska Liga",lat:41.7953,lng:20.9083},
 
   // ══════════════════════════════════════════════════
   // MADAGASCAR (1 stade)
@@ -1199,6 +1379,17 @@ const STADES_DATA = [
 
   // ── Premier League Malte ──
   {nom:"Ta' Qali National Stadium",club:"Sélection Malte",ville:"Ta' Qali",pays:"Malte",championnat:"Premier League Malte",lat:35.8972,lng:14.4139},
+  {nom:"Victor Tedesco Stadium",club:"Ħamrun Spartans",ville:"Ħamrun",pays:"Malte",championnat:"Premier League Malte",lat:35.8858,lng:14.4836},
+  {nom:"Centenary Stadium",club:"Floriana FC",ville:"Ta' Qali",pays:"Malte",championnat:"Premier League Malte",lat:35.8969,lng:14.4097},
+  {nom:"Tony Bezzina Stadium",club:"Birkirkara FC",ville:"Birkirkara",pays:"Malte",championnat:"Premier League Malte",lat:35.8958,lng:14.4647},
+  {nom:"Ta' Qali National Stadium",club:"Sliema Wanderers",ville:"Ta' Qali",pays:"Malte",championnat:"Premier League Malte",lat:35.8972,lng:14.4139},
+  {nom:"Corradino Stadium",club:"Hibernians FC",ville:"Paola",pays:"Malte",championnat:"Premier League Malte",lat:35.8694,lng:14.5025},
+  {nom:"Mosta Stadium",club:"Mosta FC",ville:"Mosta",pays:"Malte",championnat:"Premier League Malte",lat:35.9092,lng:14.4264},
+  {nom:"Gżira Stadium",club:"Gżira United",ville:"Gżira",pays:"Malte",championnat:"Premier League Malte",lat:35.9092,lng:14.4994},
+  {nom:"Marsaxlokk Ground",club:"Marsaxlokk FC",ville:"Marsaxlokk",pays:"Malte",championnat:"Premier League Malte",lat:35.8417,lng:14.5444},
+  {nom:"Naxxar Ground",club:"Naxxar Lions",ville:"Naxxar",pays:"Malte",championnat:"Premier League Malte",lat:35.9161,lng:14.4397},
+  {nom:"Balzan Ground",club:"Balzan FC",ville:"Balzan",pays:"Malte",championnat:"Premier League Malte",lat:35.8906,lng:14.4567},
+  {nom:"Marsa Ground",club:"FC Melita",ville:"Marsa",pays:"Malte",championnat:"Premier League Malte",lat:35.8783,lng:14.4933},
 
   // ══════════════════════════════════════════════════
   // MAROC (11 stades)
@@ -1343,6 +1534,36 @@ const STADES_DATA = [
   // ── LPF Panama ──
   {nom:"Estadio Rommel Fernández",club:"Sélection Panama",ville:"Panama City",pays:"Panama",championnat:"LPF Panama",lat:9.0,lng:-79.5333},
 
+
+  // ══════════════════════════════════════════════════
+  // PÉROU (18 stades)
+  // ══════════════════════════════════════════════════
+  // ── Liga 1 ──
+  {nom:"Estadio Monumental",club:"Universitario",ville:"Lima",pays:"Pérou",championnat:"Liga 1 Peru",lat:-12.0517,lng:-76.9517},
+  {nom:"Estadio Nacional",club:"Alianza Lima",ville:"Lima",pays:"Pérou",championnat:"Liga 1 Peru",lat:-12.07,lng:-77.0333},
+  
+  {nom:"Estadio Monumental UNSA",club:"FBC Melgar",ville:"Arequipa",pays:"Pérou",championnat:"Liga 1 Peru",lat:-16.4061,lng:-71.5394},
+  {nom:"Estadio Municipal Campeones del 36",club:"Alianza Atlético",ville:"Sullana",pays:"Pérou",championnat:"Liga 1 Peru",lat:-4.9003,lng:-80.6881},
+  
+  
+  {nom:"Estadio Municipal Sullana",club:"Atlético Grau",ville:"Sullana",pays:"Pérou",championnat:"Liga 1 Peru",lat:-4.8908,lng:-80.6925},
+  {nom:"Estadio Miguel Grau",club:"Sport Boys",ville:"Callao",pays:"Pérou",championnat:"Liga 1 Peru",lat:-12.0522,lng:-77.1408},
+  
+  {nom:"Estadio Juan Maldonado Gamarra",club:"UTC",ville:"Cajamarca",pays:"Pérou",championnat:"Liga 1 Peru",lat:-7.1592,lng:-78.5083},
+  {nom:"Estadio Carlos Vidaurre García",club:"Unión Comercio",ville:"Moyobamba",pays:"Pérou",championnat:"Liga 1 Peru",lat:-6.0344,lng:-76.9708},
+  
+  {nom:"Estadio Camilo Merino Benites",club:"Comerciantes Unidos",ville:"Cutervo",pays:"Pérou",championnat:"Liga 1 Peru",lat:-6.3764,lng:-78.8175},
+  
+  
+  {nom:"Estadio Heraclio Tapia",club:"Alianza Universidad",ville:"Huánuco",pays:"Pérou",championnat:"Liga 1 Peru",lat:-9.93,lng:-76.2425},
+  {nom:"Estadio Germán Contreras Jara",club:"Sport Loreto",ville:"Iquitos",pays:"Pérou",championnat:"Liga 1 Peru",lat:-3.7819,lng:-73.2667},
+  {nom:"Estadio Alberto Gallardo",club:"Sporting Cristal",ville:"Lima",pays:"Pérou",championnat:"Liga 1 Peru",lat:-11.9981,lng:-77.0656},
+  {nom:"Estadio Huancayo",club:"Sport Huancayo",ville:"Huancayo",pays:"Pérou",championnat:"Liga 1 Peru",lat:-12.0681,lng:-75.2156},
+  {nom:"Estadio Unión Tarma",club:"ADT",ville:"Tarma",pays:"Pérou",championnat:"Liga 1 Peru",lat:-11.4175,lng:-75.69},
+  {nom:"Estadio Inca Garcilaso de la Vega",club:"Cusco FC",ville:"Cusco",pays:"Pérou",championnat:"Liga 1 Peru",lat:-13.5247,lng:-71.9736},
+  {nom:"Estadio Los Chankas",club:"Los Chankas",ville:"Andahuaylas",pays:"Pérou",championnat:"Liga 1 Peru",lat:-13.6547,lng:-73.3789},
+  {nom:"Estadio Inca Garcilaso de la Vega",club:"Cienciano",ville:"Cusco",pays:"Pérou",championnat:"Liga 1 Peru",lat:-13.5247,lng:-71.9736},
+  {nom:"Estadio Mansiche",club:"Universidad César Vallejo",ville:"Trujillo",pays:"Pérou",championnat:"Liga 1 Peru",lat:-8.1228,lng:-79.0333},
   // ══════════════════════════════════════════════════
   // PARAGUAY (5 stades)
   // ══════════════════════════════════════════════════
@@ -1353,6 +1574,24 @@ const STADES_DATA = [
   {nom:"Estadio General Pablo Rojas",club:"Club Olimpia",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.3167,lng:-57.65},
   {nom:"Estadio Arsenio Erico",club:"Nacional",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.3,lng:-57.6333},
   {nom:"Estadio Rogelio Livieres",club:"Cerro Porteño",ville:"Asunción",pays:"Paraguay",championnat:"División de Honor Paraguay",lat:-25.2667,lng:-57.65},
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   // ══════════════════════════════════════════════════
   // PAYS-BAS (19 stades)
@@ -1622,6 +1861,16 @@ const STADES_DATA = [
   // ── Niké Liga ──
   {nom:"Tehelné pole",club:"Slovan Bratislava",ville:"Bratislava",pays:"Slovaquie",championnat:"Niké Liga",lat:48.1708,lng:17.1181},
   {nom:"Stade Antona Malatinského",club:"FC Spartak Trnava",ville:"Trnava",pays:"Slovaquie",championnat:"Niké Liga",lat:48.3667,lng:17.5833},
+  {nom:"Stadión MŠK Žilina",club:"MŠK Žilina",ville:"Žilina",pays:"Slovaquie",championnat:"Niké Liga",lat:49.2231,lng:18.7394},
+  {nom:"MOL Aréna",club:"DAC 1904 Dunajská Streda",ville:"Dunajská Streda",pays:"Slovaquie",championnat:"Niké Liga",lat:47.9953,lng:17.6228},
+  {nom:"Štadión MFK Ružomberok",club:"MFK Ružomberok",ville:"Ružomberok",pays:"Slovaquie",championnat:"Niké Liga",lat:49.0786,lng:19.2975},
+  {nom:"Štadión Na Sihoti",club:"AS Trenčín",ville:"Trenčín",pays:"Slovaquie",championnat:"Niké Liga",lat:48.8917,lng:18.0431},
+  {nom:"Futbalový štadión Košice",club:"FC Košice",ville:"Košice",pays:"Slovaquie",championnat:"Niké Liga",lat:48.7167,lng:21.2578},
+  {nom:"Štadión MFK Skalica",club:"MFK Skalica",ville:"Skalica",pays:"Slovaquie",championnat:"Niké Liga",lat:48.8489,lng:17.2253},
+  {nom:"Štadión SNP",club:"FK Dukla Banská Bystrica",ville:"Banská Bystrica",pays:"Slovaquie",championnat:"Niké Liga",lat:48.7406,lng:19.1456},
+  {nom:"Mestský futbalový štadión Michalovce",club:"Zemplín Michalovce",ville:"Michalovce",pays:"Slovaquie",championnat:"Niké Liga",lat:48.7561,lng:21.9217},
+  {nom:"Štadión FC Komárno",club:"FC Komárno",ville:"Komárno",pays:"Slovaquie",championnat:"Niké Liga",lat:47.7614,lng:18.1286},
+  {nom:"Štadión FK Podbrezová",club:"FK Podbrezová",ville:"Podbrezová",pays:"Slovaquie",championnat:"Niké Liga",lat:48.8167,lng:19.5242},
 
   // ══════════════════════════════════════════════════
   // SLOVÉNIE (3 stades)
@@ -1629,8 +1878,15 @@ const STADES_DATA = [
 
   // ── PrvaLiga ──
   {nom:"Stožice Stadium",club:"NK Olimpija Ljubljana",ville:"Ljubljana",pays:"Slovénie",championnat:"PrvaLiga",lat:46.0433,lng:14.5583},
-  {nom:"Stožice",club:"NK Olimpija Ljubljana",ville:"Ljubljana",pays:"Slovénie",championnat:"PrvaLiga",lat:46.0333,lng:14.5333},
   {nom:"Ljudski vrt",club:"NK Maribor",ville:"Maribor",pays:"Slovénie",championnat:"PrvaLiga",lat:46.5583,lng:15.6333},
+  {nom:"Stadion Z'dežele",club:"NK Celje",ville:"Celje",pays:"Slovénie",championnat:"PrvaLiga",lat:46.2278,lng:15.2706},
+  {nom:"Stadion Bonifika",club:"FC Koper",ville:"Koper",pays:"Slovénie",championnat:"PrvaLiga",lat:45.5531,lng:13.7194},
+  {nom:"Stadion Šiška",club:"NK Bravo",ville:"Ljubljana",pays:"Slovénie",championnat:"PrvaLiga",lat:46.0731,lng:14.4958},
+  {nom:"Športni park Domžale",club:"NK Domžale",ville:"Domžale",pays:"Slovénie",championnat:"PrvaLiga",lat:46.1417,lng:14.6019},
+  {nom:"Mestni Stadion Fazanerija",club:"ND Mura",ville:"Murska Sobota",pays:"Slovénie",championnat:"PrvaLiga",lat:46.6511,lng:16.1728},
+  {nom:"Športni park Radomlje",club:"NK Radomlje",ville:"Radomlje",pays:"Slovénie",championnat:"PrvaLiga",lat:46.1736,lng:14.7094},
+  {nom:"Stadion Ajdovščina",club:"NK Primorje",ville:"Ajdovščina",pays:"Slovénie",championnat:"PrvaLiga",lat:45.8878,lng:13.9072},
+  {nom:"Sportni Park Lendava",club:"NK Nafta 1903",ville:"Lendava",pays:"Slovénie",championnat:"PrvaLiga",lat:46.5581,lng:16.4503},
 
   // ══════════════════════════════════════════════════
   // SOUDAN (2 stades)
@@ -1702,6 +1958,19 @@ const STADES_DATA = [
   {nom:"Doosan Arena",club:"FC Viktoria Plzen",ville:"Plzen",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.7475,lng:13.3875},
   {nom:"Stadion Eden",club:"SK Slavia Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0675,lng:14.4919},
   {nom:"Generali Arena",club:"AC Sparta Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0989,lng:14.4003},
+  {nom:"Vítkovice Aréna",club:"FC Baník Ostrava",ville:"Ostrava",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.8203,lng:18.2731},
+  {nom:"Stadion Střelnice",club:"FK Jablonec",ville:"Jablonec nad Nisou",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.7244,lng:15.17},
+  {nom:"Stadion Středočeského kraje",club:"FK Mladá Boleslav",ville:"Mladá Boleslav",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.4153,lng:14.9097},
+  {nom:"Andrův stadion",club:"SK Sigma Olomouc",ville:"Olomouc",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.5972,lng:17.2408},
+  {nom:"Stadion Miroslava Valenty",club:"1. FC Slovácko",ville:"Uherské Hradiště",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.0703,lng:17.4597},
+  {nom:"Stadion Pardubice",club:"FK Pardubice",ville:"Pardubice",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0394,lng:15.7792},
+  {nom:"Stadion Za Lužánkami",club:"FC Zbrojovka Brno",ville:"Brno",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.2072,lng:16.6053},
+  {nom:"Stadion Na Julisce",club:"FK Dukla Prague",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.1064,lng:14.3869},
+  {nom:"Městský stadion Karviná",club:"MFK Karviná",ville:"Karviná",pays:"Tcheque",championnat:"Fortuna Liga",lat:49.8528,lng:18.5431},
+  {nom:"Stadion Dynamo",club:"SK Dynamo České Budějovice",ville:"České Budějovice",pays:"Tcheque",championnat:"Fortuna Liga",lat:48.9819,lng:14.4756},
+  {nom:"Stadion Ďolíček",club:"Bohemians 1905",ville:"Prague",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.0694,lng:14.4578},
+  {nom:"Stadion Na Kotišti",club:"FK Hradec Králové",ville:"Hradec Králové",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.2081,lng:15.8344},
+  {nom:"Stadion U Nisy",club:"FC Slovan Liberec",ville:"Liberec",pays:"Tcheque",championnat:"Fortuna Liga",lat:50.7611,lng:15.0556},
 
   // ══════════════════════════════════════════════════
   // THAÏLANDE (3 stades)
@@ -1773,6 +2042,18 @@ const STADES_DATA = [
   {nom:"Estadio Luis Franzini",club:"Defensor Sporting",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8833,lng:-56.1667},
   {nom:"Estadio Charrúa",club:"Sélection Uruguay",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.9,lng:-56.15},
   {nom:"Estadio Saroldi",club:"Rampla Juniors",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8667,lng:-56.1833},
+  {nom:"Estadio Belvedere",club:"Liverpool FC (Uruguay)",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8944,lng:-56.1736},
+  {nom:"Estadio Alfredo Víctor Viera",club:"Montevideo Wanderers",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8786,lng:-56.1764},
+  {nom:"Estadio Luis Méndez Piana",club:"Cerro",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8583,lng:-56.2281},
+  {nom:"Parque Artigas",club:"River Plate (Uruguay)",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8631,lng:-56.1653},
+  {nom:"Estadio Jardines del Hipódromo",club:"Danubio",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8442,lng:-56.1389},
+  {nom:"Estadio Parque Capurro",club:"Fénix",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8817,lng:-56.2056},
+  {nom:"Estadio Fútbol Club",club:"Cerro Largo",ville:"Melo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-32.3644,lng:-54.1739},
+  {nom:"Estadio Campeones Olímpicos",club:"Boston River",ville:"Florida",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.0992,lng:-56.2156},
+  {nom:"Estadio Domingo Burgueño",club:"Deportivo Maldonado",ville:"Maldonado",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.9089,lng:-54.9564},
+  {nom:"Estadio Miramar",club:"Miramar Misiones",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.9322,lng:-56.1742},
+  {nom:"Estadio Prisioneros de Guerra",club:"Plaza Colonia",ville:"Colonia del Sacramento",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.4631,lng:-57.8528},
+  {nom:"Estadio Federico Omar Saroldi",club:"Racing Club (Uruguay)",ville:"Montevideo",pays:"Uruguay",championnat:"Primera Division Uruguay",lat:-34.8667,lng:-56.1833},
 
   // ══════════════════════════════════════════════════
   // USA (26 stades)
