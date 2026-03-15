@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-title" content="Groundhopper">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
@@ -23,7 +23,7 @@
       --surface2:  #3E4450;
       --surface3:  #4E5565;
       --border:    #4E5565;
-      --border2:   #5A6070;
+      --border2:   #3E4450;
       --accent:    #CC1919;
       --accent2:   #E52020;
       --accent-dim:#35252580;
@@ -34,12 +34,13 @@
       --red-dim:   #35252580;
       --green:     #00C875;
       --green-dim: #25353080;
+      --unset:     #5A6070;
       --text:      #F0F1F3;
       --text2:     #8A909A;
       --text3:     #7A8090;
       --text4:     #5A6070;
-      --font-disp: 'Barlow Condensed', sans-serif;
-      --font-body: 'Inter', sans-serif;
+      --font-disp: 'Bebas Neue', sans-serif;
+      --font-body: 'Barlow', sans-serif;
       --font-mono: 'Share Tech Mono', monospace;
       --radius:    10px;
       --radius-sm: 6px;
@@ -176,7 +177,7 @@
     }
     .topbar-logo { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
     .topbar-logo .logo-icon { font-size: 1.3rem; }
-    .topbar-logo .logo-title { font-family: var(--font-disp); font-size: 1.6rem; font-weight: 900; letter-spacing: .1em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
+    .topbar-logo .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: .06em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
     .topbar-logo .logo-title span { color: var(--accent); }
     .topbar-spacer { width: 40px; flex-shrink: 0; }
 
@@ -403,14 +404,14 @@
     }
     @keyframes iconPop { from { transform: scale(0) rotate(-20deg); opacity:0; } to { transform: scale(1) rotate(0); opacity:1; } }
     .onboarding-slide h2 {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Bebas Neue', sans-serif;
       font-size: 2.4rem; font-weight: 800; color: #fff;
       letter-spacing: .06em; text-transform: uppercase;
       line-height: 1.1; margin-bottom: 16px;
     }
     .onboarding-slide h2 span { color: #CC1919; text-shadow: 0 0 20px rgba(204,25,25,.5); }
     .onboarding-slide p {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Barlow', sans-serif;
       color: #8A909A; font-size: 1rem; line-height: 1.6;
       max-width: 300px; margin: 0 auto 32px;
     }
@@ -452,7 +453,7 @@
       width: 100%; max-width: 320px;
       padding: 15px; border-radius: 8px;
       background: #CC1919; color: #fff;
-      border: none; font-family: 'Barlow Condensed', sans-serif;
+      border: none; font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; cursor: pointer;
       box-shadow: 0 0 32px rgba(204,25,25,.3);
@@ -461,7 +462,7 @@
     .onboarding-btn:hover { background: #E52020; transform: translateY(-1px); }
     .onboarding-skip {
       font-size: .8rem; color: #7A8090; cursor: pointer;
-      font-family: 'Inter', sans-serif; background: none; border: none;
+      font-family: 'Barlow', sans-serif; background: none; border: none;
       transition: color .15s;
     }
     .onboarding-skip:hover { color: #8A909A; }
@@ -662,15 +663,15 @@
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px">
         <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
           <span style="font-size:1.4rem">✅</span>
-          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#8A909A">Coche les stades visités</span>
+          <span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Coche les stades visités</span>
         </div>
         <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
           <span style="font-size:1.4rem">🔥</span>
-          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#8A909A">Carte de chaleur de tes voyages</span>
+          <span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Carte de chaleur de tes voyages</span>
         </div>
         <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.12);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
           <span style="font-size:1.4rem">🏆</span>
-          <span style="font-family:'Inter',sans-serif;font-size:.9rem;color:#8A909A">Classement mondial en temps réel</span>
+          <span style="font-family:'Barlow',sans-serif;font-size:.9rem;color:#8A909A">Classement mondial en temps réel</span>
         </div>
       </div>
     </div>
@@ -683,10 +684,10 @@
       <div style="background:rgba(204,25,25,.06);border:1px solid rgba(204,25,25,.2);border-radius:12px;padding:20px;width:100%;max-width:300px">
         <div style="font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#7A8090;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Gratuit pour toujours</div>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Compte gratuit</div>
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Sauvegarde cloud automatique</div>
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Classement mondial</div>
-          <div style="font-family:'Inter',sans-serif;font-size:.85rem;color:#8A909A">✓ Notes & matchs vus</div>
+          <div style="font-family:'Barlow',sans-serif;font-size:.85rem;color:#8A909A">✓ Compte gratuit</div>
+          <div style="font-family:'Barlow',sans-serif;font-size:.85rem;color:#8A909A">✓ Sauvegarde cloud automatique</div>
+          <div style="font-family:'Barlow',sans-serif;font-size:.85rem;color:#8A909A">✓ Classement mondial</div>
+          <div style="font-family:'Barlow',sans-serif;font-size:.85rem;color:#8A909A">✓ Notes & matchs vus</div>
         </div>
       </div>
     </div>
@@ -707,7 +708,7 @@
 <div class="auth-overlay hidden" id="authOverlay">
   <div class="auth-box">
     <div class="auth-logo">
-      <div class="logo-big">⚽</div>
+      
       <h1>Groundhopper</h1>
       <p>Connecte-toi pour synchroniser ta progression</p>
     </div>
@@ -786,7 +787,17 @@
   <nav class="topbar">
     <div class="topbar-spacer"></div>
     <div class="topbar-logo">
-      <span class="logo-icon">⚽</span>
+      <div style="width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg viewBox="0 0 28 28" fill="none" width="20" height="20">
+          <rect x="3" y="7" width="22" height="16" rx="2" stroke="white" stroke-width="1.4"/>
+          <line x1="3" y1="15" x2="25" y2="15" stroke="white" stroke-width="1.2"/>
+          <circle cx="14" cy="15" r="3.5" stroke="white" stroke-width="1.2"/>
+          <path d="M8 7V23" stroke="white" stroke-width=".7" opacity=".5"/>
+          <path d="M20 7V23" stroke="white" stroke-width=".7" opacity=".5"/>
+          <path d="M22 5L26 3" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M26 3L25 7" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div>
       <span class="logo-title">GROUND<span>HOPPER</span></span>
     </div>
     <button class="btn-hamburger" id="btnHamburger" aria-label="Menu">
@@ -1637,12 +1648,12 @@ function makePopupHTML(s, id) {
   const col   = champColor(s.championnat);
   const annee = s.annee ? ` <small style="color:var(--text3)">(${s.annee})</small>` : '';
   const hasInfo = !!STADES_INFO[s.nom];
-  return `<b style="font-family:'Barlow Condensed',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--text)">${esc(s.nom)}</b><br>`
+  return `<b style="font-family:'Bebas Neue',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--text)">${esc(s.nom)}</b><br>`
     + (s.club ? `<span style="color:var(--text2);font-size:12px">🏟️ ${esc(s.club)}</span><br>` : '')
     + `<span style="color:var(--text3);font-size:11px">${drapeau(s.pays)} ${esc(s.ville)}</span><br>`
     + `<span style="display:inline-block;margin:4px 0;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:${col}22;color:${col};border:1px solid ${col}44">${esc(s.championnat)}</span>`
     + (s.visite ? `<br><span style="color:var(--accent);font-weight:600;font-size:12px">✅ Visité${annee}</span>` : '')
-    + `<br><button onclick="openFiche(${id})" style="margin-top:8px;width:100%;padding:6px;background:var(--accent);color:#fff;border:none;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">${hasInfo ? '📋 Voir la fiche' : '📋 Ouvrir'}</button>`;
+    + `<br><button onclick="openFiche(${id})" style="margin-top:8px;width:100%;padding:6px;background:var(--accent);color:#fff;border:none;border-radius:5px;font-family:'Bebas Neue',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">${hasInfo ? '📋 Voir la fiche' : '📋 Ouvrir'}</button>`;
 }
 
 // ── Cluster ───────────────────────────────────
@@ -2508,7 +2519,7 @@ if ('serviceWorker' in navigator) {
               banner.style.cssText = `
                 position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
                 background:#CC1919; color:#fff; padding:10px 20px; border-radius:8px;
-                font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700;
+                font-family:'Bebas Neue',sans-serif; font-size:14px; font-weight:700;
                 letter-spacing:.06em; text-transform:uppercase; z-index:99999;
                 box-shadow:0 4px 20px rgba(204,25,25,.4); cursor:pointer;
                 display:flex; align-items:center; gap:10px;
