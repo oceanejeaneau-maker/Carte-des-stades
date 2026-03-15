@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Fond rouge -->
+  <rect width="512" height="512" rx="90" fill="#CC1919"/>
+
+  <!-- Terrain : cadre -->
+  <rect x="80" y="160" width="352" height="240" rx="16" fill="none" stroke="white" stroke-width="14"/>
+
+  <!-- Ligne médiane horizontale -->
+  <line x1="80" y1="280" x2="432" y2="280" stroke="white" stroke-width="12"/>
+
+  <!-- Rond central -->
+  <circle cx="256" cy="280" r="60" fill="none" stroke="white" stroke-width="12"/>
+
+  <!-- Lignes verticales tiers gauche / droit -->
+  <line x1="172" y1="160" x2="172" y2="400" stroke="white" stroke-width="7" opacity="0.45"/>
+  <line x1="340" y1="160" x2="340" y2="400" stroke="white" stroke-width="7" opacity="0.45"/>
+
+  <!-- Flèche sautante (hopper) en haut à droite -->
+  <line x1="378" y1="112" x2="442" y2="76" stroke="white" stroke-width="14" stroke-linecap="round"/>
+  <line x1="442" y1="76" x2="432" y2="136" stroke="white" stroke-width="14" stroke-linecap="round"/>
+</svg>
