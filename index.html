@@ -1795,6 +1795,10 @@ Object.defineProperty(window, 'guestMode', { get: () => guestMode });
 
 const CURRENT_YEAR = new Date().getFullYear();
 
+// Déclaré tôt — utilisé par makeIcon avant la section FICHE
+let wishlisted = {};
+try { wishlisted = JSON.parse(localStorage.getItem('gh_wishlist_v1') || '{}'); } catch {}
+
 function sauvegarder() { if (window._firebase) window._firebase.sauvegarder(); }
 function charger() {
   // Charger depuis localStorage (mode invité ou données locales)
@@ -2818,9 +2822,7 @@ const ficheOverlay = document.getElementById('ficheOverlay');
 const ficheClose   = document.getElementById('ficheClose');
 let ficheStadeId   = null;
 
-// ── Wishlist state (stocké localement) ──────────
-let wishlisted = {};
-try { wishlisted = JSON.parse(localStorage.getItem('gh_wishlist_v1') || '{}'); } catch {}
+// ── Wishlist state ──────────────────────────────
 function saveWishlist() {
   try { localStorage.setItem('gh_wishlist_v1', JSON.stringify(wishlisted)); } catch {}
 }
