@@ -422,11 +422,6 @@ const STADES_DATA = [
   {nom:"Allianz Parque",club:"Palmeiras",ville:"São Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5273,lng:-46.6789},
   {nom:"Neo Química Arena",club:"Corinthians",ville:"São Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.5456,lng:-46.4736},
   {nom:"Estádio do Morumbi",club:"São Paulo FC",ville:"São Paulo",pays:"Bresil",championnat:"Campeonato Brasileiro",lat:-23.6008,lng:-46.7197},
-
-  // ══════════════════════════════════════════════════
-  // BRÉSIL (3 stades)
-  // ══════════════════════════════════════════════════
-
   // ── Serie B Brazil ──
   {nom:"Estádio da Ressacada",club:"Avaí FC",ville:"Florianópolis",pays:"Bresil",championnat:"Serie B Brazil",lat:-27.6472,lng:-48.5364},
   {nom:"Estádio Rei Pelé",club:"CRB",ville:"Maceió",pays:"Bresil",championnat:"Serie B Brazil",lat:-9.6244,lng:-35.7281},
