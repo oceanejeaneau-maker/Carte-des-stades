@@ -50,8 +50,8 @@
     }
     body {
       font-family: var(--font-body); background: var(--bg); color: var(--text);
-      min-height: 100vh; overflow-x: hidden;
-      padding-bottom: var(--nav-h);
+      height: 100dvh; overflow: hidden;
+      padding-bottom: 0;
       background-image:
         radial-gradient(ellipse at 20% 50%, #CC191906 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, #CC191904 0%, transparent 50%);
@@ -259,15 +259,16 @@
       flex-shrink: 0;
     }
 
-    /* Map height ajustée */
+    /* Map — prend tout l'espace restant */
     #map {
-      height: 480px !important;
+      flex: 1 !important;
+      min-height: 200px !important;
       border-radius: 0 !important;
       border-left: none !important;
       border-right: none !important;
     }
     @media(max-width:600px) {
-      #map { height: 300px !important; }
+      #map { min-height: 180px !important; }
     }
 
     /* ══ Reste du CSS d'origine inchangé ══ */
@@ -362,7 +363,7 @@
     ::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #8c959f; }
 
-    .app-layout { display: flex; flex-direction: column; min-height: 100vh; }
+    .app-layout { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
 
     .topbar {
       background: var(--surface);
@@ -454,10 +455,12 @@
       display: flex; flex-direction: column; gap: 8px;
     }
 
-    .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-x: hidden; }
+    .main-content { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 
     .page { display: none; flex-direction: column; }
-    .page.active { display: flex; }
+    .page.active { display: flex; flex: 1; min-height: 0; overflow-y: auto; padding-bottom: var(--nav-h); }
+    .page-carte.active { overflow: hidden; padding-bottom: 0; display: flex; flex-direction: column; }
+    #map { flex: 1; min-height: 0; }
 
     .page-carte .stat-bar { display: flex; flex-wrap: wrap; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; }
     .page-carte .stat-item { display: flex; flex-direction: column; padding: 12px 20px 12px 0; margin-right: 20px; border-right: 1px solid var(--border); min-width: 80px; }
