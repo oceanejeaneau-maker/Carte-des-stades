@@ -1216,22 +1216,12 @@ function showError(msg) { authError.textContent = msg; authError.classList.add('
 
 document.getElementById('btnGoogle').addEventListener('click', async () => {
   try {
-    await signInWithPopup(auth, googleProvider);
-  } catch(e) {
-    if (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user') {
-      sessionStorage.setItem('gh_redirect_pending', '1');
-      await signInWithRedirect(auth, googleProvider);
-    } else {
-      showError('Erreur Google : ' + e.message);
-    }
-  }
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobile) { await signInWithRedirect(auth, googleProvider); }
+    else { await signInWithPopup(auth, googleProvider); }
+  } catch(e) { showError('Erreur Google : ' + e.message); }
 });
-getRedirectResult(auth).then(result => {
-  sessionStorage.removeItem('gh_redirect_pending');
-}).catch(e => {
-  sessionStorage.removeItem('gh_redirect_pending');
-  if (e.code) showError('Erreur Google : ' + e.message);
-});
+getRedirectResult(auth).catch(e => { if (e.code) showError('Erreur Google : ' + e.message); });
 
 document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
@@ -1277,16 +1267,12 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('btnLogout').style.display = 'none';
     document.getElementById('btnShowAuth').style.display = 'block';
     document.getElementById('userName').textContent = '';
-    // Ne pas afficher authOverlay si redirect Google en cours
-    const pendingRedirect = sessionStorage.getItem('gh_redirect_pending');
-    if (pendingRedirect) return;
+    if (sessionStorage.getItem('gh_redirect_pending')) return;
     if (!guestMode && !authResolved) {
       const onboarded = localStorage.getItem('stades_onboarded');
       if (onboarded) {
         setTimeout(() => {
-          if (!currentUser && !guestMode) {
-            authOverlay.classList.remove('hidden');
-          }
+          if (!currentUser && !guestMode) authOverlay.classList.remove('hidden');
         }, 1200);
       }
     }
@@ -1849,9 +1835,9 @@ const btnHamburger  = document.getElementById('btnHamburger');
 const drawerClose   = document.getElementById('drawerClose');
 function openDrawer() { if(drawer) drawer.classList.add('open'); if(drawerOverlay) drawerOverlay.classList.add('open'); if(btnHamburger) btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
 function closeDrawer() { if(drawer) drawer.classList.remove('open'); if(drawerOverlay) drawerOverlay.classList.remove('open'); if(btnHamburger) btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
-if(btnHamburger) btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
-if(drawerClose) drawerClose.addEventListener('click', closeDrawer);
-if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+if(btnHamburger) btnHamburger.addEventListener('click', () => drawer && drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+drawerClose.addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
 document.querySelectorAll('.drawer-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
@@ -2033,7 +2019,15 @@ document.getElementById('customGoalBtn').addEventListener('click', () => {
   if (obStades) obStades.textContent = typeof STADES_DATA !== 'undefined' ? STADES_DATA.length : 630;
   if (obPays)   obPays.textContent   = typeof STADES_DATA !== 'undefined' ? new Set(STADES_DATA.map(s=>s.pays)).size : 118;
   function goTo(i) { current = i; slides.style.transform = `translateX(-${i * 100}%)`; dots.forEach((d,j) => d.classList.toggle('active', j === i)); btn.textContent = i === TOTAL - 1 ? "C'est parti ! 🚀" : 'Suivant'; const icon = slides.children[i].querySelector('.onboarding-icon'); if (icon) { icon.style.animation='none'; void icon.offsetWidth; icon.style.animation=''; } }
-  function finish() { overlay.classList.add('hidden'); try { localStorage.setItem('stades_onboarded', '1'); } catch {} }
+  function finish() {
+    overlay.classList.add('hidden');
+    try { localStorage.setItem('stades_onboarded', '1'); } catch {}
+    if (!currentUser && !guestMode) {
+      setTimeout(() => {
+        if (!currentUser && !guestMode) authOverlay.classList.remove('hidden');
+      }, 500);
+    }
+  }
   btn.addEventListener('click', () => { if (current < TOTAL - 1) goTo(current + 1); else finish(); });
   skip.addEventListener('click', finish);
   let startX = 0;
