@@ -305,7 +305,8 @@
     .basemap-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 5px 9px; font-family: var(--font-body); font-size: 12px; outline: none; cursor: pointer; }
     .basemap-select option { background: var(--surface); }
 
-    #map { overflow: hidden; position: relative; z-index: 1; }
+    #map { height: 420px; border-radius: 0 0 var(--radius) var(--radius); border: 1px solid var(--border); overflow: hidden; position: relative; z-index: 1; }
+    @media(max-width:600px) { #map { height: 300px; } }
     .drawer-overlay.open ~ .main-content #map,
     body.drawer-open #map { z-index: 0; }
     .leaflet-container { background: #2B2F36 !important; }
@@ -366,16 +367,15 @@
     .topbar {
       background: var(--surface);
       border-bottom: .5px solid var(--border);
+      box-shadow: var(--shadow-sm);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 14px; height: 50px; position: sticky; top: 0; z-index: 100;
+      padding: 0 16px; height: 56px; position: sticky; top: 0; z-index: 100;
     }
-    .topbar-logo { display: flex; align-items: center; gap: 10px; }
-    .topbar-logo .logo-badge { width: 32px; height: 32px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .topbar-logo .logo-badge svg { width: 18px; height: 18px; }
-    .topbar-logo .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: .06em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
+    .topbar-logo .logo-icon { font-size: 1.3rem; }
+    .topbar-logo .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: .06em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
     .topbar-logo .logo-title span { color: var(--accent); }
-    .topbar-right { display: flex; align-items: center; gap: 8px; }
-    .topbar-spacer { display: none; }
+    .topbar-spacer { width: 40px; flex-shrink: 0; }
 
     .btn-hamburger {
       width: 40px; height: 40px; display: flex; flex-direction: column;
@@ -1602,7 +1602,7 @@ const CONTINENTS_MAP = {
   'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
 };
 
-const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'', _wishlistOnly:false, _continentPays:null };
+const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'' };
 function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly||filter.continent; }
 function getFilteredIds() {
   if (filter._wishlistOnly) {
@@ -1677,7 +1677,7 @@ function initFilters() {
         pill.classList.add('cfp-active');
         const f = pill.dataset.filter;
         filter.pays = ''; filter.visitedOnly = false; filter._wishlistOnly = false;
-        filter._continentPays = null; filter.continent = '';
+        filter._continentPays = null;
         document.getElementById('paysFilter').value = '';
         document.getElementById('btnVisited').textContent = 'Afficher : Tous';
         document.getElementById('btnVisited').className = 'btn btn-primary';
@@ -1745,7 +1745,7 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    let expanded = (pays in expandedState) ? expandedState[pays] : true;
+    let expanded = (pays in expandedState) ? expandedState[pays] : false;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
@@ -1821,11 +1821,11 @@ const drawer        = document.getElementById('drawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
 const btnHamburger  = document.getElementById('btnHamburger');
 const drawerClose   = document.getElementById('drawerClose');
-function openDrawer() { drawer.classList.add('open'); drawerOverlay.classList.add('open'); btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
-function closeDrawer() { drawer.classList.remove('open'); drawerOverlay.classList.remove('open'); btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
-btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
-drawerClose.addEventListener('click', closeDrawer);
-drawerOverlay.addEventListener('click', closeDrawer);
+function openDrawer() { if(drawer) drawer.classList.add('open'); if(drawerOverlay) drawerOverlay.classList.add('open'); if(btnHamburger) btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
+function closeDrawer() { if(drawer) drawer.classList.remove('open'); if(drawerOverlay) drawerOverlay.classList.remove('open'); if(btnHamburger) btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
+if(btnHamburger) btnHamburger.addEventListener('click', () => drawer && drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+if(drawerClose) drawerClose.addEventListener('click', closeDrawer);
+if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
 document.querySelectorAll('.drawer-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
@@ -2129,7 +2129,7 @@ function updateStatsKpis() {
   const total   = stades.length;
   const pays    = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
   const pct     = total ? (visites / total * 100).toFixed(1) : 0;
-  const nbMatchs = matchs.length;
+  const nbMatchs = (typeof matchs !== 'undefined') ? matchs.length : 0;
   const kV = document.getElementById('kpi-visites'); if (kV) kV.textContent = visites;
   const kP = document.getElementById('kpi-pays');    if (kP) kP.textContent = pays;
   const kPct = document.getElementById('kpi-pct');   if (kPct) kPct.textContent = pct + '%';
