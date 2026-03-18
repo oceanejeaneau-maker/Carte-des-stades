@@ -1216,12 +1216,15 @@ function showError(msg) { authError.textContent = msg; authError.classList.add('
 
 document.getElementById('btnGoogle').addEventListener('click', async () => {
   try {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) { await signInWithRedirect(auth, googleProvider); }
-    else { await signInWithPopup(auth, googleProvider); }
-  } catch(e) { showError('Erreur Google : ' + e.message); }
+    await auth.signInWithPopup(googleProvider);
+  } catch(e) {
+    if (e.code === 'auth/popup-blocked') {
+      showError('Popup bloquée — autorise les popups pour ce site.');
+    } else if (e.code !== 'auth/popup-closed-by-user') {
+      showError('Erreur Google : ' + e.message);
+    }
+  }
 });
-getRedirectResult(auth).catch(e => { if (e.code) showError('Erreur Google : ' + e.message); });
 
 document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
@@ -1246,7 +1249,6 @@ onAuthStateChanged(auth, async user => {
     authResolved = true;
     guestMode = false; currentUser = user;
     authOverlay.classList.add('hidden');
-    sessionStorage.removeItem('gh_redirect_pending');
     const name = user.displayName || user.email.split('@')[0];
     document.getElementById('userName').textContent = name;
     const av = document.getElementById('userAvatar'); av.style.display = 'flex';
@@ -1267,13 +1269,12 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('btnLogout').style.display = 'none';
     document.getElementById('btnShowAuth').style.display = 'block';
     document.getElementById('userName').textContent = '';
-    if (sessionStorage.getItem('gh_redirect_pending')) return;
     if (!guestMode && !authResolved) {
       const onboarded = localStorage.getItem('stades_onboarded');
       if (onboarded) {
         setTimeout(() => {
           if (!currentUser && !guestMode) authOverlay.classList.remove('hidden');
-        }, 1200);
+        }, 800);
       }
     }
   }
@@ -2023,9 +2024,7 @@ document.getElementById('customGoalBtn').addEventListener('click', () => {
     overlay.classList.add('hidden');
     try { localStorage.setItem('stades_onboarded', '1'); } catch {}
     if (!currentUser && !guestMode) {
-      setTimeout(() => {
-        if (!currentUser && !guestMode) authOverlay.classList.remove('hidden');
-      }, 500);
+      setTimeout(() => { if (!currentUser && !guestMode) authOverlay.classList.remove('hidden'); }, 500);
     }
   }
   btn.addEventListener('click', () => { if (current < TOTAL - 1) goTo(current + 1); else finish(); });
