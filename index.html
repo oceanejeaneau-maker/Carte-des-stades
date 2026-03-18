@@ -1216,12 +1216,15 @@ function showError(msg) { authError.textContent = msg; authError.classList.add('
 
 document.getElementById('btnGoogle').addEventListener('click', async () => {
   try {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) {
+    await signInWithPopup(auth, googleProvider);
+  } catch(e) {
+    if (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user') {
       sessionStorage.setItem('gh_redirect_pending', '1');
       await signInWithRedirect(auth, googleProvider);
-    } else { await signInWithPopup(auth, googleProvider); }
-  } catch(e) { showError('Erreur Google : ' + e.message); }
+    } else {
+      showError('Erreur Google : ' + e.message);
+    }
+  }
 });
 getRedirectResult(auth).then(result => {
   sessionStorage.removeItem('gh_redirect_pending');
@@ -1377,7 +1380,7 @@ document.getElementById('profilAvatarEdit').addEventListener('click', () => {
 async function chargerDepuisFirestore() {
   if (!currentUser) return;
   const snap = await getDoc(doc(db, 'users', currentUser.uid));
-  if (snap.exists()) {
+  if (snap.exists && (typeof snap.exists === 'function' ? snap.exists() : snap.exists)) {
     const d = snap.data();
     if (d.stades) d.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } });
     if (d.matchs) matchs.splice(0, matchs.length, ...d.matchs);
@@ -1844,11 +1847,11 @@ const drawer        = document.getElementById('drawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
 const btnHamburger  = document.getElementById('btnHamburger');
 const drawerClose   = document.getElementById('drawerClose');
-function openDrawer() { drawer.classList.add('open'); drawerOverlay.classList.add('open'); btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
-function closeDrawer() { drawer.classList.remove('open'); drawerOverlay.classList.remove('open'); btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
-btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
-drawerClose.addEventListener('click', closeDrawer);
-drawerOverlay.addEventListener('click', closeDrawer);
+function openDrawer() { if(drawer) drawer.classList.add('open'); if(drawerOverlay) drawerOverlay.classList.add('open'); if(btnHamburger) btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
+function closeDrawer() { if(drawer) drawer.classList.remove('open'); if(drawerOverlay) drawerOverlay.classList.remove('open'); if(btnHamburger) btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
+if(btnHamburger) btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+if(drawerClose) drawerClose.addEventListener('click', closeDrawer);
+if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
 document.querySelectorAll('.drawer-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
@@ -2152,7 +2155,7 @@ function updateStatsKpis() {
   const total   = stades.length;
   const pays    = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
   const pct     = total ? (visites / total * 100).toFixed(1) : 0;
-  const nbMatchs = matchs.length;
+  const nbMatchs = (typeof matchs !== 'undefined') ? matchs.length : 0;
   const kV = document.getElementById('kpi-visites'); if (kV) kV.textContent = visites;
   const kP = document.getElementById('kpi-pays');    if (kP) kP.textContent = pays;
   const kPct = document.getElementById('kpi-pct');   if (kPct) kPct.textContent = pct + '%';
