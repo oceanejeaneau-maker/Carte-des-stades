@@ -1288,8 +1288,8 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
 
 onAuthStateChanged(auth, async user => {
   if (user) {
-    guestMode = false; currentUser = user;
     authOverlay.classList.add('hidden');
+    guestMode = false; currentUser = user;
     const name = user.displayName || user.email.split('@')[0];
     document.getElementById('userName').textContent = name;
     const av = document.getElementById('userAvatar'); av.style.display = 'flex';
@@ -1313,7 +1313,11 @@ onAuthStateChanged(auth, async user => {
     if (!guestMode) {
       const onboarded = localStorage.getItem('stades_onboarded');
       if (onboarded) {
-        authOverlay.classList.remove('hidden');
+        setTimeout(() => {
+          if (!currentUser && !guestMode) {
+            authOverlay.classList.remove('hidden');
+          }
+        }, 800);
       }
     }
   }
@@ -2063,7 +2067,11 @@ document.getElementById('customGoalBtn').addEventListener('click', () => {
     overlay.classList.add('hidden');
     try { localStorage.setItem('stades_onboarded', '1'); } catch {}
     if (!currentUser && !guestMode) {
-      setTimeout(() => { authOverlay.classList.remove('hidden'); }, 400);
+      setTimeout(() => {
+        if (!currentUser && !guestMode) {
+          document.getElementById('authOverlay').classList.remove('hidden');
+        }
+      }, 1000);
     }
   }
   btn.addEventListener('click', () => { if (current < TOTAL - 1) goTo(current + 1); else finish(); });
