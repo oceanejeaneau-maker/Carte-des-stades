@@ -305,8 +305,7 @@
     .basemap-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 5px 9px; font-family: var(--font-body); font-size: 12px; outline: none; cursor: pointer; }
     .basemap-select option { background: var(--surface); }
 
-    #map { height: 420px; border-radius: 0 0 var(--radius) var(--radius); border: 1px solid var(--border); overflow: hidden; position: relative; z-index: 1; }
-    @media(max-width:600px) { #map { height: 300px; } }
+    #map { overflow: hidden; position: relative; z-index: 1; }
     .drawer-overlay.open ~ .main-content #map,
     body.drawer-open #map { z-index: 0; }
     .leaflet-container { background: #2B2F36 !important; }
@@ -367,15 +366,16 @@
     .topbar {
       background: var(--surface);
       border-bottom: .5px solid var(--border);
-      box-shadow: var(--shadow-sm);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 16px; height: 56px; position: sticky; top: 0; z-index: 100;
+      padding: 0 14px; height: 50px; position: sticky; top: 0; z-index: 100;
     }
-    .topbar-logo { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
-    .topbar-logo .logo-icon { font-size: 1.3rem; }
-    .topbar-logo .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: .06em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; }
+    .topbar-logo .logo-badge { width: 32px; height: 32px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .topbar-logo .logo-badge svg { width: 18px; height: 18px; }
+    .topbar-logo .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: .06em; color: var(--text); white-space: nowrap; text-transform: uppercase; line-height: 1; }
     .topbar-logo .logo-title span { color: var(--accent); }
-    .topbar-spacer { width: 40px; flex-shrink: 0; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .topbar-spacer { display: none; }
 
     .btn-hamburger {
       width: 40px; height: 40px; display: flex; flex-direction: column;
@@ -1176,7 +1176,6 @@ function onSnapshot(ref, cb) { return ref.onSnapshot(cb); }
 
 let currentUser = null;
 let guestMode = false;
-let authResolved = false;
 
 const authOverlay = document.getElementById('authOverlay');
 const authError = document.getElementById('authError');
@@ -1216,30 +1215,12 @@ function showError(msg) { authError.textContent = msg; authError.classList.add('
 
 document.getElementById('btnGoogle').addEventListener('click', async () => {
   try {
-    // Popup d'abord (fonctionne sur PC et Android navigateur)
-    await auth.signInWithPopup(googleProvider);
-  } catch(e) {
-    if (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user') {
-      // Fallback redirect pour PWA Android installée
-      try {
-        sessionStorage.setItem('gh_redirect_pending', '1');
-        await auth.signInWithRedirect(googleProvider);
-      } catch(e2) {
-        sessionStorage.removeItem('gh_redirect_pending');
-        showError('Erreur Google : ' + e2.message);
-      }
-    } else if (e.code !== 'auth/cancelled-popup-request') {
-      showError('Erreur Google : ' + e.message);
-    }
-  }
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobile) { await signInWithRedirect(auth, googleProvider); }
+    else { await signInWithPopup(auth, googleProvider); }
+  } catch(e) { showError('Erreur Google : ' + e.message); }
 });
-// Gérer le retour après redirect
-auth.getRedirectResult().then(result => {
-  sessionStorage.removeItem('gh_redirect_pending');
-}).catch(e => {
-  sessionStorage.removeItem('gh_redirect_pending');
-  if (e.code && e.code !== 'auth/no-auth-event') showError('Erreur Google : ' + e.message);
-});
+getRedirectResult(auth).catch(e => { if (e.code) showError('Erreur Google : ' + e.message); });
 
 document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
@@ -1261,8 +1242,6 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
 
 onAuthStateChanged(auth, async user => {
   if (user) {
-    authResolved = true;
-    sessionStorage.removeItem('gh_redirect_pending');
     guestMode = false; currentUser = user;
     authOverlay.classList.add('hidden');
     const name = user.displayName || user.email.split('@')[0];
@@ -1285,19 +1264,6 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('btnLogout').style.display = 'none';
     document.getElementById('btnShowAuth').style.display = 'block';
     document.getElementById('userName').textContent = '';
-    // Ne jamais afficher authOverlay si redirect en cours ou déjà connecté
-    if (sessionStorage.getItem('gh_redirect_pending')) return;
-    if (authResolved) return; // Déjà connecté une fois — ne pas réafficher
-    if (!guestMode) {
-      const onboarded = localStorage.getItem('stades_onboarded');
-      if (onboarded) {
-        setTimeout(() => {
-          if (!currentUser && !guestMode && !authResolved) {
-            authOverlay.classList.remove('hidden');
-          }
-        }, 800);
-      }
-    }
   }
 });
 
@@ -1388,7 +1354,7 @@ document.getElementById('profilAvatarEdit').addEventListener('click', () => {
 async function chargerDepuisFirestore() {
   if (!currentUser) return;
   const snap = await getDoc(doc(db, 'users', currentUser.uid));
-  if (snap.exists && (typeof snap.exists === 'function' ? snap.exists() : snap.exists)) {
+  if (snap.exists()) {
     const d = snap.data();
     if (d.stades) d.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } });
     if (d.matchs) matchs.splice(0, matchs.length, ...d.matchs);
@@ -1636,7 +1602,7 @@ const CONTINENTS_MAP = {
   'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
 };
 
-const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'' };
+const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'', _wishlistOnly:false, _continentPays:null };
 function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly||filter.continent; }
 function getFilteredIds() {
   if (filter._wishlistOnly) {
@@ -1711,7 +1677,7 @@ function initFilters() {
         pill.classList.add('cfp-active');
         const f = pill.dataset.filter;
         filter.pays = ''; filter.visitedOnly = false; filter._wishlistOnly = false;
-        filter._continentPays = null;
+        filter._continentPays = null; filter.continent = '';
         document.getElementById('paysFilter').value = '';
         document.getElementById('btnVisited').textContent = 'Afficher : Tous';
         document.getElementById('btnVisited').className = 'btn btn-primary';
@@ -1779,7 +1745,7 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    let expanded = (pays in expandedState) ? expandedState[pays] : false;
+    let expanded = (pays in expandedState) ? expandedState[pays] : true;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
@@ -1855,11 +1821,11 @@ const drawer        = document.getElementById('drawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
 const btnHamburger  = document.getElementById('btnHamburger');
 const drawerClose   = document.getElementById('drawerClose');
-function openDrawer() { if(drawer) drawer.classList.add('open'); if(drawerOverlay) drawerOverlay.classList.add('open'); if(btnHamburger) btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
-function closeDrawer() { if(drawer) drawer.classList.remove('open'); if(drawerOverlay) drawerOverlay.classList.remove('open'); if(btnHamburger) btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
-if(btnHamburger) btnHamburger.addEventListener('click', () => drawer && drawer.classList.contains('open') ? closeDrawer() : openDrawer());
-if(drawerClose) drawerClose.addEventListener('click', closeDrawer);
-if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+function openDrawer() { drawer.classList.add('open'); drawerOverlay.classList.add('open'); btnHamburger.classList.add('open'); document.body.classList.add('drawer-open'); }
+function closeDrawer() { drawer.classList.remove('open'); drawerOverlay.classList.remove('open'); btnHamburger.classList.remove('open'); document.body.classList.remove('drawer-open'); }
+btnHamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+drawerClose.addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
 document.querySelectorAll('.drawer-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
@@ -2041,13 +2007,7 @@ document.getElementById('customGoalBtn').addEventListener('click', () => {
   if (obStades) obStades.textContent = typeof STADES_DATA !== 'undefined' ? STADES_DATA.length : 630;
   if (obPays)   obPays.textContent   = typeof STADES_DATA !== 'undefined' ? new Set(STADES_DATA.map(s=>s.pays)).size : 118;
   function goTo(i) { current = i; slides.style.transform = `translateX(-${i * 100}%)`; dots.forEach((d,j) => d.classList.toggle('active', j === i)); btn.textContent = i === TOTAL - 1 ? "C'est parti ! 🚀" : 'Suivant'; const icon = slides.children[i].querySelector('.onboarding-icon'); if (icon) { icon.style.animation='none'; void icon.offsetWidth; icon.style.animation=''; } }
-  function finish() {
-    overlay.classList.add('hidden');
-    try { localStorage.setItem('stades_onboarded', '1'); } catch {}
-    if (!currentUser && !guestMode) {
-      setTimeout(() => { if (!currentUser && !guestMode) authOverlay.classList.remove('hidden'); }, 500);
-    }
-  }
+  function finish() { overlay.classList.add('hidden'); try { localStorage.setItem('stades_onboarded', '1'); } catch {} }
   btn.addEventListener('click', () => { if (current < TOTAL - 1) goTo(current + 1); else finish(); });
   skip.addEventListener('click', finish);
   let startX = 0;
@@ -2169,7 +2129,7 @@ function updateStatsKpis() {
   const total   = stades.length;
   const pays    = new Set(stades.filter(s => s.visite).map(s => s.pays)).size;
   const pct     = total ? (visites / total * 100).toFixed(1) : 0;
-  const nbMatchs = (typeof matchs !== 'undefined') ? matchs.length : 0;
+  const nbMatchs = matchs.length;
   const kV = document.getElementById('kpi-visites'); if (kV) kV.textContent = visites;
   const kP = document.getElementById('kpi-pays');    if (kP) kP.textContent = pays;
   const kPct = document.getElementById('kpi-pct');   if (kPct) kPct.textContent = pct + '%';
