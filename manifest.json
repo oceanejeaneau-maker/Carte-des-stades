@@ -7,7 +7,7 @@
   "display": "standalone",
   "background_color": "#2B2F36",
   "theme_color": "#CC1919",
-  "orientation": "any",
+  "orientation": "portrait",
   "lang": "fr",
   "categories": ["sports", "travel"],
   "icons": [
