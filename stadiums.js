@@ -849,6 +849,10 @@ const STADES_DATA = [
   {nom:"Estadio Reales Tamarindos",club:"CD Libertad",ville:"Portoviejo",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.0511,lng:-80.4539},
   {nom:"Estadio de Cumbayá",club:"Cumbayá FC",ville:"Cumbayá",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.1869,lng:-78.4361},
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 5c33b724adbe113df3a4df3211cd28ba58c205f3
   // ══════════════════════════════════════
   // STADES DES ÉQUIPES NATIONALES
   // ══════════════════════════════════════
