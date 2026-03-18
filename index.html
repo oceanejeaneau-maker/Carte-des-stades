@@ -963,10 +963,12 @@
         <button class="carte-tb-btn" id="btnCluster" style="color:#0969da;border-color:#0969da">⬡ Clusters</button>
       </div>
 
-      <!-- CARTE LEAFLET -->
-      <div id="map"></div>
+      <!-- BOUTON TOGGLE RECHERCHE AVANCÉE -->
+      <button class="carte-search-toggle" id="btnToggleSearch">
+        🔍 Recherche avancée
+      </button>
 
-      <!-- RECHERCHE + FILTRES AVANCÉS (masqués par défaut, togglés) -->
+      <!-- RECHERCHE + FILTRES AVANCÉS (masqués par défaut) -->
       <div class="carte-advanced" id="carteAdvanced" style="display:none">
         <div class="filters">
           <input type="text" id="searchInput" placeholder="Rechercher (stade, ville…)">
@@ -977,19 +979,8 @@
         </div>
       </div>
 
-      <!-- BOUTON TOGGLE RECHERCHE AVANCÉE -->
-      <button class="carte-search-toggle" id="btnToggleSearch">
-        🔍 Recherche avancée
-      </button>
-
-      <!-- LÉGENDE STATUTS (simple, 3 couleurs) -->
-      <div class="carte-legende">
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#00C875"></span>Visité</div>
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#CC1919"></span>Wishlist</div>
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#5A6070"></span>Non classé</div>
-      </div>
-
-      <!-- TABLE -->
+      <!-- CARTE LEAFLET — prend tout l'espace restant -->
+      <div id="map"></div>
 
     </div>
 
@@ -1748,7 +1739,7 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    let expanded = (pays in expandedState) ? expandedState[pays] : true;
+    let expanded = (pays in expandedState) ? expandedState[pays] : false;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
