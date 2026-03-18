@@ -848,7 +848,11 @@ const STADES_DATA = [
   {nom:"Estadio Bellavista",club:"Técnico Universitario",ville:"Ambato",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.2333,lng:-78.6197},
   {nom:"Estadio Reales Tamarindos",club:"CD Libertad",ville:"Portoviejo",pays:"Équateur",championnat:"LigaPro Serie A",lat:-1.0511,lng:-80.4539},
   {nom:"Estadio de Cumbayá",club:"Cumbayá FC",ville:"Cumbayá",pays:"Équateur",championnat:"LigaPro Serie A",lat:-0.1869,lng:-78.4361},
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 538101b8302f0eabcfe5fa15b19282d61a97b787
   // ══════════════════════════════════════
   // STADES DES ÉQUIPES NATIONALES
   // ══════════════════════════════════════
