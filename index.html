@@ -963,6 +963,18 @@
       <!-- CARTE LEAFLET -->
       <div id="map"></div>
 
+      <!-- LÉGENDE STATUTS (simple, 3 couleurs) -->
+      <div class="carte-legende">
+        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#00C875"></span>Visité</div>
+        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#CC1919"></span>Wishlist</div>
+        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#5A6070"></span>Non classé</div>
+      </div>
+
+      <!-- BOUTON TOGGLE RECHERCHE AVANCÉE -->
+      <button class="carte-search-toggle" id="btnToggleSearch">
+        🔍 Recherche avancée
+      </button>
+
       <!-- RECHERCHE + FILTRES AVANCÉS (masqués par défaut, togglés) -->
       <div class="carte-advanced" id="carteAdvanced" style="display:none">
         <div class="filters">
@@ -972,32 +984,6 @@
           <button class="btn btn-primary" id="btnVisited">Afficher : Tous</button>
           <button class="btn btn-ghost" id="btnReset">Réinitialiser</button>
         </div>
-      </div>
-
-      <!-- BOUTON TOGGLE RECHERCHE AVANCÉE -->
-      <button class="carte-search-toggle" id="btnToggleSearch">
-        🔍 Recherche avancée
-      </button>
-
-      <!-- LÉGENDE STATUTS (simple, 3 couleurs) -->
-      <div class="carte-legende">
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#00C875"></span>Visité</div>
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#CC1919"></span>Wishlist</div>
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#5A6070"></span>Non classé</div>
-      </div>
-
-      <!-- TABLE -->
-      <div class="table-container">
-        <table id="stadesTable">
-          <thead>
-            <tr>
-              <th width="36"><input type="checkbox" id="selectAll" title="Tout cocher/décocher"></th>
-              <th>Stade</th><th>Club</th><th>Ville</th><th>Pays</th><th>Championnat</th>
-              <th width="80">Année</th><th width="60">Visité</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
       </div>
 
     </div>
@@ -1010,6 +996,21 @@
         <select id="notesFilter"><option value="visites">Stades visités</option><option value="tous">Tous les stades</option></select>
       </div>
       <div class="notes-list" id="notesList"></div>
+
+      <!-- TOUS LES STADES -->
+      <div style="padding:12px 16px 6px;font-family:var(--font-disp);font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);border-top:.5px solid var(--border);margin-top:8px;">Tous les stades</div>
+      <div class="table-container">
+        <table id="stadesTable">
+          <thead>
+            <tr>
+              <th width="36"><input type="checkbox" id="selectAll" title="Tout cocher/décocher"></th>
+              <th>Stade</th><th>Club</th><th>Ville</th><th>Pays</th><th>Championnat</th>
+              <th width="80">Année</th><th width="60">Visité</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- PAGE MATCHS -->
@@ -1745,7 +1746,7 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    let expanded = (pays in expandedState) ? expandedState[pays] : true;
+    let expanded = (pays in expandedState) ? expandedState[pays] : false;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
