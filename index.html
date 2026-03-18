@@ -50,8 +50,7 @@
     }
     body {
       font-family: var(--font-body); background: var(--bg); color: var(--text);
-      min-height: 100vh; overflow-x: hidden;
-      padding-bottom: var(--nav-h);
+      height: 100dvh; overflow: hidden;
       background-image:
         radial-gradient(ellipse at 20% 50%, #CC191906 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, #CC191904 0%, transparent 50%);
@@ -243,7 +242,7 @@
       gap: 14px;
       padding: 6px 14px;
       background: var(--surface);
-      border-bottom: .5px solid var(--border);
+      border: .5px solid var(--border);
       flex-shrink: 0;
     }
     .carte-legende-item {
@@ -259,15 +258,33 @@
       flex-shrink: 0;
     }
 
-    /* Map height ajustée */
+    /* Map — occupe toute la hauteur restante */
+    .page-carte.active {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .map-wrap {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      margin-bottom: var(--nav-h);
+    }
     #map {
-      height: 360px !important;
+      height: 100% !important;
       border-radius: 0 !important;
       border-left: none !important;
       border-right: none !important;
     }
-    @media(max-width:600px) {
-      #map { height: 300px !important; }
+    .carte-legende {
+      position: absolute !important;
+      bottom: 8px !important;
+      left: 8px !important;
+      z-index: 1000 !important;
+      background: rgba(var(--surface-rgb, 22,27,34), 0.88) !important;
+      backdrop-filter: blur(4px);
+      border-radius: 8px !important;
     }
 
     /* ══ Reste du CSS d'origine inchangé ══ */
@@ -361,7 +378,7 @@
     ::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #8c959f; }
 
-    .app-layout { display: flex; flex-direction: column; min-height: 100vh; }
+    .app-layout { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
 
     .topbar {
       background: var(--surface);
@@ -454,10 +471,11 @@
       display: flex; flex-direction: column; gap: 8px;
     }
 
-    .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-x: hidden; }
+    .main-content { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 
     .page { display: none; flex-direction: column; }
-    .page.active { display: flex; }
+    .page.active { display: flex; overflow-y: auto; padding-bottom: var(--nav-h); }
+    .page-carte.active { overflow: hidden; padding-bottom: 0; }
 
     .page-carte .stat-bar { display: flex; flex-wrap: wrap; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; }
     .page-carte .stat-item { display: flex; flex-direction: column; padding: 12px 20px 12px 0; margin-right: 20px; border-right: 1px solid var(--border); min-width: 80px; }
@@ -960,16 +978,6 @@
         <button class="carte-tb-btn" id="btnCluster" style="color:#0969da;border-color:#0969da">⬡ Clusters</button>
       </div>
 
-      <!-- CARTE LEAFLET -->
-      <div id="map"></div>
-
-      <!-- LÉGENDE STATUTS (simple, 3 couleurs) -->
-      <div class="carte-legende">
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#00C875"></span>Visité</div>
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#CC1919"></span>Wishlist</div>
-        <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#5A6070"></span>Non classé</div>
-      </div>
-
       <!-- BOUTON TOGGLE RECHERCHE AVANCÉE -->
       <button class="carte-search-toggle" id="btnToggleSearch">
         🔍 Recherche avancée
@@ -983,6 +991,17 @@
           <select id="champFilter"><option value="">Tous les championnats</option></select>
           <button class="btn btn-primary" id="btnVisited">Afficher : Tous</button>
           <button class="btn btn-ghost" id="btnReset">Réinitialiser</button>
+        </div>
+      </div>
+
+      <!-- CARTE LEAFLET + LÉGENDE superposée -->
+      <div class="map-wrap">
+        <div id="map"></div>
+        <!-- LÉGENDE STATUTS (superposée sur la carte) -->
+        <div class="carte-legende">
+          <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#00C875"></span>Visité</div>
+          <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#CC1919"></span>Wishlist</div>
+          <div class="carte-legende-item"><span class="carte-leg-dot" style="background:#5A6070"></span>Non classé</div>
         </div>
       </div>
 
