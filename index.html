@@ -1745,7 +1745,7 @@ function renderTableBody(ids) {
   const groups=grouper(ids), autoExpand=isFilterActive();
   Object.keys(groups).sort().forEach(pays=>{
     const flag=drapeau(pays), paysIds=Object.values(groups[pays]).flat();
-    let expanded = (pays in expandedState) ? expandedState[pays] : false;
+    let expanded = (pays in expandedState) ? expandedState[pays] : true;
     expandedState[pays] = expanded;
     const trP=tbody.insertRow(); trP.className='group-header';
     const tdP=trP.insertCell(); tdP.colSpan=8;
