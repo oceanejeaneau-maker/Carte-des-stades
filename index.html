@@ -1222,6 +1222,7 @@ function onSnapshot(ref, cb) { return ref.onSnapshot(cb); }
 
 let currentUser = null;
 let guestMode = false;
+let authResolved = false;
 
 const authOverlay = document.getElementById('authOverlay');
 const authError = document.getElementById('authError');
@@ -1262,11 +1263,16 @@ function showError(msg) { authError.textContent = msg; authError.classList.add('
 document.getElementById('btnGoogle').addEventListener('click', async () => {
   try {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) { await signInWithRedirect(auth, googleProvider); }
+    if (isMobile) { sessionStorage.setItem('gh_redirect_pending', '1'); await signInWithRedirect(auth, googleProvider); }
     else { await signInWithPopup(auth, googleProvider); }
   } catch(e) { showError('Erreur Google : ' + e.message); }
 });
-getRedirectResult(auth).catch(e => { if (e.code) showError('Erreur Google : ' + e.message); });
+getRedirectResult(auth).then(result => {
+  sessionStorage.removeItem('gh_redirect_pending');
+}).catch(e => {
+  sessionStorage.removeItem('gh_redirect_pending');
+  if (e.code) showError('Erreur Google : ' + e.message);
+});
 
 document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
@@ -1288,6 +1294,7 @@ document.getElementById('btnAuthSubmit').addEventListener('click', async () => {
 
 onAuthStateChanged(auth, async user => {
   if (user) {
+    authResolved = true;
     authOverlay.classList.add('hidden');
     guestMode = false; currentUser = user;
     const name = user.displayName || user.email.split('@')[0];
@@ -1310,14 +1317,16 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('btnLogout').style.display = 'none';
     document.getElementById('btnShowAuth').style.display = 'block';
     document.getElementById('userName').textContent = '';
-    if (!guestMode) {
+    const pendingRedirect = sessionStorage.getItem('gh_redirect_pending');
+    if (pendingRedirect) return;
+    if (!guestMode && !authResolved) {
       const onboarded = localStorage.getItem('stades_onboarded');
       if (onboarded) {
         setTimeout(() => {
           if (!currentUser && !guestMode) {
             authOverlay.classList.remove('hidden');
           }
-        }, 800);
+        }, 1200);
       }
     }
   }
