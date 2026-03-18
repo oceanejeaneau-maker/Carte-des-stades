@@ -742,6 +742,21 @@
     .topbar-user-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-disp); font-size: 14px; color: #fff; cursor: pointer; overflow: hidden; border: 2px solid var(--surface2); }
     .topbar-user-btn img { width: 100%; height: 100%; object-fit: cover; }
 
+    /* ── PROG STICKY ── */
+    .prog-sticky {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      background: var(--surface);
+      border-bottom: .5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .prog-sticky-info { display:flex; align-items:baseline; gap:5px; min-width:90px; }
+    .prog-sticky-track { flex:1; height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+    .prog-sticky-fill { height:100%; background:var(--accent); border-radius:2px; transition:width .4s ease; width:0%; }
+    .prog-sticky-pct { font-size:10px; color:var(--text4); min-width:28px; text-align:right; }
+
     /* Masquer drawer (remplacé par bottom nav) */
     .drawer, .drawer-overlay, .btn-hamburger, .topbar-spacer { display: none !important; }
     .main-content { padding-bottom: 0; }
@@ -888,47 +903,35 @@
 
   <!-- TOPBAR -->
   <nav class="topbar" id="NOUVEAU_TOPBAR">
+    <div class="topbar-logo">
+      <div class="logo-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <span class="logo-title">GROUND<span>HOPPER</span></span>
+    </div>
     <div class="topbar-right">
       <div class="topbar-user-btn" id="userAvatarTop" style="display:none"></div>
       <button class="btn-logout" id="btnLogoutTop" style="display:none">Déco</button>
       <button class="btn-logout" id="btnShowAuthTop" style="background:transparent;border:.5px solid var(--accent);color:var(--accent);font-size:11px;padding:5px 10px">Connexion</button>
     </div>
-    <button class="btn-hamburger" id="btnHamburger" aria-label="Menu" style="display:none !important">
-      <span></span><span></span><span></span>
-    </button>
   </nav>
 
   <!-- CONTENU -->
   <div class="main-content">
 
+    <!-- BARRE DE PROGRESSION STICKY -->
+    <div class="prog-sticky">
+      <div class="prog-sticky-info">
+        <span id="statVisites" style="font-family:var(--font-disp);font-size:1.1rem;color:var(--green);">0</span>
+        <span style="font-size:11px;color:var(--text4);">/ <span id="statTotal">0</span> stades</span>
+      </div>
+      <div class="prog-sticky-track">
+        <div class="prog-sticky-fill" id="progressFill"></div>
+      </div>
+      <span class="prog-sticky-pct" id="statPct">0%</span>
+    </div>
+
     <!-- ══ PAGE CARTE ══ -->
     <!-- PAGE CARTE — VARIANTE C -->
     <div class="page page-carte active" id="page-carte">
-
-      <!-- HEADER STATS -->
-      <div class="carte-header">
-        <div class="carte-header-top">
-          <div>
-            <div class="carte-header-title">GROUND<span>HOPPER</span></div>
-            <div class="carte-header-sub">Tour du monde des stades</div>
-          </div>
-          <div class="carte-header-right">
-            <div style="text-align:right">
-              <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end">
-                <span class="carte-kpi-val" id="statVisites">0</span>
-                <span class="carte-kpi-total">/ <span id="statTotal">0</span></span>
-              </div>
-              <div class="carte-kpi-lbl">stades visités</div>
-            </div>
-          </div>
-        </div>
-        <div class="carte-progress-row">
-          <div class="carte-progress-track">
-            <div class="carte-progress-fill" id="progressFill"></div>
-          </div>
-          <span class="carte-progress-pct" id="statPct">0%</span>
-        </div>
-      </div>
 
       <!-- FILTRES PILLS -->
       <div class="carte-filters-pills" id="carteFilterPills">
