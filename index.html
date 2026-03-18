@@ -800,9 +800,35 @@
     .status-badge.unset::before { background: var(--unset); }
     .stade-name-cell { font-family: var(--font-disp); font-size: 15px; letter-spacing: .03em; color: var(--text); line-height: 1.1; }
     .stade-meta-cell { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+    /* ── BLOCAGE ORIENTATION PAYSAGE ── */
+    #rotate-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 99999;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 16px;
+      text-align: center;
+    }
+    #rotate-overlay svg { width: 60px; height: 60px; stroke: var(--accent); animation: spin-phone 1.5s ease-in-out infinite alternate; }
+    @keyframes spin-phone { from { transform: rotate(-30deg); } to { transform: rotate(30deg); } }
+    #rotate-overlay p { font-family: var(--font-disp); font-size: 1.2rem; color: var(--text3); letter-spacing: .05em; }
+    @media screen and (orientation: landscape) and (max-height: 500px) {
+      #rotate-overlay { display: flex; }
+    }
   </style>
 </head>
 <body>
+<!-- OVERLAY ROTATION — affiché si l'écran est en mode paysage -->
+<div id="rotate-overlay" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="2" width="14" height="20" rx="2"/>
+    <path d="M12 18h.01"/>
+  </svg>
+  <p>Tourne ton téléphone<br>en mode portrait</p>
+</div>
+
 
 <!-- FICHE STADE -->
 <div class="fiche-overlay" id="ficheOverlay">
@@ -2157,6 +2183,16 @@ function updateStatsKpis() {
   const kR = document.getElementById('kpi-rest');    if (kR) kR.textContent = (total - visites).toLocaleString('fr-FR') + ' restants';
 }
 window.addEventListener('load', () => { injectStatsKpis(); updateStatsKpis(); });
+</script>
+
+<script>
+// ── Verrouillage orientation portrait ──
+(function() {
+  // API Screen Orientation (Chrome Android, Edge)
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('portrait').catch(() => {});
+  }
+})();
 </script>
 </body>
 </html>
