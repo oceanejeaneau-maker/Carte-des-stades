@@ -1175,6 +1175,8 @@ const authError = document.getElementById('authError');
 let isLogin = true;
 
 document.getElementById('btnShowAuth').addEventListener('click', () => { authOverlay.classList.remove('hidden'); });
+document.getElementById('btnShowAuthTop')?.addEventListener('click', () => { authOverlay.classList.remove('hidden'); });
+document.getElementById('btnLogoutTop')?.addEventListener('click', () => { if(guestMode){guestMode=false;authOverlay.classList.remove('hidden');return;} signOut(auth); });
 document.getElementById('btnGuest').addEventListener('click', () => {
   guestMode = true; authOverlay.classList.add('hidden');
   document.getElementById('btnShowAuth').style.display = 'block';
@@ -1242,6 +1244,13 @@ onAuthStateChanged(auth, async user => {
     const av = document.getElementById('userAvatar'); av.style.display = 'flex';
     document.getElementById('btnLogout').style.display = 'block';
     document.getElementById('btnShowAuth').style.display = 'none';
+    // Topbar
+    const avTop = document.getElementById('userAvatarTop');
+    if(avTop) { avTop.style.display = 'flex'; avTop.innerHTML = user.photoURL ? `<img src="${user.photoURL}">` : name[0].toUpperCase(); }
+    const btnLogoutTop = document.getElementById('btnLogoutTop');
+    if(btnLogoutTop) btnLogoutTop.style.display = 'block';
+    const btnShowAuthTop = document.getElementById('btnShowAuthTop');
+    if(btnShowAuthTop) btnShowAuthTop.style.display = 'none';
     if (user.photoURL) { av.innerHTML = `<img src="${user.photoURL}">`; }
     else { av.textContent = name[0].toUpperCase(); }
     await chargerDepuisFirestore();
@@ -1257,6 +1266,12 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('btnLogout').style.display = 'none';
     document.getElementById('btnShowAuth').style.display = 'block';
     document.getElementById('userName').textContent = '';
+    const avTop2 = document.getElementById('userAvatarTop');
+    if(avTop2) avTop2.style.display = 'none';
+    const btnLogoutTop2 = document.getElementById('btnLogoutTop');
+    if(btnLogoutTop2) btnLogoutTop2.style.display = 'none';
+    const btnShowAuthTop2 = document.getElementById('btnShowAuthTop');
+    if(btnShowAuthTop2) btnShowAuthTop2.style.display = 'block';
   }
 });
 
