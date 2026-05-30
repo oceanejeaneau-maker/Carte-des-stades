@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════
-// SERVICE WORKER — Groundhopper v8
+// SERVICE WORKER — Groundhopper v9
 // ═══════════════════════════════════════════════
 
-const CACHE_NAME = 'groundhopper-v8';
+const CACHE_NAME = 'groundhopper-v9';
 
 const PRECACHE_URLS = [
   '/manifest.json',
