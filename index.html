@@ -567,7 +567,8 @@
     .leaderboard-score { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent); letter-spacing: .05em; font-weight: 400; }
     .leaderboard-me { background: rgba(204,25,25,.04) !important; border-left: 3px solid var(--accent); }
 
-    .page-profil { padding: 16px; gap: 16px; max-width: 560px; margin: 0 auto; width: 100%; }
+    .page-profil { padding: 0; width: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .page-profil-inner { padding: 16px; gap: 16px; max-width: 560px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; padding-bottom: calc(var(--nav-h) + 16px); }
     .profil-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .profil-banner { height: 72px; background: linear-gradient(90deg, var(--surface) 0%, rgba(204,25,25,.12) 50%, var(--surface) 100%); border-bottom: 1px solid var(--accent); position: relative; overflow: hidden; }
     .profil-banner::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(204,25,25,.04) 20px, rgba(204,25,25,.04) 21px); }
@@ -1129,6 +1130,7 @@
 
     <!-- PAGE PROFIL -->
     <div class="page page-profil" id="page-profil">
+      <div class="page-profil-inner">
       <div class="profil-card">
         <div class="profil-banner"></div>
         <div class="profil-header">
@@ -1161,6 +1163,7 @@
         </div>
       </div>
     </div>
+      </div><!-- /page-profil-inner -->
 
   </div>
 
