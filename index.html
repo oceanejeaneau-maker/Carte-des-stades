@@ -1195,8 +1195,10 @@
 window._firebase = {
   sauvegarder: () => {
     try {
-      const data = stades.map(s => ({ visite: s.visite, annee: s.annee ?? null }));
-      localStorage.setItem('stades_guest_v1', JSON.stringify({ stades: data, matchs: typeof matchs !== 'undefined' ? matchs : [], notes: typeof notes !== 'undefined' ? notes : {} }));
+      // Sauvegarde par id stable — résistant aux réorganisations de stadiums.js
+      const visites = {};
+      stades.forEach(s => { if (s.visite) visites[s.id] = { visite: true, annee: s.annee ?? null }; });
+      localStorage.setItem('stades_v2', JSON.stringify({ visites, matchs: typeof matchs !== 'undefined' ? matchs : [], notes: typeof notes !== 'undefined' ? notes : {} }));
     } catch(e) { console.warn('Save error:', e); }
   },
   chargerClassement: () => {
@@ -1217,15 +1219,48 @@ window._firebase = {
 const CURRENT_YEAR = new Date().getFullYear();
 
 let wishlisted = {};
-try { wishlisted = JSON.parse(localStorage.getItem('gh_wishlist_v1') || '{}'); } catch {}
+try {
+  const wv2 = localStorage.getItem('gh_wishlist_v2');
+  if (wv2) {
+    wishlisted = JSON.parse(wv2);
+  } else {
+    // Migration v1 (clés = index numériques) → v2 (clés = id stables)
+    const wv1 = JSON.parse(localStorage.getItem('gh_wishlist_v1') || '{}');
+    Object.keys(wv1).forEach(idx => {
+      const s = stades[parseInt(idx)];
+      if (s && wv1[idx]) wishlisted[s.id] = true;
+    });
+  }
+} catch {}
 
 function sauvegarder() { if (window._firebase) window._firebase.sauvegarder(); }
 function charger() {
   try {
-    const saved = JSON.parse(localStorage.getItem('stades_guest_v1') || 'null');
-    if (saved && saved.stades) { saved.stades.forEach((s, i) => { if (stades[i]) { stades[i].visite = Boolean(s.visite); stades[i].annee = s.annee ?? null; } }); }
-    if (saved && saved.matchs) matchs.splice(0, matchs.length, ...saved.matchs);
-    if (saved && saved.notes) Object.assign(notes, saved.notes);
+    // Format v2 : sauvegarde par id stable
+    const savedV2 = JSON.parse(localStorage.getItem('stades_v2') || 'null');
+    if (savedV2) {
+      if (savedV2.visites) {
+        stades.forEach(s => {
+          const d = savedV2.visites[s.id];
+          if (d) { s.visite = true; s.annee = d.annee ?? null; }
+        });
+      }
+      if (savedV2.matchs) matchs.splice(0, matchs.length, ...savedV2.matchs);
+      if (savedV2.notes) Object.assign(notes, savedV2.notes);
+      return;
+    }
+    // Migration automatique depuis l'ancien format v1 (par index)
+    const savedV1 = JSON.parse(localStorage.getItem('stades_guest_v1') || 'null');
+    if (savedV1 && savedV1.stades) {
+      savedV1.stades.forEach((s, i) => {
+        if (stades[i] && s.visite) { stades[i].visite = true; stades[i].annee = s.annee ?? null; }
+      });
+      if (savedV1.matchs) matchs.splice(0, matchs.length, ...savedV1.matchs);
+      if (savedV1.notes) Object.assign(notes, savedV1.notes);
+      // Convertir immédiatement en v2 pour ne plus dépendre des index
+      sauvegarder();
+      console.info('Groundhopper : migration v1 -> v2 effectuée');
+    }
   } catch {}
 }
 
@@ -1301,7 +1336,7 @@ document.getElementById('basemapSelect').addEventListener('change', e => {
 });
 
 function makeIcon(s) {
-  const col  = s.visite ? '#00C875' : (wishlisted && wishlisted[s._id] ? '#CC1919' : '#5A6070');
+  const col  = s.visite ? '#00C875' : (wishlisted && wishlisted[s.id] ? '#CC1919' : '#5A6070');
   const size = s.visite ? 13 : 11;
   const ring = s.visite ? 'box-shadow:0 0 0 3px rgba(0,200,117,.35),0 1px 4px rgba(0,0,0,.4)' : 'box-shadow:0 1px 4px rgba(0,0,0,.4)';
   return L.divIcon({ className:'', html:`<div class="map-dot" style="width:${size}px;height:${size}px;background:${col};${ring}"></div>`, iconSize:[size,size], iconAnchor:[size/2,size/2], popupAnchor:[0,-size/2] });
@@ -1425,7 +1460,7 @@ const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continen
 function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly||filter.continent; }
 function getFilteredIds() {
   if (filter._wishlistOnly) {
-    return stades.reduce((acc,s,i) => { if(wishlisted[s._id||i]) acc.push(i); return acc; }, []);
+    return stades.reduce((acc,s,i) => { if(wishlisted[s.id]) acc.push(i); return acc; }, []);
   }
   const q = sansAccents(filter.search);
   const acc = stades.reduce((acc,s,i) => {
@@ -1817,18 +1852,18 @@ document.getElementById('customGoalBtn').addEventListener('click', () => {
 const ficheOverlay = document.getElementById('ficheOverlay');
 const ficheClose   = document.getElementById('ficheClose');
 let ficheStadeId   = null;
-function saveWishlist() { try { localStorage.setItem('gh_wishlist_v1', JSON.stringify(wishlisted)); } catch {} }
+function saveWishlist() { try { localStorage.setItem('gh_wishlist_v2', JSON.stringify(wishlisted)); } catch {} }
 function haversine(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2; return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))); }
 function getStadesProches(id, n = 4) { const s = stades[id]; return stades.map((t, i) => ({ i, dist: haversine(s.lat, s.lng, t.lat, t.lng) })).filter(x => x.i !== id).sort((a, b) => a.dist - b.dist).slice(0, n); }
 
 function openFiche(id) {
   ficheStadeId = id;
   const s = stades[id]; const info = STADES_INFO[s.nom];
-  const col = champColor(s.championnat); const isWish = !!wishlisted[id];
+  const col = champColor(s.championnat); const isWish = !!wishlisted[s.id];
   document.getElementById('ficheHeader').innerHTML = `<div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44"><span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>${esc(s.championnat)}</div><div class="fiche-nom">${esc(s.nom)}</div>${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}<div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>`;
   document.getElementById('ficheCta').innerHTML = `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}</button><button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">${isWish ? '★ Wishlist' : '☆ Wishlist'}</button>`;
   document.getElementById('ficheVisiteBtn').addEventListener('click', () => { stades[ficheStadeId].visite = !stades[ficheStadeId].visite; if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR; commit(true); const btn = document.getElementById('ficheVisiteBtn'); const v = stades[ficheStadeId].visite; btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`; btn.textContent = v ? '✅ Visité — retirer' : 'Marquer visité'; });
-  document.getElementById('ficheWishlistBtn').addEventListener('click', () => { wishlisted[ficheStadeId] = !wishlisted[ficheStadeId]; if (!wishlisted[ficheStadeId]) delete wishlisted[ficheStadeId]; saveWishlist(); const btn = document.getElementById('ficheWishlistBtn'); const w = !!wishlisted[ficheStadeId]; btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`; btn.textContent = w ? '★ Wishlist' : '☆ Wishlist'; });
+  document.getElementById('ficheWishlistBtn').addEventListener('click', () => { const sid = stades[ficheStadeId].id; wishlisted[sid] = !wishlisted[sid]; if (!wishlisted[sid]) delete wishlisted[sid]; saveWishlist(); const btn = document.getElementById('ficheWishlistBtn'); const w = !!wishlisted[sid]; btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`; btn.textContent = w ? '★ Wishlist' : '☆ Wishlist'; });
   let body = '';
   if (info) {
     body += `<div><div class="fiche-section-title">Infos clés</div><div class="fiche-stats-row"><div class="fiche-stat"><div class="fiche-stat-val">${info.capacite ? info.capacite.toLocaleString('fr-FR') : '—'}</div><div class="fiche-stat-lbl">Capacité</div></div><div class="fiche-stat"><div class="fiche-stat-val">${info.ouverture || '—'}</div><div class="fiche-stat-lbl">Ouverture</div></div><div class="fiche-stat"><div class="fiche-stat-val">${info.record ? info.record.toLocaleString('fr-FR') : '—'}</div><div class="fiche-stat-lbl">Record</div></div></div></div>`;
@@ -1838,7 +1873,7 @@ function openFiche(id) {
   if (notes[noteKey]) { body += `<div><div class="fiche-section-title">Ta note</div><div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;">${esc(notes[noteKey])}</div></div>`; }
   const proches = getStadesProches(id, 4);
   if (proches.length) {
-    body += `<div><div class="fiche-section-title">Stades proches</div><div class="fiche-nearby-list">${proches.map(({ i, dist }) => { const t = stades[i]; const dotColor = t.visite ? 'var(--green)' : wishlisted[i] ? 'var(--accent)' : 'var(--unset)'; return `<div class="fiche-nearby-row" onclick="ficheOverlay.classList.remove('open');setTimeout(()=>{openFiche(${i});flyTo(${t.lat},${t.lng});},300)"><div class="fiche-nearby-dot" style="background:${dotColor}"></div><span class="fiche-nearby-name">${esc(t.nom)}</span><span class="fiche-nearby-dist">${dist} km</span><span class="fiche-nearby-arrow">›</span></div>`; }).join('')}</div></div>`;
+    body += `<div><div class="fiche-section-title">Stades proches</div><div class="fiche-nearby-list">${proches.map(({ i, dist }) => { const t = stades[i]; const dotColor = t.visite ? 'var(--green)' : wishlisted[t.id] ? 'var(--accent)' : 'var(--unset)'; return `<div class="fiche-nearby-row" onclick="ficheOverlay.classList.remove('open');setTimeout(()=>{openFiche(${i});flyTo(${t.lat},${t.lng});},300)"><div class="fiche-nearby-dot" style="background:${dotColor}"></div><span class="fiche-nearby-name">${esc(t.nom)}</span><span class="fiche-nearby-dist">${dist} km</span><span class="fiche-nearby-arrow">›</span></div>`; }).join('')}</div></div>`;
   }
   document.getElementById('ficheBody').innerHTML = body;
   ficheOverlay.classList.add('open');
