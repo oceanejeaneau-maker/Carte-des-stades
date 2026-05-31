@@ -534,6 +534,14 @@
     .continent-bar { height: 100%; border-radius: 4px; transition: width .8s cubic-bezier(.4,0,.2,1); }
     .continent-count { font-family: var(--font-mono); font-size: 11px; color: var(--accent); min-width: 28px; text-align: right; }
     .objectif-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 10px; }
+    .badge-item { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 6px; background: var(--surface2); border: .5px solid var(--border); border-radius: 10px; text-align: center; transition: all .2s; }
+    .badge-item.locked { opacity: .35; filter: grayscale(1); }
+    .badge-item.unlocked { border-color: var(--amber); background: var(--amber-dim); }
+    .badge-emoji { font-size: 1.7rem; line-height: 1; }
+    .badge-name { font-size: 10px; font-weight: 600; color: var(--text2); line-height: 1.2; }
+    .badge-item.unlocked .badge-name { color: var(--amber); }
+    .badge-desc { font-size: 9px; color: var(--text4); line-height: 1.2; }
     .objectif-header { display: flex; justify-content: space-between; align-items: center; }
     .objectif-name { font-size: 13px; color: var(--text); font-weight: 500; }
     .objectif-pct { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
@@ -934,6 +942,22 @@
 </head>
 <body>
 
+<!-- ONBOARDING (premier lancement) -->
+<div id="onboardingOverlay" style="position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:420px;width:100%;padding:28px 24px;text-align:center">
+    <div style="font-size:2.6rem;margin-bottom:10px">🌍⚽</div>
+    <div style="font-family:var(--font-disp);font-size:1.7rem;letter-spacing:.04em;color:var(--text);margin-bottom:6px">BIENVENUE SUR<br><span style="color:var(--accent)">GROUNDHOPPER</span></div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px">Ton carnet de voyage des stades de football. Voici comment ça marche :</p>
+    <div style="display:flex;flex-direction:column;gap:14px;text-align:left;margin-bottom:24px">
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.4rem">🗺️</span><div><div style="font-size:13px;font-weight:600;color:var(--text)">Explore la carte</div><div style="font-size:12px;color:var(--text3);line-height:1.4">Touche un stade pour voir ses infos et le marquer comme visité.</div></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.4rem">✅</span><div><div style="font-size:13px;font-weight:600;color:var(--text)">Coche tes visites</div><div style="font-size:12px;color:var(--text3);line-height:1.4">Ajoute une date, une photo et une note à chaque stade visité.</div></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.4rem">📊</span><div><div style="font-size:13px;font-weight:600;color:var(--text)">Suis ta progression</div><div style="font-size:12px;color:var(--text3);line-height:1.4">Stats par continent, badges à débloquer et carte du monde.</div></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.4rem">💾</span><div><div style="font-size:13px;font-weight:600;color:var(--text)">Sauvegarde tes données</div><div style="font-size:12px;color:var(--text3);line-height:1.4">Dans Réglages, exporte régulièrement pour ne rien perdre.</div></div></div>
+    </div>
+    <button id="onboardingStart" style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font-disp);font-size:15px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">C'est parti !</button>
+  </div>
+</div>
+
 <!-- FICHE STADE -->
 <div class="fiche-overlay" id="ficheOverlay">
   <div class="fiche-panel" id="fichePanel">
@@ -1101,9 +1125,11 @@
 
     <!-- PAGE STATS -->
     <div class="page page-stats" id="page-stats">
+      <div class="stats-card"><div class="stats-card-title">🗺️ Ma carte du monde</div><div id="statsMiniMap" style="height:220px;border-radius:8px;overflow:hidden;background:var(--surface2)"></div></div>
       <div class="stats-card"><div class="stats-card-title">🌍 Tour du monde par continent</div><div id="statsContinents"></div></div>
       <div class="stats-card"><div class="stats-card-title">📈 Progression par année</div><div class="bar-chart" id="statsBarChart"><div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div></div></div>
       <div class="stats-card"><div class="stats-card-title">🏴 Top pays visités</div><div class="top-pays-grid" id="statsTopPays"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">🏅 Badges</div><div id="statsBadges"></div></div>
       <div class="stats-card">
         <div class="stats-card-title">🎯 Objectifs</div>
         <div id="statsObjectifs"></div>
@@ -1218,7 +1244,7 @@ window._firebase = {
     try {
       // Sauvegarde par id stable — résistant aux réorganisations de stadiums.js
       const visites = {};
-      stades.forEach(s => { if (s.visite) visites[s.id] = { visite: true, annee: s.annee ?? null }; });
+      stades.forEach(s => { if (s.visite) visites[s.id] = { visite: true, annee: s.annee ?? null, dateVisite: s.dateVisite ?? null, photo: s.photo ?? null }; });
       localStorage.setItem('stades_v2', JSON.stringify({ visites, matchs: typeof matchs !== 'undefined' ? matchs : [], notes: typeof notes !== 'undefined' ? notes : {} }));
     } catch(e) { console.warn('Save error:', e); }
   },
@@ -1312,7 +1338,7 @@ window.addEventListener('load', () => {
       notes: (typeof notes !== 'undefined') ? notes : {},
       profil: JSON.parse(localStorage.getItem('gh_profil_v1') || '{}')
     };
-    if (typeof stades !== 'undefined') stades.forEach(s => { if (s.visite) data.visites[s.id] = { visite: true, annee: s.annee ?? null }; });
+    if (typeof stades !== 'undefined') stades.forEach(s => { if (s.visite) data.visites[s.id] = { visite: true, annee: s.annee ?? null, dateVisite: s.dateVisite ?? null, photo: s.photo ?? null }; });
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1339,8 +1365,8 @@ window.addEventListener('load', () => {
           if (!confirm('Importer cette sauvegarde ? Cela remplacera tes données actuelles.')) return;
           // Restaurer les visites
           if (typeof stades !== 'undefined' && data.visites) {
-            stades.forEach(s => { s.visite = false; s.annee = null; });
-            stades.forEach(s => { const d = data.visites[s.id]; if (d) { s.visite = true; s.annee = d.annee ?? null; } });
+            stades.forEach(s => { s.visite = false; s.annee = null; s.dateVisite = null; s.photo = null; });
+            stades.forEach(s => { const d = data.visites[s.id]; if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; } });
           }
           // Restaurer wishlist
           if (data.wishlist && typeof wishlisted !== 'undefined') {
@@ -1403,11 +1429,17 @@ function charger() {
       if (savedV2.visites) {
         stades.forEach(s => {
           const d = savedV2.visites[s.id];
-          if (d) { s.visite = true; s.annee = d.annee ?? null; }
+          if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; }
         });
       }
       if (savedV2.matchs) matchs.splice(0, matchs.length, ...savedV2.matchs);
-      if (savedV2.notes) Object.assign(notes, savedV2.notes);
+      if (savedV2.notes) {
+        // Migrer d'éventuelles notes encore indexées par nombre vers les id
+        Object.keys(savedV2.notes).forEach(k => {
+          if (/^\d+$/.test(k) && stades[parseInt(k)]) notes[stades[parseInt(k)].id] = savedV2.notes[k];
+          else notes[k] = savedV2.notes[k];
+        });
+      }
       return;
     }
     // Migration automatique depuis l'ancien format v1 (par index)
@@ -1417,7 +1449,10 @@ function charger() {
         if (stades[i] && s.visite) { stades[i].visite = true; stades[i].annee = s.annee ?? null; }
       });
       if (savedV1.matchs) matchs.splice(0, matchs.length, ...savedV1.matchs);
-      if (savedV1.notes) Object.assign(notes, savedV1.notes);
+      if (savedV1.notes) Object.keys(savedV1.notes).forEach(k => {
+        if (/^\d+$/.test(k) && stades[parseInt(k)]) notes[stades[parseInt(k)].id] = savedV1.notes[k];
+        else notes[k] = savedV1.notes[k];
+      });
       // Convertir immédiatement en v2 pour ne plus dépendre des index
       sauvegarder();
       console.info('Groundhopper : migration v1 -> v2 effectuée');
@@ -1425,7 +1460,7 @@ function charger() {
   } catch {}
 }
 
-const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', Tcheque:'CZ', Autriche:'AT', Hongrie:'HU', Bresil:'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', Perou:'PE', USA:'US', Mexique:'MX', Canada:'CA', Japon:'JP', 'Corée du Sud':'KR', Chine:'CN', Australie:'AU', 'Arabie Saoudite':'SA', 'Émirats Arabes Unis':'AE', Qatar:'QA', Inde:'IN', Iran:'IR', Indonésie:'ID', Thaïlande:'TH', 'Afrique du Sud':'ZA', Maroc:'MA', Nigeria:'NG', Égypte:'EG', Sénégal:'SN', Cameroun:'CM', "Côte d'Ivoire":'CI', Ghana:'GH', Tanzanie:'TZ', Kenya:'KE', Algérie:'DZ', Tunisie:'TN', 'Nouvelle-Zélande':'NZ', Norvège:'NO', Danemark:'DK', Suède:'SE', Finlande:'FI', Islande:'IS', Russie:'RU', Ukraine:'UA', Bulgarie:'BG', Slovaquie:'SK', Slovénie:'SI', Géorgie:'GE', Arménie:'AM', Azerbaïdjan:'AZ', Biélorussie:'BY', Albanie:'AL', 'Macédoine du Nord':'MK', Bosnie:'BA', Luxembourg:'LU', Malte:'MT', Chypre:'CY', Mali:'ML', 'Burkina Faso':'BF', Bénin:'BJ', Guinée:'GN', 'Guinée Équatoriale':'GQ', Gabon:'GA', Centrafrique:'CF', 'Congo RDC':'CD', Ouganda:'UG', Rwanda:'RW', Zimbabwe:'ZW', Zambie:'ZM', Éthiopie:'ET', Soudan:'SD', Angola:'AO', Madagascar:'MG', Mozambique:'MZ', Jordanie:'JO', Liban:'LB', Koweït:'KW', Bahreïn:'BH', Oman:'OM', Irak:'IQ', Malaisie:'MY', Philippines:'PH', Myanmar:'MM', Cambodge:'KH', Bangladesh:'BD', Pakistan:'PK', Népal:'NP', 'Sri Lanka':'LK', Honduras:'HN', 'El Salvador':'SV', Guatemala:'GT', Nicaragua:'NI', Panama:'PA', Jamaïque:'JM', Cuba:'CU', Paraguay:'PY', Équateur:'EC', Bolivie:'BO', Venezuela:'VE' };
+const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Italie:'IT', 'Pays-Bas':'NL', Portugal:'PT', Suisse:'CH', Grèce:'GR', Irlande:'IE', Turquie:'TR', Serbie:'RS', Croatie:'HR', Roumanie:'RO', Pologne:'PL', 'Tchéquie':'CZ', Autriche:'AT', Hongrie:'HU', 'Brésil':'BR', Argentine:'AR', Uruguay:'UY', Chili:'CL', Colombie:'CO', 'Pérou':'PE', USA:'US', Mexique:'MX', Canada:'CA', Japon:'JP', 'Corée du Sud':'KR', Chine:'CN', Australie:'AU', 'Arabie Saoudite':'SA', 'Émirats Arabes Unis':'AE', Qatar:'QA', Inde:'IN', Iran:'IR', Indonésie:'ID', Thaïlande:'TH', 'Afrique du Sud':'ZA', Maroc:'MA', Nigeria:'NG', Égypte:'EG', Sénégal:'SN', Cameroun:'CM', "Côte d'Ivoire":'CI', Ghana:'GH', Tanzanie:'TZ', Kenya:'KE', Algérie:'DZ', Tunisie:'TN', 'Nouvelle-Zélande':'NZ', Norvège:'NO', Danemark:'DK', Suède:'SE', Finlande:'FI', Islande:'IS', Russie:'RU', Ukraine:'UA', Bulgarie:'BG', Slovaquie:'SK', Slovénie:'SI', Géorgie:'GE', Arménie:'AM', Azerbaïdjan:'AZ', Biélorussie:'BY', Albanie:'AL', 'Macédoine du Nord':'MK', 'Bosnie-Herzégovine':'BA', Luxembourg:'LU', Malte:'MT', Chypre:'CY', Mali:'ML', 'Burkina Faso':'BF', Bénin:'BJ', Guinée:'GN', 'Guinée Équatoriale':'GQ', Gabon:'GA', Centrafrique:'CF', 'Congo RDC':'CD', Ouganda:'UG', Rwanda:'RW', Zimbabwe:'ZW', Zambie:'ZM', Éthiopie:'ET', Soudan:'SD', Angola:'AO', Madagascar:'MG', Mozambique:'MZ', Jordanie:'JO', Liban:'LB', Koweït:'KW', Bahreïn:'BH', Oman:'OM', Irak:'IQ', Malaisie:'MY', Philippines:'PH', Myanmar:'MM', Cambodge:'KH', Bangladesh:'BD', Pakistan:'PK', Népal:'NP', 'Sri Lanka':'LK', Honduras:'HN', 'El Salvador':'SV', Guatemala:'GT', Nicaragua:'NI', Panama:'PA', Jamaïque:'JM', Cuba:'CU', Paraguay:'PY', Équateur:'EC', Bolivie:'BO', Venezuela:'VE' };
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
@@ -1459,7 +1494,7 @@ const STADES_INFO = {
   'FNB Stadium':          { capacite:94736, ouverture:1989, record:94736, anecdote:"Surnommé 'Soccer City', c'est ici que Nelson Mandela a fait sa première apparition publique après sa libération en 1990." },
 };
 
-const stades = STADES_DATA.map(s => ({...s, visite:false, annee:null}));
+const stades = STADES_DATA.map(s => ({...s, visite:false, annee:null, dateVisite:null, photo:null}));
 
 // Fix Android : forcer hauteur avant init Leaflet
 (function() {
@@ -1667,8 +1702,8 @@ function initFilters() {
   // ── Pills filtres carte rapide ─────────────────
   (function() {
     const CONT = {
-      'Europe':['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Irlande du Nord','Écosse','Pays de Galles','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Tchéquie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Bosnie-Herzégovine','Macédoine du Nord','Monténégro','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie','Andorre'],
-      'Amériques':['Bresil','Brésil','Argentine','Uruguay','Chili','Colombie','Perou','Pérou','Équateur','Bolivie','Paraguay','Venezuela','USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
+      'Europe':['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Irlande du Nord','Écosse','Pays de Galles','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tchéquie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie-Herzégovine','Macédoine du Nord','Monténégro','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie','Andorre'],
+      'Amériques':['Brésil','Argentine','Uruguay','Chili','Colombie','Pérou','Équateur','Bolivie','Paraguay','Venezuela','USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
       'Afrique':['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique','Libye'],
       'Asie':['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande','Nouvelle-Calédonie','Fidji','Samoa','Polynésie française','Îles Salomon'],
       'M-Orient':['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Koweït','Bahreïn','Oman','Liban'],
@@ -1865,9 +1900,9 @@ function renderNotes() {
     const i = stades.indexOf(s);
     const card = document.createElement('div'); card.className = 'note-card';
     const col = champColor(s.championnat);
-    card.innerHTML = `<div class="note-card-header"><div><div class="note-card-title">${esc(s.nom)} ${s.visite ? '✅' : ''}</div><div class="note-card-meta">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.annee ? ' · ' + s.annee : ''}</div></div></div><textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[i] || '')}</textarea>`;
+    card.innerHTML = `<div class="note-card-header"><div><div class="note-card-title">${esc(s.nom)} ${s.visite ? '✅' : ''}</div><div class="note-card-meta">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.annee ? ' · ' + s.annee : ''}</div></div></div><textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[s.id] || '')}</textarea>`;
     const ta = card.querySelector('textarea');
-    ta.addEventListener('input', () => { notes[i] = ta.value; saveNotes(); });
+    ta.addEventListener('input', () => { if (ta.value.trim()) notes[s.id] = ta.value; else delete notes[s.id]; saveNotes(); });
     list.appendChild(card);
   });
 }
@@ -1940,8 +1975,8 @@ renderMatchs();
 
 // ── Stats ───────────────────────────────────────
 const CONTINENTS = {
-  'Europe': ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Irlande du Nord','Écosse','Pays de Galles','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Tchéquie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Bosnie-Herzégovine','Macédoine du Nord','Monténégro','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie','Andorre'],
-  'Amérique du Sud': ['Bresil','Brésil','Argentine','Uruguay','Chili','Colombie','Perou','Pérou','Équateur','Bolivie','Paraguay','Venezuela'],
+  'Europe': ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Irlande du Nord','Écosse','Pays de Galles','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tchéquie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie-Herzégovine','Macédoine du Nord','Monténégro','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie','Andorre'],
+  'Amérique du Sud': ['Brésil','Argentine','Uruguay','Chili','Colombie','Pérou','Équateur','Bolivie','Paraguay','Venezuela'],
   'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
   'Afrique': ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique','Libye'],
   'Asie & Océanie': ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande','Nouvelle-Calédonie','Fidji','Samoa','Polynésie française','Îles Salomon'],
@@ -1990,6 +2025,46 @@ function renderStats() {
     return `<div class="objectif-row"><div class="objectif-header"><span class="objectif-name">${obj.name}</span><div style="display:flex;align-items:center;gap:6px"><span class="objectif-pct">${done}/${obj.target}</span>${isDone ? `<span class="objectif-badge done">✓ Atteint</span>` : `<span class="objectif-badge">${pct}%</span>`}</div></div><div class="objectif-track"><div class="objectif-fill${isDone?' done':''}" style="width:${pct}%"></div></div></div>`;
   }).join('');
   if (customGoal > 0) { document.getElementById('customGoalDisplay').textContent = `Actuel : ${customGoal}`; document.getElementById('customGoalInput').value = customGoal; }
+
+  // ── Badges / achievements ──
+  const paysVisites = new Set(visites.map(s => s.pays));
+  const contVisites = new Set(visites.map(s => getContinent(s.pays)));
+  const champVisites = new Set(visites.map(s => s.championnat));
+  const nbContinents = Object.keys(CONTINENTS).length;
+  const grosStades = visites.filter(s => { const info = STADES_INFO[s.nom]; return info && info.capacite >= 60000; }).length;
+  const badges = [
+    { emoji: '👟', name: 'Premier pas', desc: '1 stade', ok: done >= 1 },
+    { emoji: '🔟', name: 'Dizaine', desc: '10 stades', ok: done >= 10 },
+    { emoji: '💯', name: 'Centurion', desc: '100 stades', ok: done >= 100 },
+    { emoji: '🗺️', name: 'Cartographe', desc: '5 pays', ok: paysVisites.size >= 5 },
+    { emoji: '🌍', name: 'Tour du monde', desc: '25 pays', ok: paysVisites.size >= 25 },
+    { emoji: '🧭', name: 'Aventurier', desc: 'Tous les continents', ok: contVisites.size >= nbContinents },
+    { emoji: '🏟️', name: 'Cathédrales', desc: '5 stades 60k+', ok: grosStades >= 5 },
+    { emoji: '🎽', name: 'Collectionneur', desc: '10 championnats', ok: champVisites.size >= 10 },
+  ];
+  const badgesEl = document.getElementById('statsBadges');
+  if (badgesEl) {
+    const nbOk = badges.filter(b => b.ok).length;
+    badgesEl.innerHTML = `<div style="font-size:11px;color:var(--text3);margin-bottom:10px">${nbOk}/${badges.length} débloqués</div><div class="badges-grid">` + badges.map(b => `<div class="badge-item ${b.ok ? 'unlocked' : 'locked'}"><div class="badge-emoji">${b.emoji}</div><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div></div>`).join('') + `</div>`;
+  }
+
+  // ── Mini-carte des visites ──
+  renderMiniMap(visites);
+}
+
+let _miniMap = null, _miniLayer = null;
+function renderMiniMap(visites) {
+  const el = document.getElementById('statsMiniMap');
+  if (!el || typeof L === 'undefined') return;
+  if (!_miniMap) {
+    _miniMap = L.map(el, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: true }).setView([20, 0], 1);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 6 }).addTo(_miniMap);
+  }
+  if (_miniLayer) { _miniMap.removeLayer(_miniLayer); _miniLayer = null; }
+  if (!visites.length) { setTimeout(() => _miniMap.invalidateSize(), 50); return; }
+  const markers = visites.map(s => L.circleMarker([s.lat, s.lng], { radius: 4, color: '#00C875', fillColor: '#00C875', fillOpacity: .8, weight: 1 }));
+  _miniLayer = L.layerGroup(markers).addTo(_miniMap);
+  setTimeout(() => { _miniMap.invalidateSize(); try { const grp = L.featureGroup(markers); _miniMap.fitBounds(grp.getBounds().pad(0.2), { maxZoom: 5 }); } catch {} }, 60);
 }
 
 document.getElementById('customGoalBtn').addEventListener('click', () => {
@@ -2011,20 +2086,47 @@ function openFiche(id) {
   const col = champColor(s.championnat); const isWish = !!wishlisted[s.id];
   document.getElementById('ficheHeader').innerHTML = `<div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44"><span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>${esc(s.championnat)}</div><div class="fiche-nom">${esc(s.nom)}</div>${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}<div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>`;
   document.getElementById('ficheCta').innerHTML = `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}</button><button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">${isWish ? '★ Wishlist' : '☆ Wishlist'}</button>`;
-  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { stades[ficheStadeId].visite = !stades[ficheStadeId].visite; if (stades[ficheStadeId].visite && !stades[ficheStadeId].annee) stades[ficheStadeId].annee = CURRENT_YEAR; commit(true); const btn = document.getElementById('ficheVisiteBtn'); const v = stades[ficheStadeId].visite; btn.className = `fiche-visite-btn ${v ? 'visite' : 'non-visite'}`; btn.textContent = v ? '✅ Visité — retirer' : 'Marquer visité'; });
+  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { const st = stades[ficheStadeId]; st.visite = !st.visite; if (st.visite && !st.dateVisite) { st.dateVisite = new Date().toISOString().slice(0,10); st.annee = parseInt(st.dateVisite.slice(0,4)); } commit(true); openFiche(ficheStadeId); });
   document.getElementById('ficheWishlistBtn').addEventListener('click', () => { const sid = stades[ficheStadeId].id; wishlisted[sid] = !wishlisted[sid]; if (!wishlisted[sid]) delete wishlisted[sid]; saveWishlist(); const btn = document.getElementById('ficheWishlistBtn'); const w = !!wishlisted[sid]; btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`; btn.textContent = w ? '★ Wishlist' : '☆ Wishlist'; });
   let body = '';
+
+  // Bloc visite : date + photo (seulement si visité)
+  if (s.visite) {
+    const dateVal = s.dateVisite || (s.annee ? `${s.annee}-01-01` : '');
+    body += `<div><div class="fiche-section-title">Ma visite</div>`;
+    body += `<div style="display:flex;flex-direction:column;gap:10px">`;
+    body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📅 Date</span><input type="date" id="ficheDateInput" value="${dateVal}" max="${new Date().toISOString().slice(0,10)}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
+    if (s.photo) {
+      body += `<div style="position:relative"><img src="${esc(s.photo)}" alt="" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover" onerror="this.style.display='none'"><button id="ficheRemovePhoto" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px">✕</button></div>`;
+    }
+    body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📷 Photo</span><input type="url" id="finchePhotoInput" placeholder="https://… (URL de l'image)" value="${s.photo ? esc(s.photo) : ''}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
+    body += `</div></div>`;
+  }
+
   if (info) {
     body += `<div><div class="fiche-section-title">Infos clés</div><div class="fiche-stats-row"><div class="fiche-stat"><div class="fiche-stat-val">${info.capacite ? info.capacite.toLocaleString('fr-FR') : '—'}</div><div class="fiche-stat-lbl">Capacité</div></div><div class="fiche-stat"><div class="fiche-stat-val">${info.ouverture || '—'}</div><div class="fiche-stat-lbl">Ouverture</div></div><div class="fiche-stat"><div class="fiche-stat-val">${info.record ? info.record.toLocaleString('fr-FR') : '—'}</div><div class="fiche-stat-lbl">Record</div></div></div></div>`;
     body += `<div><div class="fiche-section-title">Le savais-tu ?</div><div class="fiche-anecdote">${esc(info.anecdote)}</div></div>`;
   } else { body += `<div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;color:var(--text3);font-size:13px;">Fiche détaillée bientôt disponible</div>`; }
-  const noteKey = ficheStadeId;
-  if (notes[noteKey]) { body += `<div><div class="fiche-section-title">Ta note</div><div style="background:var(--surface2);border:.5px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;">${esc(notes[noteKey])}</div></div>`; }
+
+  // Note éditable directement dans la fiche
+  body += `<div><div class="fiche-section-title">Ma note</div><textarea id="ficheNoteInput" placeholder="Ajoute un souvenir, une anecdote…" style="width:100%;min-height:70px;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:13px;line-height:1.5;outline:none;resize:vertical">${esc(notes[s.id] || '')}</textarea></div>`;
+
   const proches = getStadesProches(id, 4);
   if (proches.length) {
     body += `<div><div class="fiche-section-title">Stades proches</div><div class="fiche-nearby-list">${proches.map(({ i, dist }) => { const t = stades[i]; const dotColor = t.visite ? 'var(--green)' : wishlisted[t.id] ? 'var(--accent)' : 'var(--unset)'; return `<div class="fiche-nearby-row" onclick="ficheOverlay.classList.remove('open');setTimeout(()=>{openFiche(${i});flyTo(${t.lat},${t.lng});},300)"><div class="fiche-nearby-dot" style="background:${dotColor}"></div><span class="fiche-nearby-name">${esc(t.nom)}</span><span class="fiche-nearby-dist">${dist} km</span><span class="fiche-nearby-arrow">›</span></div>`; }).join('')}</div></div>`;
   }
   document.getElementById('ficheBody').innerHTML = body;
+
+  // Handlers des champs visite
+  const dateInput = document.getElementById('ficheDateInput');
+  if (dateInput) dateInput.addEventListener('change', () => { const st = stades[ficheStadeId]; st.dateVisite = dateInput.value || null; if (dateInput.value) st.annee = parseInt(dateInput.value.slice(0,4)); commit(true); });
+  const photoInput = document.getElementById('finchePhotoInput');
+  if (photoInput) photoInput.addEventListener('change', () => { stades[ficheStadeId].photo = photoInput.value.trim() || null; commit(true); openFiche(ficheStadeId); });
+  const removePhoto = document.getElementById('ficheRemovePhoto');
+  if (removePhoto) removePhoto.addEventListener('click', () => { stades[ficheStadeId].photo = null; commit(true); openFiche(ficheStadeId); });
+  const noteInput = document.getElementById('ficheNoteInput');
+  if (noteInput) noteInput.addEventListener('input', () => { const sid = stades[ficheStadeId].id; if (noteInput.value.trim()) notes[sid] = noteInput.value; else delete notes[sid]; saveNotes(); });
+
   ficheOverlay.classList.add('open');
 }
 ficheClose.addEventListener('click', () => ficheOverlay.classList.remove('open'));
@@ -2043,6 +2145,49 @@ updateStats();
 renderAll();
 
 window._app = { updateStats, renderAll, renderMatchs };
+
+// ── Onboarding premier lancement ────────────────
+(function() {
+  try {
+    if (!localStorage.getItem('gh_onboarding_done')) {
+      const ov = document.getElementById('onboardingOverlay');
+      if (ov) {
+        ov.style.display = 'flex';
+        document.getElementById('onboardingStart').addEventListener('click', () => {
+          ov.style.display = 'none';
+          try { localStorage.setItem('gh_onboarding_done', '1'); } catch {}
+        });
+      }
+    }
+  } catch {}
+})();
+
+// ── Swipe entre pages ───────────────────────────
+(function() {
+  const PAGES = ['carte','notes','stats','matchs','profil'];
+  let touchX = 0, touchY = 0, touching = false;
+  const main = document.querySelector('.main-content');
+  if (!main) return;
+  main.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { touching = false; return; }
+    touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; touching = true;
+  }, { passive: true });
+  main.addEventListener('touchend', e => {
+    if (!touching) return;
+    touching = false;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    // Swipe horizontal franc uniquement (évite conflit avec scroll vertical et carte)
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.8) return;
+    // Ne pas intercepter le swipe sur la carte Leaflet (l'utilisateur déplace la carte)
+    if (e.target.closest('#map') || e.target.closest('.leaflet-container')) return;
+    const current = PAGES.find(p => document.getElementById('page-' + p)?.classList.contains('active'));
+    let idx = PAGES.indexOf(current);
+    if (idx === -1) return;
+    if (dx < 0 && idx < PAGES.length - 1) navTo(PAGES[idx + 1]);
+    else if (dx > 0 && idx > 0) navTo(PAGES[idx - 1]);
+  }, { passive: true });
+})();
 </script>
 
 <script>
