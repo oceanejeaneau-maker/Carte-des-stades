@@ -1131,38 +1131,56 @@
     <!-- PAGE PROFIL -->
     <div class="page page-profil" id="page-profil">
       <div class="page-profil-inner">
+
+      <div class="page-header" style="margin-bottom:8px">
+        <h2>⚙️ Réglages</h2>
+        <p>Sauvegarde, installation et infos sur l'app</p>
+      </div>
+
       <div class="profil-card">
-        <div class="profil-banner"></div>
-        <div class="profil-header">
-          <div class="profil-avatar-wrap"><div class="profil-avatar" id="profilAvatar"></div><div class="profil-avatar-edit" id="profilAvatarEdit" title="Changer la photo">✏️</div></div>
-          <div class="profil-name-row">
-            <div><div class="profil-name" id="profilName">—</div><div class="profil-email" id="profilEmail">—</div></div>
-            <button class="profil-share-btn" id="btnShareProfil">🔗 Partager</button>
-            <button class="profil-share-btn" id="btnInstallApp" style="display:none;background:var(--accent);color:#000;border-color:var(--accent);font-family:var(--font-disp);letter-spacing:.06em;text-transform:uppercase;">📲 Installer l'app</button>
-          </div>
-        </div>
         <div class="profil-stats">
           <div class="profil-stat"><div class="profil-stat-val green" id="psVisites">0</div><div class="profil-stat-lbl">Stades visités</div></div>
           <div class="profil-stat"><div class="profil-stat-val" id="psPays">0</div><div class="profil-stat-lbl">Pays</div></div>
           <div class="profil-stat"><div class="profil-stat-val" id="psMatchs">0</div><div class="profil-stat-lbl">Matchs vus</div></div>
         </div>
       </div>
+
       <div class="profil-section">
-        <h3>✏️ Modifier mes informations</h3>
-        <div class="profil-field"><label>Pseudo</label><input type="text" id="profilInputNom" placeholder="Ton pseudo…" maxlength="30"></div>
-        <div class="profil-field"><label>URL photo de profil</label><input type="url" id="profilInputPhoto" placeholder="https://…"></div>
-        <div id="profilToast" class="profil-toast"></div>
-        <button class="profil-save-btn" id="btnSauvegarderProfil">Sauvegarder</button>
-      </div>
-      <div class="profil-section">
-        <h3>🔗 Partager mon profil</h3>
-        <p style="font-size:13px;color:var(--text2);line-height:1.6">Partage ce lien avec tes amis pour qu'ils voient tes stades visités.</p>
-        <div class="profil-link-box">
-          <span class="profil-link-url" id="profilLienUrl">—</span>
-          <button class="profil-link-copy" id="btnCopierLien">Copier</button>
+        <h3>💾 Sauvegarde de mes données</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6">Tes données sont stockées sur cet appareil uniquement. Exporte-les régulièrement : ce fichier te permet de tout restaurer si tu changes de téléphone ou vides ton cache.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="profil-save-btn" id="btnExportData" style="background:var(--green);color:#06231a">⬇️ Exporter</button>
+          <button class="profil-save-btn" id="btnImportData" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)">⬆️ Importer</button>
+          <input type="file" id="importFileInput" accept="application/json,.json" style="display:none">
         </div>
+        <div id="importToast" class="profil-toast"></div>
       </div>
-    </div>
+
+      <div class="profil-section" id="installSection" style="display:none">
+        <h3>📲 Installer l'application</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6">Installe Groundhopper sur ton écran d'accueil pour un accès rapide et une utilisation hors-ligne.</p>
+        <button class="profil-save-btn" id="btnInstallApp" style="display:none;align-self:flex-start;background:var(--accent);color:#fff">📲 Installer</button>
+      </div>
+
+      <div class="profil-section">
+        <h3>ℹ️ À propos</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6">Groundhopper — ton carnet de voyage des stades de football. Suis ton avancée dans le tour du monde des stades, en toute neutralité.</p>
+      </div>
+
+      <div style="display:none" aria-hidden="true">
+        <div id="profilAvatar"></div>
+        <div id="profilAvatarEdit"></div>
+        <div id="profilName">—</div>
+        <div id="profilEmail">—</div>
+        <button id="btnShareProfil"></button>
+        <input type="text" id="profilInputNom">
+        <input type="url" id="profilInputPhoto">
+        <div id="profilToast" class="profil-toast"></div>
+        <button id="btnSauvegarderProfil"></button>
+        <span id="profilLienUrl">—</span>
+        <button id="btnCopierLien"></button>
+      </div>
+
       </div><!-- /page-profil-inner -->
 
   </div>
@@ -1186,8 +1204,8 @@
       <span class="bn-label">Matchs</span>
     </div>
     <div class="bn-item" data-page="profil" onclick="navTo('profil')">
-      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-      <span class="bn-label">Profil</span>
+      <div class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5A6070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <span class="bn-label">Réglages</span>
     </div>
   </nav>
 
@@ -1208,8 +1226,148 @@ window._firebase = {
     const el = document.getElementById('leaderboard');
     if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3)">Classement désactivé</div>';
   },
-  renderProfil: () => {}
+  renderProfil: () => {
+    let prof = {};
+    try { prof = JSON.parse(localStorage.getItem('gh_profil_v1') || '{}'); } catch {}
+    const pseudo = prof.pseudo || 'Groundhopper';
+    const photo  = prof.photo || '';
+
+    const visites = (typeof stades !== 'undefined') ? stades.filter(s => s.visite).length : 0;
+    const pays    = (typeof stades !== 'undefined') ? new Set(stades.filter(s => s.visite).map(s => s.pays)).size : 0;
+    const nbMatchs = (typeof matchs !== 'undefined') ? matchs.length : 0;
+
+    // Nom + email
+    const nameEl = document.getElementById('profilName'); if (nameEl) nameEl.textContent = pseudo;
+    const mailEl = document.getElementById('profilEmail'); if (mailEl) mailEl.textContent = visites + ' stade' + (visites > 1 ? 's' : '') + ' visité' + (visites > 1 ? 's' : '');
+
+    // Avatar (photo ou initiale)
+    const avEl = document.getElementById('profilAvatar');
+    if (avEl) {
+      if (photo) avEl.innerHTML = '<img src="' + esc(photo) + '" alt="" onerror="this.parentNode.textContent=\'' + esc(pseudo.charAt(0).toUpperCase()) + '\'">';
+      else avEl.textContent = pseudo.charAt(0).toUpperCase();
+    }
+
+    // Stats
+    const sV = document.getElementById('psVisites'); if (sV) sV.textContent = visites;
+    const sP = document.getElementById('psPays');    if (sP) sP.textContent = pays;
+    const sM = document.getElementById('psMatchs');  if (sM) sM.textContent = nbMatchs;
+
+    // Pré-remplir les champs du formulaire
+    const inN = document.getElementById('profilInputNom');   if (inN && !inN.dataset.touched) inN.value = prof.pseudo || '';
+    const inP = document.getElementById('profilInputPhoto'); if (inP && !inP.dataset.touched) inP.value = prof.photo || '';
+
+    // Lien de partage
+    const lienEl = document.getElementById('profilLienUrl');
+    if (lienEl) lienEl.textContent = location.origin + location.pathname + '?profil=' + encodeURIComponent(pseudo);
+  }
 };
+
+// ── Handlers profil (mode local) ────────────────
+window.addEventListener('load', () => {
+  const inN = document.getElementById('profilInputNom');
+  const inP = document.getElementById('profilInputPhoto');
+  if (inN) inN.addEventListener('input', () => { inN.dataset.touched = '1'; });
+  if (inP) inP.addEventListener('input', () => { inP.dataset.touched = '1'; });
+
+  const saveBtn = document.getElementById('btnSauvegarderProfil');
+  if (saveBtn) saveBtn.addEventListener('click', () => {
+    const prof = {
+      pseudo: (inN?.value || '').trim(),
+      photo:  (inP?.value || '').trim()
+    };
+    try { localStorage.setItem('gh_profil_v1', JSON.stringify(prof)); } catch {}
+    const toast = document.getElementById('profilToast');
+    if (toast) { toast.className = 'profil-toast success'; toast.textContent = '✅ Profil sauvegardé'; setTimeout(() => { toast.className = 'profil-toast'; }, 2500); }
+    if (inN) delete inN.dataset.touched;
+    if (inP) delete inP.dataset.touched;
+    window._firebase.renderProfil();
+  });
+
+  const copyBtn = document.getElementById('btnCopierLien');
+  if (copyBtn) copyBtn.addEventListener('click', () => {
+    const url = document.getElementById('profilLienUrl')?.textContent || '';
+    navigator.clipboard?.writeText(url).then(() => {
+      copyBtn.textContent = 'Copié !';
+      setTimeout(() => { copyBtn.textContent = 'Copier'; }, 1800);
+    }).catch(() => {});
+  });
+
+  const shareBtn = document.getElementById('btnShareProfil');
+  if (shareBtn) shareBtn.addEventListener('click', () => {
+    const url = document.getElementById('profilLienUrl')?.textContent || location.href;
+    if (navigator.share) navigator.share({ title: 'Mon profil Groundhopper', url }).catch(() => {});
+    else navigator.clipboard?.writeText(url);
+  });
+
+  // ── Export des données ────────────────────────
+  const exportBtn = document.getElementById('btnExportData');
+  if (exportBtn) exportBtn.addEventListener('click', () => {
+    const data = {
+      _format: 'groundhopper-backup',
+      _version: 2,
+      _date: new Date().toISOString(),
+      visites: {},
+      wishlist: (typeof wishlisted !== 'undefined') ? wishlisted : {},
+      matchs: (typeof matchs !== 'undefined') ? matchs : [],
+      notes: (typeof notes !== 'undefined') ? notes : {},
+      profil: JSON.parse(localStorage.getItem('gh_profil_v1') || '{}')
+    };
+    if (typeof stades !== 'undefined') stades.forEach(s => { if (s.visite) data.visites[s.id] = { visite: true, annee: s.annee ?? null }; });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const dateStr = new Date().toISOString().slice(0, 10);
+    a.href = url; a.download = `groundhopper-sauvegarde-${dateStr}.json`;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+
+  // ── Import des données ────────────────────────
+  const importBtn = document.getElementById('btnImportData');
+  const fileInput = document.getElementById('importFileInput');
+  if (importBtn && fileInput) {
+    importBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const toast = document.getElementById('importToast');
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          if (data._format !== 'groundhopper-backup') throw new Error('format');
+          if (!confirm('Importer cette sauvegarde ? Cela remplacera tes données actuelles.')) return;
+          // Restaurer les visites
+          if (typeof stades !== 'undefined' && data.visites) {
+            stades.forEach(s => { s.visite = false; s.annee = null; });
+            stades.forEach(s => { const d = data.visites[s.id]; if (d) { s.visite = true; s.annee = d.annee ?? null; } });
+          }
+          // Restaurer wishlist
+          if (data.wishlist && typeof wishlisted !== 'undefined') {
+            Object.keys(wishlisted).forEach(k => delete wishlisted[k]);
+            Object.assign(wishlisted, data.wishlist);
+            saveWishlist();
+          }
+          // Restaurer matchs et notes
+          if (data.matchs && typeof matchs !== 'undefined') matchs.splice(0, matchs.length, ...data.matchs);
+          if (data.notes && typeof notes !== 'undefined') { Object.keys(notes).forEach(k => delete notes[k]); Object.assign(notes, data.notes); }
+          // Restaurer profil
+          if (data.profil) localStorage.setItem('gh_profil_v1', JSON.stringify(data.profil));
+          // Sauvegarder le tout et rafraîchir
+          sauvegarder();
+          if (window._app) { window._app.updateStats(); window._app.renderAll(); }
+          window._firebase.renderProfil();
+          if (toast) { toast.className = 'profil-toast success'; toast.textContent = '✅ Sauvegarde importée avec succès'; }
+        } catch (err) {
+          if (toast) { toast.className = 'profil-toast error'; toast.textContent = '❌ Fichier invalide ou corrompu'; }
+        }
+        fileInput.value = '';
+        if (toast) setTimeout(() => { toast.className = 'profil-toast'; }, 3500);
+      };
+      reader.readAsText(file);
+    });
+  }
+});
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1925,7 +2083,9 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault(); deferredPrompt = e;
   const btn = document.getElementById('btnInstallApp');
-  if (btn) { btn.style.display = 'flex'; btn.addEventListener('click', async () => { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') btn.style.display = 'none'; deferredPrompt = null; }); }
+  const section = document.getElementById('installSection');
+  if (section) section.style.display = 'flex';
+  if (btn) { btn.style.display = 'flex'; btn.addEventListener('click', async () => { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { btn.style.display = 'none'; if (section) section.style.display = 'none'; } deferredPrompt = null; }); }
 });
 window.addEventListener('appinstalled', () => { const btn = document.getElementById('btnInstallApp'); if (btn) btn.style.display = 'none'; deferredPrompt = null; });
 
