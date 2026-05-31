@@ -1101,8 +1101,8 @@
 
     <!-- PAGE STATS -->
     <div class="page page-stats" id="page-stats">
+      <div class="stats-card"><div class="stats-card-title">🌍 Tour du monde par continent</div><div id="statsContinents"></div></div>
       <div class="stats-card"><div class="stats-card-title">📈 Progression par année</div><div class="bar-chart" id="statsBarChart"><div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div></div></div>
-      <div class="stats-card"><div class="stats-card-title">🌍 Répartition par continent</div><div id="statsContinents"></div></div>
       <div class="stats-card"><div class="stats-card-title">🏴 Top pays visités</div><div class="top-pays-grid" id="statsTopPays"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
       <div class="stats-card">
         <div class="stats-card-title">🎯 Objectifs</div>
@@ -1608,17 +1608,9 @@ function initMapLayers() {
   Object.entries(struct).forEach(([p,cs]) => cs.forEach(c => { mapLayers[layerKey(p,c)]=true; }));
 }
 
-const CONTINENTS_MAP = {
-  'Europe':        ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Macédoine du Nord','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie'],
-  'Amérique du Sud': ['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela'],
-  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
-  'Afrique':       ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique'],
-  'Asie':          ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande'],
-  'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
-};
 
-const filter = { search:'', pays:'', championnat:'', visitedOnly:false, continent:'' };
-function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly||filter.continent; }
+const filter = { search:'', pays:'', championnat:'', visitedOnly:false };
+function isFilterActive() { return filter.search||filter.pays||filter.championnat||filter.visitedOnly; }
 function getFilteredIds() {
   if (filter._wishlistOnly) {
     return stades.reduce((acc,s,i) => { if(wishlisted[s.id]) acc.push(i); return acc; }, []);
@@ -1628,10 +1620,6 @@ function getFilteredIds() {
     if (filter.visitedOnly&&!s.visite) return acc;
     if (filter.pays&&s.pays!==filter.pays) return acc;
     if (filter.championnat&&s.championnat!==filter.championnat) return acc;
-    if (filter.continent) {
-      const list = CONTINENTS_MAP[filter.continent] || [];
-      if (!list.includes(s.pays)) return acc;
-    }
     if (q) { const hay=sansAccents(`${s.nom} ${s.ville} ${s.pays}`.toLowerCase()); if(!hay.includes(q)) return acc; }
     acc.push(i); return acc;
   }, []);
@@ -1660,7 +1648,7 @@ function initFilters() {
     renderAll();
   });
   document.getElementById('btnReset').addEventListener('click', ()=>{
-    filter.search=''; filter.pays=''; filter.championnat=''; filter.visitedOnly=false; filter.continent='';
+    filter.search=''; filter.pays=''; filter.championnat=''; filter.visitedOnly=false;
     champFilter.active=null;
     document.getElementById('searchInput').value=''; pS.value=''; cS.value='';
     document.getElementById('btnVisited').textContent='Afficher : Tous';
@@ -1679,10 +1667,10 @@ function initFilters() {
   // ── Pills filtres carte rapide ─────────────────
   (function() {
     const CONT = {
-      'Europe':['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Géorgie','Arménie','Azerbaïdjan','Luxembourg','Malte','Chypre'],
-      'Amériques':['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela','USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Panama','Cuba','Jamaïque'],
-      'Afrique':['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Angola','Madagascar','Mali'],
-      'Asie':['Japon','Corée du Sud','Chine','Australie','Inde','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Bangladesh','Pakistan','Népal','Cambodge','Nouvelle-Zélande'],
+      'Europe':['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Irlande du Nord','Écosse','Pays de Galles','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Tchéquie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Bosnie-Herzégovine','Macédoine du Nord','Monténégro','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie','Andorre'],
+      'Amériques':['Bresil','Brésil','Argentine','Uruguay','Chili','Colombie','Perou','Pérou','Équateur','Bolivie','Paraguay','Venezuela','USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
+      'Afrique':['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique','Libye'],
+      'Asie':['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande','Nouvelle-Calédonie','Fidji','Samoa','Polynésie française','Îles Salomon'],
       'M-Orient':['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Koweït','Bahreïn','Oman','Liban'],
     };
 
@@ -1952,14 +1940,14 @@ renderMatchs();
 
 // ── Stats ───────────────────────────────────────
 const CONTINENTS = {
-  'Europe':        ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Écosse','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Macédoine du Nord','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre'],
-  'Amérique du Sud': ['Bresil','Argentine','Uruguay','Chili','Colombie','Perou','Équateur','Bolivie','Paraguay','Venezuela'],
-  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Panama','Cuba','Jamaïque'],
-  'Afrique':       ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique'],
-  'Asie':          ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande'],
-  'Moyen-Orient':  ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
+  'Europe': ['Allemagne','Angleterre','Espagne','France','Italie','Portugal','Pays-Bas','Belgique','Suisse','Grèce','Irlande','Irlande du Nord','Écosse','Pays de Galles','Turquie','Russie','Ukraine','Pologne','Serbie','Croatie','Roumanie','Tcheque','Tchéquie','Autriche','Hongrie','Suède','Norvège','Danemark','Finlande','Islande','Slovaquie','Slovénie','Bulgarie','Albanie','Bosnie','Bosnie-Herzégovine','Macédoine du Nord','Monténégro','Géorgie','Arménie','Azerbaïdjan','Biélorussie','Luxembourg','Malte','Chypre','Lituanie','Lettonie','Estonie','Andorre'],
+  'Amérique du Sud': ['Bresil','Brésil','Argentine','Uruguay','Chili','Colombie','Perou','Pérou','Équateur','Bolivie','Paraguay','Venezuela'],
+  'Amérique du Nord': ['USA','Mexique','Canada','Guatemala','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Jamaïque'],
+  'Afrique': ['Afrique du Sud','Maroc','Nigeria','Égypte','Sénégal','Cameroun',"Côte d'Ivoire",'Ghana','Algérie','Tunisie','Tanzanie','Kenya','Ouganda','Rwanda','Zimbabwe','Zambie','Éthiopie','Soudan','Angola','Madagascar','Mozambique','Mali','Burkina Faso','Bénin','Guinée','Guinée Équatoriale','Gabon','Congo RDC','Centrafrique','Libye'],
+  'Asie & Océanie': ['Japon','Corée du Sud','Chine','Australie','Inde','Iran','Indonésie','Thaïlande','Malaisie','Philippines','Vietnam','Myanmar','Bangladesh','Pakistan','Népal','Sri Lanka','Cambodge','Nouvelle-Zélande','Nouvelle-Calédonie','Fidji','Samoa','Polynésie française','Îles Salomon'],
+  'Moyen-Orient': ['Arabie Saoudite','Émirats Arabes Unis','Qatar','Irak','Jordanie','Liban','Koweït','Bahreïn','Oman'],
 };
-const CONTINENT_COLORS = { 'Europe':'#3b82f6','Amérique du Sud':'#f59e0b','Amérique du Nord':'#ef4444','Afrique':'#10b981','Asie':'#8b5cf6','Moyen-Orient':'#f97316' };
+const CONTINENT_COLORS = { 'Europe':'#3b82f6','Amérique du Sud':'#f59e0b','Amérique du Nord':'#ef4444','Afrique':'#10b981','Asie & Océanie':'#8b5cf6','Moyen-Orient':'#f97316' };
 function getContinent(pays) { for (const [c, list] of Object.entries(CONTINENTS)) { if (list.includes(pays)) return c; } return 'Autre'; }
 
 function renderStats() {
@@ -1977,8 +1965,8 @@ function renderStats() {
   const byCont = {};
   visites.forEach(s => { const c = getContinent(s.pays); byCont[c] = (byCont[c] || 0) + 1; });
   const contEl = document.getElementById('statsContinents');
-  const contList = Object.entries(CONTINENTS).map(([c, list]) => { const total = stades.filter(s => list.includes(s.pays)).length; const done = visites.filter(s => list.includes(s.pays)).length; return { c, total, done }; }).filter(x => x.total > 0).sort((a,b) => b.done - a.done);
-  contEl.innerHTML = contList.map(({c, total, done}) => `<div class="continent-row"><div class="continent-name">${c}</div><div class="continent-bar-wrap"><div class="continent-bar" style="width:${Math.round((done/total)*100)}%;background:${CONTINENT_COLORS[c]||'#aaa'}"></div></div><div class="continent-count">${done}<span style="color:var(--text3);font-size:9px">/${total}</span></div></div>`).join('');
+  const contList = Object.entries(CONTINENTS).map(([c, list]) => { const total = stades.filter(s => list.includes(s.pays)).length; const done = visites.filter(s => list.includes(s.pays)).length; return { c, total, done }; }).filter(x => x.total > 0).sort((a,b) => b.total - a.total);
+  contEl.innerHTML = contList.map(({c, total, done}) => { const pct = total ? Math.round((done/total)*100) : 0; const col = CONTINENT_COLORS[c]||'#aaa'; return `<div class="continent-row"><div class="continent-name">${c}</div><div class="continent-bar-wrap"><div class="continent-bar" style="width:${pct}%;background:${col}"></div></div><div class="continent-count" style="color:${col}">${done}<span style="color:var(--text3);font-size:9px">/${total}</span></div></div>`; }).join('');
   const byPays = {};
   visites.forEach(s => { byPays[s.pays] = (byPays[s.pays] || 0) + 1; });
   const topPays = Object.entries(byPays).sort((a,b)=>b[1]-a[1]).slice(0,8);
