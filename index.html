@@ -2099,7 +2099,7 @@ function openFiche(id) {
     if (s.photo) {
       body += `<div style="position:relative"><img src="${esc(s.photo)}" alt="" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover" onerror="this.style.display='none'"><button id="ficheRemovePhoto" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px">✕</button></div>`;
     }
-    body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📷 Photo</span><input type="url" id="finchePhotoInput" placeholder="https://… (URL de l'image)" value="${s.photo ? esc(s.photo) : ''}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
+    body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📷 Photo</span><input type="url" id="fichePhotoInput" placeholder="https://… (URL de l'image)" value="${s.photo ? esc(s.photo) : ''}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
     body += `</div></div>`;
   }
 
@@ -2120,7 +2120,7 @@ function openFiche(id) {
   // Handlers des champs visite
   const dateInput = document.getElementById('ficheDateInput');
   if (dateInput) dateInput.addEventListener('change', () => { const st = stades[ficheStadeId]; st.dateVisite = dateInput.value || null; if (dateInput.value) st.annee = parseInt(dateInput.value.slice(0,4)); commit(true); });
-  const photoInput = document.getElementById('finchePhotoInput');
+  const photoInput = document.getElementById('fichePhotoInput');
   if (photoInput) photoInput.addEventListener('change', () => { stades[ficheStadeId].photo = photoInput.value.trim() || null; commit(true); openFiche(ficheStadeId); });
   const removePhoto = document.getElementById('ficheRemovePhoto');
   if (removePhoto) removePhoto.addEventListener('click', () => { stades[ficheStadeId].photo = null; commit(true); openFiche(ficheStadeId); });
