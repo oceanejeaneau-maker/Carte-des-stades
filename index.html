@@ -457,7 +457,7 @@
     .main-content { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 
     .page { display: none; flex-direction: column; }
-    .page.active { display: flex; flex: 1; min-height: 0; overflow-y: auto; padding-bottom: var(--nav-h); }
+    .page.active { display: flex; flex: 1; min-height: 0; overflow-y: auto; padding-bottom: var(--nav-h); -webkit-overflow-scrolling: touch; }
     .page-carte.active { overflow: hidden; padding-bottom: 0; display: flex; flex-direction: column; }
     #map { flex: 1; min-height: 0; }
 
@@ -519,7 +519,8 @@
     .btn-logout { background: none; border: 1px solid var(--border); color: var(--text3); border-radius: 4px; padding: 4px 8px; font-size: 10px; cursor: pointer; font-family: var(--font-disp); transition: all .15s; white-space: nowrap; letter-spacing: .06em; text-transform: uppercase; }
     .btn-logout:hover { border-color: var(--red); color: var(--red); }
 
-    .page-stats { padding: 16px; gap: 16px; max-width: 640px; margin: 0 auto; width: 100%; }
+    .page-stats { padding: 0; gap: 0; max-width: none; margin: 0; width: 100%; }
+    .page-stats-inner { display: flex; flex-direction: column; gap: 16px; padding: 16px; padding-bottom: calc(var(--nav-h) + 24px); max-width: 640px; margin: 0 auto; width: 100%; }
     .stats-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
     .stats-card-title { font-family: var(--font-disp); font-size: 1rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
@@ -1125,6 +1126,7 @@
 
     <!-- PAGE STATS -->
     <div class="page page-stats" id="page-stats">
+      <div class="page-stats-inner">
       <div class="stats-card"><div class="stats-card-title">🗺️ Ma carte du monde</div><div id="statsMiniMap" style="height:220px;border-radius:8px;overflow:hidden;background:var(--surface2)"></div></div>
       <div class="stats-card"><div class="stats-card-title">🌍 Tour du monde par continent</div><div id="statsContinents"></div></div>
       <div class="stats-card"><div class="stats-card-title">📈 Progression par année</div><div class="bar-chart" id="statsBarChart"><div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div></div></div>
@@ -1141,6 +1143,7 @@
             <span id="customGoalDisplay" style="font-size:11px;color:var(--text3)"></span>
           </div>
         </div>
+      </div>
       </div>
     </div>
 
@@ -2244,14 +2247,13 @@ function navTo(page) {
 
 // ── Stats KPIs ──────────────────────────────────
 function injectStatsKpis() {
-  const statsPage = document.getElementById('page-stats');
-  if (!statsPage || document.getElementById('stats-kpi-injected')) return;
+  const statsInner = document.querySelector('#page-stats .page-stats-inner');
+  if (!statsInner || document.getElementById('stats-kpi-injected')) return;
   const kpiDiv = document.createElement('div');
   kpiDiv.id = 'stats-kpi-injected'; kpiDiv.className = 'stats-kpi-grid';
-  kpiDiv.style.cssText = 'margin: 16px 16px 0;';
   kpiDiv.innerHTML = `<div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-visites" style="color:var(--green)">0</div><div class="stats-kpi-lbl">Stades visités</div><div class="stats-kpi-sub" id="kpi-visites-sub">0 ce mois-ci</div></div><div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-pays" style="color:var(--accent)">0</div><div class="stats-kpi-lbl">Pays visités</div><div class="stats-kpi-sub" id="kpi-pays-sub">sur 80 disponibles</div></div><div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-pct" style="color:var(--text2)">0%</div><div class="stats-kpi-lbl">Complétion</div><div class="stats-kpi-sub" id="kpi-rest">restants</div></div><div class="stats-kpi-card"><div class="stats-kpi-val" id="kpi-matchs" style="color:var(--amber)">0</div><div class="stats-kpi-lbl">Matchs vus</div><div class="stats-kpi-sub">en direct</div></div>`;
-  const first = statsPage.querySelector('.stats-card');
-  if (first) statsPage.insertBefore(kpiDiv, first); else statsPage.prepend(kpiDiv);
+  const first = statsInner.querySelector('.stats-card');
+  if (first) statsInner.insertBefore(kpiDiv, first); else statsInner.prepend(kpiDiv);
 }
 function updateStatsKpis() {
   injectStatsKpis();
