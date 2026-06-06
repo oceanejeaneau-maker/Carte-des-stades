@@ -1196,18 +1196,34 @@
         <p style="font-size:13px;color:var(--text2);line-height:1.6">Groundhopper — ton carnet de voyage des stades de football. Suis ton avancée dans le tour du monde des stades, en toute neutralité.</p>
       </div>
 
+      <div class="profil-section">
+        <h3>👤 Mon profil</h3>
+        <div class="profil-field">
+          <label>Pseudo</label>
+          <input type="text" id="profilInputNom" placeholder="Ton pseudo de groundhopper">
+        </div>
+        <div class="profil-field">
+          <label>Photo (URL)</label>
+          <input type="url" id="profilInputPhoto" placeholder="https://…">
+        </div>
+        <button class="profil-save-btn" id="btnSauvegarderProfil">Enregistrer</button>
+        <div id="profilToast" class="profil-toast"></div>
+        <div style="margin-top:12px;border-top:.5px solid var(--border);padding-top:12px">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Lien de partage</div>
+          <div class="profil-link-box">
+            <span class="profil-link-url" id="profilLienUrl">—</span>
+            <button class="profil-link-copy" id="btnCopierLien">Copier</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Éléments cachés requis par le JS (avatar, share) -->
       <div style="display:none" aria-hidden="true">
         <div id="profilAvatar"></div>
         <div id="profilAvatarEdit"></div>
         <div id="profilName">—</div>
         <div id="profilEmail">—</div>
         <button id="btnShareProfil"></button>
-        <input type="text" id="profilInputNom">
-        <input type="url" id="profilInputPhoto">
-        <div id="profilToast" class="profil-toast"></div>
-        <button id="btnSauvegarderProfil"></button>
-        <span id="profilLienUrl">—</span>
-        <button id="btnCopierLien"></button>
       </div>
 
       </div><!-- /page-profil-inner -->
@@ -1241,16 +1257,9 @@
 </div>
 
 <script>
-// Sauvegarde locale uniquement
+// Stub Firebase (mode local) — la sauvegarde localStorage est dans sauvegarder() principal
 window._firebase = {
-  sauvegarder: () => {
-    try {
-      // Sauvegarde par id stable — résistant aux réorganisations de stadiums.js
-      const visites = {};
-      stades.forEach(s => { if (s.visite) visites[s.id] = { visite: true, annee: s.annee ?? null, dateVisite: s.dateVisite ?? null, photo: s.photo ?? null }; });
-      localStorage.setItem('stades_v2', JSON.stringify({ visites, matchs: typeof matchs !== 'undefined' ? matchs : [], notes: typeof notes !== 'undefined' ? notes : {} }));
-    } catch(e) { console.warn('Save error:', e); }
-  },
+  sauvegarder: () => {}, // no-op : déjà géré par sauvegarder() dans le script principal
   chargerClassement: () => {
     const el = document.getElementById('leaderboard');
     if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3)">Classement désactivé</div>';
@@ -1384,8 +1393,8 @@ window.addEventListener('load', () => {
           if (data.profil) localStorage.setItem('gh_profil_v1', JSON.stringify(data.profil));
           // Sauvegarder le tout et rafraîchir
           sauvegarder();
-          if (window._app) { window._app.updateStats(); window._app.renderAll(); }
-          window._firebase.renderProfil();
+          if (window._app) { window._app.updateStats(); window._app.renderAll(); window._app.renderMatchs(); window._app.renderNotes(); }
+          if (window._firebase) window._firebase.renderProfil();
           if (toast) { toast.className = 'profil-toast success'; toast.textContent = '✅ Sauvegarde importée avec succès'; }
         } catch (err) {
           if (toast) { toast.className = 'profil-toast error'; toast.textContent = '❌ Fichier invalide ou corrompu'; }
@@ -1423,7 +1432,28 @@ try {
   }
 } catch {}
 
-function sauvegarder() { if (window._firebase) window._firebase.sauvegarder(); }
+function sauvegarder() {
+  // Toujours persister en localStorage (mode guest ET connecté)
+  try {
+    const payload = {
+      visites: Object.fromEntries(
+        stades.filter(s => s.visite).map(s => [s.id, {
+          annee:      s.annee      ?? null,
+          dateVisite: s.dateVisite ?? null,
+          photo:      s.photo      ?? null,
+        }])
+      ),
+      matchs,
+      notes,
+    };
+    localStorage.setItem('stades_v2', JSON.stringify(payload));
+    localStorage.setItem('gh_wishlist_v2', JSON.stringify(wishlisted));
+  } catch (e) {
+    console.warn('Groundhopper: localStorage indisponible', e);
+  }
+  // Sync Firebase en plus si connecté
+  if (window._firebase) window._firebase.sauvegarder();
+}
 function charger() {
   try {
     // Format v2 : sauvegarde par id stable
@@ -1435,7 +1465,16 @@ function charger() {
           if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; }
         });
       }
-      if (savedV2.matchs) matchs.splice(0, matchs.length, ...savedV2.matchs);
+      if (savedV2.matchs) {
+        const migratedMatchs = savedV2.matchs.map(m => {
+          if (!m.stadeId && m.stadeIdx !== null && m.stadeIdx !== undefined && stades[m.stadeIdx]) {
+            const { stadeIdx, ...rest } = m;
+            return { ...rest, stadeId: stades[m.stadeIdx].id };
+          }
+          return m;
+        });
+        matchs.splice(0, matchs.length, ...migratedMatchs);
+      }
       if (savedV2.notes) {
         // Migrer d'éventuelles notes encore indexées par nombre vers les id
         Object.keys(savedV2.notes).forEach(k => {
@@ -1451,7 +1490,16 @@ function charger() {
       savedV1.stades.forEach((s, i) => {
         if (stades[i] && s.visite) { stades[i].visite = true; stades[i].annee = s.annee ?? null; }
       });
-      if (savedV1.matchs) matchs.splice(0, matchs.length, ...savedV1.matchs);
+      if (savedV1.matchs) {
+        const migratedMatchs = savedV1.matchs.map(m => {
+          if (m.stadeIdx !== null && m.stadeIdx !== undefined && stades[m.stadeIdx]) {
+            const { stadeIdx, ...rest } = m;
+            return { ...rest, stadeId: stades[m.stadeIdx].id };
+          }
+          return m;
+        });
+        matchs.splice(0, matchs.length, ...migratedMatchs);
+      }
       if (savedV1.notes) Object.keys(savedV1.notes).forEach(k => {
         if (/^\d+$/.test(k) && stades[parseInt(k)]) notes[stades[parseInt(k)].id] = savedV1.notes[k];
         else notes[k] = savedV1.notes[k];
@@ -1674,7 +1722,11 @@ function initFilters() {
   pays.forEach(p  => pS.add(new Option(`${drapeau(p)} ${p}`, p)));
   champ.forEach(c => cS.add(new Option(c, c)));
 
-  document.getElementById('searchInput').addEventListener('input', e=>{filter.search=sansAccents(e.target.value.toLowerCase());renderAll();});
+  let _searchDebounce = null;
+  document.getElementById('searchInput').addEventListener('input', e => {
+    clearTimeout(_searchDebounce);
+    _searchDebounce = setTimeout(() => { filter.search = sansAccents(e.target.value.toLowerCase()); renderAll(); }, 150);
+  });
   pS.addEventListener('change', e=>{filter.pays=e.target.value;renderAll();});
   cS.addEventListener('change', e=>{filter.championnat=e.target.value; champFilter.active=e.target.value||null; renderAll();});
 
@@ -1894,13 +1946,14 @@ function renderNotes() {
   const list = document.getElementById('notesList');
   list.innerHTML = '';
   const filtered = stades.filter((s) => {
+    // 'visites' (défaut) : seulement visités + ceux qui ont une note
+    if (filterV !== 'tous' && !s.visite && !notes[s.id]) return false;
     if (filterV === 'visites' && !s.visite) return false;
     if (search && !s.nom.toLowerCase().includes(search) && !s.ville.toLowerCase().includes(search)) return false;
     return true;
   });
   if (!filtered.length) { list.innerHTML = '<div class="note-empty">Aucun stade trouvé.<br><small>Visite des stades sur la page Carte pour les voir ici !</small></div>'; return; }
   filtered.forEach((s) => {
-    const i = stades.indexOf(s);
     const card = document.createElement('div'); card.className = 'note-card';
     const col = champColor(s.championnat);
     card.innerHTML = `<div class="note-card-header"><div><div class="note-card-title">${esc(s.nom)} ${s.visite ? '✅' : ''}</div><div class="note-card-meta">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.annee ? ' · ' + s.annee : ''}</div></div></div><textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[s.id] || '')}</textarea>`;
@@ -1915,7 +1968,6 @@ document.getElementById('notesFilter').addEventListener('change', renderNotes);
 // ── Matchs ─────────────────────────────────────
 const MATCHS_KEY = 'stades_matchs_v1';
 let matchs = [];
-charger();
 function saveMatchs() { sauvegarder(); }
 
 const matchStadeEl = document.getElementById('matchStade');
@@ -1924,18 +1976,18 @@ const matchFilterChampEl = document.getElementById('matchFilterChamp');
 const matchFilterPaysEl = document.getElementById('matchFilterPays');
 [...new Set(stades.map(s => s.championnat))].sort().forEach(c => { matchChampEl.add(new Option(c, c)); matchFilterChampEl.add(new Option(c, c)); });
 [...new Set(stades.map(s => s.pays))].sort().forEach(p => { matchFilterPaysEl.add(new Option(`${drapeau(p)} ${p}`, p)); });
-stades.slice().sort((a,b) => a.nom.localeCompare(b.nom)).forEach((s) => { const i = stades.indexOf(s); matchStadeEl.add(new Option(`${s.nom} (${s.ville})`, i)); });
+stades.slice().sort((a,b) => a.nom.localeCompare(b.nom)).forEach((s) => { matchStadeEl.add(new Option(`${s.nom} (${s.ville})`, s.id)); });
 
 document.getElementById('btnAjouterMatch').addEventListener('click', () => {
   const eq1 = document.getElementById('matchEquipe1').value.trim();
   const eq2 = document.getElementById('matchEquipe2').value.trim();
   const score = document.getElementById('matchScore').value.trim();
   const date = document.getElementById('matchDate').value;
-  const stadeIdx = document.getElementById('matchStade').value;
+  const stadeId = document.getElementById('matchStade').value;
   const champ = document.getElementById('matchChamp').value;
   if (!eq1 || !eq2 || !date) { alert('Remplis au moins les équipes et la date !'); return; }
-  const s = stadeIdx !== '' ? stades[parseInt(stadeIdx)] : null;
-  matchs.unshift({ eq1, eq2, score, date, stadeIdx: stadeIdx !== '' ? parseInt(stadeIdx) : null, champ: champ || (s ? s.championnat : ''), pays: s ? s.pays : '' });
+  const s = stadeId !== '' ? stades.find(x => x.id === stadeId) : null;
+  matchs.unshift({ eq1, eq2, score, date, stadeId: stadeId || null, champ: champ || (s ? s.championnat : ''), pays: s ? s.pays : '' });
   saveMatchs();
   document.getElementById('matchEquipe1').value = ''; document.getElementById('matchEquipe2').value = '';
   document.getElementById('matchScore').value = ''; document.getElementById('matchDate').value = '';
@@ -1948,10 +2000,16 @@ function renderMatchs() {
   const fChamp = document.getElementById('matchFilterChamp').value;
   const fPays = document.getElementById('matchFilterPays').value;
   const list = document.getElementById('matchList'); list.innerHTML = '';
+  // Helper: résoudre le stade depuis stadeId (nouveau) ou stadeIdx (ancien, migration)
+  function resolveStade(m) {
+    if (m.stadeId) return stades.find(s => s.id === m.stadeId) || null;
+    if (m.stadeIdx !== null && m.stadeIdx !== undefined) return stades[m.stadeIdx] || null;
+    return null;
+  }
   const filtered = matchs.filter(m => {
     if (fChamp && m.champ !== fChamp) return false;
     if (fPays && m.pays !== fPays) return false;
-    if (search) { const stadeNom = m.stadeIdx !== null ? stades[m.stadeIdx]?.nom || '' : ''; const hay = `${m.eq1} ${m.eq2} ${stadeNom}`.toLowerCase(); if (!hay.includes(search)) return false; }
+    if (search) { const s = resolveStade(m); const stadeNom = s ? s.nom : ''; const hay = `${m.eq1} ${m.eq2} ${stadeNom}`.toLowerCase(); if (!hay.includes(search)) return false; }
     return true;
   });
   document.getElementById('matchTotal').textContent = matchs.length;
@@ -1962,7 +2020,7 @@ function renderMatchs() {
   if (!filtered.length) { list.innerHTML = '<div class="match-empty">Aucun match trouvé.<br><small>Ajoute ton premier match ci-dessus !</small></div>'; return; }
   filtered.forEach((m) => {
     const realIdx = matchs.indexOf(m);
-    const s = m.stadeIdx !== null ? stades[m.stadeIdx] : null;
+    const s = resolveStade(m);
     const col = m.champ ? champColor(m.champ) : '#aaa';
     const card = document.createElement('div'); card.className = 'match-card';
     const dateStr = m.date ? new Date(m.date).toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric'}) : '—';
@@ -2089,7 +2147,7 @@ function openFiche(id) {
   const col = champColor(s.championnat); const isWish = !!wishlisted[s.id];
   document.getElementById('ficheHeader').innerHTML = `<div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44"><span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>${esc(s.championnat)}</div><div class="fiche-nom">${esc(s.nom)}</div>${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}<div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>`;
   document.getElementById('ficheCta').innerHTML = `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}</button><button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">${isWish ? '★ Wishlist' : '☆ Wishlist'}</button>`;
-  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { const st = stades[ficheStadeId]; st.visite = !st.visite; if (st.visite && !st.dateVisite) { st.dateVisite = new Date().toISOString().slice(0,10); st.annee = parseInt(st.dateVisite.slice(0,4)); } commit(true); openFiche(ficheStadeId); });
+  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { const st = stades[ficheStadeId]; st.visite = !st.visite; if (st.visite && !st.dateVisite) { st.dateVisite = new Date().toISOString().slice(0,10); st.annee = parseInt(st.dateVisite.slice(0,4)); } commit(true); showToast(st.visite ? '✅ Stade marqué visité' : 'Stade retiré des visites'); openFiche(ficheStadeId); });
   document.getElementById('ficheWishlistBtn').addEventListener('click', () => { const sid = stades[ficheStadeId].id; wishlisted[sid] = !wishlisted[sid]; if (!wishlisted[sid]) delete wishlisted[sid]; saveWishlist(); const btn = document.getElementById('ficheWishlistBtn'); const w = !!wishlisted[sid]; btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`; btn.textContent = w ? '★ Wishlist' : '☆ Wishlist'; });
   let body = '';
 
@@ -2100,7 +2158,7 @@ function openFiche(id) {
     body += `<div style="display:flex;flex-direction:column;gap:10px">`;
     body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📅 Date</span><input type="date" id="ficheDateInput" value="${dateVal}" max="${new Date().toISOString().slice(0,10)}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
     if (s.photo) {
-      body += `<div style="position:relative"><img src="${esc(s.photo)}" alt="" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover" onerror="this.style.display='none'"><button id="ficheRemovePhoto" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px">✕</button></div>`;
+      body += `<div style="position:relative"><img src="${esc(s.photo)}" alt="" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;align-items:center;justify-content:center;height:60px;border-radius:8px;background:var(--surface2);color:var(--text3);font-size:12px;gap:6px">⚠️ Image inaccessible — mets à jour l'URL</div><button id="ficheRemovePhoto" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px">✕</button></div>`;
     }
     body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📷 Photo</span><input type="url" id="fichePhotoInput" placeholder="https://… (URL de l'image)" value="${s.photo ? esc(s.photo) : ''}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
     body += `</div></div>`;
@@ -2134,12 +2192,36 @@ function openFiche(id) {
 }
 ficheClose.addEventListener('click', () => ficheOverlay.classList.remove('open'));
 ficheOverlay.addEventListener('click', e => { if (e.target === ficheOverlay) ficheOverlay.classList.remove('open'); });
-let ficheStartY = 0;
-document.getElementById('fichePanel').addEventListener('touchstart', e => { ficheStartY = e.touches[0].clientY; }, {passive:true});
-document.getElementById('fichePanel').addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ficheStartY > 80) ficheOverlay.classList.remove('open'); }, {passive:true});
+let ficheStartY = 0, ficheStartScrollTop = 0;
+document.getElementById('fichePanel').addEventListener('touchstart', e => {
+  ficheStartY = e.touches[0].clientY;
+  ficheStartScrollTop = document.getElementById('ficheBody').scrollTop;
+}, {passive:true});
+document.getElementById('fichePanel').addEventListener('touchend', e => {
+  const dy = e.changedTouches[0].clientY - ficheStartY;
+  const scrollMoved = Math.abs(document.getElementById('ficheBody').scrollTop - ficheStartScrollTop);
+  // Fermer seulement si swipe bas franc ET le contenu n'a pas scrollé
+  if (dy > 80 && scrollMoved < 10) ficheOverlay.classList.remove('open');
+}, {passive:true});
 window.openFiche = openFiche;
 
-// ── Démarrage ───────────────────────────────────
+// ── Toast global ────────────────────────────────
+function showToast(msg, type = 'success') {
+  let t = document.getElementById('_ghToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = '_ghToast';
+    t.style.cssText = 'position:fixed;bottom:calc(var(--nav-h) + 12px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface2);color:var(--text);border:.5px solid var(--border);border-radius:8px;padding:10px 18px;font-family:var(--font-body);font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.4)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.borderColor = type === 'success' ? 'var(--green)' : type === 'error' ? 'var(--accent)' : 'var(--border)';
+  t.style.color = type === 'success' ? 'var(--green)' : type === 'error' ? 'var(--accent)' : 'var(--text)';
+  t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+}
+window.showToast = showToast;
 // Charger sauvegarde locale automatiquement
 charger();
 initMapLayers();
@@ -2147,7 +2229,7 @@ initFilters();
 updateStats();
 renderAll();
 
-window._app = { updateStats, renderAll, renderMatchs };
+window._app = { updateStats, renderAll, renderMatchs, renderNotes };
 
 // ── Onboarding premier lancement ────────────────
 (function() {
@@ -2238,11 +2320,12 @@ function navTo(page) {
   });
   if (page === 'notes') renderNotes();
   if (page === 'matchs') renderMatchs();
-  if (page === 'stats') renderStats();
+  if (page === 'stats') { renderStats(); setTimeout(() => { if (typeof _miniMap !== 'undefined' && _miniMap) _miniMap.invalidateSize(); }, 80); }
   if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
   if (page === 'profil' && window._firebase) window._firebase.renderProfil();
   if (page === 'carte') setTimeout(() => { if (typeof map !== 'undefined') map.invalidateSize(); }, 50);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const activePage = document.getElementById('page-' + page);
+  if (activePage) activePage.scrollTop = 0;
 }
 
 // ── Stats KPIs ──────────────────────────────────
@@ -2267,6 +2350,12 @@ function updateStatsKpis() {
   const kPct = document.getElementById('kpi-pct');   if (kPct) kPct.textContent = pct + '%';
   const kM = document.getElementById('kpi-matchs');  if (kM) kM.textContent = nbMatchs;
   const kR = document.getElementById('kpi-rest');    if (kR) kR.textContent = (total - visites).toLocaleString('fr-FR') + ' restants';
+  // "X ce mois-ci" — stades dont dateVisite est dans le mois courant
+  const now = new Date();
+  const thisMo = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const thisMoCount = stades.filter(s => s.visite && s.dateVisite && s.dateVisite.startsWith(thisMo)).length;
+  const kVsub = document.getElementById('kpi-visites-sub'); if (kVsub) kVsub.textContent = `${thisMoCount} ce mois-ci`;
+  const kPsub = document.getElementById('kpi-pays-sub');    if (kPsub) kPsub.textContent = `sur ${new Set(stades.map(s=>s.pays)).size} disponibles`;
 }
 window.addEventListener('load', () => { injectStatsKpis(); updateStatsKpis(); });
 </script>
