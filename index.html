@@ -3191,7 +3191,7 @@ function updateStatsKpis() {
   const kVsub = document.getElementById('kpi-visites-sub'); if (kVsub) kVsub.textContent = `${thisMoCount} ce mois-ci`;
   const kPsub = document.getElementById('kpi-pays-sub');    if (kPsub) kPsub.textContent = `sur ${new Set(stades.map(s=>s.pays)).size} disponibles`;
 }
-window.addEventListener('load', () => { injectStatsKpis(); updateStatsKpis(); });
+if (typeof stades !== 'undefined') updateStatsKpis();
 </script>
 </body>
 </html>
