@@ -2646,12 +2646,13 @@ window.openFiche = openFiche;
     ctx.fillText(new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'}), W-20, H-16);
   }
 
-  // ── Capture de la carte Leaflet via leaflet-image ──
+// ── Capture de la carte Leaflet via leaflet-image ──
   function captureMapAndDraw(canvas, theme) {
-    return new Promise(resolve => {
-      if (typeof leafletImage === 'undefined' || !map) {
-        drawFinal(canvas, null, theme); resolve(); return;
-      }
+  return new Promise(resolve => {
+    drawFinal(canvas, null, theme);
+    resolve();
+  });
+}
       // Centrer la carte sur les stades visités ou vue monde
       const visited = stades.filter(s => s.visite);
       if (visited.length) {
@@ -2717,13 +2718,11 @@ window.openFiche = openFiche;
     if (!canvas || canvas._shareInited) return;
     canvas._shareInited = true;
 
-    // Charger leaflet-image dynamiquement
-    if (!window.leafletImage) {
-      const sc = document.createElement('script');
-      sc.src = 'https://cdn.jsdelivr.net/npm/leaflet-image@0.4.0/leaflet-image.js';
-      document.head.appendChild(sc);
-    }
-
+    renderSharePreview();
+    document.getElementById('btnDownloadShare').addEventListener('click', downloadShare);
+    const btnWeb = document.getElementById('btnWebShare');
+    if (navigator.canShare) { btnWeb.style.display = 'inline-flex'; btnWeb.addEventListener('click', webShare); }
+  }
     renderSharePreview();
     document.getElementById('btnDownloadShare').addEventListener('click', downloadShare);
     const btnWeb = document.getElementById('btnWebShare');
