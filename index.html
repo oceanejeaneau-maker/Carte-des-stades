@@ -1258,7 +1258,7 @@
         <p style="font-size:13px;color:var(--text2);line-height:1.6">Génère une image avec tes stats à partager sur les réseaux. La carte est créée directement sur ton appareil.</p>
 
         <!-- Aperçu de la carte -->
-        <div style="position:relative;border-radius:12px;overflow:hidden;background:#0d0d0d;margin-bottom:12px" id="shareCardPreview">
+        <div style="position:relative;border-radius:12px;overflow:hidden;background:#0d0d0d;margin-bottom:12px;max-width:300px;margin-left:auto;margin-right:auto" id="shareCardPreview">
           <canvas id="shareCanvas" style="width:100%;display:block"></canvas>
         </div>
 
@@ -2445,8 +2445,293 @@ window.openFiche = openFiche;
 
 // ── Carte de partage Canvas ─────────────────────
 (function() {
-  const W = 900, H = 500;
+  const W = 600, H = 900;
   let currentTheme = 'dark';
+  let shareMapInstance = null;
+
+  const THEMES = {
+    dark:  { bg:'#0d0d0d', bg2:'#1a1a1a', bg3:'#222222', text:'#ffffff', text2:'#999999', text3:'#555555', accent:'#CC1919', green:'#00C875', amber:'#f59e0b', border:'#2a2a2a', mapStyle:'dark' },
+    light: { bg:'#fafaf8', bg2:'#f0f0ec', bg3:'#e8e8e2', text:'#111111', text2:'#666666', text3:'#aaaaaa', accent:'#CC1919', green:'#00a85a', amber:'#d97706', border:'#e0e0da', mapStyle:'osm' },
+    rouge: { bg:'#0d0000', bg2:'#1a0404', bg3:'#2a0808', text:'#ffffff', text2:'#cc8888', text3:'#773333', accent:'#CC1919', green:'#00C875', amber:'#f59e0b', border:'#3a0a0a', mapStyle:'dark' },
+  };
+
+  function getPseudo() {
+    try { const p = JSON.parse(localStorage.getItem('gh_profil_v1')||'{}'); if (p.pseudo) return p.pseudo; } catch {}
+    const inp = document.getElementById('profilInputNom');
+    return (inp && inp.value.trim()) || 'Groundhopper';
+  }
+
+  function getStats() {
+    const visited = stades.filter(s => s.visite);
+    const paysSet = new Set(visited.map(s => s.pays));
+    const total   = stades.length;
+    return {
+      visites:  visited.length,
+      pays:     paysSet.size,
+      nbMatchs: matchs.length,
+      pct:      total ? Math.round(visited.length / total * 100) : 0,
+      total,
+      topPays:  [...paysSet].map(p => ({ pays:p, count: visited.filter(s=>s.pays===p).length }))
+                            .sort((a,b)=>b.count-a.count).slice(0,5),
+      visitedStades: visited,
+    };
+  }
+
+  function rr(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+  }
+
+  function drawFinal(canvas, mapImg, theme) {
+    const t = THEMES[theme] || THEMES.dark;
+    const s = getStats();
+    canvas.width  = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // ── Fond global ──
+    ctx.fillStyle = t.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // ── Strip accent haut ──
+    ctx.fillStyle = t.accent;
+    ctx.fillRect(0, 0, W, 5);
+
+    let y = 24;
+
+    // ── En-tête ──
+    const pseudo = getPseudo();
+    // Avatar
+    ctx.fillStyle = t.accent;
+    ctx.beginPath(); ctx.arc(48, y+22, 24, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 20px system-ui, Arial, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(pseudo[0]?.toUpperCase()||'G', 48, y+22);
+
+    // Pseudo + sous-titre
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillStyle = t.text;
+    ctx.font = 'bold 22px system-ui, Arial, sans-serif';
+    ctx.fillText(pseudo, 84, y+6);
+    ctx.fillStyle = t.text3;
+    ctx.font = '13px system-ui, Arial, sans-serif';
+    ctx.fillText('Groundhopper', 84, y+32);
+
+    // Logo droite
+    ctx.fillStyle = t.accent;
+    ctx.font = 'bold 11px system-ui, Arial, sans-serif';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillText('GROUND', W-20, y+6);
+    ctx.fillText('HOPPER', W-20, y+22);
+
+    y += 64;
+
+    // ── Séparateur ──
+    ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(20, y); ctx.lineTo(W-20, y); ctx.stroke();
+    y += 16;
+
+    // ── KPIs ──
+    const kpis = [
+      { val: s.visites,       lbl:'Stades',      col: t.green  },
+      { val: s.pays,          lbl:'Pays',        col: t.accent },
+      { val: s.nbMatchs,      lbl:'Matchs',      col: t.amber  },
+      { val: s.pct + '%',     lbl:'Complétion',  col: t.text2  },
+    ];
+    const kW = (W - 40) / 4;
+    kpis.forEach((k, i) => {
+      const kx = 20 + i * kW;
+      ctx.fillStyle = t.bg2;
+      rr(ctx, kx+3, y, kW-6, 72, 8); ctx.fill();
+      ctx.fillStyle = k.col;
+      ctx.font = 'bold 30px system-ui, Arial, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText(k.val, kx + kW/2, y+10);
+      ctx.fillStyle = t.text3;
+      ctx.font = '10px system-ui, Arial, sans-serif';
+      ctx.fillText(k.lbl.toUpperCase(), kx + kW/2, y+50);
+    });
+    y += 84;
+
+    // ── CARTE (image Leaflet capturée) ──
+    const mapH = 320;
+    if (mapImg) {
+      ctx.save();
+      rr(ctx, 20, y, W-40, mapH, 10); ctx.clip();
+      ctx.drawImage(mapImg, 20, y, W-40, mapH);
+      ctx.restore();
+      // Overlay sombre + label
+      ctx.fillStyle = 'rgba(0,0,0,0.35)';
+      rr(ctx, 20, y+mapH-32, W-40, 32, 0); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '11px system-ui, Arial, sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(`${s.visites} stades · ${s.pays} pays visités`, 32, y+mapH-16);
+    } else {
+      ctx.fillStyle = t.bg2;
+      rr(ctx, 20, y, W-40, mapH, 10); ctx.fill();
+      ctx.fillStyle = t.text3;
+      ctx.font = '14px system-ui, Arial, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('Carte en cours de chargement…', W/2, y+mapH/2);
+    }
+    y += mapH + 14;
+
+    // ── Top pays (sans emojis — texte seul pour éviter les bugs Canvas) ──
+    if (s.topPays.length) {
+      ctx.fillStyle = t.text3;
+      ctx.font = 'bold 10px system-ui, Arial, sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('TOP PAYS', 20, y);
+      y += 16;
+      const maxC = s.topPays[0].count;
+      const barTotalW = W - 40;
+      s.topPays.forEach(({ pays, count }) => {
+        const barW = Math.round((count / maxC) * (barTotalW - 70));
+        ctx.fillStyle = t.bg2;
+        rr(ctx, 20, y, barTotalW, 22, 4); ctx.fill();
+        ctx.fillStyle = t.accent + '50';
+        if (barW > 0) { rr(ctx, 20, y, barW + 70, 22, 4); ctx.fill(); }
+        ctx.fillStyle = t.text;
+        ctx.font = '12px system-ui, Arial, sans-serif';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(pays, 30, y+11);
+        ctx.fillStyle = t.accent;
+        ctx.font = 'bold 12px system-ui, Arial, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(count, W-24, y+11);
+        y += 26;
+      });
+      y += 6;
+    }
+
+    // ── Badges gagnés ──
+    const badges = [
+      { icon:'🏟', cond: s.visites>=1,   lbl:'1er stade' },
+      { icon:'5️⃣', cond: s.visites>=5,   lbl:'5 stades' },
+      { icon:'🔟', cond: s.visites>=10,  lbl:'10 stades' },
+      { icon:'💯', cond: s.visites>=100, lbl:'100 stades' },
+      { icon:'🌍', cond: s.pays>=3,      lbl:'3 pays' },
+      { icon:'✈️', cond: s.pays>=5,      lbl:'5 pays' },
+      { icon:'⚽', cond: s.nbMatchs>=1,  lbl:'1er match' },
+    ].filter(b => b.cond);
+
+    if (badges.length) {
+      ctx.fillStyle = t.text3;
+      ctx.font = 'bold 10px system-ui, Arial, sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('BADGES', 20, y); y += 14;
+      badges.forEach((b, i) => {
+        ctx.font = '22px sans-serif';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+        ctx.fillText(b.icon, 20 + i*36, y);
+      });
+      y += 34;
+    }
+
+    // ── Footer ──
+    ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(20, H-30); ctx.lineTo(W-20, H-30); ctx.stroke();
+    ctx.fillStyle = t.text3;
+    ctx.font = '11px system-ui, Arial, sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('groundhopper.app', 20, H-16);
+    ctx.textAlign = 'right';
+    ctx.fillText(new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'}), W-20, H-16);
+  }
+
+  // ── Capture de la carte Leaflet via leaflet-image ──
+  function captureMapAndDraw(canvas, theme) {
+    return new Promise(resolve => {
+      if (typeof leafletImage === 'undefined' || !map) {
+        drawFinal(canvas, null, theme); resolve(); return;
+      }
+      // Centrer la carte sur les stades visités ou vue monde
+      const visited = stades.filter(s => s.visite);
+      if (visited.length) {
+        const bounds = L.latLngBounds(visited.map(s => [s.lat, s.lng]));
+        map.fitBounds(bounds.pad(0.3), { animate: false });
+      } else {
+        map.setView([20, 0], 2, { animate: false });
+      }
+      setTimeout(() => {
+        leafletImage(map, (err, imgCanvas) => {
+          drawFinal(canvas, err ? null : imgCanvas, theme);
+          resolve();
+        });
+      }, 600);
+    });
+  }
+
+  // ── Preview via canvas 2d direct (pas de leaflet-image pour l'aperçu) ──
+  function renderSharePreview() {
+    const canvas = document.getElementById('shareCanvas');
+    if (!canvas) return;
+    drawFinal(canvas, null, currentTheme);
+  }
+
+  function selectShareTheme(theme, el) {
+    currentTheme = theme;
+    document.querySelectorAll('.share-theme-dot').forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+    renderSharePreview();
+  }
+  window.selectShareTheme = selectShareTheme;
+
+  async function downloadShare() {
+    const btn = document.getElementById('btnDownloadShare');
+    if (btn) { btn.textContent = '⏳ Génération…'; btn.disabled = true; }
+    const offscreen = document.createElement('canvas');
+    await captureMapAndDraw(offscreen, currentTheme);
+    offscreen.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `groundhopper-${getPseudo().toLowerCase().replace(/\s+/g,'-')}.png`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      showToast('✅ Image téléchargée !');
+      if (btn) { btn.textContent = '⬇️ Télécharger l\'image'; btn.disabled = false; }
+    }, 'image/png');
+  }
+
+  async function webShare() {
+    const offscreen = document.createElement('canvas');
+    await captureMapAndDraw(offscreen, currentTheme);
+    offscreen.toBlob(async blob => {
+      const file = new File([blob], 'groundhopper.png', { type:'image/png' });
+      try {
+        await navigator.share({ files:[file], title:'Groundhopper', text:`${getPseudo()} — ${getStats().visites} stades · ${getStats().pays} pays 🏟️` });
+      } catch(e) { if (e.name !== 'AbortError') downloadShare(); }
+    }, 'image/png');
+  }
+
+  function initShareSection() {
+    const canvas = document.getElementById('shareCanvas');
+    if (!canvas || canvas._shareInited) return;
+    canvas._shareInited = true;
+
+    // Charger leaflet-image dynamiquement
+    if (!window.leafletImage) {
+      const sc = document.createElement('script');
+      sc.src = 'https://cdn.jsdelivr.net/npm/leaflet-image@0.4.0/leaflet-image.js';
+      document.head.appendChild(sc);
+    }
+
+    renderSharePreview();
+    document.getElementById('btnDownloadShare').addEventListener('click', downloadShare);
+    const btnWeb = document.getElementById('btnWebShare');
+    if (navigator.canShare) { btnWeb.style.display = 'inline-flex'; btnWeb.addEventListener('click', webShare); }
+  }
+
+  window._initShareSection    = initShareSection;
+  window._refreshSharePreview = renderSharePreview;
+})();
 
   const THEMES = {
     dark:  { bg: '#0d0d0d', bg2: '#1a1a1a', text: '#ffffff', text2: '#888888', text3: '#555555', accent: '#CC1919', green: '#00C875', amber: '#f59e0b', border: '#222222' },
