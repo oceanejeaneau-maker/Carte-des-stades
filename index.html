@@ -330,7 +330,7 @@
 
     .map-dot { border-radius: 50%; border: 2px solid rgba(255,255,255,.9); box-shadow: 0 1px 4px rgba(0,0,0,.35); }
 
-    .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: auto; max-height: 480px; }
+    .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }
     thead { position: sticky; top: 0; z-index: 3; }
     th { background: var(--surface2); padding: 10px 12px; text-align: left; font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--text3); border-bottom: 1px solid var(--border); white-space: nowrap; }
@@ -514,7 +514,8 @@
     .page-carte .stat-item:last-child { border-right: none; }
     .page-carte .app-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
 
-    .page-notes { padding: 16px; gap: 14px; }
+    .page-notes { padding: 0; gap: 0; }
+    .page-notes-inner { display: flex; flex-direction: column; gap: 14px; padding: 16px; padding-bottom: calc(var(--nav-h) + 24px); width: 100%; }
     .page-header { margin-bottom: 4px; }
     .page-header h2 { font-family: var(--font-disp); font-size: 1.8rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 0 16px var(--accent-glow); }
     .page-header p { color: var(--text2); font-size: 13px; margin-top: 4px; }
@@ -1122,6 +1123,7 @@
 
     <!-- NOTES / LISTE -->
     <div class="page page-notes" id="page-notes">
+      <div class="page-notes-inner">
       <div class="page-header"><h2>📋 Liste des stades</h2><p>Tous les stades · coche pour marquer visité</p></div>
       <div class="notes-search">
         <input type="text" id="notesSearch" placeholder="Rechercher un stade…">
@@ -1144,6 +1146,7 @@
           </thead>
           <tbody></tbody>
         </table>
+      </div>
       </div>
     </div>
 
