@@ -1,10 +1,13 @@
 // ═══════════════════════════════════════════════
-// SERVICE WORKER — Groundhopper v28
+// SERVICE WORKER — Groundhopper v29
 // ═══════════════════════════════════════════════
 
-const CACHE_NAME = 'groundhopper-v28';
+const CACHE_NAME = 'groundhopper-v29';
 
 const PRECACHE_URLS = [
+  '/',
+  '/index.html',
+  '/stadiums.js',
   '/manifest.json',
   '/icons/icon-512.png',
   '/icons/icon-192.png',
@@ -62,10 +65,24 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Navigation HTML → TOUJOURS réseau, jamais cache
+  // Navigation HTML → réseau d'abord, cache en secours (offline)
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match('/index.html'))
+      fetch(event.request)
+        .then(res => {
+          // Rafraîchir la copie en cache à chaque visite en ligne
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then(c => c.put('/index.html', clone));
+          }
+          return res;
+        })
+        .catch(async () =>
+          (await caches.match(event.request)) ||
+          (await caches.match('/index.html')) ||
+          (await caches.match('/')) ||
+          new Response('Hors ligne', { status: 503, headers: { 'Content-Type': 'text/plain' } })
+        )
     );
     return;
   }
