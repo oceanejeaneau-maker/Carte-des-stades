@@ -352,7 +352,7 @@
     .input-annee { width: 68px; padding: 3px 6px; font-size: 12px; font-family: var(--font-mono); background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 4px; transition: border-color .12s; }
     .input-annee:focus { outline: none; border-color: var(--accent); }
     .input-annee.invalid { border-color: var(--red); }
-    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"] {appearance: textfield; }
     input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
     input[type="checkbox"] { accent-color: var(--accent2); cursor: pointer; }
     /* ── Tri table ── */
@@ -1337,6 +1337,7 @@
     </div>
   </nav>
 
+</div>
 </div>
 
 <script>
@@ -2445,7 +2446,7 @@ window.openFiche = openFiche;
 
 // ── Carte de partage Canvas ─────────────────────
 (function() {
-  const W = 600, H = 900;
+  const W = 600, H = 750;
   let currentTheme = 'dark';
   let shareMapInstance = null;
 
@@ -2493,43 +2494,45 @@ window.openFiche = openFiche;
     canvas.height = H;
     const ctx = canvas.getContext('2d');
 
-    // ── Fond global ──
+    // ── Fond ──
     ctx.fillStyle = t.bg;
     ctx.fillRect(0, 0, W, H);
 
-    // ── Strip accent haut ──
-    ctx.fillStyle = t.accent;
-    ctx.fillRect(0, 0, W, 5);
+    // ── Strip gradient haut ──
+    const hGrad = ctx.createLinearGradient(0,0,W,0);
+    hGrad.addColorStop(0, t.accent);
+    hGrad.addColorStop(1, t.accent + '66');
+    ctx.fillStyle = hGrad;
+    ctx.fillRect(0, 0, W, 4);
 
-    let y = 24;
+    let y = 28;
 
-    // ── En-tête ──
-    const pseudo = getPseudo();
-    // Avatar
+    // ── HEADER ──
+    ctx.save();
     ctx.fillStyle = t.accent;
-    ctx.beginPath(); ctx.arc(48, y+22, 24, 0, Math.PI*2); ctx.fill();
+    ctx.shadowColor = t.accent + '55'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(52, y+24, 26, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
     ctx.fillStyle = '#fff';
-    ctx.font = 'bold 20px system-ui, Arial, sans-serif';
+    ctx.font = 'bold 22px system-ui,Arial,sans-serif';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(pseudo[0]?.toUpperCase()||'G', 48, y+22);
+    ctx.fillText(getPseudo()[0]?.toUpperCase()||'G', 52, y+24);
 
-    // Pseudo + sous-titre
     ctx.textAlign = 'left'; ctx.textBaseline = 'top';
     ctx.fillStyle = t.text;
-    ctx.font = 'bold 22px system-ui, Arial, sans-serif';
-    ctx.fillText(pseudo, 84, y+6);
+    ctx.font = 'bold 23px system-ui,Arial,sans-serif';
+    ctx.fillText(getPseudo(), 92, y+8);
     ctx.fillStyle = t.text3;
-    ctx.font = '13px system-ui, Arial, sans-serif';
-    ctx.fillText('Groundhopper', 84, y+32);
+    ctx.font = '12px system-ui,Arial,sans-serif';
+    ctx.fillText('Groundhopper', 92, y+36);
 
-    // Logo droite
     ctx.fillStyle = t.accent;
-    ctx.font = 'bold 11px system-ui, Arial, sans-serif';
+    ctx.font = 'bold 10px system-ui,Arial,sans-serif';
     ctx.textAlign = 'right'; ctx.textBaseline = 'top';
-    ctx.fillText('GROUND', W-20, y+6);
-    ctx.fillText('HOPPER', W-20, y+22);
+    ctx.fillText('GROUND', W-20, y+8);
+    ctx.fillText('HOPPER', W-20, y+24);
 
-    y += 64;
+    y += 66;
 
     // ── Séparateur ──
     ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
@@ -2538,135 +2541,207 @@ window.openFiche = openFiche;
 
     // ── KPIs ──
     const kpis = [
-      { val: s.visites,       lbl:'Stades',      col: t.green  },
-      { val: s.pays,          lbl:'Pays',        col: t.accent },
-      { val: s.nbMatchs,      lbl:'Matchs',      col: t.amber  },
-      { val: s.pct + '%',     lbl:'Complétion',  col: t.text2  },
+      { val:s.visites,   lbl:'Stades',     col:t.green  },
+      { val:s.pays,      lbl:'Pays',       col:t.accent },
+      { val:s.nbMatchs,  lbl:'Matchs',     col:t.amber  },
+      { val:s.pct+'%',   lbl:'Complétion', col:t.text2  },
     ];
-    const kW = (W - 40) / 4;
-    kpis.forEach((k, i) => {
-      const kx = 20 + i * kW;
+    const kW = (W-40)/4;
+    kpis.forEach((k,i) => {
+      const kx = 20 + i*kW;
       ctx.fillStyle = t.bg2;
-      rr(ctx, kx+3, y, kW-6, 72, 8); ctx.fill();
+      rr(ctx, kx+3, y, kW-6, 66, 8); ctx.fill();
+      // micro strip couleur en haut de la carte KPI
+      ctx.fillStyle = k.col + '55';
+      rr(ctx, kx+3, y, kW-6, 3, 2); ctx.fill();
       ctx.fillStyle = k.col;
-      ctx.font = 'bold 30px system-ui, Arial, sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText(k.val, kx + kW/2, y+10);
-      ctx.fillStyle = t.text3;
-      ctx.font = '10px system-ui, Arial, sans-serif';
-      ctx.fillText(k.lbl.toUpperCase(), kx + kW/2, y+50);
-    });
-    y += 84;
-
-    // ── CARTE (image Leaflet capturée) ──
-    const mapH = 320;
-    if (mapImg) {
-      ctx.save();
-      rr(ctx, 20, y, W-40, mapH, 10); ctx.clip();
-      ctx.drawImage(mapImg, 20, y, W-40, mapH);
-      ctx.restore();
-      // Overlay sombre + label
-      ctx.fillStyle = 'rgba(0,0,0,0.35)';
-      rr(ctx, 20, y+mapH-32, W-40, 32, 0); ctx.fill();
-      ctx.fillStyle = '#fff';
-      ctx.font = '11px system-ui, Arial, sans-serif';
-      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      ctx.fillText(`${s.visites} stades · ${s.pays} pays visités`, 32, y+mapH-16);
-    } else {
-      ctx.fillStyle = t.bg2;
-      rr(ctx, 20, y, W-40, mapH, 10); ctx.fill();
-      ctx.fillStyle = t.text3;
-      ctx.font = '14px system-ui, Arial, sans-serif';
+      ctx.font = 'bold 28px system-ui,Arial,sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('Carte en cours de chargement…', W/2, y+mapH/2);
-    }
-    y += mapH + 14;
+      ctx.fillText(k.val, kx+kW/2, y+30);
+      ctx.fillStyle = t.text3;
+      ctx.font = '9px system-ui,Arial,sans-serif';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(k.lbl.toUpperCase(), kx+kW/2, y+60);
+    });
+    y += 80;
 
-    // ── Top pays (sans emojis — texte seul pour éviter les bugs Canvas) ──
+    // ── CARTE MONDE depuis GeoJSON ──
+    const mapH = 260, mapX = 20, mapY = y, mapW = W-40;
+
+    function lngToX(lng) { return mapX+((lng+180)/360)*mapW; }
+    function latToY(lat) {
+      const r = lat*Math.PI/180;
+      return mapY + mapH/2 - (Math.log(Math.tan(Math.PI/4+r/2))/Math.PI)*mapH*0.72;
+    }
+
+    function drawWorldMap(geoJson) {
+      // Fond océan
+      const oceanG = ctx.createLinearGradient(mapX, mapY, mapX, mapY+mapH);
+      if (theme==='light') { oceanG.addColorStop(0,'#ddeef8'); oceanG.addColorStop(1,'#c8e0f0'); }
+      else { oceanG.addColorStop(0,'#0d1f2d'); oceanG.addColorStop(1,'#0a1520'); }
+      ctx.fillStyle = oceanG;
+      rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.fill();
+      ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
+      rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.stroke();
+
+      // Grille
+      ctx.save();
+      ctx.beginPath(); rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.clip();
+      ctx.strokeStyle = (theme==='light'?'#a0c0d8':'#1a3040')+'50';
+      ctx.lineWidth = 0.4;
+      [.25,.5,.75].forEach(p => {
+        ctx.beginPath(); ctx.moveTo(mapX, mapY+p*mapH); ctx.lineTo(mapX+mapW, mapY+p*mapH); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(mapX+p*mapW, mapY); ctx.lineTo(mapX+p*mapW, mapY+mapH); ctx.stroke();
+      });
+
+      // Pays depuis GeoJSON
+      const cFill   = theme==='light' ? '#b8d4a8' : '#1e3320';
+      const cStroke = theme==='light' ? '#8ab878' : '#2a4428';
+      ctx.fillStyle = cFill; ctx.strokeStyle = cStroke; ctx.lineWidth = 0.3;
+
+      geoJson.features.forEach(f => {
+        const geom = f.geometry; if (!geom) return;
+        const polys = geom.type==='Polygon' ? [geom.coordinates]
+                    : geom.type==='MultiPolygon' ? geom.coordinates : [];
+        polys.forEach(poly => {
+          poly.forEach((ring, ri) => {
+            ctx.beginPath();
+            ring.forEach(([lng,lat], i) => {
+              const px = lngToX(lng), py = latToY(lat);
+              i===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
+            });
+            ctx.closePath();
+            if (ri===0) ctx.fill();
+            ctx.stroke();
+          });
+        });
+      });
+
+      ctx.restore();
+
+      // Points GPS visités
+      stades.filter(sv => sv.visite).forEach(sv => {
+        const px = lngToX(sv.lng), py = latToY(sv.lat);
+        if (px<mapX+3||px>mapX+mapW-3||py<mapY+3||py>mapY+mapH-3) return;
+        ctx.fillStyle = t.accent+'25';
+        ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = t.accent+'66';
+        ctx.beginPath(); ctx.arc(px, py,  5, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = t.accent;
+        ctx.beginPath(); ctx.arc(px, py,  3, 0, Math.PI*2); ctx.fill();
+        ctx.strokeStyle = '#ffffffaa'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(px, py,  3, 0, Math.PI*2); ctx.stroke();
+      });
+
+      // Label
+      ctx.fillStyle = theme==='light'?'#44668877':'#ffffff44';
+      ctx.font = '10px system-ui,Arial,sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(`${s.visites} stade${s.visites>1?'s':''} · ${s.pays} pays`, mapX+10, mapY+mapH-12);
+    }
+
+    if (window._worldGeoJson) {
+      drawWorldMap(window._worldGeoJson);
+    } else {
+      // Placeholder
+      const oceanG2 = ctx.createLinearGradient(mapX, mapY, mapX, mapY+mapH);
+      if (theme==='light') { oceanG2.addColorStop(0,'#ddeef8'); oceanG2.addColorStop(1,'#c8e0f0'); }
+      else { oceanG2.addColorStop(0,'#0d1f2d'); oceanG2.addColorStop(1,'#0a1520'); }
+      ctx.fillStyle = oceanG2;
+      rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.fill();
+      ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
+      rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.stroke();
+      ctx.fillStyle = t.text3;
+      ctx.font = '12px system-ui,Arial,sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('Chargement de la carte…', mapX+mapW/2, mapY+mapH/2);
+      fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+        .then(r => r.json())
+        .then(data => { window._worldGeoJson = data; renderSharePreview(); })
+        .catch(() => {});
+    }
+
+    y += mapH + 16;
+
+    // ── TOP PAYS ──
     if (s.topPays.length) {
       ctx.fillStyle = t.text3;
-      ctx.font = 'bold 10px system-ui, Arial, sans-serif';
+      ctx.font = 'bold 9px system-ui,Arial,sans-serif';
       ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-      ctx.fillText('TOP PAYS', 20, y);
-      y += 16;
+      ctx.fillText('TOP PAYS', 20, y); y += 13;
+
       const maxC = s.topPays[0].count;
-      const barTotalW = W - 40;
-      s.topPays.forEach(({ pays, count }) => {
-        const barW = Math.round((count / maxC) * (barTotalW - 70));
+      s.topPays.slice(0,5).forEach(({pays,count}) => {
+        const bw = W-40;
+        const fw = Math.max(Math.round((count/maxC)*(bw-60)), 4);
         ctx.fillStyle = t.bg2;
-        rr(ctx, 20, y, barTotalW, 22, 4); ctx.fill();
-        ctx.fillStyle = t.accent + '50';
-        if (barW > 0) { rr(ctx, 20, y, barW + 70, 22, 4); ctx.fill(); }
+        rr(ctx, 20, y, bw, 20, 4); ctx.fill();
+        const barG = ctx.createLinearGradient(20, y, 20+fw+60, y);
+        barG.addColorStop(0, t.accent+'cc'); barG.addColorStop(1, t.accent+'33');
+        ctx.fillStyle = barG;
+        rr(ctx, 20, y, fw+60, 20, 4); ctx.fill();
         ctx.fillStyle = t.text;
-        ctx.font = '12px system-ui, Arial, sans-serif';
+        ctx.font = '11px system-ui,Arial,sans-serif';
         ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-        ctx.fillText(pays, 30, y+11);
-        ctx.fillStyle = t.accent;
-        ctx.font = 'bold 12px system-ui, Arial, sans-serif';
+        ctx.fillText(pays, 28, y+10);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 11px system-ui,Arial,sans-serif';
         ctx.textAlign = 'right';
-        ctx.fillText(count, W-24, y+11);
-        y += 26;
+        ctx.fillText(count, W-24, y+10);
+        y += 24;
       });
       y += 6;
     }
 
-    // ── Badges gagnés ──
-    const badges = [
-      { icon:'🏟', cond: s.visites>=1,   lbl:'1er stade' },
-      { icon:'5️⃣', cond: s.visites>=5,   lbl:'5 stades' },
-      { icon:'🔟', cond: s.visites>=10,  lbl:'10 stades' },
-      { icon:'💯', cond: s.visites>=100, lbl:'100 stades' },
-      { icon:'🌍', cond: s.pays>=3,      lbl:'3 pays' },
-      { icon:'✈️', cond: s.pays>=5,      lbl:'5 pays' },
-      { icon:'⚽', cond: s.nbMatchs>=1,  lbl:'1er match' },
-    ].filter(b => b.cond);
+    // ── BADGES ──
+    const BDEFS = [
+      {lbl:'1er stade', cond:s.visites>=1},
+      {lbl:'5 stades',  cond:s.visites>=5},
+      {lbl:'10 stades', cond:s.visites>=10},
+      {lbl:'50 stades', cond:s.visites>=50},
+      {lbl:'3 pays',    cond:s.pays>=3},
+      {lbl:'5 pays',    cond:s.pays>=5},
+      {lbl:'1er match', cond:s.nbMatchs>=1},
+    ].filter(b=>b.cond);
 
-    if (badges.length) {
+    if (BDEFS.length) {
       ctx.fillStyle = t.text3;
-      ctx.font = 'bold 10px system-ui, Arial, sans-serif';
+      ctx.font = 'bold 9px system-ui,Arial,sans-serif';
       ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-      ctx.fillText('BADGES', 20, y); y += 14;
-      badges.forEach((b, i) => {
-        ctx.font = '22px sans-serif';
-        ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-        ctx.fillText(b.icon, 20 + i*36, y);
+      ctx.fillText('BADGES', 20, y); y += 12;
+      BDEFS.forEach((b,i) => {
+        const bx = 20+i*82;
+        if (bx+76 > W-10) return;
+        ctx.fillStyle = t.bg2;
+        rr(ctx, bx, y, 76, 20, 4); ctx.fill();
+        ctx.strokeStyle = t.accent+'55'; ctx.lineWidth = 0.5;
+        rr(ctx, bx, y, 76, 20, 4); ctx.stroke();
+        ctx.fillStyle = t.accent;
+        ctx.font = 'bold 9px system-ui,Arial,sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(b.lbl, bx+38, y+10);
       });
-      y += 34;
+      y += 28;
     }
 
-    // ── Footer ──
+    // ── FOOTER ──
     ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
-    ctx.beginPath(); ctx.moveTo(20, H-30); ctx.lineTo(W-20, H-30); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(20, H-26); ctx.lineTo(W-20, H-26); ctx.stroke();
     ctx.fillStyle = t.text3;
-    ctx.font = '11px system-ui, Arial, sans-serif';
+    ctx.font = '10px system-ui,Arial,sans-serif';
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillText('groundhopper.app', 20, H-16);
+    ctx.fillText('groundhopper.app', 20, H-13);
     ctx.textAlign = 'right';
-    ctx.fillText(new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'}), W-20, H-16);
+    ctx.fillText(new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'}), W-20, H-13);
   }
 
   // ── Capture de la carte Leaflet via leaflet-image ──
   function captureMapAndDraw(canvas, theme) {
-    return new Promise(resolve => {
-      if (typeof leafletImage === 'undefined' || !map) {
-        drawFinal(canvas, null, theme); resolve(); return;
-      }
-      // Centrer la carte sur les stades visités ou vue monde
-      const visited = stades.filter(s => s.visite);
-      if (visited.length) {
-        const bounds = L.latLngBounds(visited.map(s => [s.lat, s.lng]));
-        map.fitBounds(bounds.pad(0.3), { animate: false });
-      } else {
-        map.setView([20, 0], 2, { animate: false });
-      }
-      setTimeout(() => {
-        leafletImage(map, (err, imgCanvas) => {
-          drawFinal(canvas, err ? null : imgCanvas, theme);
-          resolve();
-        });
-      }, 600);
-    });
-  }
+return new Promise(resolve => {
+    drawFinal(canvas, null, theme);
+    resolve();
+  });
+}
 
   // ── Preview via canvas 2d direct (pas de leaflet-image pour l'aperçu) ──
   function renderSharePreview() {
@@ -2715,14 +2790,6 @@ window.openFiche = openFiche;
     const canvas = document.getElementById('shareCanvas');
     if (!canvas || canvas._shareInited) return;
     canvas._shareInited = true;
-
-    // Charger leaflet-image dynamiquement
-    if (!window.leafletImage) {
-      const sc = document.createElement('script');
-      sc.src = 'https://cdn.jsdelivr.net/npm/leaflet-image@0.4.0/leaflet-image.js';
-      document.head.appendChild(sc);
-    }
-
     renderSharePreview();
     document.getElementById('btnDownloadShare').addEventListener('click', downloadShare);
     const btnWeb = document.getElementById('btnWebShare');
@@ -2886,7 +2953,7 @@ function updateStatsKpis() {
   const kVsub = document.getElementById('kpi-visites-sub'); if (kVsub) kVsub.textContent = `${thisMoCount} ce mois-ci`;
   const kPsub = document.getElementById('kpi-pays-sub');    if (kPsub) kPsub.textContent = `sur ${new Set(stades.map(s=>s.pays)).size} disponibles`;
 }
-window.addEventListener('load', () => { injectStatsKpis(); updateStatsKpis(); });
+if (typeof stades !== 'undefined') updateStatsKpis();
 </script>
 </body>
 </html>
