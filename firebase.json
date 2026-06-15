@@ -3,8 +3,27 @@
     "public": ".",
     "ignore": [
       "firebase.json",
+      ".firebaserc",
+      ".firebaseignore",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/*.ps1",
+      "**/*.bat",
+      "**/*.sh",
+      "**/*.env",
+      "**/*.md",
+      "**/*.zip",
+      "**/*.bak",
+      "**/*.psd",
+      "**/*.ai",
+      "**/*.log",
+      "deploy.ps1",
+      "deployer.bat",
+      "_backup/**",
+      "backup/**",
+      "src/**",
+      "Thumbs.db",
+      "desktop.ini"
     ]
   }
 }

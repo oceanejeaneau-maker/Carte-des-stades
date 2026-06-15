@@ -1435,9 +1435,8 @@
 </div>
 
 <script>
-// Stub Firebase (mode local) — la sauvegarde localStorage est dans sauvegarder() principal
-window._firebase = {
-  sauvegarder: () => {}, // no-op : déjà géré par sauvegarder() dans le script principal
+// Module UI profil/classement (mode local, sans backend)
+window._ui = {
   chargerClassement: () => {
     const el = document.getElementById('leaderboard');
     if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3)">Classement désactivé</div>';
@@ -1496,7 +1495,7 @@ window.addEventListener('load', () => {
     if (toast) { toast.className = 'profil-toast success'; toast.textContent = '✅ Profil sauvegardé'; setTimeout(() => { toast.className = 'profil-toast'; }, 2500); }
     if (inN) delete inN.dataset.touched;
     if (inP) delete inP.dataset.touched;
-    window._firebase.renderProfil();
+    window._ui.renderProfil();
     if (window._refreshSharePreview) window._refreshSharePreview();
   });
 
@@ -1573,7 +1572,7 @@ window.addEventListener('load', () => {
           // Sauvegarder le tout et rafraîchir
           sauvegarder();
           if (window._app) { window._app.updateStats(); window._app.renderAll(); window._app.renderMatchs(); window._app.renderNotes(); }
-          if (window._firebase) window._firebase.renderProfil();
+          if (window._ui) window._ui.renderProfil();
           if (toast) { toast.className = 'profil-toast success'; toast.textContent = '✅ Sauvegarde importée avec succès'; }
         } catch (err) {
           if (toast) { toast.className = 'profil-toast error'; toast.textContent = '❌ Fichier invalide ou corrompu'; }
@@ -1630,8 +1629,6 @@ function sauvegarder() {
   } catch (e) {
     console.warn('Groundhopper: localStorage indisponible', e);
   }
-  // Sync Firebase en plus si connecté
-  if (window._firebase) window._firebase.sauvegarder();
 }
 function charger() {
   try {
@@ -2203,8 +2200,8 @@ document.querySelectorAll('.drawer-item').forEach(item => {
     document.getElementById('page-' + page).classList.add('active');
     if (page === 'notes') renderNotes();
     if (page === 'matchs') renderMatchs();
-    if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
-    if (page === 'profil') { if (window._firebase) window._firebase.renderProfil(); }
+    if (page === 'classement' && window._ui) window._ui.chargerClassement();
+    if (page === 'profil') { if (window._ui) window._ui.renderProfil(); }
     if (page === 'stats') renderStats();
     closeDrawer();
   });
@@ -3010,8 +3007,8 @@ function navTo(page) {
   if (page === 'notes') renderNotes();
   if (page === 'matchs') renderMatchs();
   if (page === 'stats') { renderStats(); setTimeout(() => { if (typeof _miniMap !== 'undefined' && _miniMap) _miniMap.invalidateSize(); }, 80); }
-  if (page === 'classement' && window._firebase) window._firebase.chargerClassement();
-  if (page === 'profil' && window._firebase) window._firebase.renderProfil();
+  if (page === 'classement' && window._ui) window._ui.chargerClassement();
+  if (page === 'profil' && window._ui) window._ui.renderProfil();
   if (page === 'profil') { if (window._initShareSection) window._initShareSection(); else if (window._refreshSharePreview) window._refreshSharePreview(); }
   if (page === 'carte') setTimeout(() => { if (typeof map !== 'undefined') map.invalidateSize(); }, 50);
   const activePage = document.getElementById('page-' + page);

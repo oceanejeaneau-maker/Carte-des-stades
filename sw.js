@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════
-// SERVICE WORKER — Groundhopper v29
+// SERVICE WORKER — Groundhopper v30
 // ═══════════════════════════════════════════════
 
-const CACHE_NAME = 'groundhopper-v29';
+const CACHE_NAME = 'groundhopper-v30';
 
 const PRECACHE_URLS = [
   '/',
@@ -33,15 +33,10 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // NE JAMAIS intercepter Firebase/Google Auth
+  // Laisser passer les polices Google directement au réseau (CORS géré par le navigateur)
   if (
-    url.hostname.includes('firebaseapp.com') ||
-    url.hostname.includes('firebase.com') ||
-    url.hostname.includes('firestore.googleapis.com') ||
-    url.hostname.includes('googleapis.com') ||
-    url.hostname.includes('gstatic.com') ||
-    url.hostname.includes('accounts.google.com') ||
-    url.pathname.startsWith('/__/')
+    url.hostname.includes('fonts.googleapis.com') ||
+    url.hostname.includes('fonts.gstatic.com')
   ) return;
 
   // Tiles carte → cache
@@ -110,5 +105,7 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('message', event => {
-  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data?.type === 'SKIP_WAITING' && event.source?.url?.startsWith(self.registration.scope)) {
+    self.skipWaiting();
+  }
 });
