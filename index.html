@@ -605,6 +605,10 @@
     .note-card textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: var(--font-body); font-size: 13px; color: var(--text); resize: vertical; min-height: 70px; outline: none; background: var(--surface2); transition: border-color .15s; }
     .note-card textarea:focus { border-color: var(--accent); background: var(--surface2); box-shadow: 0 0 0 3px var(--accent-glow); }
     .note-card textarea::placeholder { color: var(--text3); }
+    .note-card-stars { font-size: 13px; color: var(--amber); letter-spacing: 1px; white-space: nowrap; flex-shrink: 0; }
+    .note-card-stars-off { color: var(--border); }
+    .note-card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0 11px; }
+    .note-card-tag { font-size: 11px; padding: 2px 8px; border-radius: 12px; background: var(--accent-dim); color: var(--accent); border: .5px solid var(--accent); white-space: nowrap; }
     .note-empty { text-align: center; padding: 48px; color: var(--text3); font-size: 14px; }
 
     .page-matchs { padding: 16px; gap: 14px; }
@@ -644,12 +648,12 @@
     .page-stats-inner { display: flex; flex-direction: column; gap: 16px; padding: 16px; padding-bottom: calc(var(--nav-h) + 24px); max-width: 640px; margin: 0 auto; width: 100%; }
     .stats-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
     .stats-card-title { font-family: var(--font-disp); font-size: 1rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-    .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
-    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; overflow-x: auto; }
+    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1 0 32px; }
     .bar-wrap { width: 100%; display: flex; align-items: flex-end; justify-content: center; height: 100px; }
     .bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--accent); min-height: 2px; transition: height .6s cubic-bezier(.4,0,.2,1); position: relative; }
     .bar:hover::after { content: attr(data-val); position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; color: var(--accent); white-space: nowrap; }
-    .bar-lbl { font-family: var(--font-mono); font-size: 9px; color: var(--text3); }
+    .bar-lbl { font-family: var(--font-mono); font-size: 9px; color: var(--text3); white-space: nowrap; }
     .continent-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .continent-name { font-size: 12px; color: var(--text2); min-width: 110px; font-family: var(--font-disp); text-transform: uppercase; letter-spacing: .04em; }
     .continent-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
@@ -679,6 +683,39 @@
     .top-pays-bar-wrap { width: 80px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
     .top-pays-bar { height: 100%; background: var(--accent); border-radius: 3px; }
     .top-pays-count { font-family: var(--font-mono); font-size: 11px; color: var(--text3); min-width: 22px; text-align: right; }
+    /* Records personnels */
+    .records-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .record-item { background: var(--surface2); border: .5px solid var(--border); border-radius: 10px; padding: 11px 12px; }
+    .record-lbl { font-size: 10px; color: var(--text3); font-family: var(--font-disp); text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+    .record-val { font-size: 14px; color: var(--text); font-weight: 600; line-height: 1.3; }
+    .record-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+    /* Distance */
+    .distance-big { font-family: var(--font-mono); font-size: 34px; color: var(--green); line-height: 1; }
+    .distance-sub { font-size: 12px; color: var(--text3); margin-top: 6px; line-height: 1.5; }
+    .distance-eq { font-size: 11px; color: var(--text2); margin-top: 8px; padding-top: 8px; border-top: .5px solid var(--border); }
+    /* Heatmap calendrier */
+    .heatmap-year { margin-bottom: 14px; }
+    .heatmap-year-lbl { font-size: 11px; color: var(--text3); font-family: var(--font-mono); margin-bottom: 5px; }
+    .heatmap-months { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+    .heatmap-cell { aspect-ratio: 1; border-radius: 3px; background: var(--surface2); border: .5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--text3); font-family: var(--font-mono); }
+    .heatmap-cell.lvl1 { background: #25353050; border-color: var(--green); color: var(--green); }
+    .heatmap-cell.lvl2 { background: #1d6b4a; border-color: var(--green); color: #fff; }
+    .heatmap-cell.lvl3 { background: var(--green); border-color: var(--green); color: #003; }
+    .heatmap-legend { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); margin-top: 8px; justify-content: flex-end; }
+    .heatmap-legend span { width: 12px; height: 12px; border-radius: 3px; border: .5px solid var(--border); }
+    /* Suggestions */
+    .suggestion-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .suggestion-flag { font-size: 1rem; min-width: 22px; }
+    .suggestion-name { font-size: 13px; color: var(--text); flex: 1; }
+    .suggestion-name small { color: var(--text3); font-size: 11px; }
+    .suggestion-bar-wrap { width: 70px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .suggestion-bar { height: 100%; background: var(--amber); border-radius: 3px; }
+    .suggestion-rest { font-family: var(--font-mono); font-size: 11px; color: var(--amber); min-width: 36px; text-align: right; }
+    /* Championnats vus : détail par saison */
+    .champ-vu-head.expandable { cursor: pointer; border-radius: 6px; transition: background .15s; outline: none; }
+    .champ-vu-head.expandable:hover, .champ-vu-head.expandable:focus-visible { background: var(--surface2); }
+    .champ-caret { display: inline-block; width: 11px; font-size: 9px; color: var(--text3); }
+    .champ-vu-detail { margin: 2px 0 6px; }
 
     .page-classement { padding: 16px; gap: 14px; }
     .leaderboard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
@@ -926,6 +963,7 @@
     .fiche-cta-row {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
       padding: 12px 20px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
@@ -972,15 +1010,64 @@
       border-color: var(--accent);
       color: var(--accent);
     }
+    .fiche-goto-btn {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 14px;
+      font-family: var(--font-disp);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text2);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .fiche-goto-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--text3); }
+    /* Note étoiles */
+    .fiche-stars { display: inline-flex; gap: 3px; }
+    .fiche-star { font-size: 20px; line-height: 1; color: var(--border); cursor: pointer; transition: color .12s, transform .08s; user-select: none; outline: none; }
+    .fiche-star:hover { transform: scale(1.15); }
+    .fiche-star.on { color: var(--amber); }
+    .fiche-star:focus-visible { color: var(--amber); }
+    /* Tags de visite */
+    .fiche-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .fiche-tag { font-size: 12px; padding: 4px 10px; border-radius: 14px; border: .5px solid var(--border); background: var(--surface2); color: var(--text3); cursor: pointer; transition: all .12s; user-select: none; outline: none; white-space: nowrap; }
+    .fiche-tag:hover { border-color: var(--text3); color: var(--text2); }
+    .fiche-tag.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+    .fiche-tag:focus-visible { border-color: var(--accent); }
+    /* Matchs vus ici */
+    .fiche-match-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+    .fiche-match-row { display: flex; align-items: center; gap: 8px; background: var(--surface2); border-radius: 6px; padding: 8px 10px; }
+    .fiche-match-main { flex: 1; min-width: 0; }
+    .fiche-match-teams { font-size: 13px; color: var(--text); font-weight: 500; }
+    .fiche-match-score { background: var(--surface); border-radius: 4px; padding: 1px 6px; font-family: var(--font-mono); font-size: 12px; color: var(--text2); margin-left: 4px; }
+    .fiche-match-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
+    .fiche-match-del { background: none; border: none; cursor: pointer; font-size: 14px; opacity: .5; transition: opacity .15s; flex-shrink: 0; }
+    .fiche-match-del:hover { opacity: 1; }
+    .fiche-match-add-toggle { width: 100%; padding: 8px; background: transparent; border: .5px dashed var(--border); border-radius: 6px; color: var(--text3); font-family: var(--font-body); font-size: 12px; cursor: pointer; transition: all .15s; }
+    .fiche-match-add-toggle:hover { border-color: var(--text3); color: var(--text2); }
+    .fiche-match-form { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+    .fiche-match-form input, .fiche-match-form select { background: var(--surface2); border: .5px solid var(--border); color: var(--text); border-radius: 6px; padding: 8px 10px; font-family: var(--font-body); font-size: 13px; outline: none; }
+    .fiche-match-form input:focus, .fiche-match-form select:focus { border-color: var(--accent); }
+    .fiche-match-save { padding: 9px; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-family: var(--font-disp); font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; }
+    .fiche-match-save:hover { background: var(--accent2); }
 
     /* Corps scrollable */
     .fiche-body {
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       padding: 16px 20px 20px;
       display: flex;
       flex-direction: column;
       gap: 14px;
       flex: 1;
+      min-height: 0;
     }
 
     /* Sections internes */
@@ -1084,11 +1171,36 @@
 <div class="fiche-overlay" id="ficheOverlay">
   <div class="fiche-panel" id="fichePanel">
     <div class="fiche-handle"></div>
-    <div style="position:relative">
+    <div style="position:relative;display:flex;flex-direction:column;flex:1;min-height:0">
       <button class="fiche-close" id="ficheClose">✕</button>
-      <div class="fiche-header" id="ficheHeader"></div>
-      <div class="fiche-cta-row" id="ficheCta"></div>
+      <div class="fiche-header" id="ficheHeader" style="flex-shrink:0"></div>
+      <div class="fiche-cta-row" id="ficheCta" style="flex-shrink:0"></div>
       <div class="fiche-body" id="ficheBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modale : carte de visite partageable par stade ── -->
+<div class="fiche-overlay" id="stadeShareOverlay" style="z-index:1100">
+  <div class="fiche-panel" id="stadeSharePanel" style="max-width:380px">
+    <div style="position:relative;display:flex;flex-direction:column;flex:1;min-height:0">
+      <button class="fiche-close" id="stadeShareClose">✕</button>
+      <div style="padding:18px 18px 8px"><div style="font-size:15px;font-weight:600;color:var(--text)">🎴 Carte du stade</div></div>
+      <div class="fiche-body" style="padding:0 18px 18px">
+        <div class="share-preview-wrap" style="margin-bottom:12px"><canvas id="stadeShareCanvas" style="width:100%;display:block;border-radius:10px"></canvas></div>
+        <div class="share-theme-row" style="margin-bottom:12px">
+          <span class="share-theme-lbl">Thème</span>
+          <div class="share-theme-pills" id="stadeShareThemes">
+            <button class="share-theme-pill active" data-theme="dark"><span class="share-theme-swatch" style="background:#0d0d0d"></span>Sombre</button>
+            <button class="share-theme-pill" data-theme="light"><span class="share-theme-swatch" style="background:#fafaf8"></span>Clair</button>
+            <button class="share-theme-pill" data-theme="rouge"><span class="share-theme-swatch" style="background:#1a0404"></span>Rouge</button>
+          </div>
+        </div>
+        <div class="share-actions">
+          <button class="share-btn-dl" id="stadeShareDl">⬇️ Télécharger l'image</button>
+          <button class="share-btn-web" id="stadeShareWeb" style="display:none">📤 Partager</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1200,6 +1312,8 @@
       <div class="notes-search">
         <input type="text" id="notesSearch" placeholder="Rechercher un stade…">
         <select id="notesFilter"><option value="visites">Stades visités</option><option value="tous">Tous les stades</option></select>
+        <select id="notesTagFilter"><option value="">Tous les tags</option></select>
+        <select id="notesNoteFilter"><option value="">Toutes les notes</option><option value="5">★ 5</option><option value="4">★ 4+</option><option value="3">★ 3+</option></select>
       </div>
       <div class="notes-list" id="notesList"></div>
       <div class="table-container">
@@ -1257,7 +1371,12 @@
       <div class="page-stats-inner">
       <div class="stats-card stats-card-featured"><div class="stats-card-title">🗺️ Ma carte du monde</div><div id="statsMiniMap" style="height:240px;overflow:hidden;background:var(--surface2)"></div></div>
       <div class="stats-card"><div class="stats-card-title">🌍 Tour du monde par continent</div><div id="statsContinents"></div></div>
-      <div class="stats-card"><div class="stats-card-title">📈 Progression par année</div><div class="bar-chart" id="statsBarChart"><div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">📈 Progression par saison</div><div class="bar-chart" id="statsBarChart"><div style="color:var(--text3);font-size:12px;text-align:center;width:100%">Aucun stade visité pour l'instant</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">🏆 Records personnels</div><div class="records-grid" id="statsRecords"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">📏 Distance parcourue</div><div id="statsDistance"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">📅 Calendrier des visites</div><div id="statsHeatmap"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">🏟️ Championnats</div><div id="statsLigues"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
+      <div class="stats-card"><div class="stats-card-title">🎯 Prochains objectifs suggérés</div><div id="statsSuggestions"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
       <div class="stats-card"><div class="stats-card-title">🏴 Top pays visités</div><div class="top-pays-grid" id="statsTopPays"><div style="color:var(--text3);font-size:12px">Aucun stade visité</div></div></div>
       <div class="stats-card"><div class="stats-card-title">🏅 Badges</div><div id="statsBadges"></div></div>
       <div class="stats-card">
@@ -1528,7 +1647,7 @@ window.addEventListener('load', () => {
       notes: (typeof notes !== 'undefined') ? notes : {},
       profil: JSON.parse(localStorage.getItem('gh_profil_v1') || '{}')
     };
-    if (typeof stades !== 'undefined') stades.forEach(s => { if (s.visite) data.visites[s.id] = { visite: true, annee: s.annee ?? null, dateVisite: s.dateVisite ?? null, photo: s.photo ?? null }; });
+    if (typeof stades !== 'undefined') stades.forEach(s => { if (s.visite) data.visites[s.id] = { visite: true, annee: s.annee ?? null, dateVisite: s.dateVisite ?? null, photo: s.photo ?? null, champVu: s.champVu ?? null, note: s.note ?? null, tags: s.tags ?? null }; });
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1555,8 +1674,8 @@ window.addEventListener('load', () => {
           if (!confirm('Importer cette sauvegarde ? Cela remplacera tes données actuelles.')) return;
           // Restaurer les visites
           if (typeof stades !== 'undefined' && data.visites) {
-            stades.forEach(s => { s.visite = false; s.annee = null; s.dateVisite = null; s.photo = null; });
-            stades.forEach(s => { const d = data.visites[s.id]; if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; } });
+            stades.forEach(s => { s.visite = false; s.annee = null; s.dateVisite = null; s.photo = null; s.champVu = null; s.note = null; s.tags = null; });
+            stades.forEach(s => { const d = data.visites[s.id]; if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; s.champVu = d.champVu ?? null; s.note = d.note ?? null; s.tags = d.tags ?? null; } });
           }
           // Restaurer wishlist
           if (data.wishlist && typeof wishlisted !== 'undefined') {
@@ -1619,6 +1738,9 @@ function sauvegarder() {
           annee:      s.annee      ?? null,
           dateVisite: s.dateVisite ?? null,
           photo:      s.photo      ?? null,
+          champVu:    s.champVu    ?? null,
+          note:       s.note       ?? null,
+          tags:       s.tags       ?? null,
         }])
       ),
       matchs,
@@ -1638,7 +1760,7 @@ function charger() {
       if (savedV2.visites) {
         stades.forEach(s => {
           const d = savedV2.visites[s.id];
-          if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; }
+          if (d) { s.visite = true; s.annee = d.annee ?? null; s.dateVisite = d.dateVisite ?? null; s.photo = d.photo ?? null; s.champVu = d.champVu ?? null; s.note = d.note ?? null; s.tags = d.tags ?? null; }
         });
       }
       if (savedV2.matchs) {
@@ -1691,9 +1813,50 @@ const PAYS_ISO = { Allemagne:'DE', Belgique:'BE', Espagne:'ES', France:'FR', Ita
 const PAYS_FLAG_EXCEPTION = { Angleterre:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', Écosse:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' };
 
 const CHAMP_COLORS = {
-  'Ligue 1':'#1e90ff','Ligue 2':'#74b9ff','National':'#a8c8ff','Bundesliga':'#e84393','2. Bundesliga':'#fd79a8','La Liga':'#e17055','Segunda División':'#fab1a0','Premier League':'#6c5ce7','Championship':'#b8860b','Serie A':'#00b894','Serie B':'#52c7aa','Eredivisie':'#fdcb6e','Jupiler Pro League':'#e67e22','Primeira Liga':'#27ae60','Segunda Liga':'#a8d8a8','Liga Portugal 2':'#2ecc71','Serie B Brazil':'#009c3b','J2 League':'#e67e22','K League 2':'#1f8dd6','USL Championship':'#16a085','League One':'#9b59b6','Primera Federación':'#2980b9','Liga':'#f39c12','Serie C':'#d35400','Serie C Brazil':'#27ae60','USL League One':'#f1c40f','J3 League':'#e74c3c','League Two':'#34495e','National 2':'#2c3e50','Regionalliga':'#27ae60','Serie D':'#8e44ad','Segunda Federación':'#e67e22','Japan Football League':'#16a085','Scottish Premiership':'#9b59b6','Super League Suisse':'#c0392b','Super League Grèce':'#1abc9c','League of Ireland':'#2ecc71','Süper Lig':'#e74c3c','SuperLiga Serbie':'#c0392b','HNL Croatie':'#3498db','Liga 1 Roumanie':'#f39c12','Ekstraklasa':'#e67e22','Fortuna Liga':'#2980b9','Bundesliga Autriche':'#8e44ad','OTP Bank Liga':'#27ae60','Serie A Bresil':'#009c3b','Liga Profesional':'#74acdf','Primera Division Uruguay':'#001489','Primera Division Chili':'#d52b1e','Liga BetPlay':'#fcd116','Liga 1 Perou':'#d91023','MLS':'#002855','Liga MX':'#006847','MLS Canada':'#d52b1e','J1 League':'#e63946','K League':'#003594','Super League':'#de2910','A-League':'#00843d','Saudi Pro League':'#006c35','UAE Pro League':'#00732f','Qatar Stars League':'#8d1b3d','ISL':'#ff6600','Persian Gulf Pro League':'#239f40','Thai League 1':'#003087','Liga 1':'#ce1126','PSL':'#007a4d','Botola Pro':'#c1272d','NPFL':'#008751','Egyptian Premier League':'#c09300','Ligue 1 Sénégal':'#00853f','MTN Elite One':'#007a5e','MTN Ligue 1':'#f77f00','Ghana Premier League':'#006b3f','NBC Premier League':'#1eb53a','FKF Premier League':'#006600','Ligue Professionnelle 1':'#006233','Ligue 1 Tunisie':'#e70013','National League NZ':'#00247d','Eliteserien':'#ef2b2d','Superliga':'#c8102e','Allsvenskan':'#006aa7','Veikkausliiga':'#003580','Úrvalsdeild':'#003897','Premier League Ukraine':'#005bbc','Premier League Russie':'#cc0000'
+  'Ligue 1':'#1e90ff','Ligue 2':'#74b9ff','National':'#a8c8ff','Bundesliga':'#e84393','2. Bundesliga':'#fd79a8','La Liga':'#e17055','Segunda División':'#fab1a0','Premier League':'#6c5ce7','Championship':'#b8860b','Serie A':'#00b894','Serie B':'#52c7aa','Eredivisie':'#fdcb6e','Jupiler Pro League':'#e67e22','Primeira Liga':'#27ae60','Segunda Liga':'#a8d8a8','Liga Portugal 2':'#2ecc71','Serie B Brazil':'#009c3b','J2 League':'#e67e22','K League 2':'#1f8dd6','USL Championship':'#16a085','League One':'#9b59b6','Primera Federación':'#2980b9','Liga':'#f39c12','Serie C':'#d35400','Serie C Brazil':'#27ae60','USL League One':'#f1c40f','J3 League':'#e74c3c','League Two':'#34495e','National 2':'#2c3e50','Regionalliga':'#27ae60','Serie D':'#8e44ad','Segunda Federación':'#e67e22','Japan Football League':'#16a085','Scottish Premiership':'#9b59b6','Super League Suisse':'#c0392b','Super League Grèce':'#1abc9c','League of Ireland':'#2ecc71','Süper Lig':'#e74c3c','SuperLiga Serbie':'#c0392b','HNL Croatie':'#3498db','Liga 1 Roumanie':'#f39c12','Ekstraklasa':'#e67e22','Fortuna Liga':'#2980b9','Bundesliga Autriche':'#8e44ad','OTP Bank Liga':'#27ae60','Serie A Bresil':'#009c3b','Liga Profesional':'#74acdf','Primera Division Uruguay':'#001489','Primera Division Chili':'#d52b1e','Liga BetPlay':'#fcd116','Liga 1 Perou':'#d91023','MLS':'#002855','Liga MX':'#006847','MLS Canada':'#d52b1e','J1 League':'#e63946','K League':'#003594','Super League':'#de2910','A-League':'#00843d','Saudi Pro League':'#006c35','UAE Pro League':'#00732f','Qatar Stars League':'#8d1b3d','ISL':'#ff6600','Persian Gulf Pro League':'#239f40','Thai League 1':'#003087','Liga 1':'#ce1126','PSL':'#007a4d','Botola Pro':'#c1272d','NPFL':'#008751','Egyptian Premier League':'#c09300','Ligue 1 Sénégal':'#00853f','MTN Elite One':'#007a5e','MTN Ligue 1':'#f77f00','Ghana Premier League':'#006b3f','NBC Premier League':'#1eb53a','FKF Premier League':'#006600','Ligue Professionnelle 1':'#006233','Ligue 1 Tunisie':'#e70013','National League NZ':'#00247d','Eliteserien':'#ef2b2d','Superliga':'#c8102e','Allsvenskan':'#006aa7','Veikkausliiga':'#003580','Úrvalsdeild':'#003897','Premier League Ukraine':'#005bbc','Premier League Russie':'#cc0000',
+  'Ligue des Champions':'#1a2c5b','Ligue Europa':'#ff6900','Ligue Europa Conférence':'#1e9e4f','Supercoupe d\'Europe':'#003087','Copa Libertadores':'#d4af37','Copa Sudamericana':'#00529f','Recopa Sudamericana':'#c0392b','CONCACAF Champions Cup':'#003f87','Leagues Cup':'#e63946','Ligue des Champions CAF':'#009639','Coupe de la Confédération CAF':'#f77f00','Supercoupe CAF':'#c8a415','AFC Champions League Elite':'#003da5','AFC Champions League Two':'#0066cc','OFC Champions League':'#00aaff'
 };
 function champColor(c) { return CHAMP_COLORS[c] || '#aaa'; }
+// Compétitions internationales (hors championnat national) proposées dans les menus de division.
+// Un match de coupe d'Europe peut se jouer dans n'importe quel stade, indépendamment du pays.
+const COMPETITIONS_INTL = ['Ligue des Champions', 'Ligue Europa', 'Conference League', 'Supercoupe d\'Europe'];
+// Tags de visite prédéfinis (liste fixe pour rester cohérent et filtrable)
+const TAGS_VISITE = [
+  { id: 'derby',    label: 'Derby',           emoji: '🔥' },
+  { id: 'pluie',    label: 'Pluie',           emoji: '🌧️' },
+  { id: 'guichets', label: 'Guichets fermés', emoji: '🎟️' },
+  { id: 'ambiance', label: 'Ambiance folle',  emoji: '📣' },
+  { id: 'deplacement', label: 'Déplacement',  emoji: '🚌' },
+  { id: 'nul',      label: 'Match nul',       emoji: '🤝' },
+];
+// Divisions existantes dans un pays donné (triées), pour le sélecteur de la fiche.
+function championnatsParPays(pays) {
+  return [...new Set(stades.filter(s => s.pays === pays).map(s => s.championnat))].filter(Boolean).sort();
+}
+// Compétitions continentales de clubs, selon le continent du stade.
+const COUPES_CONTINENTALES = {
+  'Europe': ['Ligue des Champions', 'Ligue Europa', 'Ligue Europa Conférence', 'Supercoupe d\u2019Europe'],
+  'Amérique du Sud': ['Copa Libertadores', 'Copa Sudamericana', 'Recopa Sudamericana'],
+  'Amérique du Nord': ['CONCACAF Champions Cup', 'Leagues Cup'],
+  'Afrique': ['Ligue des Champions CAF', 'Coupe de la Confédération CAF', 'Supercoupe CAF'],
+  'Asie & Océanie': ['AFC Champions League Elite', 'AFC Champions League Two', 'OFC Champions League'],
+  'Moyen-Orient': ['AFC Champions League Elite', 'AFC Champions League Two'],
+};
+// Options de division pour un stade : championnats du pays + coupes continentales du continent.
+function optionsDivision(stade) {
+  const nat = championnatsParPays(stade.pays);
+  const base = nat.length ? nat : [stade.championnat].filter(Boolean);
+  const coupes = COUPES_CONTINENTALES[getContinent(stade.pays)] || [];
+  return { nationaux: base, continentales: coupes };
+}
+// Construit le HTML des <option>/<optgroup> pour un sélecteur de division, avec valeur présélectionnée.
+function htmlOptionsDivision(stade, selected) {
+  const { nationaux, continentales } = optionsDivision(stade);
+  const opt = c => `<option value="${esc(c)}"${c === selected ? ' selected' : ''}>${esc(c)}</option>`;
+  let html = `<optgroup label="Championnat">${nationaux.map(opt).join('')}</optgroup>`;
+  if (continentales.length) html += `<optgroup label="Coupe continentale">${continentales.map(opt).join('')}</optgroup>`;
+  return html;
+}
 
 function drapeau(pays) {
   if (PAYS_FLAG_EXCEPTION[pays]) return PAYS_FLAG_EXCEPTION[pays];
@@ -1721,7 +1884,18 @@ const STADES_INFO = {
   'FNB Stadium':          { capacite:94736, ouverture:1989, record:94736, anecdote:"Surnommé 'Soccer City', c'est ici que Nelson Mandela a fait sa première apparition publique après sa libération en 1990." },
 };
 
-const stades = STADES_DATA.map(s => ({...s, visite:false, annee:null, dateVisite:null, photo:null}));
+// (B) Historique éditorial des divisions par saison, À MAINTENIR À LA MAIN uniquement
+// pour les stades dont le club change de division. Clé = nom EXACT du stade (s.nom),
+// valeur = { "saison": "Championnat" }. Sert à recréditer correctement les visites passées
+// quand stadiums.js a déjà basculé le stade vers sa division actuelle.
+// Exemple : la Beaujoire, en Ligue 1 jusqu'en 2025-26 puis Ligue 2 en 2026-27 :
+//   'Stade de la Beaujoire': { '2024-25': 'Ligue 1', '2025-26': 'Ligue 1' },
+const HISTORIQUE_CHAMPIONNAT = {
+  // 'Stade de la Beaujoire': { '2025-26': 'Ligue 1' },
+  // 'Stade Saint-Symphorien': { '2025-26': 'Ligue 1' },
+};
+
+const stades = STADES_DATA.map(s => ({...s, visite:false, annee:null, dateVisite:null, photo:null, champVu:null, note:null, tags:null, historiqueChampionnat: HISTORIQUE_CHAMPIONNAT[s.nom] || null}));
 
 // Fix Android : forcer hauteur avant init Leaflet
 (function() {
@@ -2077,6 +2251,7 @@ function renderTableBody(ids) {
       cb.addEventListener('change', () => {
         stades[id].visite = cb.checked;
         if (cb.checked && !stades[id].annee) stades[id].annee = CURRENT_YEAR;
+        if (cb.checked) figerChampVu(stades[id]);
         const tdV = tr.querySelector('.badge-oui, .badge-non');
         if (tdV) { tdV.className = cb.checked ? 'badge-oui' : 'badge-non'; tdV.textContent = cb.checked ? '✅' : '—'; }
         tr.style.background = cb.checked ? 'rgba(0,200,117,.04)' : '';
@@ -2147,6 +2322,7 @@ function renderTableBody(ids) {
         cb.addEventListener('change',()=>{
           stades[id].visite=cb.checked;
           if(cb.checked&&!stades[id].annee) stades[id].annee=CURRENT_YEAR;
+          if(cb.checked) figerChampVu(stades[id]);
           const tdV = tr.querySelector('.badge-oui, .badge-non');
           if(tdV) { tdV.className = cb.checked ? 'badge-oui' : 'badge-non'; tdV.textContent = cb.checked ? '✅' : '—'; }
           tr.style.background = cb.checked ? 'rgba(0,200,117,.04)' : '';
@@ -2215,6 +2391,8 @@ function saveNotes() { sauvegarder(); }
 function renderNotes() {
   const search = document.getElementById('notesSearch').value.toLowerCase();
   const filterV = document.getElementById('notesFilter').value;
+  const filterTag = document.getElementById('notesTagFilter').value;
+  const filterNote = parseInt(document.getElementById('notesNoteFilter').value) || 0;
   const list = document.getElementById('notesList');
   list.innerHTML = '';
   const filtered = stades.filter((s) => {
@@ -2222,6 +2400,8 @@ function renderNotes() {
     if (filterV !== 'tous' && !s.visite && !notes[s.id]) return false;
     if (filterV === 'visites' && !s.visite) return false;
     if (search && !s.nom.toLowerCase().includes(search) && !s.ville.toLowerCase().includes(search)) return false;
+    if (filterTag && !(Array.isArray(s.tags) && s.tags.includes(filterTag))) return false;
+    if (filterNote && !(s.note >= filterNote)) return false;
     return true;
   });
   if (!filtered.length) {
@@ -2238,8 +2418,8 @@ function renderNotes() {
     }
     return;
   }
-  // Section wishlist en haut si filtre visites
-  const wishlistStades = filterV !== 'tous'
+  // Section wishlist en haut si filtre visites (mais pas si filtre tag/note actif)
+  const wishlistStades = (filterV !== 'tous' && !filterTag && !filterNote)
     ? stades.filter(s => !s.visite && wishlisted[s.id] && (!search || s.nom.toLowerCase().includes(search) || s.ville.toLowerCase().includes(search)))
     : [];
 
@@ -2266,14 +2446,25 @@ function renderNotes() {
     const card = document.createElement('div');
     card.className = 'note-card' + (s.visite ? ' visited' : '');
     const col = champColor(s.championnat);
-    card.innerHTML = `<div class="note-card-header"><div><div class="note-card-title" style="display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:3px;height:16px;border-radius:2px;background:${col};flex-shrink:0"></span>${esc(s.nom)} ${s.visite ? '<span style="color:var(--green);font-size:.85em">✅</span>' : ''}</div><div class="note-card-meta" style="margin-left:11px">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.dateVisite ? ' · ' + new Date(s.dateVisite).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}) : s.annee ? ' · ' + s.annee : ''}</div></div></div><textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[s.id] || '')}</textarea>`;
+    const noteHtml = s.note ? `<div class="note-card-stars">${'★'.repeat(s.note)}<span class="note-card-stars-off">${'★'.repeat(5 - s.note)}</span></div>` : '';
+    const tagsHtml = (Array.isArray(s.tags) && s.tags.length)
+      ? `<div class="note-card-tags">${s.tags.map(id => { const t = TAGS_VISITE.find(x => x.id === id); return t ? `<span class="note-card-tag">${t.emoji} ${t.label}</span>` : ''; }).join('')}</div>`
+      : '';
+    card.innerHTML = `<div class="note-card-header"><div><div class="note-card-title" style="display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:3px;height:16px;border-radius:2px;background:${col};flex-shrink:0"></span>${esc(s.nom)} ${s.visite ? '<span style="color:var(--green);font-size:.85em">✅</span>' : ''}</div><div class="note-card-meta" style="margin-left:11px">${drapeau(s.pays)} ${esc(s.ville)} · <span style="color:${col}">${esc(s.championnat)}</span>${s.dateVisite ? ' · ' + new Date(s.dateVisite).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}) : s.annee ? ' · ' + s.annee : ''}</div></div>${noteHtml}</div>${tagsHtml}<textarea placeholder="Ajoute un souvenir, une note…">${esc(notes[s.id] || '')}</textarea>`;
     const ta = card.querySelector('textarea');
     ta.addEventListener('input', () => { if (ta.value.trim()) notes[s.id] = ta.value; else delete notes[s.id]; saveNotes(); });
     list.appendChild(card);
   });
 }
+// Peupler le filtre de tags une seule fois
+(function initTagFilter() {
+  const sel = document.getElementById('notesTagFilter');
+  if (sel) TAGS_VISITE.forEach(t => sel.add(new Option(`${t.emoji} ${t.label}`, t.id)));
+})();
 document.getElementById('notesSearch').addEventListener('input', renderNotes);
 document.getElementById('notesFilter').addEventListener('change', renderNotes);
+document.getElementById('notesTagFilter').addEventListener('change', renderNotes);
+document.getElementById('notesNoteFilter').addEventListener('change', renderNotes);
 
 // ── Matchs ─────────────────────────────────────
 const MATCHS_KEY = 'stades_matchs_v1';
@@ -2285,8 +2476,25 @@ const matchChampEl = document.getElementById('matchChamp');
 const matchFilterChampEl = document.getElementById('matchFilterChamp');
 const matchFilterPaysEl = document.getElementById('matchFilterPays');
 [...new Set(stades.map(s => s.championnat))].sort().forEach(c => { matchChampEl.add(new Option(c, c)); matchFilterChampEl.add(new Option(c, c)); });
+// Ajouter les coupes continentales (toutes zones) aux sélecteurs de match
+[...new Set(Object.values(COUPES_CONTINENTALES).flat())].forEach(c => { matchChampEl.add(new Option(c, c)); matchFilterChampEl.add(new Option(c, c)); });
 [...new Set(stades.map(s => s.pays))].sort().forEach(p => { matchFilterPaysEl.add(new Option(`${drapeau(p)} ${p}`, p)); });
 stades.slice().sort((a,b) => a.nom.localeCompare(b.nom)).forEach((s) => { matchStadeEl.add(new Option(`${s.nom} (${s.ville})`, s.id)); });
+
+// Pré-remplir le championnat avec celui du stade choisi (modifiable ensuite)
+matchStadeEl.addEventListener('change', () => {
+  const s = stades.find(x => x.id === matchStadeEl.value);
+  if (s && s.championnat) matchChampEl.value = s.championnat;
+});
+
+// Création centralisée d'un match (réutilisée par le formulaire global et la fiche stade)
+function ajouterMatch({ eq1, eq2, score, date, stadeId, champ }) {
+  const s = stadeId ? stades.find(x => x.id === stadeId) : null;
+  matchs.unshift({ eq1, eq2, score: score || '', date, stadeId: stadeId || null, champ: champ || '', pays: s ? s.pays : '' });
+  // Marquer le stade visité si ce n'est pas déjà fait
+  if (s && !s.visite) { s.visite = true; if (!s.dateVisite) { s.dateVisite = date; s.annee = parseInt(date.slice(0,4)); } figerChampVu(s); }
+  saveMatchs();
+}
 
 document.getElementById('btnAjouterMatch').addEventListener('click', () => {
   const eq1 = document.getElementById('matchEquipe1').value.trim();
@@ -2296,14 +2504,21 @@ document.getElementById('btnAjouterMatch').addEventListener('click', () => {
   const stadeId = document.getElementById('matchStade').value;
   const champ = document.getElementById('matchChamp').value;
   if (!eq1 || !eq2 || !date) { alert('Remplis au moins les équipes et la date !'); return; }
-  const s = stadeId !== '' ? stades.find(x => x.id === stadeId) : null;
-  matchs.unshift({ eq1, eq2, score, date, stadeId: stadeId || null, champ: champ || (s ? s.championnat : ''), pays: s ? s.pays : '' });
-  saveMatchs();
+  ajouterMatch({ eq1, eq2, score, date, stadeId, champ });
   document.getElementById('matchEquipe1').value = ''; document.getElementById('matchEquipe2').value = '';
   document.getElementById('matchScore').value = ''; document.getElementById('matchDate').value = '';
   document.getElementById('matchStade').value = ''; document.getElementById('matchChamp').value = '';
-  renderMatchs();
+  commit(); renderMatchs();
 });
+
+// Matchs enregistrés pour un stade donné (gère stadeId et l'ancien stadeIdx)
+function matchsDuStade(stadeId) {
+  return matchs.filter(m => {
+    if (m.stadeId) return m.stadeId === stadeId;
+    if (m.stadeIdx !== null && m.stadeIdx !== undefined && stades[m.stadeIdx]) return stades[m.stadeIdx].id === stadeId;
+    return false;
+  });
+}
 
 function renderMatchs() {
   const search = document.getElementById('matchSearch').value.toLowerCase();
@@ -2375,18 +2590,55 @@ const CONTINENTS = {
 };
 const CONTINENT_COLORS = { 'Europe':'#3b82f6','Amérique du Sud':'#f59e0b','Amérique du Nord':'#ef4444','Afrique':'#10b981','Asie & Océanie':'#8b5cf6','Moyen-Orient':'#f97316' };
 function getContinent(pays) { for (const [c, list] of Object.entries(CONTINENTS)) { if (list.includes(pays)) return c; } return 'Autre'; }
+function haversine(a, b) {
+  const R = 6371, toRad = d => d * Math.PI / 180;
+  const dLat = toRad(b.lat - a.lat), dLng = toRad(b.lng - a.lng);
+  const h = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+// Saison calée sur le 1er août : une visite août→déc. = saison N/N+1, janv.→juil. = saison N-1/N.
+// Si seule l'année est connue (pas de mois) : année N → saison N-1/N.
+function saisonDe(s) {
+  if (s.dateVisite) {
+    const y = parseInt(s.dateVisite.slice(0, 4)), m = parseInt(s.dateVisite.slice(5, 7));
+    const debut = m >= 8 ? y : y - 1;
+    return `${debut}-${(debut + 1).toString().slice(2)}`;
+  }
+  if (s.annee) { const debut = s.annee - 1; return `${debut}-${(debut + 1).toString().slice(2)}`; }
+  return null;
+}
+// (C) Fige la division dans la visite, par saison. Idempotent : n'écrase jamais une valeur
+// déjà enregistrée pour la saison. Si un historique éditorial (B) existe pour cette saison,
+// on fige cette valeur plutôt que la division actuelle de la base (cas des clubs descendus).
+function figerChampVu(stade) {
+  if (!stade.championnat) return;
+  const sa = saisonDe(stade) || '—';
+  stade.champVu = stade.champVu || {};
+  if (stade.champVu[sa]) return;
+  const histo = (sa !== '—' && stade.historiqueChampionnat && stade.historiqueChampionnat[sa]) ? stade.historiqueChampionnat[sa] : null;
+  stade.champVu[sa] = histo || stade.championnat;
+}
+// Détermine la division d'un stade pour une saison donnée, par ordre de priorité :
+// 1) correction manuelle dans la fiche (champVu de la saison) — c'est ton choix explicite,
+// 2) historique éditorial par saison (B), 3) champVu sans saison, 4) repli base actuelle.
+function champPourSaison(stade, saison) {
+  if (saison && stade.champVu && stade.champVu[saison]) return stade.champVu[saison];
+  if (saison && stade.historiqueChampionnat && stade.historiqueChampionnat[saison]) return stade.historiqueChampionnat[saison];
+  if (stade.champVu && stade.champVu['—']) return stade.champVu['—'];
+  return stade.championnat || null;
+}
 
 function renderStats() {
   const visites = stades.filter(s => s.visite);
-  const byYear = {};
-  visites.forEach(s => { const y = s.annee || 'N/A'; byYear[y] = (byYear[y] || 0) + 1; });
+  const bySaison = {};
+  visites.forEach(s => { const sa = saisonDe(s) || 'N/A'; bySaison[sa] = (bySaison[sa] || 0) + 1; });
   const chart = document.getElementById('statsBarChart');
   if (!visites.length) { chart.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;width:100%;padding:20px 0">Commence à cocher des stades !</div>'; }
   else {
-    const years = Object.keys(byYear).filter(y=>y!=='N/A').sort();
-    if (byYear['N/A']) years.push('N/A');
-    const max = Math.max(...Object.values(byYear));
-    chart.innerHTML = years.map(y => { const val = byYear[y]; const pct = Math.round((val/max)*100); return `<div class="bar-col"><div class="bar-wrap"><div class="bar" style="height:${pct}%;opacity:${0.5+pct/200}" data-val="${val}"></div></div><div class="bar-lbl">${y === 'N/A' ? '?' : y.toString().slice(2)}</div></div>`; }).join('');
+    const saisons = Object.keys(bySaison).filter(s=>s!=='N/A').sort();
+    if (bySaison['N/A']) saisons.push('N/A');
+    const max = Math.max(...Object.values(bySaison));
+    chart.innerHTML = saisons.map(sa => { const val = bySaison[sa]; const pct = Math.round((val/max)*100); const lbl = sa === 'N/A' ? '?' : sa; return `<div class="bar-col"><div class="bar-wrap"><div class="bar" style="height:${pct}%;opacity:${0.5+pct/200}" data-val="${val}"></div></div><div class="bar-lbl">${lbl}</div></div>`; }).join('');
   }
   const byCont = {};
   visites.forEach(s => { const c = getContinent(s.pays); byCont[c] = (byCont[c] || 0) + 1; });
@@ -2400,6 +2652,127 @@ function renderStats() {
   const topEl = document.getElementById('statsTopPays');
   if (!topPays.length) { topEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Aucun stade visité</div>'; }
   else { topEl.innerHTML = topPays.map(([pays, count]) => `<div class="top-pays-row"><span class="top-pays-flag">${drapeau(pays)}</span><span class="top-pays-name">${pays}</span><div class="top-pays-bar-wrap"><div class="top-pays-bar" style="width:${Math.round((count/topMax)*100)}%"></div></div><span class="top-pays-count">${count}</span></div>`).join(''); }
+
+  // ── Records personnels ──
+  const recEl = document.getElementById('statsRecords');
+  if (recEl) {
+    if (!visites.length) { recEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Aucun stade visité</div>'; }
+    else {
+      const avecCapa = visites.filter(s => STADES_INFO[s.nom]?.capacite);
+      const plusGrand = avecCapa.length ? avecCapa.reduce((m, s) => STADES_INFO[s.nom].capacite > STADES_INFO[m.nom].capacite ? s : m) : null;
+      const avecOuv = visites.filter(s => STADES_INFO[s.nom]?.ouverture);
+      const plusAncien = avecOuv.length ? avecOuv.reduce((m, s) => STADES_INFO[s.nom].ouverture < STADES_INFO[m.nom].ouverture ? s : m) : null;
+      const plusNord = visites.reduce((m, s) => s.lat > m.lat ? s : m);
+      const plusSud  = visites.reduce((m, s) => s.lat < m.lat ? s : m);
+      const recs = [];
+      if (plusGrand) recs.push({ ic:'🏟️', lbl:'Plus grand stade', val:plusGrand.nom, sub:STADES_INFO[plusGrand.nom].capacite.toLocaleString('fr-FR') + ' places' });
+      if (plusAncien) recs.push({ ic:'🏛️', lbl:'Plus ancien', val:plusAncien.nom, sub:'Ouvert en ' + STADES_INFO[plusAncien.nom].ouverture });
+      recs.push({ ic:'⬆️', lbl:'Le plus au nord', val:plusNord.nom, sub:`${drapeau(plusNord.pays)} ${plusNord.ville} · ${plusNord.lat.toFixed(1)}°` });
+      recs.push({ ic:'⬇️', lbl:'Le plus au sud', val:plusSud.nom, sub:`${drapeau(plusSud.pays)} ${plusSud.ville} · ${plusSud.lat.toFixed(1)}°` });
+      recEl.innerHTML = recs.map(r => `<div class="record-item"><div class="record-lbl">${r.ic} ${r.lbl}</div><div class="record-val">${esc(r.val)}</div><div class="record-sub">${r.sub}</div></div>`).join('');
+    }
+  }
+
+  // ── Distance totale parcourue ──
+  const distEl = document.getElementById('statsDistance');
+  if (distEl) {
+    const datees = visites.filter(s => s.dateVisite).sort((a, b) => a.dateVisite.localeCompare(b.dateVisite));
+    if (datees.length < 2) { distEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Ajoute des dates de visite à au moins 2 stades pour calculer la distance parcourue.</div>'; }
+    else {
+      let km = 0;
+      for (let i = 1; i < datees.length; i++) km += haversine(datees[i-1], datees[i]);
+      const tours = (km / 40075).toFixed(2);
+      distEl.innerHTML = `<div class="distance-big">${Math.round(km).toLocaleString('fr-FR')} km</div><div class="distance-sub">parcourus entre ${datees.length} stades visités, dans l'ordre chronologique</div><div class="distance-eq">🌍 soit ${tours} fois le tour de la Terre</div>`;
+    }
+  }
+
+  // ── Calendrier des visites (heatmap temporelle) ──
+  const heatEl = document.getElementById('statsHeatmap');
+  if (heatEl) {
+    const datees = visites.filter(s => s.dateVisite);
+    if (!datees.length) { heatEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Ajoute des dates de visite pour voir ton calendrier.</div>'; }
+    else {
+      // Mois ordonnés de la saison : août (idx 0) → juillet (idx 11)
+      const SAISON_MOIS = [8,9,10,11,12,1,2,3,4,5,6,7];
+      const LBL = ['A','S','O','N','D','J','F','M','A','M','J','J'];
+      const bySaisonMois = {};
+      datees.forEach(s => { const sa = saisonDe(s); if (!sa) return; const m = parseInt(s.dateVisite.slice(5,7)); const slot = SAISON_MOIS.indexOf(m); (bySaisonMois[sa] = bySaisonMois[sa] || Array(12).fill(0))[slot]++; });
+      const saisons = Object.keys(bySaisonMois).sort();
+      heatEl.innerHTML = saisons.map(sa => {
+        const cells = bySaisonMois[sa].map((n, i) => { const lvl = n === 0 ? 0 : n === 1 ? 1 : n <= 3 ? 2 : 3; return `<div class="heatmap-cell${lvl?' lvl'+lvl:''}" title="${LBL[i]} : ${n} visite${n>1?'s':''}">${n||''}</div>`; }).join('');
+        return `<div class="heatmap-year"><div class="heatmap-year-lbl">Saison ${sa} · ${bySaisonMois[sa].reduce((a,b)=>a+b,0)} visites</div><div class="heatmap-months">${cells}</div></div>`;
+      }).join('') + `<div class="heatmap-legend">moins<span></span><span class="lvl1" style="background:#25353050;border-color:var(--green)"></span><span class="lvl2" style="background:#1d6b4a"></span><span class="lvl3" style="background:var(--green)"></span>plus</div>`;
+    }
+  }
+
+  // ── Progression par championnat ──
+  const liguesEl = document.getElementById('statsLigues');
+  if (liguesEl) {
+    if (!visites.length) { liguesEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Aucun stade visité</div>'; }
+    else {
+      // (1) Complétion sur la composition ACTUELLE du championnat (saison en cours)
+      const champStats = {};
+      stades.forEach(s => { const c = champStats[s.championnat] = champStats[s.championnat] || { total:0, done:0, pays:s.pays }; c.total++; if (s.visite) c.done++; });
+      const liste = Object.entries(champStats).filter(([,c]) => c.done > 0).map(([nom, c]) => ({ nom, ...c, pct: Math.round((c.done/c.total)*100) })).sort((a, b) => b.pct - a.pct || b.done - a.done).slice(0, 12);
+      const completion = `<div style="font-size:11px;color:var(--text3);margin-bottom:8px">Complétion · saison en cours</div>` + liste.map(c => { const col = champColor(c.nom); return `<div class="continent-row"><div class="continent-name" style="min-width:130px;text-transform:none;font-family:inherit;font-size:12px">${drapeau(c.pays)} ${esc(c.nom)}</div><div class="continent-bar-wrap"><div class="continent-bar" style="width:${c.pct}%;background:${col}"></div></div><div class="continent-count" style="color:${col}">${c.done}<span style="color:var(--text3);font-size:9px">/${c.total}</span></div></div>`; }).join('');
+
+      // (2) Comptage STABLE par championnat, avec détail par saison.
+      //     Source prioritaire : matchs (champ figé + date → saison). Repli : championnat actuel du stade (saison inconnue).
+      const stadesAvecMatch = new Set();
+      const parChamp = {}; // { champ: { pays, total, parSaison: {saison: n} } }
+      const addVu = (champ, pays, saison) => {
+        const c = parChamp[champ] = parChamp[champ] || { pays, total: 0, parSaison: {} };
+        c.total++; const key = saison || '—'; c.parSaison[key] = (c.parSaison[key] || 0) + 1;
+      };
+      if (typeof matchs !== 'undefined') {
+        matchs.forEach(m => {
+          if (!m.champ) return;
+          const st = m.stadeId ? stades.find(x => x.id === m.stadeId) : null;
+          if (m.stadeId && (!st || !st.visite)) return; // ne compter que les stades visités
+          if (m.stadeId) stadesAvecMatch.add(m.stadeId);
+          const saison = m.date ? saisonDe({ dateVisite: m.date }) : null;
+          addVu(m.champ, st ? st.pays : (m.pays || ''), saison);
+        });
+      }
+      // Stades visités sans aucun match → division résolue par saison (historique B / champVu C / repli)
+      visites.forEach(s => { if (stadesAvecMatch.has(s.id)) return; const saison = saisonDe(s); const champ = champPourSaison(s, saison); if (!champ) return; addVu(champ, s.pays, saison); });
+
+      const vusListe = Object.entries(parChamp).map(([nom, v]) => ({ nom, ...v })).sort((a, b) => b.total - a.total).slice(0, 12);
+      const vusMax = vusListe[0]?.total || 1;
+      const stable = `<div style="font-size:11px;color:var(--text3);margin:14px 0 8px;padding-top:12px;border-top:.5px solid var(--border)">Matchs vus par championnat · cumul historique</div>` + vusListe.map(c => {
+        const col = champColor(c.nom);
+        const saisons = Object.entries(c.parSaison).sort((a, b) => (b[0]==='—'?-1:a[0]==='—'?1:b[0].localeCompare(a[0])));
+        const detail = saisons.map(([sa, n]) => `<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);font-family:var(--font-mono);padding:1px 0 1px 138px"><span>${sa === '—' ? 'saison inconnue' : 'saison ' + sa}</span><span style="color:${col}">${n}</span></div>`).join('');
+        const multi = saisons.length > 1;
+        return `<div class="champ-vu-group">`
+          + `<div class="continent-row champ-vu-head${multi?' expandable':''}"${multi?' role="button" tabindex="0"':''}><div class="continent-name" style="min-width:130px;text-transform:none;font-family:inherit;font-size:12px">${multi?'<span class="champ-caret">▸</span> ':''}${drapeau(c.pays)} ${esc(c.nom)}</div><div class="continent-bar-wrap"><div class="continent-bar" style="width:${Math.round((c.total/vusMax)*100)}%;background:${col}"></div></div><div class="continent-count" style="color:${col}">${c.total}</div></div>`
+          + (multi ? `<div class="champ-vu-detail" hidden>${detail}</div>` : '')
+          + `</div>`;
+      }).join('');
+
+      liguesEl.innerHTML = completion + stable;
+      // Dépliage du détail par saison
+      liguesEl.querySelectorAll('.champ-vu-head.expandable').forEach(head => {
+        const toggle = () => { const d = head.nextElementSibling; if (!d) return; d.hidden = !d.hidden; const car = head.querySelector('.champ-caret'); if (car) car.textContent = d.hidden ? '▸' : '▾'; };
+        head.addEventListener('click', toggle);
+        head.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+      });
+    }
+  }
+
+  // ── Prochains objectifs suggérés ──
+  const sugEl = document.getElementById('statsSuggestions');
+  if (sugEl) {
+    if (!visites.length) { sugEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Commence à cocher des stades pour recevoir des suggestions.</div>'; }
+    else {
+      const champStats = {};
+      stades.forEach(s => { const c = champStats[s.championnat] = champStats[s.championnat] || { total:0, done:0, pays:s.pays }; c.total++; if (s.visite) c.done++; });
+      const presque = Object.entries(champStats).map(([nom, c]) => ({ nom, ...c, reste: c.total - c.done })).filter(c => c.done > 0 && c.reste > 0).sort((a, b) => a.reste - b.reste).slice(0, 5);
+      if (!presque.length) { sugEl.innerHTML = '<div style="color:var(--text3);font-size:12px">Bravo, tu as complété tous les championnats commencés ! 🎉</div>'; }
+      else { sugEl.innerHTML = presque.map(c => `<div class="suggestion-row"><span class="suggestion-flag">${drapeau(c.pays)}</span><span class="suggestion-name">${esc(c.nom)} <small>${c.done}/${c.total}</small></span><div class="suggestion-bar-wrap"><div class="suggestion-bar" style="width:${Math.round((c.done/c.total)*100)}%"></div></div><span class="suggestion-rest">-${c.reste}</span></div>`).join(''); }
+    }
+  }
+
   const done = visites.length, total = stades.length;
   const customGoal = parseInt(localStorage.getItem('stades_custom_goal') || '0');
   const objectifs = [
@@ -2476,8 +2849,10 @@ function openFiche(id) {
   const s = stades[id]; const info = STADES_INFO[s.nom];
   const col = champColor(s.championnat); const isWish = !!wishlisted[s.id];
   document.getElementById('ficheHeader').innerHTML = `<div class="fiche-champ-badge" style="background:${col}22;color:${col};border:1px solid ${col}44"><span style="width:8px;height:8px;border-radius:50%;background:${col};display:inline-block"></span>${esc(s.championnat)}</div><div class="fiche-nom">${esc(s.nom)}</div>${s.club ? `<div class="fiche-club">🏟️ ${esc(s.club)}</div>` : ''}<div class="fiche-location">${drapeau(s.pays)} ${esc(s.ville)}, ${esc(s.pays)}</div>`;
-  document.getElementById('ficheCta').innerHTML = `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}</button><button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">${isWish ? '★ Wishlist' : '☆ Wishlist'}</button>`;
-  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { const st = stades[ficheStadeId]; st.visite = !st.visite; if (st.visite && !st.dateVisite) { st.dateVisite = new Date().toISOString().slice(0,10); st.annee = parseInt(st.dateVisite.slice(0,4)); } commit(true); showToast(st.visite ? '✅ Stade marqué visité' : 'Stade retiré des visites'); openFiche(ficheStadeId); });
+  document.getElementById('ficheCta').innerHTML = `<button class="fiche-visite-btn ${s.visite ? 'visite' : 'non-visite'}" id="ficheVisiteBtn">${s.visite ? '✅ Visité — retirer' : 'Marquer visité'}</button><button class="fiche-wishlist-btn ${isWish ? 'on' : 'off'}" id="ficheWishlistBtn">${isWish ? '★ Wishlist' : '☆ Wishlist'}</button><a class="fiche-goto-btn" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}" target="_blank" rel="noopener" title="Itinéraire vers le stade">🧭 Y aller</a>${s.visite ? `<button class="fiche-goto-btn" id="ficheShareBtn" title="Créer une carte partageable de ce stade">🎴 Partager</button>` : ''}`;
+  const ficheShareBtn = document.getElementById('ficheShareBtn');
+  if (ficheShareBtn) ficheShareBtn.addEventListener('click', () => window._openStadeShare(stades[ficheStadeId]));
+  document.getElementById('ficheVisiteBtn').addEventListener('click', () => { const st = stades[ficheStadeId]; st.visite = !st.visite; if (st.visite && !st.dateVisite) { st.dateVisite = new Date().toISOString().slice(0,10); st.annee = parseInt(st.dateVisite.slice(0,4)); } if (st.visite) figerChampVu(st); commit(true); showToast(st.visite ? '✅ Stade marqué visité' : 'Stade retiré des visites'); openFiche(ficheStadeId); });
   document.getElementById('ficheWishlistBtn').addEventListener('click', () => { const sid = stades[ficheStadeId].id; wishlisted[sid] = !wishlisted[sid]; if (!wishlisted[sid]) delete wishlisted[sid]; saveWishlist(); const btn = document.getElementById('ficheWishlistBtn'); const w = !!wishlisted[sid]; btn.className = `fiche-wishlist-btn ${w ? 'on' : 'off'}`; btn.textContent = w ? '★ Wishlist' : '☆ Wishlist'; });
   let body = '';
 
@@ -2487,11 +2862,54 @@ function openFiche(id) {
     body += `<div><div class="fiche-section-title">Ma visite</div>`;
     body += `<div style="display:flex;flex-direction:column;gap:10px">`;
     body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📅 Date</span><input type="date" id="ficheDateInput" value="${dateVal}" max="${new Date().toISOString().slice(0,10)}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
+    // Division vue (rattachée à la saison de la visite)
+    const saisonV = saisonDe(s);
+    const champActuel = champPourSaison(s, saisonV);
+    const optionsChamp = htmlOptionsDivision(s, champActuel);
+    const saisonLbl = saisonV ? `saison ${saisonV}` : 'saison non datée';
+    body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">🏟️ Division</span><select id="ficheChampInput" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none">${optionsChamp}</select></div>`;
+    body += `<div style="font-size:11px;color:var(--text3);margin:-4px 0 0 78px">Division vue lors de ta visite · ${saisonLbl}</div>`;
+    // Note sur 5 (étoiles)
+    const noteVal = s.note || 0;
+    const etoiles = [1,2,3,4,5].map(n => `<span class="fiche-star${n <= noteVal ? ' on' : ''}" data-note="${n}" role="button" tabindex="0" aria-label="${n} étoile${n>1?'s':''}">★</span>`).join('');
+    body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">⭐ Note</span><div id="ficheStars" class="fiche-stars">${etoiles}</div>${noteVal ? `<span id="ficheStarsClear" style="font-size:11px;color:var(--text3);cursor:pointer;margin-left:4px">effacer</span>` : ''}</div>`;
+    // Tags de visite (prédéfinis)
+    const tagsSel = Array.isArray(s.tags) ? s.tags : [];
+    const tagsHtml = TAGS_VISITE.map(t => `<span class="fiche-tag${tagsSel.includes(t.id) ? ' on' : ''}" data-tag="${t.id}" role="button" tabindex="0">${t.emoji} ${t.label}</span>`).join('');
+    body += `<div style="display:flex;align-items:flex-start;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px;padding-top:5px">🏷️ Tags</span><div id="ficheTags" class="fiche-tags">${tagsHtml}</div></div>`;
     if (s.photo) {
       body += `<div style="position:relative"><img src="${esc(s.photo)}" alt="" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;align-items:center;justify-content:center;height:60px;border-radius:8px;background:var(--surface2);color:var(--text3);font-size:12px;gap:6px">⚠️ Image inaccessible — mets à jour l'URL</div><button id="ficheRemovePhoto" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px">✕</button></div>`;
     }
     body += `<div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);min-width:70px">📷 Photo</span><input type="url" id="fichePhotoInput" placeholder="https://… (URL de l'image)" value="${s.photo ? esc(s.photo) : ''}" style="flex:1;background:var(--surface2);border:.5px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-body);font-size:13px;outline:none"></div>`;
     body += `</div></div>`;
+  }
+
+  // ── Matchs vus dans ce stade ──
+  {
+    const mList = matchsDuStade(s.id).slice().sort((a,b) => (b.date||'').localeCompare(a.date||''));
+    let mHtml = `<div><div class="fiche-section-title">Matchs vus ici${mList.length ? ` (${mList.length})` : ''}</div>`;
+    if (mList.length) {
+      mHtml += `<div class="fiche-match-list">` + mList.map(m => {
+        const realIdx = matchs.indexOf(m);
+        const col = m.champ ? champColor(m.champ) : 'var(--border)';
+        const dateStr = m.date ? new Date(m.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+        return `<div class="fiche-match-row" style="border-left:3px solid ${col}"><div class="fiche-match-main"><div class="fiche-match-teams">${esc(m.eq1)} <span style="color:var(--text4)">vs</span> ${esc(m.eq2)}${m.score ? ` <span class="fiche-match-score">${esc(m.score)}</span>` : ''}</div><div class="fiche-match-meta">${dateStr}${m.champ ? ` · <span style="color:${col}">${esc(m.champ)}</span>` : ''}</div></div><button class="fiche-match-del" data-idx="${realIdx}" title="Supprimer ce match">🗑</button></div>`;
+      }).join('') + `</div>`;
+    } else {
+      mHtml += `<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Aucun match enregistré pour ce stade.</div>`;
+    }
+    // Bouton + mini-formulaire d'ajout (replié par défaut)
+    const champOpts = htmlOptionsDivision(s, s.championnat);
+    mHtml += `<button class="fiche-match-add-toggle" id="ficheMatchAddToggle">+ Ajouter un match</button>`;
+    mHtml += `<div class="fiche-match-form" id="ficheMatchForm" hidden>
+      <input type="text" id="fmEq1" placeholder="Équipe domicile">
+      <input type="text" id="fmEq2" placeholder="Équipe extérieure">
+      <div style="display:flex;gap:6px"><input type="text" id="fmScore" placeholder="Score (2-1)" style="flex:1"><input type="date" id="fmDate" value="${s.dateVisite || ''}" max="${new Date().toISOString().slice(0,10)}" style="flex:1"></div>
+      <select id="fmChamp">${champOpts}</select>
+      <button class="fiche-match-save" id="ficheMatchSave">Enregistrer le match</button>
+    </div>`;
+    mHtml += `</div>`;
+    body += mHtml;
   }
 
   if (info) {
@@ -2510,29 +2928,116 @@ function openFiche(id) {
 
   // Handlers des champs visite
   const dateInput = document.getElementById('ficheDateInput');
-  if (dateInput) dateInput.addEventListener('change', () => { const st = stades[ficheStadeId]; st.dateVisite = dateInput.value || null; if (dateInput.value) st.annee = parseInt(dateInput.value.slice(0,4)); commit(true); });
+  if (dateInput) dateInput.addEventListener('change', () => { const st = stades[ficheStadeId]; st.dateVisite = dateInput.value || null; if (dateInput.value) st.annee = parseInt(dateInput.value.slice(0,4)); if (st.visite) figerChampVu(st); commit(true); openFiche(ficheStadeId); });
+  const champInput = document.getElementById('ficheChampInput');
+  if (champInput) champInput.addEventListener('change', () => { const st = stades[ficheStadeId]; const sa = saisonDe(st) || '—'; st.champVu = st.champVu || {}; st.champVu[sa] = champInput.value; commit(true); showToast('🏟️ Division enregistrée'); });
   const photoInput = document.getElementById('fichePhotoInput');
   if (photoInput) photoInput.addEventListener('change', () => { stades[ficheStadeId].photo = photoInput.value.trim() || null; commit(true); openFiche(ficheStadeId); });
   const removePhoto = document.getElementById('ficheRemovePhoto');
   if (removePhoto) removePhoto.addEventListener('click', () => { stades[ficheStadeId].photo = null; commit(true); openFiche(ficheStadeId); });
   const noteInput = document.getElementById('ficheNoteInput');
   if (noteInput) noteInput.addEventListener('input', () => { const sid = stades[ficheStadeId].id; if (noteInput.value.trim()) notes[sid] = noteInput.value; else delete notes[sid]; saveNotes(); });
+  // Note étoiles
+  const setNote = (n) => { const st = stades[ficheStadeId]; st.note = (st.note === n) ? null : n; commit(true); openFiche(ficheStadeId); };
+  document.querySelectorAll('#ficheStars .fiche-star').forEach(el => {
+    el.addEventListener('click', () => setNote(parseInt(el.dataset.note)));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNote(parseInt(el.dataset.note)); } });
+  });
+  const starsClear = document.getElementById('ficheStarsClear');
+  if (starsClear) starsClear.addEventListener('click', () => { stades[ficheStadeId].note = null; commit(true); openFiche(ficheStadeId); });
+  // Tags de visite
+  const toggleTag = (tag) => { const st = stades[ficheStadeId]; const cur = Array.isArray(st.tags) ? st.tags : []; st.tags = cur.includes(tag) ? cur.filter(t => t !== tag) : [...cur, tag]; if (!st.tags.length) st.tags = null; commit(true); openFiche(ficheStadeId); };
+  document.querySelectorAll('#ficheTags .fiche-tag').forEach(el => {
+    el.addEventListener('click', () => toggleTag(el.dataset.tag));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTag(el.dataset.tag); } });
+  });
+  // Matchs vus ici : repli/déplier le formulaire
+  const matchToggle = document.getElementById('ficheMatchAddToggle');
+  const matchForm = document.getElementById('ficheMatchForm');
+  if (matchToggle && matchForm) matchToggle.addEventListener('click', () => { matchForm.hidden = !matchForm.hidden; matchToggle.textContent = matchForm.hidden ? '+ Ajouter un match' : '− Annuler'; if (!matchForm.hidden) document.getElementById('fmEq1').focus(); });
+  // Enregistrer un match depuis la fiche
+  const matchSave = document.getElementById('ficheMatchSave');
+  if (matchSave) matchSave.addEventListener('click', () => {
+    const st = stades[ficheStadeId];
+    const eq1 = document.getElementById('fmEq1').value.trim();
+    const eq2 = document.getElementById('fmEq2').value.trim();
+    const score = document.getElementById('fmScore').value.trim();
+    const date = document.getElementById('fmDate').value;
+    const champ = document.getElementById('fmChamp').value;
+    if (!eq1 || !eq2 || !date) { alert('Renseigne au moins les deux équipes et la date.'); return; }
+    ajouterMatch({ eq1, eq2, score, date, stadeId: st.id, champ });
+    commit(true); if (typeof renderMatchs === 'function') renderMatchs();
+    showToast('⚽ Match enregistré'); openFiche(ficheStadeId);
+  });
+  // Supprimer un match depuis la fiche
+  document.querySelectorAll('.fiche-match-del').forEach(btn => btn.addEventListener('click', () => {
+    const idx = parseInt(btn.dataset.idx);
+    if (Number.isInteger(idx) && matchs[idx]) { matchs.splice(idx, 1); saveMatchs(); if (typeof renderMatchs === 'function') renderMatchs(); showToast('Match supprimé'); openFiche(ficheStadeId); }
+  }));
 
   ficheOverlay.classList.add('open');
 }
 ficheClose.addEventListener('click', () => ficheOverlay.classList.remove('open'));
 ficheOverlay.addEventListener('click', e => { if (e.target === ficheOverlay) ficheOverlay.classList.remove('open'); });
-let ficheStartY = 0, ficheStartScrollTop = 0;
-document.getElementById('fichePanel').addEventListener('touchstart', e => {
-  ficheStartY = e.touches[0].clientY;
-  ficheStartScrollTop = document.getElementById('ficheBody').scrollTop;
-}, {passive:true});
-document.getElementById('fichePanel').addEventListener('touchend', e => {
-  const dy = e.changedTouches[0].clientY - ficheStartY;
-  const scrollMoved = Math.abs(document.getElementById('ficheBody').scrollTop - ficheStartScrollTop);
-  // Fermer seulement si swipe bas franc ET le contenu n'a pas scrollé
-  if (dy > 80 && scrollMoved < 10) ficheOverlay.classList.remove('open');
-}, {passive:true});
+
+// Swipe bas pour fermer la fiche.
+// Posé sur le panel entier (une seule fois) : le contenu header/body est régénéré
+// en innerHTML à chaque openFiche, donc on ne peut pas s'attacher aux enfants.
+// On n'amorce un swipe-to-close que si le body scrollable est tout en haut,
+// sinon c'est un scroll normal. On ignore aussi les gestes horizontaux.
+(function initFicheSwipe() {
+  const panel = document.getElementById('fichePanel');
+  const body = document.getElementById('ficheBody');
+  if (!panel || !body) return;
+
+  let startX = 0, startY = 0, dragging = false, tracking = false;
+
+  function reset(animated) {
+    dragging = false;
+    tracking = false;
+    panel.style.transition = animated ? 'transform .25s ease' : '';
+    panel.style.transform = '';
+    if (animated) setTimeout(() => { panel.style.transition = ''; }, 260);
+  }
+
+  panel.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { tracking = false; return; }
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    // On ne suit le geste que si le contenu n'est pas scrollé : sinon l'utilisateur scrolle.
+    tracking = body.scrollTop <= 0;
+    dragging = false;
+    panel.style.transition = '';
+  }, { passive: true });
+
+  panel.addEventListener('touchmove', e => {
+    if (!tracking) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    // Premier mouvement : décide si c'est un swipe vertical descendant ou autre chose.
+    if (!dragging) {
+      if (dy <= 0 || Math.abs(dx) > Math.abs(dy)) { tracking = false; return; }
+      dragging = true;
+    }
+    if (dy > 0) panel.style.transform = `translateY(${dy}px)`;
+  }, { passive: true });
+
+  panel.addEventListener('touchend', e => {
+    if (!dragging) { tracking = false; return; }
+    const dy = e.changedTouches[0].clientY - startY;
+    if (dy > 110) {
+      // Fermeture : laisse la transition CSS de l'overlay reprendre la main.
+      panel.style.transition = '';
+      panel.style.transform = '';
+      ficheOverlay.classList.remove('open');
+      tracking = false; dragging = false;
+    } else {
+      reset(true); // rebond vers le haut
+    }
+  }, { passive: true });
+
+  panel.addEventListener('touchcancel', () => reset(true), { passive: true });
+})();
 window.openFiche = openFiche;
 
 // ── Carte de partage Canvas ─────────────────────
@@ -2891,6 +3396,311 @@ return new Promise(resolve => {
   window._refreshSharePreview = renderSharePreview;
 })();
 
+// ── Carte de visite partageable par stade (Canvas) ──────────────
+// Réutilise la philosophie de la carte globale : portrait, 3 thèmes,
+// projection Mercator, world GeoJSON déjà chargé dans window._worldGeoJson.
+(function() {
+  const W = 600, H = 750;
+  let currentTheme = 'dark';
+  let currentStade = null;
+
+  const THEMES = {
+    dark:  { bg:'#0d0d0d', bg2:'#1a1a1a', bg3:'#222222', text:'#ffffff', text2:'#999999', text3:'#555555', accent:'#CC1919', green:'#00C875', amber:'#f59e0b', border:'#2a2a2a' },
+    light: { bg:'#fafaf8', bg2:'#f0f0ec', bg3:'#e8e8e2', text:'#111111', text2:'#666666', text3:'#aaaaaa', accent:'#CC1919', green:'#00a85a', amber:'#d97706', border:'#e0e0da' },
+    rouge: { bg:'#0d0000', bg2:'#1a0404', bg3:'#2a0808', text:'#ffffff', text2:'#cc8888', text3:'#773333', accent:'#CC1919', green:'#00C875', amber:'#f59e0b', border:'#3a0a0a' },
+  };
+
+  function rr(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+  }
+
+  // Wrap texte centré, renvoie le nombre de lignes dessinées
+  function wrapText(ctx, text, cx, y, maxW, lh) {
+    const words = String(text).split(/\s+/);
+    const lines = []; let line = '';
+    words.forEach(w => {
+      const test = line ? line + ' ' + w : w;
+      if (ctx.measureText(test).width > maxW && line) { lines.push(line); line = w; }
+      else line = test;
+    });
+    if (line) lines.push(line);
+    lines.forEach((l, i) => ctx.fillText(l, cx, y + i*lh));
+    return lines.length;
+  }
+
+  function getPseudo() {
+    try { const p = JSON.parse(localStorage.getItem('gh_profil_v1')||'{}'); if (p.pseudo) return p.pseudo; } catch {}
+    const inp = document.getElementById('profilInputNom');
+    return (inp && inp.value.trim()) || 'Groundhopper';
+  }
+
+  function dateLabel(s) {
+    if (s.dateVisite) return new Date(s.dateVisite).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+    if (s.annee) return String(s.annee);
+    return null;
+  }
+
+  function draw(canvas, stade, theme) {
+    const t = THEMES[theme] || THEMES.dark;
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    const col = (typeof champColor === 'function') ? champColor(stade.championnat) : t.accent;
+
+    // Fond
+    ctx.fillStyle = t.bg; ctx.fillRect(0,0,W,H);
+    // Strip haut (couleur de la division)
+    const hGrad = ctx.createLinearGradient(0,0,W,0);
+    hGrad.addColorStop(0, col); hGrad.addColorStop(1, col+'66');
+    ctx.fillStyle = hGrad; ctx.fillRect(0,0,W,5);
+
+    // ── Header marque ──
+    let y = 30;
+    ctx.fillStyle = t.text3;
+    ctx.font = '11px system-ui,Arial,sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('🏟️  GROUNDHOPPER', 28, y);
+    ctx.fillStyle = col;
+    ctx.font = 'bold 11px system-ui,Arial,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(getPseudo().toUpperCase(), W-28, y);
+
+    // ── Badge division ──
+    y = 72;
+    ctx.font = 'bold 12px system-ui,Arial,sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    const divTxt = stade.championnat || '';
+    const bw = ctx.measureText(divTxt).width + 34;
+    ctx.fillStyle = col+'22';
+    rr(ctx, 28, y-13, bw, 26, 13); ctx.fill();
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(28+14, y, 4, 0, Math.PI*2); ctx.fill();
+    ctx.fillText(divTxt, 28+24, y);
+
+    // ── Nom du stade (gros titre) ──
+    y = 118;
+    ctx.fillStyle = t.text;
+    ctx.font = 'bold 34px system-ui,Arial,sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    const nLines = wrapText(ctx, stade.nom, 28, y, W-56, 38);
+    y += nLines*38 + 6;
+
+    // ── Club ──
+    if (stade.club) {
+      ctx.fillStyle = t.text2;
+      ctx.font = '17px system-ui,Arial,sans-serif';
+      ctx.fillText(stade.club, 28, y);
+      y += 26;
+    }
+    // ── Ville, pays + drapeau ──
+    const flag = (typeof drapeau === 'function') ? drapeau(stade.pays) : '';
+    ctx.fillStyle = t.text3;
+    ctx.font = '14px system-ui,Arial,sans-serif';
+    ctx.fillText(`${flag}  ${stade.ville}, ${stade.pays}`, 28, y);
+    y += 32;
+
+    // ── Carte du monde zoomée sur le stade ──
+    const mapH = 240, mapX = 28, mapY = y, mapW = W-56;
+    drawMiniMap(ctx, t, theme, stade, col, mapX, mapY, mapW, mapH);
+    y += mapH + 26;
+
+    // ── Note étoiles + date + tags ──
+    if (stade.note) {
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.font = '22px system-ui,Arial,sans-serif';
+      let sx = 28;
+      for (let i=1;i<=5;i++) {
+        ctx.fillStyle = i <= stade.note ? t.amber : t.bg3;
+        ctx.fillText('★', sx, y);
+        sx += ctx.measureText('★').width + 4;
+      }
+      y += 32;
+    }
+    const dl = dateLabel(stade);
+    if (dl) {
+      ctx.fillStyle = t.text2;
+      ctx.font = '14px system-ui,Arial,sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText('📅  Visité le ' + dl, 28, y);
+      y += 26;
+    }
+    if (Array.isArray(stade.tags) && stade.tags.length && typeof TAGS_VISITE !== 'undefined') {
+      const labels = stade.tags.map(id => { const tg = TAGS_VISITE.find(x=>x.id===id); return tg ? tg.emoji+' '+tg.label : null; }).filter(Boolean);
+      let tx = 28;
+      ctx.font = '12px system-ui,Arial,sans-serif';
+      ctx.textBaseline = 'middle';
+      labels.forEach(lbl => {
+        const w = ctx.measureText(lbl).width + 20;
+        if (tx + w > W-28) return;
+        ctx.fillStyle = t.accent+'18';
+        rr(ctx, tx, y-12, w, 24, 12); ctx.fill();
+        ctx.fillStyle = t.accent;
+        ctx.textAlign = 'left';
+        ctx.fillText(lbl, tx+10, y);
+        tx += w + 8;
+      });
+    }
+
+    // ── Footer ──
+    ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(28, H-30); ctx.lineTo(W-28, H-30); ctx.stroke();
+    ctx.fillStyle = t.text3;
+    ctx.font = '10px system-ui,Arial,sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('groundhopper.app', 28, H-16);
+    ctx.textAlign = 'right';
+    ctx.fillText(`${stade.lat.toFixed(3)}°, ${stade.lng.toFixed(3)}°`, W-28, H-16);
+  }
+
+  // Mini-carte centrée sur le stade : projection Mercator avec zoom régional
+  function drawMiniMap(ctx, t, theme, stade, col, mapX, mapY, mapW, mapH) {
+    // Fenêtre géographique autour du stade (degrés)
+    const spanLng = 26, spanLat = 18;
+    const lng0 = stade.lng - spanLng/2, lng1 = stade.lng + spanLng/2;
+    const lat0 = stade.lat + spanLat/2, lat1 = stade.lat - spanLat/2; // haut = nord
+    const mercY = lat => Math.log(Math.tan(Math.PI/4 + (lat*Math.PI/180)/2));
+    const my0 = mercY(lat0), my1 = mercY(lat1);
+    function projX(lng){ return mapX + ((lng - lng0)/(lng1 - lng0))*mapW; }
+    function projY(lat){ return mapY + ((mercY(lat) - my0)/(my1 - my0))*mapH; }
+
+    // Océan
+    const oceanG = ctx.createLinearGradient(mapX, mapY, mapX, mapY+mapH);
+    if (theme==='light') { oceanG.addColorStop(0,'#ddeef8'); oceanG.addColorStop(1,'#c8e0f0'); }
+    else { oceanG.addColorStop(0,'#0d1f2d'); oceanG.addColorStop(1,'#0a1520'); }
+    ctx.fillStyle = oceanG;
+    rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.fill();
+    ctx.strokeStyle = t.border; ctx.lineWidth = 0.5;
+    rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.stroke();
+
+    ctx.save();
+    rr(ctx, mapX, mapY, mapW, mapH, 10); ctx.clip();
+
+    // Pays depuis GeoJSON
+    if (window._worldGeoJson) {
+      const cFill   = theme==='light' ? '#b8d4a8' : '#1e3320';
+      const cStroke = theme==='light' ? '#8ab878' : '#2a4428';
+      ctx.fillStyle = cFill; ctx.strokeStyle = cStroke; ctx.lineWidth = 0.4;
+      window._worldGeoJson.features.forEach(f => {
+        const geom = f.geometry; if (!geom) return;
+        const polys = geom.type==='Polygon' ? [geom.coordinates]
+                    : geom.type==='MultiPolygon' ? geom.coordinates : [];
+        polys.forEach(poly => {
+          poly.forEach((ring, ri) => {
+            ctx.beginPath();
+            ring.forEach(([lng,lat], i) => {
+              const px = projX(lng), py = projY(lat);
+              i===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
+            });
+            ctx.closePath();
+            if (ri===0) ctx.fill();
+            ctx.stroke();
+          });
+        });
+      });
+    }
+
+    // Pin du stade (au centre)
+    const px = projX(stade.lng), py = projY(stade.lat);
+    // halo
+    ctx.fillStyle = col+'22';
+    ctx.beginPath(); ctx.arc(px, py, 22, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = col+'44';
+    ctx.beginPath(); ctx.arc(px, py, 13, 0, Math.PI*2); ctx.fill();
+    // goutte
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.arc(px, py-6, 9, Math.PI, 0);
+    ctx.lineTo(px, py+10);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(px, py-6, 4, 0, Math.PI*2); ctx.fill();
+
+    ctx.restore();
+  }
+
+  function ensureGeo(cb) {
+    if (window._worldGeoJson) { cb(); return; }
+    fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+      .then(r => r.json())
+      .then(data => { window._worldGeoJson = data; cb(); })
+      .catch(() => cb());
+  }
+
+  function render() {
+    const canvas = document.getElementById('stadeShareCanvas');
+    if (!canvas || !currentStade) return;
+    draw(canvas, currentStade, currentTheme);
+  }
+
+  function exportCanvas() {
+    const c = document.createElement('canvas');
+    draw(c, currentStade, currentTheme);
+    return c;
+  }
+
+  function filename() {
+    const base = (currentStade.nom || 'stade').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    return `groundhopper-${base}.png`;
+  }
+
+  function download() {
+    const btn = document.getElementById('stadeShareDl');
+    if (btn) { btn.textContent = '⏳ Génération…'; btn.disabled = true; }
+    exportCanvas().toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename(); a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      if (typeof showToast === 'function') showToast('✅ Carte téléchargée !');
+      if (btn) { btn.textContent = '⬇️ Télécharger l\'image'; btn.disabled = false; }
+    }, 'image/png');
+  }
+
+  function webShare() {
+    exportCanvas().toBlob(async blob => {
+      const file = new File([blob], filename(), { type:'image/png' });
+      try {
+        await navigator.share({ files:[file], title:currentStade.nom, text:`${currentStade.nom} — ${currentStade.ville}, ${currentStade.pays} 🏟️` });
+      } catch(e) { if (e.name !== 'AbortError') download(); }
+    }, 'image/png');
+  }
+
+  function open(stade) {
+    currentStade = stade;
+    const overlay = document.getElementById('stadeShareOverlay');
+    if (!overlay) return;
+    overlay.classList.add('open');
+    ensureGeo(render);
+    render();
+  }
+
+  // Init listeners (une fois)
+  function init() {
+    const overlay = document.getElementById('stadeShareOverlay');
+    if (!overlay || overlay._inited) return;
+    overlay._inited = true;
+    document.getElementById('stadeShareClose').addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+    document.getElementById('stadeShareThemes').addEventListener('click', e => {
+      const pill = e.target.closest('.share-theme-pill'); if (!pill) return;
+      currentTheme = pill.dataset.theme;
+      document.querySelectorAll('#stadeShareThemes .share-theme-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      render();
+    });
+    document.getElementById('stadeShareDl').addEventListener('click', download);
+    const w = document.getElementById('stadeShareWeb');
+    if (navigator.canShare) { w.style.display = 'inline-flex'; w.addEventListener('click', webShare); }
+  }
+
+  window._openStadeShare = function(stade) { init(); open(stade); };
+})();
+
+
 function showToast(msg, type = 'success') {
   let t = document.getElementById('_ghToast');
   if (!t) {
@@ -2909,6 +3719,10 @@ function showToast(msg, type = 'success') {
 window.showToast = showToast;
 // Charger sauvegarde locale automatiquement
 charger();
+// (C) Backfill : figer la division actuelle pour les stades déjà visités sans champVu,
+// afin que leur catégorisation ne bouge plus aux futures mises à jour de stadiums.js.
+// L'historique éditorial (B) reste prioritaire et corrige les clubs déjà descendus.
+stades.forEach(s => { if (s.visite && (!s.champVu || !Object.keys(s.champVu).length)) figerChampVu(s); });
 initMapLayers();
 initFilters();
 updateStats();
