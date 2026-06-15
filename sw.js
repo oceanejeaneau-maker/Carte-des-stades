@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════
-// SERVICE WORKER — Groundhopper v30
+// SERVICE WORKER — Groundhopper v31
 // ═══════════════════════════════════════════════
 
-const CACHE_NAME = 'groundhopper-v30';
+const CACHE_NAME = 'groundhopper-v31';
 
 const PRECACHE_URLS = [
   '/',
@@ -11,7 +11,8 @@ const PRECACHE_URLS = [
   '/manifest.json',
   '/icons/icon-512.png',
   '/icons/icon-192.png',
-  '/icons/icon-96.png'
+  '/icons/icon-96.png',
+  'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'
 ];
 
 self.addEventListener('install', event => {
@@ -87,7 +88,8 @@ self.addEventListener('fetch', event => {
     url.hostname === self.location.hostname ||
     url.hostname.includes('unpkg.com') ||
     url.hostname.includes('fonts.g') ||
-    url.hostname.includes('cdnjs.')
+    url.hostname.includes('cdnjs.') ||
+    url.hostname.includes('raw.githubusercontent.com')
   ) {
     event.respondWith(
       caches.match(event.request).then(cached => {
