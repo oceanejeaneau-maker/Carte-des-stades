@@ -1390,7 +1390,7 @@
           <div style="font-size:11px;color:var(--text3);font-family:var(--font-disp);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Objectif personnalisé</div>
           <div style="display:flex;gap:8px;align-items:center">
             <input type="number" id="customGoalInput" min="1" max="630" placeholder="Ex: 50" style="width:80px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--font-mono);font-size:13px;outline:none">
-            <button id="customGoalBtn" style="padding:7px 14px;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:var(--font-disp);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">Définir</button>
+            <button id="customGoalBtn" style="padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:var(--font-disp);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">Définir</button>
             <span id="customGoalDisplay" style="font-size:11px;color:var(--text3)"></span>
           </div>
         </div>
@@ -1405,7 +1405,7 @@
         <div class="match-stat-item"><span class="stat-label">Joueurs</span><span class="stat-value" id="classNbJoueurs">0</span></div>
         <div class="match-stat-item"><span class="stat-label">Ton rang</span><span class="stat-value" id="classMonRang">—</span></div>
       </div>
-      <div class="leaderboard" id="leaderboard"><div style="text-align:center;padding:32px;color:var(--muted)">Chargement…</div></div>
+      <div class="leaderboard" id="leaderboard"><div style="text-align:center;padding:32px;color:var(--text3)">Chargement…</div></div>
     </div>
 
     <!-- PAGE PROFIL -->
@@ -1528,7 +1528,9 @@
 
       </div><!-- /page-profil-inner -->
 
-  </div>
+    </div><!-- /page-profil -->
+
+  </div><!-- /main-content -->
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav" id="bottomNav" aria-label="Navigation principale">
@@ -1554,8 +1556,7 @@
     </div>
   </nav>
 
-</div>
-</div>
+</div><!-- /app-layout -->
 
 <script>
 // Module UI profil/classement (mode local, sans backend)
@@ -3340,11 +3341,11 @@ window.openFiche = openFiche;
 
   // ── Capture de la carte Leaflet via leaflet-image ──
   function captureMapAndDraw(canvas, theme) {
-return new Promise(resolve => {
-    drawFinal(canvas, null, theme);
-    resolve();
-  });
-}
+    return new Promise(resolve => {
+      drawFinal(canvas, null, theme);
+      resolve();
+    });
+  }
 
   // ── Preview via canvas 2d direct (pas de leaflet-image pour l'aperçu) ──
   function renderSharePreview() {
@@ -3901,3 +3902,4 @@ if (typeof stades !== 'undefined') updateStatsKpis();
 </script>
 </body>
 </html>
+
