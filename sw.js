@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════
-// SERVICE WORKER — Groundhopper v36
+// SERVICE WORKER — Groundhopper v37
 // ═══════════════════════════════════════════════
 
-const CACHE_NAME = 'groundhopper-v36';
+const CACHE_NAME = 'groundhopper-v37';
 
 const PRECACHE_URLS = [
   '/',
